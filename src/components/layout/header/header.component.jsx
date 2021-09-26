@@ -5,7 +5,6 @@ import breakpoints from "../../../constants/breakpoints.constant";
 import Search from "./search.component";
 const Header = () => {
   const isLargeOrBigger = useMediaQuery({ minWidth: breakpoints.lg });
-  console.log(isLargeOrBigger);
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">

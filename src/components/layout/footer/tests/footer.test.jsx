@@ -19,3 +19,10 @@ test("footer must contain brand, about us, contact us, exams and copyright", () 
   const copyright = screen.getByText(/© 2021/i);
   expect(copyright).toBeInTheDocument();
 });
+
+test("footer must have id equal to 'footer'", () => {
+  render(<Footer />);
+
+  const footer = screen.getByTestId("footer");
+  expect(footer).toHaveAttribute("id", "footer");
+});
