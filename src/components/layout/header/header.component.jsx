@@ -1,6 +1,6 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { useMediaQuery } from "react-responsive";
-import breakpoints from "../../constants/breakpoints.constant";
+import breakpoints from "../../../constants/breakpoints.constant";
 
 import Search from "./search.component";
 const Header = () => {

@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import Header from "../header.component";
 
-import { wrapWithWidth } from "../../../utilities/tests.utility";
-import breakpoints from "../../../constants/breakpoints.constant";
+import { wrapWithWidth } from "../../../../utilities/tests.utility";
+import breakpoints from "../../../../constants/breakpoints.constant";
 
 describe("check initial conditions", () => {
   test("in size less than large, header will contain brand, exams, about us, contact us, login, register and search", () => {
