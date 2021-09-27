@@ -1,22 +1,12 @@
-import { Card, Button, Row, Col, Image } from "react-bootstrap";
+import { Card, Button, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShareAlt } from "@fortawesome/free-solid-svg-icons";
+import UserInfo from "../user-info/user-info.component";
 
-const ExamCard = ({ title }) => {
+const ExamCard = ({ title, ...props }) => {
   return (
-    <Card className="mb-2 bg-light" style={{ height: 600 }}>
-      <Row className="p-3">
-        <Col xs={3} className="d-flex justify-content-center">
-          <Image
-            style={{ width: 50, height: 50 }}
-            src="./user.jpeg"
-            roundedCircle
-          />
-        </Col>
-        <Col xs={9}>
-          <p className="fs-4">Just Test</p>
-        </Col>
-      </Row>
+    <Card className="bg-light" {...props} style={{ height: 600 }}>
+      <UserInfo />
       <Card.Img style={{ height: 250 }} variant="top" src="./Exam.jpeg" />
       <Card.Body className="d-flex flex-column justify-content-between">
         <Card.Title>{title}</Card.Title>

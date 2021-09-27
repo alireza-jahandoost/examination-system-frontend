@@ -6,7 +6,7 @@ import Search from "./search.component";
 import useInfiniteScroll from "../../../hooks/useInfiniteScroll";
 import urlRoutes from "../../../constants/urlRoutes.constant";
 
-import ExamCard from "./exam-card.component";
+import ExamCard from "../../../components/exam-card/exam-card.component";
 
 const ExamsIndex = () => {
   const [exams, setExams] = useState([]);
@@ -14,7 +14,6 @@ const ExamsIndex = () => {
   const [isFinished, setIsFinished] = useState(false);
 
   const fetchExams = async () => {
-    console.log("first");
     const response = await fetch(urlRoutes["exams.index"](page));
     const { data, meta } = await response.json();
     setIsFinished(meta.current_page === meta.last_page);
@@ -39,7 +38,7 @@ const ExamsIndex = () => {
             {exams.map((exam) => {
               return (
                 <Col key={`exam-${exam.exam_id}`} md={6} lg={4}>
-                  <ExamCard title={exam.exam_name} />
+                  <ExamCard className="mt-4" title={exam.exam_name} />
                 </Col>
               );
             })}
