@@ -23,6 +23,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:39.000000Z",
                   last_update: "2021-09-24T15:40:39.000000Z",
                   owner_id: 33,
+                  owner_name: "Mrs. Alanna Bogan Jr.",
                   owner_link: "http://localhost:8000/api/users/33",
                 },
                 {
@@ -35,6 +36,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:39.000000Z",
                   last_update: "2021-09-24T15:40:39.000000Z",
                   owner_id: 24,
+                  owner_name: "Miss Isabell Boehm",
                   owner_link: "http://localhost:8000/api/users/24",
                 },
                 {
@@ -48,6 +50,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:39.000000Z",
                   last_update: "2021-09-24T15:40:39.000000Z",
                   owner_id: 12,
+                  owner_name: "Lauriane Hahn",
                   owner_link: "http://localhost:8000/api/users/12",
                 },
                 {
@@ -60,6 +63,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:39.000000Z",
                   last_update: "2021-09-24T15:40:39.000000Z",
                   owner_id: 20,
+                  owner_name: "Hertha DuBuque",
                   owner_link: "http://localhost:8000/api/users/20",
                 },
                 {
@@ -73,6 +77,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:39.000000Z",
                   last_update: "2021-09-24T15:40:39.000000Z",
                   owner_id: 46,
+                  owner_name: "Eleonore Bartell Jr.",
                   owner_link: "http://localhost:8000/api/users/46",
                 },
                 {
@@ -85,6 +90,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:40.000000Z",
                   last_update: "2021-09-24T15:40:40.000000Z",
                   owner_id: 32,
+                  owner_name: "Mr. Tony Reichel I",
                   owner_link: "http://localhost:8000/api/users/32",
                 },
                 {
@@ -97,6 +103,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:40.000000Z",
                   last_update: "2021-09-24T15:40:40.000000Z",
                   owner_id: 26,
+                  owner_name: "Zane Schuppe DVM",
                   owner_link: "http://localhost:8000/api/users/26",
                 },
                 {
@@ -109,6 +116,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:40.000000Z",
                   last_update: "2021-09-24T15:40:40.000000Z",
                   owner_id: 26,
+                  owner_name: "Zane Schuppe DVM",
                   owner_link: "http://localhost:8000/api/users/26",
                 },
                 {
@@ -121,6 +129,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:40.000000Z",
                   last_update: "2021-09-24T15:40:40.000000Z",
                   owner_id: 49,
+                  owner_name: "Osvaldo Rau",
                   owner_link: "http://localhost:8000/api/users/49",
                 },
                 {
@@ -133,6 +142,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:40.000000Z",
                   last_update: "2021-09-24T15:40:40.000000Z",
                   owner_id: 43,
+                  owner_name: "Kale Haley",
                   owner_link: "http://localhost:8000/api/users/43",
                 },
                 {
@@ -145,6 +155,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:41.000000Z",
                   last_update: "2021-09-24T15:40:41.000000Z",
                   owner_id: 32,
+                  owner_name: "Mr. Tony Reichel I",
                   owner_link: "http://localhost:8000/api/users/32",
                 },
                 {
@@ -157,6 +168,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:41.000000Z",
                   last_update: "2021-09-24T15:40:41.000000Z",
                   owner_id: 35,
+                  owner_name: "Mrs. Stacey Toy MD",
                   owner_link: "http://localhost:8000/api/users/35",
                 },
                 {
@@ -169,6 +181,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:41.000000Z",
                   last_update: "2021-09-24T15:40:41.000000Z",
                   owner_id: 38,
+                  owner_name: "Shane West",
                   owner_link: "http://localhost:8000/api/users/38",
                 },
                 {
@@ -182,6 +195,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:41.000000Z",
                   last_update: "2021-09-24T15:40:41.000000Z",
                   owner_id: 4,
+                  owner_name: "Mr. Chandler Keeling Jr.",
                   owner_link: "http://localhost:8000/api/users/4",
                 },
                 {
@@ -195,6 +209,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:42.000000Z",
                   last_update: "2021-09-24T15:40:42.000000Z",
                   owner_id: 39,
+                  owner_name: "Horace Bahringer",
                   owner_link: "http://localhost:8000/api/users/39",
                 },
                 {
@@ -208,6 +223,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:42.000000Z",
                   last_update: "2021-09-24T15:40:42.000000Z",
                   owner_id: 29,
+                  owner_name: "Dr. Brad Ryan IV",
                   owner_link: "http://localhost:8000/api/users/29",
                 },
                 {
@@ -221,6 +237,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:42.000000Z",
                   last_update: "2021-09-24T15:40:42.000000Z",
                   owner_id: 47,
+                  owner_name: "Ms. Bessie Doyle",
                   owner_link: "http://localhost:8000/api/users/47",
                 },
                 {
@@ -233,6 +250,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:42.000000Z",
                   last_update: "2021-09-24T15:40:42.000000Z",
                   owner_id: 40,
+                  owner_name: "Zachariah McCullough",
                   owner_link: "http://localhost:8000/api/users/40",
                 },
               ],
@@ -297,6 +315,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:42.000000Z",
                   last_update: "2021-09-24T15:40:42.000000Z",
                   owner_id: 3,
+                  owner_name: "Miss Bridie Hauck",
                   owner_link: "http://localhost:8000/api/users/3",
                 },
                 {
@@ -310,6 +329,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:43.000000Z",
                   last_update: "2021-09-24T15:40:43.000000Z",
                   owner_id: 2,
+                  owner_name: "Anya Oberbrunner",
                   owner_link: "http://localhost:8000/api/users/2",
                 },
                 {
@@ -323,6 +343,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:43.000000Z",
                   last_update: "2021-09-24T15:40:43.000000Z",
                   owner_id: 17,
+                  owner_name: "Mrs. Joana Medhurst V",
                   owner_link: "http://localhost:8000/api/users/17",
                 },
                 {
@@ -336,6 +357,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:43.000000Z",
                   last_update: "2021-09-24T15:40:43.000000Z",
                   owner_id: 49,
+                  owner_name: "Osvaldo Rau",
                   owner_link: "http://localhost:8000/api/users/49",
                 },
                 {
@@ -348,6 +370,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:43.000000Z",
                   last_update: "2021-09-24T15:40:43.000000Z",
                   owner_id: 2,
+                  owner_name: "Anya Oberbrunner",
                   owner_link: "http://localhost:8000/api/users/2",
                 },
                 {
@@ -361,6 +384,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:43.000000Z",
                   last_update: "2021-09-24T15:40:43.000000Z",
                   owner_id: 29,
+                  owner_name: "Dr. Brad Ryan IV",
                   owner_link: "http://localhost:8000/api/users/29",
                 },
                 {
@@ -373,6 +397,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:44.000000Z",
                   last_update: "2021-09-24T15:40:44.000000Z",
                   owner_id: 2,
+                  owner_name: "Anya Oberbrunner",
                   owner_link: "http://localhost:8000/api/users/2",
                 },
                 {
@@ -385,6 +410,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:44.000000Z",
                   last_update: "2021-09-24T15:40:44.000000Z",
                   owner_id: 39,
+                  owner_name: "Horace Bahringer",
                   owner_link: "http://localhost:8000/api/users/39",
                 },
                 {
@@ -397,6 +423,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:44.000000Z",
                   last_update: "2021-09-24T15:40:44.000000Z",
                   owner_id: 50,
+                  owner_name: "Mr. Fabian Mosciski Sr.",
                   owner_link: "http://localhost:8000/api/users/50",
                 },
                 {
@@ -409,6 +436,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:44.000000Z",
                   last_update: "2021-09-24T15:40:44.000000Z",
                   owner_id: 40,
+                  owner_name: "Zachariah McCullough",
                   owner_link: "http://localhost:8000/api/users/40",
                 },
                 {
@@ -422,6 +450,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:44.000000Z",
                   last_update: "2021-09-24T15:40:44.000000Z",
                   owner_id: 40,
+                  owner_name: "Zachariah McCullough",
                   owner_link: "http://localhost:8000/api/users/40",
                 },
                 {
@@ -434,6 +463,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:45.000000Z",
                   last_update: "2021-09-24T15:40:45.000000Z",
                   owner_id: 3,
+                  owner_name: "Miss Bridie Hauck",
                   owner_link: "http://localhost:8000/api/users/3",
                 },
                 {
@@ -446,6 +476,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:45.000000Z",
                   last_update: "2021-09-24T15:40:45.000000Z",
                   owner_id: 16,
+                  owner_name: "Mr. Sammie Rosenbaum III",
                   owner_link: "http://localhost:8000/api/users/16",
                 },
                 {
@@ -458,6 +489,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:45.000000Z",
                   last_update: "2021-09-24T15:40:45.000000Z",
                   owner_id: 27,
+                  owner_name: "Darion Oberbrunner",
                   owner_link: "http://localhost:8000/api/users/27",
                 },
                 {
@@ -471,6 +503,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:45.000000Z",
                   last_update: "2021-09-24T15:40:45.000000Z",
                   owner_id: 17,
+                  owner_name: "Mrs. Joana Medhurst V",
                   owner_link: "http://localhost:8000/api/users/17",
                 },
                 {
@@ -483,6 +516,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:45.000000Z",
                   last_update: "2021-09-24T15:40:45.000000Z",
                   owner_id: 39,
+                  owner_name: "Horace Bahringer",
                   owner_link: "http://localhost:8000/api/users/39",
                 },
                 {
@@ -495,6 +529,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:46.000000Z",
                   last_update: "2021-09-24T15:40:46.000000Z",
                   owner_id: 48,
+                  owner_name: "Prof. Colin Murray DVM",
                   owner_link: "http://localhost:8000/api/users/48",
                 },
                 {
@@ -507,6 +542,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:46.000000Z",
                   last_update: "2021-09-24T15:40:46.000000Z",
                   owner_id: 41,
+                  owner_name: "Mr. Gonzalo Pfeffer I",
                   owner_link: "http://localhost:8000/api/users/41",
                 },
               ],
@@ -572,6 +608,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:46.000000Z",
                   last_update: "2021-09-24T15:40:46.000000Z",
                   owner_id: 27,
+                  owner_name: "Darion Oberbrunner",
                   owner_link: "http://localhost:8000/api/users/27",
                 },
                 {
@@ -585,6 +622,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:46.000000Z",
                   last_update: "2021-09-24T15:40:46.000000Z",
                   owner_id: 38,
+                  owner_name: "Shane West",
                   owner_link: "http://localhost:8000/api/users/38",
                 },
                 {
@@ -597,6 +635,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:47.000000Z",
                   last_update: "2021-09-24T15:40:47.000000Z",
                   owner_id: 40,
+                  owner_name: "Zachariah McCullough",
                   owner_link: "http://localhost:8000/api/users/40",
                 },
                 {
@@ -609,6 +648,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:47.000000Z",
                   last_update: "2021-09-24T15:40:47.000000Z",
                   owner_id: 11,
+                  owner_name: "Mrs. Zelma Donnelly DVM",
                   owner_link: "http://localhost:8000/api/users/11",
                 },
                 {
@@ -621,6 +661,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:47.000000Z",
                   last_update: "2021-09-24T15:40:47.000000Z",
                   owner_id: 10,
+                  owner_name: "Anabel Ankunding",
                   owner_link: "http://localhost:8000/api/users/10",
                 },
                 {
@@ -633,6 +674,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:47.000000Z",
                   last_update: "2021-09-24T15:40:47.000000Z",
                   owner_id: 5,
+                  owner_name: "Cristopher Leuschke",
                   owner_link: "http://localhost:8000/api/users/5",
                 },
                 {
@@ -646,6 +688,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:47.000000Z",
                   last_update: "2021-09-24T15:40:47.000000Z",
                   owner_id: 14,
+                  owner_name: "Miss Keely Funk III",
                   owner_link: "http://localhost:8000/api/users/14",
                 },
                 {
@@ -659,6 +702,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:48.000000Z",
                   last_update: "2021-09-24T15:40:48.000000Z",
                   owner_id: 38,
+                  owner_name: "Shane West",
                   owner_link: "http://localhost:8000/api/users/38",
                 },
                 {
@@ -671,6 +715,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:48.000000Z",
                   last_update: "2021-09-24T15:40:48.000000Z",
                   owner_id: 21,
+                  owner_name: "Albin Sauer",
                   owner_link: "http://localhost:8000/api/users/21",
                 },
                 {
@@ -683,6 +728,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:48.000000Z",
                   last_update: "2021-09-24T15:40:48.000000Z",
                   owner_id: 21,
+                  owner_name: "Albin Sauer",
                   owner_link: "http://localhost:8000/api/users/21",
                 },
                 {
@@ -695,6 +741,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:48.000000Z",
                   last_update: "2021-09-24T15:40:48.000000Z",
                   owner_id: 34,
+                  owner_name: "Dagmar Quigley",
                   owner_link: "http://localhost:8000/api/users/34",
                 },
                 {
@@ -708,6 +755,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:49.000000Z",
                   last_update: "2021-09-24T15:40:49.000000Z",
                   owner_id: 34,
+                  owner_name: "Dagmar Quigley",
                   owner_link: "http://localhost:8000/api/users/34",
                 },
                 {
@@ -720,6 +768,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:49.000000Z",
                   last_update: "2021-09-24T15:40:49.000000Z",
                   owner_id: 50,
+                  owner_name: "Mr. Fabian Mosciski Sr.",
                   owner_link: "http://localhost:8000/api/users/50",
                 },
                 {
@@ -732,6 +781,7 @@ const examsHandler = [
                   creation_time: "2021-09-24T15:40:49.000000Z",
                   last_update: "2021-09-24T15:40:49.000000Z",
                   owner_id: 17,
+                  owner_name: "Mrs. Joana Medhurst V",
                   owner_link: "http://localhost:8000/api/users/17",
                 },
               ],
@@ -834,7 +884,8 @@ const examsHandler = [
     }
   }),
   rest.get(`${baseUrl}/exams/:examId`, (req, res, ctx) => {
-    const { examId } = req.params;
+    let { examId } = req.params;
+    examId = Number(examId);
 
     switch (examId) {
       case 1:
@@ -845,12 +896,14 @@ const examsHandler = [
                 exam_id: 1,
                 exam_name: "Dolorum repellendus fuga nihil illo.",
                 needs_confirmation: false,
+                has_password: false,
                 start_of_exam: "2021-10-11 15:40:39",
                 end_of_exam: "2021-10-11 17:40:39",
                 total_score: 100,
                 creation_time: "2021-09-24T15:40:39.000000Z",
                 last_update: "2021-09-24T15:40:39.000000Z",
                 owner_id: 33,
+                owner_name: "Mrs. Alanna Bogan Jr.",
                 owner_link: "http://localhost:8000/api/users/33",
               },
             },
@@ -865,12 +918,14 @@ const examsHandler = [
                 exam_id: 2,
                 exam_name: "Natus ut magnam aut voluptatum dolores aut.",
                 needs_confirmation: true,
+                has_password: false,
                 start_of_exam: "2021-09-27 05:40:39",
                 end_of_exam: "2021-09-27 07:40:39",
                 total_score: 100,
                 creation_time: "2021-09-24T15:40:39.000000Z",
                 last_update: "2021-09-24T15:40:39.000000Z",
                 owner_id: 24,
+                owner_name: "Miss Isabell Boehm",
                 owner_link: "http://localhost:8000/api/users/24",
               },
             },
@@ -886,12 +941,14 @@ const examsHandler = [
                 exam_name:
                   "Consequatur optio dicta modi suscipit blanditiis fuga eligendi totam.",
                 needs_confirmation: true,
+                has_password: false,
                 start_of_exam: "2021-10-07 13:40:39",
                 end_of_exam: "2021-10-07 15:40:39",
                 total_score: 100,
                 creation_time: "2021-09-24T15:40:39.000000Z",
                 last_update: "2021-09-24T15:40:39.000000Z",
                 owner_id: 12,
+                owner_name: "Lauriane Hahn",
                 owner_link: "http://localhost:8000/api/users/12",
               },
             },
@@ -906,12 +963,14 @@ const examsHandler = [
                 exam_id: 4,
                 exam_name: "Quam rerum dicta nostrum doloribus facere.",
                 needs_confirmation: true,
+                has_password: false,
                 start_of_exam: "2021-10-06 18:40:39",
                 end_of_exam: "2021-10-06 20:40:39",
                 total_score: 100,
                 creation_time: "2021-09-24T15:40:39.000000Z",
                 last_update: "2021-09-24T15:40:39.000000Z",
                 owner_id: 20,
+                owner_name: "Hertha DuBuque",
                 owner_link: "http://localhost:8000/api/users/20",
               },
             },
