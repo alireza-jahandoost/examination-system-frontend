@@ -7,7 +7,6 @@ const examsHandler = [
   rest.get(`${baseUrl}/exams`, (req, res, ctx) => {
     const valueOfPage = req.url.searchParams.get("page");
     const page = Number(valueOfPage);
-    console.log(page, page === 2);
     switch (page) {
       case 1:
         return res(
