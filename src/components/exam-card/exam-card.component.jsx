@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShareAlt } from "@fortawesome/free-solid-svg-icons";
 import UserInfo from "../user-info/user-info.component";
 
-const ExamCard = ({ title, ...props }) => {
+const ExamCard = ({ title, handleMoreDetails, ...props }) => {
   return (
     <Card className="bg-light" {...props} style={{ height: 600 }}>
       <UserInfo />
@@ -16,7 +16,9 @@ const ExamCard = ({ title, ...props }) => {
         </Card.Text>
         <Row>
           <Col xs={6} className="d-flex justify-content-start">
-            <Button variant="secondary">register</Button>
+            <Button variant="secondary" onClick={handleMoreDetails}>
+              More Details
+            </Button>
           </Col>
           <Col xs={6} className="d-flex justify-content-end align-items-center">
             <Button variant="outline-secondary">

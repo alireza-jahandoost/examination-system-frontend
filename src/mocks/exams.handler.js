@@ -963,7 +963,7 @@ const examsHandler = [
                 exam_id: 4,
                 exam_name: "Quam rerum dicta nostrum doloribus facere.",
                 needs_confirmation: true,
-                has_password: false,
+                has_password: true,
                 start_of_exam: "2021-10-06 18:40:39",
                 end_of_exam: "2021-10-06 20:40:39",
                 total_score: 100,

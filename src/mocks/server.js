@@ -2,10 +2,11 @@
 
 import { setupServer } from "msw/node";
 
-import examsHandler from "./examsHandler";
+import examsHandler from "./exams.handler";
+import authenticationHandler from "./authentication.handler";
 
 // This configures a request mocking server with the given request handlers.
 
-const handlers = [...examsHandler];
+const handlers = [...examsHandler, ...authenticationHandler];
 
 export const server = setupServer(...handlers);
