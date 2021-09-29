@@ -6,6 +6,7 @@ import MobilePopover from "./mobile-popover.component";
 import axios from "axios";
 import urlRoutes from "../../constants/urlRoutes.constant";
 import { ExamTimeProvider } from "../../contexts/exam-time-context/exam-time.context";
+import Popover from "../popover/popover.component";
 
 const ExamDescription = ({ examId, onExamDescriptionClose }) => {
   const [exam, setExam] = useState(null);
@@ -29,16 +30,7 @@ const ExamDescription = ({ examId, onExamDescriptionClose }) => {
   }, [examId]);
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        width: "100%",
-        height: "100%",
-        top: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        zIndex: "10",
-      }}
-    >
+    <Popover onPopoverClose={onExamDescriptionClose}>
       {exam ? (
         isXLargeOrBigger ? (
           <ExamTimeProvider
@@ -66,7 +58,7 @@ const ExamDescription = ({ examId, onExamDescriptionClose }) => {
           <div>Loading...</div>
         </div>
       )}
-    </div>
+    </Popover>
   );
 };
 
