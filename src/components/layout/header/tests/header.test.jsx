@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen } from "../../../../test-utils/testing-library-utils";
 import Header from "../header.component";
 
 import { wrapWithWidth } from "../../../../utilities/tests.utility";
@@ -23,10 +23,10 @@ describe("check initial conditions", () => {
     const contactUsLink = screen.getByRole("link", { name: /contact us/i });
     expect(contactUsLink).toBeInTheDocument();
 
-    const loginLink = screen.getByRole("link", { name: /login/i });
+    const loginLink = screen.getByRole("button", { name: /login/i });
     expect(loginLink).toBeInTheDocument();
 
-    const registerLink = screen.getByRole("link", { name: /register/i });
+    const registerLink = screen.getByRole("button", { name: /register/i });
     expect(registerLink).toBeInTheDocument();
 
     const searchContainer = screen.getByRole("search");

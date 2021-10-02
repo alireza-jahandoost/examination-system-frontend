@@ -63,6 +63,7 @@ describe("check exams loadings", () => {
   );
 
   test("when all of the exams loaded, user mustn't see any Loading", async () => {
+    jest.setTimeout(6000);
     render(<Index />);
 
     const loading = screen.getByText(/loading.../i);
