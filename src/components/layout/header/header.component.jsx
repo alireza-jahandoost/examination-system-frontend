@@ -2,9 +2,8 @@ import { useState, useEffect, useContext } from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { useMediaQuery } from "react-responsive";
 import breakpoints from "../../../constants/breakpoints.constant";
-import Login from "../../authentication/login/login.component";
-import Popover from "../../popover/popover.component";
 import { AuthenticationContext } from "../../../contexts/authentication-context/authentication.context";
+import LoginPopover from "./login-popover.component";
 
 import Search from "./search.component";
 const Header = () => {
@@ -62,9 +61,7 @@ const Header = () => {
         </Container>
       </Navbar>
       {isLoginShown && (
-        <Popover onPopoverClose={() => setIsLoginShown(false)}>
-          <Login />
-        </Popover>
+        <LoginPopover onPopoverClose={() => setIsLoginShown(false)} />
       )}
     </div>
   );
