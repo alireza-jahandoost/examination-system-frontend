@@ -1,7 +1,7 @@
 import { Form } from "react-bootstrap";
 import "./text-input.styles.css";
 
-const TextInput = ({ type, label, placeholder, id, ...props }) => {
+const TextInput = ({ type, label, placeholder, id, error, ...props }) => {
   return (
     <Form.Group className="mb-3" controlId={id}>
       <Form.Control
@@ -12,6 +12,7 @@ const TextInput = ({ type, label, placeholder, id, ...props }) => {
         {...props}
         placeholder={placeholder}
       />
+      {error && <p>{error[0]}</p>}
     </Form.Group>
   );
 };
