@@ -9,9 +9,11 @@ export const AuthenticationProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [errors, setErrors] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const { createNotification } = useContext(NotificationContext);
 
   const login = async (email, password) => {
+    setIsLoading(true);
     return axios
       .post(
         urlRoutes["login"],
@@ -28,10 +30,12 @@ export const AuthenticationProvider = ({ children }) => {
         setToken(token);
         setErrors([]);
         createNotification("You logged in successfully", 3000);
+        setIsLoading(false);
         return true;
       })
       .catch((err) => {
         setErrors(["invalid email or password"]);
+        setIsLoading(false);
         return false;
       });
   };
@@ -39,7 +43,9 @@ export const AuthenticationProvider = ({ children }) => {
   const register = (email, password, confirmPassword) => {};
 
   return (
-    <AuthenticationContext.Provider value={{ user, login, register, errors }}>
+    <AuthenticationContext.Provider
+      value={{ user, login, register, errors, isLoading }}
+    >
       {children}
     </AuthenticationContext.Provider>
   );
