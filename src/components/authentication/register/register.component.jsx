@@ -25,7 +25,7 @@ const Register = () => {
                 <span className="text-uppercase">have an account? </span>
                 <button
                   onClick={() => changePopover("login")}
-                  className="text-uppercase text-decoration-none"
+                  className="text-uppercase text-decoration-none border-0 bg-transparent text-primary fst-italic"
                 >
                   sign in
                 </button>
