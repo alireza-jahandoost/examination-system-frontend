@@ -17,15 +17,9 @@ const LoginForm = ({ ...props }) => {
   return (
     <div {...props}>
       <div className="h-100 d-flex flex-column align-items-around justify-content-around">
-        {errors.length > 0 && (
-          <div>
-            {errors.map((error, idx) => (
-              <Alert variant="danger" key={`error-${idx}`}>
-                {error}
-              </Alert>
-            ))}
-          </div>
-        )}
+        <div>
+          {errors.message && <Alert variant="danger">{errors.message}</Alert>}
+        </div>
         <Form
           className="flex-fill d-flex flex-column justify-content-around align-items-around"
           onSubmit={handleSubmit}

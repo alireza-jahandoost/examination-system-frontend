@@ -28,13 +28,17 @@ export const AuthenticationProvider = ({ children }) => {
       .then(({ user, token }) => {
         setUser(user);
         setToken(token);
-        setErrors([]);
+        setErrors({});
         createNotification("You logged in successfully", 3000);
         setIsLoading(false);
         return true;
       })
       .catch((err) => {
-        setErrors(["invalid email or password"]);
+        const correntErrors = errors;
+        if (err.response?.data?.data?.message) {
+          correntErrors.message = err.response.data.data.message;
+        }
+        setErrors(correntErrors);
         setIsLoading(false);
         return false;
       });
@@ -66,7 +70,8 @@ export const AuthenticationProvider = ({ children }) => {
         setIsLoading(false);
         return true;
       })
-      .catch((err) => {
+      .catch((requestErrors) => {
+        const err = requestErrors.response.data;
         const correntErrors = { ...errors };
         if (err.message) {
           correntErrors.message = err.message;

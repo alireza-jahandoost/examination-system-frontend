@@ -18,7 +18,14 @@ const authenticationHandler = [
         })
       );
     } else {
-      return res(ctx.status(401));
+      return res(
+        ctx.status(401),
+        ctx.json({
+          data: {
+            message: "Invalid email or password",
+          },
+        })
+      );
     }
   }),
   rest.post(urlRoutes["register"], (req, res, ctx) => {
@@ -29,6 +36,7 @@ const authenticationHandler = [
       password === "1stStrongPassword"
     ) {
       return res(
+        ctx.status(201),
         ctx.json({
           data: {
             user: {
@@ -46,6 +54,7 @@ const authenticationHandler = [
       password === "1stStrongPassword"
     ) {
       return res(
+        ctx.status(422),
         ctx.json({
           message: "The given data was invalid.",
           errors: {
@@ -58,6 +67,7 @@ const authenticationHandler = [
       password !== password_confirmation
     ) {
       return res(
+        ctx.status(422),
         ctx.json({
           message: "The given data was invalid.",
           errors: {
@@ -71,6 +81,7 @@ const authenticationHandler = [
       password === "weak"
     ) {
       return res(
+        ctx.status(422),
         ctx.json({
           message: "The given data was invalid.",
           errors: {
@@ -85,6 +96,7 @@ const authenticationHandler = [
       password === "weak"
     ) {
       return res(
+        ctx.status(422),
         ctx.json({
           message: "The given data was invalid.",
           errors: {

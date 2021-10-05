@@ -72,9 +72,6 @@ test("user will see the errors if he/she's login was unsuccessful", async () => 
 
   userEvent.click(loginButton);
 
-  const textMessage = await screen.findByRole(
-    "alert",
-    /invalid email or password/i
-  );
+  const textMessage = await screen.findByText(/invalid email or password/i);
   expect(textMessage).toHaveClass("alert-danger");
 });
