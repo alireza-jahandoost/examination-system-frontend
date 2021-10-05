@@ -8,13 +8,7 @@ const Login = () => {
     <div className="h-100">
       <Row className="h-100 flex-column flex-md-row">
         <Col xs={12} md={6} lg={8}>
-          <Container
-            fluid
-            className="h-100"
-            style={{ backgroundColor: "#c2ebdb" }}
-          >
-            <AuthenticateHeader className="p-3 p-md-0 h-100" />
-          </Container>
+          <AuthenticateHeader />
         </Col>
         <Col className="order-md-first flex-fill" xs={12} md={6} lg={4}>
           <Container className="h-100 d-flex justify-content-around flex-column align-items-around">
