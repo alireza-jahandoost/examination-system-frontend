@@ -1,5 +1,5 @@
 import { Image, Row, Col } from "react-bootstrap";
-const LoginHeader = ({ ...props }) => {
+const AuthenticateHeader = ({ ...props }) => {
   return (
     <div {...props}>
       <Row className="d-flex flex-column justify-content-center align-items-center">
@@ -41,4 +41,4 @@ const LoginHeader = ({ ...props }) => {
   );
 };
 
-export default LoginHeader;
+export default AuthenticateHeader;

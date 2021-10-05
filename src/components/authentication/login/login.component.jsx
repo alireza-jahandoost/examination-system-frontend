@@ -1,6 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
 import LoginForm from "./login-form.component";
-import LoginHeader from "./login-header.component";
+import AuthenticateHeader from "../partials/authenticate-header.component";
 import Brand from "../../brand/brand.component";
 
 const Login = () => {
@@ -13,7 +13,7 @@ const Login = () => {
             className="h-100"
             style={{ backgroundColor: "#c2ebdb" }}
           >
-            <LoginHeader className="p-3 p-md-0 h-100" />
+            <AuthenticateHeader className="p-3 p-md-0 h-100" />
           </Container>
         </Col>
         <Col className="order-md-first flex-fill" xs={12} md={6} lg={4}>

@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Form, Alert } from "react-bootstrap";
-import TextInput from "./text-input.component";
-import AuthButton from "./auth-button.component";
+import TextInput from "../partials/text-input.component";
+import AuthButton from "../partials/auth-button.component";
 import { AuthenticationContext } from "../../../contexts/authentication-context/authentication.context";
 
 const LoginForm = ({ ...props }) => {
