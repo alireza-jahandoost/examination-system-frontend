@@ -4,17 +4,18 @@ import { useMediaQuery } from "react-responsive";
 import breakpoints from "../../../constants/breakpoints.constant";
 import { AuthenticationContext } from "../../../contexts/authentication-context/authentication.context";
 import LoginPopover from "./login-popover.component";
+import RegisterPopover from "./register-popover.component";
 
 import Search from "./search.component";
 const Header = () => {
-  const [isLoginShown, setIsLoginShown] = useState(false);
+  const [popover, setPopover] = useState("");
   const { user } = useContext(AuthenticationContext);
 
   useEffect(() => {
-    if (user && isLoginShown) {
-      setIsLoginShown(false);
+    if (user && popover !== "") {
+      setPopover("");
     }
-  }, [user, isLoginShown]);
+  }, [user, popover]);
 
   const isLargeOrBigger = useMediaQuery({ minWidth: breakpoints.lg });
   return (
@@ -45,13 +46,17 @@ const Header = () => {
               ) : (
                 <>
                   <Nav.Link
-                    onClick={() => setIsLoginShown(true)}
+                    onClick={() => setPopover("login")}
                     role="button"
                     title="see login popover"
                   >
                     Login
                   </Nav.Link>
-                  <Nav.Link role="button" title="see register popover">
+                  <Nav.Link
+                    onClick={() => setPopover("register")}
+                    role="button"
+                    title="see register popover"
+                  >
                     Register
                   </Nav.Link>
                 </>
@@ -60,8 +65,11 @@ const Header = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      {isLoginShown && (
-        <LoginPopover onPopoverClose={() => setIsLoginShown(false)} />
+      {popover === "login" && (
+        <LoginPopover onPopoverClose={() => setPopover("")} />
+      )}
+      {popover === "register" && (
+        <RegisterPopover onPopoverClose={() => setPopover("")} />
       )}
     </div>
   );
