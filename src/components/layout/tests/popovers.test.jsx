@@ -1,0 +1,252 @@
+import { render, screen } from "../../../test-utils/testing-library-utils";
+import userEvent from "@testing-library/user-event";
+import Layout from "../layout.component";
+import { wait } from "../../../utilities/tests.utility";
+
+describe("check errors of login and register don't have conflict", () => {
+  test("if user get error from login, he can close the popover and register to site", async () => {
+    render(<Layout />);
+
+    const registerButton = screen.getByRole("button", { name: /register/i });
+    const loginButton = screen.getByRole("button", { name: /login/i });
+
+    userEvent.click(loginButton);
+
+    //login fields
+    const loginEmailField = screen.getByRole("textbox", { name: /email/i });
+    const loginPasswordField = screen.getByLabelText(/password/i);
+
+    userEvent.clear(loginEmailField);
+    userEvent.clear(loginPasswordField);
+    userEvent.type(loginEmailField, "test@test.com");
+    userEvent.type(loginPasswordField, "wrongPassword");
+
+    const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
+    userEvent.click(loginSubmitButton);
+
+    const errorMessage = await screen.findByText(/invalid email or password/i);
+    expect(errorMessage).toBeInTheDocument();
+
+    const closeButton = screen.getByRole("button", { name: /close/i });
+    userEvent.click(closeButton);
+
+    userEvent.click(registerButton);
+
+    const nullErrorMessage = screen.queryByText(/invalid email or password/i);
+    expect(nullErrorMessage).not.toBeInTheDocument();
+
+    // register fields
+    const registerNameField = screen.getByRole("textbox", { name: /name/i });
+    const registerEmailField = screen.getByRole("textbox", { name: /email/i });
+    const registerPasswordField = screen.getAllByLabelText(/password/i)[0];
+    const registerConfirmPasswordField = screen.getByLabelText(
+      /confirm password/i
+    );
+
+    userEvent.clear(registerNameField);
+    userEvent.clear(registerEmailField);
+    userEvent.clear(registerPasswordField);
+    userEvent.clear(registerConfirmPasswordField);
+
+    userEvent.type(registerNameField, "test");
+    userEvent.type(registerEmailField, "test@test.com");
+    userEvent.type(registerPasswordField, "1stStrongPassword");
+    userEvent.type(registerConfirmPasswordField, "1stStrongPassword");
+
+    const registerSubmitButton = screen.getByRole("button", {
+      name: "REGISTER",
+    });
+    userEvent.click(registerSubmitButton);
+
+    const registerMessage = await screen.findByText(
+      /you registered successfully/i
+    );
+    expect(registerMessage).toBeInTheDocument();
+  });
+
+  test("if user see error in registration, he can close the registeration popover and login to the site", async () => {
+    render(<Layout />);
+
+    const registerButton = screen.getByRole("button", { name: /register/i });
+    const loginButton = screen.getByRole("button", { name: /login/i });
+
+    userEvent.click(registerButton);
+
+    // register fields
+    const registerNameField = screen.getByRole("textbox", { name: /name/i });
+    const registerEmailField = screen.getByRole("textbox", { name: /email/i });
+    const registerPasswordField = screen.getAllByLabelText(/password/i)[0];
+    const registerConfirmPasswordField = screen.getByLabelText(
+      /confirm password/i
+    );
+
+    userEvent.clear(registerNameField);
+    userEvent.clear(registerEmailField);
+    userEvent.clear(registerPasswordField);
+    userEvent.clear(registerConfirmPasswordField);
+
+    userEvent.type(registerNameField, "test");
+    userEvent.type(registerEmailField, "test@test.com");
+    userEvent.type(registerPasswordField, "weak");
+    userEvent.type(registerConfirmPasswordField, "weak");
+
+    const registerSubmitButton = screen.getByRole("button", {
+      name: "REGISTER",
+    });
+    userEvent.click(registerSubmitButton);
+
+    const errorMessage = await screen.findByText(
+      /the password must be at least 8 characters/i
+    );
+    expect(errorMessage).toBeInTheDocument();
+
+    const closeButton = screen.getByRole("button", { name: /close/i });
+
+    userEvent.click(closeButton);
+
+    userEvent.click(loginButton);
+
+    const nullErrorMessage = screen.queryByText(
+      /the password must be at least 8 characters/i
+    );
+    expect(nullErrorMessage).not.toBeInTheDocument();
+
+    //login fields
+    const loginEmailField = screen.getByRole("textbox", { name: /email/i });
+    const loginPasswordField = screen.getByLabelText(/password/i);
+
+    userEvent.clear(loginEmailField);
+    userEvent.clear(loginPasswordField);
+    userEvent.type(loginEmailField, "fkub@example.org");
+    userEvent.type(loginPasswordField, "password");
+
+    const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
+    userEvent.click(loginSubmitButton);
+
+    const loginMessage = await screen.findByText(/you logged in successfully/i);
+    expect(loginMessage).toBeInTheDocument();
+  });
+});
+
+describe("check user can move from login to register popover", () => {
+  test("user can go to register popover from login popover after he faced to an error and register", async () => {
+    render(<Layout />);
+
+    const loginButton = screen.getByRole("button", { name: /login/i });
+
+    userEvent.click(loginButton);
+
+    //login fields
+    const loginEmailField = screen.getByRole("textbox", { name: /email/i });
+    const loginPasswordField = screen.getByLabelText(/password/i);
+
+    userEvent.clear(loginEmailField);
+    userEvent.clear(loginPasswordField);
+    userEvent.type(loginEmailField, "test@test.com");
+    userEvent.type(loginPasswordField, "wrongPassword");
+
+    const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
+    userEvent.click(loginSubmitButton);
+
+    const errorMessage = await screen.findByText(/invalid email or password/i);
+    expect(errorMessage).toBeInTheDocument();
+
+    const registerPopoverButton = screen.getByRole("button", {
+      name: /sign up/i,
+    });
+    userEvent.click(registerPopoverButton);
+
+    const nullErrorMessage = screen.queryByText(/invalid email or password/i);
+    expect(nullErrorMessage).not.toBeInTheDocument();
+
+    // register fields
+    const registerNameField = screen.getByRole("textbox", { name: /name/i });
+    const registerEmailField = screen.getByRole("textbox", { name: /email/i });
+    const registerPasswordField = screen.getAllByLabelText(/password/i)[0];
+    const registerConfirmPasswordField = screen.getByLabelText(
+      /confirm password/i
+    );
+
+    userEvent.clear(registerNameField);
+    userEvent.clear(registerEmailField);
+    userEvent.clear(registerPasswordField);
+    userEvent.clear(registerConfirmPasswordField);
+
+    userEvent.type(registerNameField, "test");
+    userEvent.type(registerEmailField, "test@test.com");
+    userEvent.type(registerPasswordField, "1stStrongPassword");
+    userEvent.type(registerConfirmPasswordField, "1stStrongPassword");
+
+    const registerSubmitButton = screen.getByRole("button", {
+      name: "REGISTER",
+    });
+    userEvent.click(registerSubmitButton);
+
+    const registerMessage = await screen.findByText(
+      /you registered successfully/i
+    );
+    expect(registerMessage).toBeInTheDocument();
+  });
+});
+
+describe("check user can move from register to login popover", () => {
+  test("user can go to login popover from register popover after he faced to an error and login", async () => {
+    render(<Layout />);
+
+    const registerButton = screen.getByRole("button", { name: /register/i });
+    const loginButton = screen.getByRole("button", { name: /login/i });
+
+    userEvent.click(registerButton);
+
+    // register fields
+    const registerNameField = screen.getByRole("textbox", { name: /name/i });
+    const registerEmailField = screen.getByRole("textbox", { name: /email/i });
+    const registerPasswordField = screen.getAllByLabelText(/password/i)[0];
+    const registerConfirmPasswordField = screen.getByLabelText(
+      /confirm password/i
+    );
+
+    userEvent.clear(registerNameField);
+    userEvent.clear(registerEmailField);
+    userEvent.clear(registerPasswordField);
+    userEvent.clear(registerConfirmPasswordField);
+
+    userEvent.type(registerNameField, "test");
+    userEvent.type(registerEmailField, "test@test.com");
+    userEvent.type(registerPasswordField, "weak");
+    userEvent.type(registerConfirmPasswordField, "weak");
+
+    const registerSubmitButton = screen.getByRole("button", {
+      name: "REGISTER",
+    });
+    userEvent.click(registerSubmitButton);
+
+    const errorMessage = await screen.findByText(
+      /the password must be at least 8 characters/i
+    );
+    expect(errorMessage).toBeInTheDocument();
+
+    const loginPopoverButton = screen.getByRole("button", { name: /sign in/i });
+    userEvent.click(loginPopoverButton);
+
+    const nullErrorMessage = screen.queryByText(
+      /the password must be at least 8 characters/i
+    );
+    expect(nullErrorMessage).not.toBeInTheDocument();
+
+    //login fields
+    const loginEmailField = screen.getByRole("textbox", { name: /email/i });
+    const loginPasswordField = screen.getByLabelText(/password/i);
+
+    userEvent.clear(loginEmailField);
+    userEvent.clear(loginPasswordField);
+    userEvent.type(loginEmailField, "fkub@example.org");
+    userEvent.type(loginPasswordField, "password");
+
+    const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
+    userEvent.click(loginSubmitButton);
+
+    const loginMessage = await screen.findByText(/you logged in successfully/i);
+    expect(loginMessage).toBeInTheDocument();
+  });
+});

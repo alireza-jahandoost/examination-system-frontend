@@ -8,14 +8,13 @@ import RegisterPopover from "./register-popover.component";
 
 import Search from "./search.component";
 const Header = () => {
-  const [popover, setPopover] = useState("");
-  const { user } = useContext(AuthenticationContext);
+  const { user, popover, changePopover } = useContext(AuthenticationContext);
 
   useEffect(() => {
     if (user && popover !== "") {
-      setPopover("");
+      changePopover("");
     }
-  }, [user, popover]);
+  }, [user, popover, changePopover]);
 
   const isLargeOrBigger = useMediaQuery({ minWidth: breakpoints.lg });
   return (
@@ -46,14 +45,14 @@ const Header = () => {
               ) : (
                 <>
                   <Nav.Link
-                    onClick={() => setPopover("login")}
+                    onClick={() => changePopover("login")}
                     role="button"
                     title="see login popover"
                   >
                     Login
                   </Nav.Link>
                   <Nav.Link
-                    onClick={() => setPopover("register")}
+                    onClick={() => changePopover("register")}
                     role="button"
                     title="see register popover"
                   >
@@ -65,12 +64,8 @@ const Header = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      {popover === "login" && (
-        <LoginPopover onPopoverClose={() => setPopover("")} />
-      )}
-      {popover === "register" && (
-        <RegisterPopover onPopoverClose={() => setPopover("")} />
-      )}
+      {popover === "login" && <LoginPopover />}
+      {popover === "register" && <RegisterPopover />}
     </div>
   );
 };

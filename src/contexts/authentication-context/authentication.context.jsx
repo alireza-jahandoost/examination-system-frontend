@@ -10,7 +10,19 @@ export const AuthenticationProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [popover, setPopover] = useState("");
   const { createNotification } = useContext(NotificationContext);
+
+  const changePopover = (newPopover) => {
+    if (
+      newPopover !== "login" &&
+      newPopover !== "register" &&
+      newPopover !== ""
+    ) {
+      throw Error("popover is invalid");
+    }
+    setPopover(newPopover);
+  };
 
   const login = async (email, password) => {
     setIsLoading(true);
@@ -89,7 +101,15 @@ export const AuthenticationProvider = ({ children }) => {
 
   return (
     <AuthenticationContext.Provider
-      value={{ user, login, register, errors, isLoading }}
+      value={{
+        user,
+        login,
+        register,
+        errors,
+        isLoading,
+        popover,
+        changePopover,
+      }}
     >
       {children}
     </AuthenticationContext.Provider>

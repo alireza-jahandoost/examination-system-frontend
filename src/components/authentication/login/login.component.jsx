@@ -1,9 +1,12 @@
+import { useContext } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import LoginForm from "./login-form.component";
 import AuthenticateHeader from "../partials/authenticate-header.component";
 import Brand from "../../brand/brand.component";
+import { AuthenticationContext } from "../../../contexts/authentication-context/authentication.context";
 
 const Login = () => {
+  const { changePopover } = useContext(AuthenticationContext);
   return (
     <div className="h-100">
       <Row className="h-100 flex-column flex-md-row">
@@ -20,12 +23,12 @@ const Login = () => {
             <p style={{ flexGrow: 1 }} className="fw-light text-center">
               <small>
                 <span className="text-uppercase">dont have an account? </span>
-                <a
-                  href="#signUp"
+                <button
+                  onClick={() => changePopover("register")}
                   className="text-uppercase text-decoration-none"
                 >
                   sign up
-                </a>
+                </button>
               </small>
             </p>
           </Container>
