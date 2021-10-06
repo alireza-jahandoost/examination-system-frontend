@@ -3,10 +3,9 @@ import { useMediaQuery } from "react-responsive";
 import breakpoints from "../../constants/breakpoints.constant";
 import DesktopPopover from "./desktop-popover.component";
 import MobilePopover from "./mobile-popover.component";
-import axios from "axios";
-import urlRoutes from "../../constants/urlRoutes.constant";
 import { ExamTimeProvider } from "../../contexts/exam-time-context/exam-time.context";
 import Popover from "../popover/popover.component";
+import { examsShowRequest } from "../../services/exams/exams.service";
 
 const ExamDescription = ({ examId, onExamDescriptionClose }) => {
   const [exam, setExam] = useState(null);
@@ -16,8 +15,7 @@ const ExamDescription = ({ examId, onExamDescriptionClose }) => {
 
   useEffect(() => {
     let isCleaningStarted = false;
-    axios
-      .get(urlRoutes["exams.show"](examId))
+    examsShowRequest(examId)
       .then((response) => response.data.data)
       .then((data) => {
         if (!isCleaningStarted) {

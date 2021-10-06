@@ -1,7 +1,9 @@
 import { useState, createContext, useContext } from "react";
 import { NotificationContext } from "../notification-context/notification.context";
-import urlRoutes from "../../constants/urlRoutes.constant";
-import axios from "axios";
+import {
+  loginRequest,
+  registerRequest,
+} from "../../services/authentication/authentication.service";
 
 export const AuthenticationContext = createContext();
 
@@ -26,16 +28,7 @@ export const AuthenticationProvider = ({ children }) => {
 
   const login = async (email, password) => {
     setIsLoading(true);
-    return axios
-      .post(
-        urlRoutes["login"],
-        { email, password },
-        {
-          headers: {
-            accept: "application/json",
-          },
-        }
-      )
+    loginRequest(email, password)
       .then((response) => response.data.data)
       .then(({ user, token }) => {
         setUser(user);
@@ -58,16 +51,7 @@ export const AuthenticationProvider = ({ children }) => {
 
   const register = (name, email, password, password_confirmation) => {
     setIsLoading(true);
-    return axios
-      .post(
-        urlRoutes["register"],
-        { name, email, password, password_confirmation },
-        {
-          headers: {
-            accept: "application/json",
-          },
-        }
-      )
+    registerRequest(name, email, password, password_confirmation)
       .then((response) => {
         if (response.data.hasOwnProperty("errors")) {
           throw response.data;

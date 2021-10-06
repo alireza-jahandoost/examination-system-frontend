@@ -2,10 +2,8 @@ import { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Header from "./header.component";
 import Search from "./search.component";
-// import useInfiniteScroll from "../../../hooks/useInfiniteScroll";
 import useInfiniteScroll from "../../../hooks/useInfiniteScroll";
-import urlRoutes from "../../../constants/urlRoutes.constant";
-
+import { examsIndexRequest } from "../../../services/exams/exams.service";
 import ExamCard from "../../../components/exam-card/exam-card.component";
 import ExamDescription from "../../../components/exam-description/exam-description.component";
 
@@ -20,8 +18,8 @@ const ExamsIndex = () => {
   };
 
   const fetchExams = async () => {
-    const response = await fetch(urlRoutes["exams.index"](page));
-    const { data, meta } = await response.json();
+    const response = await examsIndexRequest(page);
+    const { data, meta } = await response.data;
     setIsFinished(meta.current_page === meta.last_page);
     setPage((prevPage) => prevPage + 1);
     setExams((prevExams) => [...prevExams, ...data.exams]);
