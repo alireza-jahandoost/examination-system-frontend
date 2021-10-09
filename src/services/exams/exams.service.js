@@ -13,5 +13,9 @@ export const examsIndexRequest = async (page) => {
 };
 
 export const examsShowRequest = async (examId) => {
-  return axios.get(urlRoutes["exams.show"](examId));
+  return axios.get(urlRoutes["exams.show"](examId), {
+    headers: {
+      accept: "application/json",
+    },
+  });
 };
