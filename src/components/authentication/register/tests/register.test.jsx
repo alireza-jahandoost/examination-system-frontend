@@ -65,6 +65,44 @@ test("user will see 'loading...' message in register button when request is pend
   expect(registerMessage).toHaveClass("alert-success");
 });
 
+test("user will not see 'loading...' message in register button when the response is received and it has errors", async () => {
+  render(<Register />);
+
+  const nameField = screen.getByRole("textbox", { name: /name/i });
+  const emailField = screen.getByRole("textbox", { name: /email address/i });
+  const passwordField = screen.getAllByLabelText(/password/i)[0];
+  const confirmPasswordField = screen.getByLabelText(/confirm password/i);
+
+  userEvent.clear(nameField);
+  userEvent.clear(emailField);
+  userEvent.clear(passwordField);
+  userEvent.clear(confirmPasswordField);
+
+  userEvent.type(nameField, "test");
+  userEvent.type(emailField, "test@test.com");
+  userEvent.type(passwordField, "weak");
+  userEvent.type(confirmPasswordField, "weak");
+
+  const registerButton = screen.getByRole("button", { name: /register/i });
+
+  userEvent.click(registerButton);
+
+  const changedRegisterButton = await screen.findByRole("button", {
+    name: /loading\.\.\./i,
+  });
+  expect(changedRegisterButton).toBeDisabled();
+
+  const errorMessage = await screen.findByText(
+    /the password must be at least 8 characters/i
+  );
+  expect(errorMessage).toBeInTheDocument();
+
+  const changedRegisterButtonToNormal = await screen.findByRole("button", {
+    name: "REGISTER",
+  });
+  expect(changedRegisterButtonToNormal).toBeInTheDocument();
+});
+
 test("user can register after he faced to error", async () => {
   render(<Register />);
 
