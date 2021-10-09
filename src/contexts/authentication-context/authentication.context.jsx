@@ -15,6 +15,12 @@ export const AuthenticationProvider = ({ children }) => {
   const [popover, setPopover] = useState("");
   const { createNotification } = useContext(NotificationContext);
 
+  const resetErrors = () => {
+    if (errors) {
+      setErrors({});
+    }
+  };
+
   const changePopover = (newPopover) => {
     if (
       newPopover !== "login" &&
@@ -93,6 +99,7 @@ export const AuthenticationProvider = ({ children }) => {
         isLoading,
         popover,
         changePopover,
+        resetErrors,
       }}
     >
       {children}

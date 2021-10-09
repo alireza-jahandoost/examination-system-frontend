@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Form, Alert } from "react-bootstrap";
 import TextInput from "../partials/text-input.component";
 import AuthButton from "../partials/auth-button.component";
@@ -7,7 +7,11 @@ import { AuthenticationContext } from "../../../contexts/authentication-context/
 const LoginForm = ({ ...props }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, errors } = useContext(AuthenticationContext);
+  const { login, errors, resetErrors } = useContext(AuthenticationContext);
+
+  useEffect(() => {
+    return () => resetErrors();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
