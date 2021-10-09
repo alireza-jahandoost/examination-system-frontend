@@ -905,6 +905,7 @@ const examsHandler = [
                 owner_id: 33,
                 owner_name: "Mrs. Alanna Bogan Jr.",
                 owner_link: "http://localhost:8000/api/users/33",
+                is_registered: true,
               },
             },
           })
@@ -927,6 +928,7 @@ const examsHandler = [
                 owner_id: 24,
                 owner_name: "Miss Isabell Boehm",
                 owner_link: "http://localhost:8000/api/users/24",
+                is_registered: false,
               },
             },
           })
@@ -950,6 +952,7 @@ const examsHandler = [
                 owner_id: 12,
                 owner_name: "Lauriane Hahn",
                 owner_link: "http://localhost:8000/api/users/12",
+                is_registered: false,
               },
             },
           })
@@ -972,6 +975,7 @@ const examsHandler = [
                 owner_id: 20,
                 owner_name: "Hertha DuBuque",
                 owner_link: "http://localhost:8000/api/users/20",
+                is_registered: false,
               },
             },
           })
