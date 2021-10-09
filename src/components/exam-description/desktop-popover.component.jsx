@@ -3,11 +3,16 @@ import { Button, Row, Col, Container, Form } from "react-bootstrap";
 import UserInfo from "../user-info/user-info.component";
 import ExamTime from "./exam-time.component";
 import PasswordInput from "./password-input.component";
-import { ExamTimeContext } from "../../contexts/exam-time-context/exam-time.context";
+import { ExamInfoContext } from "../../contexts/exam-info-context/exam-info.context";
+import ExamDescriptionLoading from "./exam-description-loading.component";
 
-const DesktopPopover = ({ exam }) => {
-  const { canUserRegister } = useContext(ExamTimeContext);
+const DesktopPopover = () => {
+  const { canUserRegister, exam } = useContext(ExamInfoContext);
   const isPasswordRequired = exam ? exam.has_password : false;
+
+  if (!exam) {
+    return <ExamDescriptionLoading />;
+  }
 
   return (
     <div className="d-flex justify-content-center align-items-center w-100 h-100">

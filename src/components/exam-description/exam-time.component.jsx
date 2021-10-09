@@ -1,12 +1,13 @@
 import { useContext, useMemo } from "react";
 import { Col, Row } from "react-bootstrap";
-import { ExamTimeContext } from "../../contexts/exam-time-context/exam-time.context";
+import { ExamInfoContext } from "../../contexts/exam-info-context/exam-info.context";
 import {
   standardTime,
   convertObjectToString,
 } from "../../utilities/dateAndTime.utility";
 
 const ExamTime = ({ color, fontSize }) => {
+  const { examTime } = useContext(ExamInfoContext);
   const {
     isExamStarted,
     examTimeDuration,
@@ -15,7 +16,7 @@ const ExamTime = ({ color, fontSize }) => {
     minutes,
     hours,
     days,
-  } = useContext(ExamTimeContext);
+  } = examTime;
 
   const message = isExamFinished
     ? "Exam is over"

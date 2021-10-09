@@ -1,21 +1,42 @@
-import { createContext, useMemo } from "react";
+import { useEffect, useState, createContext, useMemo } from "react";
 import useRemainingTime from "../../hooks/useRemainingTime";
+import { examsShowRequest } from "../../services/exams/exams.service";
 
 import {
   convertDateTimeToObject,
   convertSecondsToObject,
 } from "../../utilities/dateAndTime.utility";
 
-export const ExamTimeContext = createContext();
+export const ExamInfoContext = createContext();
 
-export const ExamTimeProvider = ({ children, startTime, endTime }) => {
+export const ExamInfoProvider = ({ children, examId }) => {
+  const [exam, setExam] = useState(null);
+  useEffect(() => {
+    let isCleaningStarted = false;
+    examsShowRequest(examId)
+      .then((response) => response.data.data)
+      .then((data) => {
+        if (!isCleaningStarted) {
+          setExam(data.exam);
+        }
+      });
+    return () => {
+      isCleaningStarted = true;
+    };
+  }, [examId]);
   const startOfExam = useMemo(
-    () => new Date(convertDateTimeToObject(startTime).timestamp),
-    [startTime]
+    () =>
+      exam
+        ? new Date(convertDateTimeToObject(exam?.start_of_exam).timestamp)
+        : null,
+    [exam]
   );
   const endOfExam = useMemo(
-    () => new Date(convertDateTimeToObject(endTime).timestamp),
-    [endTime]
+    () =>
+      exam
+        ? new Date(convertDateTimeToObject(exam?.end_of_exam).timestamp)
+        : null,
+    [exam]
   );
 
   const timeToStart = useRemainingTime(new Date(), startOfExam);
@@ -32,17 +53,16 @@ export const ExamTimeProvider = ({ children, startTime, endTime }) => {
   }, [isExamStarted]);
 
   const examTimeDuration = useMemo(() => {
-    const duration = Math.floor(
-      (endOfExam.getTime() - startOfExam.getTime()) / 1000
-    );
+    const duration = startOfExam
+      ? Math.floor((endOfExam.getTime() - startOfExam.getTime()) / 1000)
+      : 0;
     return convertSecondsToObject(duration);
   }, [endOfExam, startOfExam]);
 
-  const value = {
+  const examTime = {
     isExamStarted,
     isExamFinished,
     examTimeDuration,
-    canUserRegister,
     seconds: isExamStarted
       ? isExamFinished
         ? 0
@@ -66,8 +86,14 @@ export const ExamTimeProvider = ({ children, startTime, endTime }) => {
   };
 
   return (
-    <ExamTimeContext.Provider value={value}>
+    <ExamInfoContext.Provider
+      value={{
+        examTime,
+        canUserRegister,
+        exam,
+      }}
+    >
       {children}
-    </ExamTimeContext.Provider>
+    </ExamInfoContext.Provider>
   );
 };

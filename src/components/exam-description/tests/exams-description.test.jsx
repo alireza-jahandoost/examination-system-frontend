@@ -5,17 +5,28 @@ import {
   wait,
   asignExamShowStartAndEnd,
 } from "../../../utilities/tests.utility";
+import { ExamInfoProvider } from "../../../contexts/exam-info-context/exam-info.context";
 
 describe("test password field", () => {
   test("if exam requires password, password field must be shwon in Desktop", async () => {
-    render(wrapWithWidth(<ExamDescription examId={4} />, 1200));
+    const Element = (
+      <ExamInfoProvider examId={4}>
+        {wrapWithWidth(<ExamDescription />, 1200)}
+      </ExamInfoProvider>
+    );
+    render(Element);
 
     const passwordInput = await screen.findByLabelText(/exam password/i);
     expect(passwordInput).toBeInTheDocument();
   });
 
   test("if exam doesn't require password, password field must be shwon in Desktop", async () => {
-    render(wrapWithWidth(<ExamDescription examId={1} />, 1200));
+    const Element = (
+      <ExamInfoProvider examId={1}>
+        {wrapWithWidth(<ExamDescription />, 1200)}
+      </ExamInfoProvider>
+    );
+    render(Element);
 
     await wait(200);
 
@@ -24,14 +35,24 @@ describe("test password field", () => {
   });
 
   test("if exam requires password, password field must be shwon in Mobile", async () => {
-    render(wrapWithWidth(<ExamDescription examId={4} />, 800));
+    const Element = (
+      <ExamInfoProvider examId={4}>
+        {wrapWithWidth(<ExamDescription />, 800)}
+      </ExamInfoProvider>
+    );
+    render(Element);
 
     const passwordInput = await screen.findByLabelText(/exam password/i);
     expect(passwordInput).toBeInTheDocument();
   });
 
   test("if exam doesn't require password, password field must be shwon in Mobile", async () => {
-    render(wrapWithWidth(<ExamDescription examId={1} />, 800));
+    const Element = (
+      <ExamInfoProvider examId={1}>
+        {wrapWithWidth(<ExamDescription />, 800)}
+      </ExamInfoProvider>
+    );
+    render(Element);
 
     await wait(200);
 
@@ -47,7 +68,12 @@ describe("check countdown field on Desktop", () => {
       new Date(Date.now() - 5000),
       new Date(Date.now() + 3600 * 1000)
     );
-    render(wrapWithWidth(<ExamDescription examId={1} />, 1300));
+    const Element = (
+      <ExamInfoProvider examId={1}>
+        {wrapWithWidth(<ExamDescription />, 1300)}
+      </ExamInfoProvider>
+    );
+    render(Element);
 
     const examTime = await screen.findByText(/exam is running/i);
     expect(examTime).toBeInTheDocument();
@@ -58,7 +84,12 @@ describe("check countdown field on Desktop", () => {
       new Date(Date.now() + 5000),
       new Date(Date.now() + 3600 * 1000)
     );
-    render(wrapWithWidth(<ExamDescription examId={1} />, 1300));
+    const Element = (
+      <ExamInfoProvider examId={1}>
+        {wrapWithWidth(<ExamDescription />, 1300)}
+      </ExamInfoProvider>
+    );
+    render(Element);
 
     const examTime = await screen.findByText(/until start/i);
     expect(examTime).toBeInTheDocument();
@@ -69,7 +100,12 @@ describe("check countdown field on Desktop", () => {
       new Date(Date.now() - 3600 * 5000),
       new Date(Date.now() - 3600 * 1000)
     );
-    render(wrapWithWidth(<ExamDescription examId={1} />, 1300));
+    const Element = (
+      <ExamInfoProvider examId={1}>
+        {wrapWithWidth(<ExamDescription />, 1300)}
+      </ExamInfoProvider>
+    );
+    render(Element);
 
     const examTime = await screen.findByText(/exam is over/i);
     expect(examTime).toBeInTheDocument();
@@ -83,7 +119,12 @@ describe("check countdown field on mobile", () => {
       new Date(Date.now() - 5000),
       new Date(Date.now() + 3600 * 1000)
     );
-    render(wrapWithWidth(<ExamDescription examId={1} />, 600));
+    const Element = (
+      <ExamInfoProvider examId={1}>
+        {wrapWithWidth(<ExamDescription />, 600)}
+      </ExamInfoProvider>
+    );
+    render(Element);
 
     const examTime = await screen.findByText(/exam is running/i);
     expect(examTime).toBeInTheDocument();
@@ -94,7 +135,12 @@ describe("check countdown field on mobile", () => {
       new Date(Date.now() + 5000),
       new Date(Date.now() + 3600 * 1000)
     );
-    render(wrapWithWidth(<ExamDescription examId={1} />, 600));
+    const Element = (
+      <ExamInfoProvider examId={1}>
+        {wrapWithWidth(<ExamDescription />, 600)}
+      </ExamInfoProvider>
+    );
+    render(Element);
 
     const examTime = await screen.findByText(/until start/i);
     expect(examTime).toBeInTheDocument();
@@ -105,7 +151,12 @@ describe("check countdown field on mobile", () => {
       new Date(Date.now() - 3600 * 5000),
       new Date(Date.now() - 3600 * 1000)
     );
-    render(wrapWithWidth(<ExamDescription examId={1} />, 600));
+    const Element = (
+      <ExamInfoProvider examId={1}>
+        {wrapWithWidth(<ExamDescription />, 600)}
+      </ExamInfoProvider>
+    );
+    render(Element);
 
     const examTime = await screen.findByText(/exam is over/i);
     expect(examTime).toBeInTheDocument();
@@ -119,7 +170,12 @@ describe("check that the register button", () => {
       new Date(Date.now() - 3600 * 5000),
       new Date(Date.now() - 3600 * 1000)
     );
-    render(wrapWithWidth(<ExamDescription examId={1} />, 1300));
+    const Element = (
+      <ExamInfoProvider examId={1}>
+        {wrapWithWidth(<ExamDescription />, 1300)}
+      </ExamInfoProvider>
+    );
+    render(Element);
 
     const registerButton = await screen.findByRole("button", {
       name: /register/i,
@@ -132,7 +188,12 @@ describe("check that the register button", () => {
       new Date(Date.now() - 3600 * 5000),
       new Date(Date.now() - 3600 * 1000)
     );
-    render(wrapWithWidth(<ExamDescription examId={1} />, 800));
+    const Element = (
+      <ExamInfoProvider examId={1}>
+        {wrapWithWidth(<ExamDescription />, 800)}
+      </ExamInfoProvider>
+    );
+    render(Element);
 
     const registerButton = await screen.findByRole("button", {
       name: /register/i,
@@ -148,7 +209,12 @@ describe("check duration of exam for Desktop", () => {
       new Date(Date.now() + 2000),
       new Date(Date.now() + 2000 + 94380 * 1000)
     );
-    render(wrapWithWidth(<ExamDescription examId={1} />, 1300));
+    const Element = (
+      <ExamInfoProvider examId={1}>
+        {wrapWithWidth(<ExamDescription />, 1300)}
+      </ExamInfoProvider>
+    );
+    render(Element);
 
     const duration = await screen.findByText(/duration:/i);
     expect(duration).toHaveTextContent("1:02:13:00");
@@ -166,7 +232,12 @@ describe("check duration of exam for Mobile", () => {
       new Date(Date.now() + 2000),
       new Date(Date.now() + 2000 + 94380 * 1000)
     );
-    render(wrapWithWidth(<ExamDescription examId={1} />, 800));
+    const Element = (
+      <ExamInfoProvider examId={1}>
+        {wrapWithWidth(<ExamDescription />, 800)}
+      </ExamInfoProvider>
+    );
+    render(Element);
 
     const duration = await screen.findByText(/duration:/i);
     expect(duration).toHaveTextContent("1:02:13:00");

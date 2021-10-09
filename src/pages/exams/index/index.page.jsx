@@ -6,6 +6,7 @@ import useInfiniteScroll from "../../../hooks/useInfiniteScroll";
 import { examsIndexRequest } from "../../../services/exams/exams.service";
 import ExamCard from "../../../components/exam-card/exam-card.component";
 import ExamDescription from "../../../components/exam-description/exam-description.component";
+import { ExamInfoProvider } from "../../../contexts/exam-info-context/exam-info.context";
 
 const ExamsIndex = () => {
   const [exams, setExams] = useState([]);
@@ -61,10 +62,9 @@ const ExamsIndex = () => {
         </Container>
       </div>
       {shownExamId !== -1 && (
-        <ExamDescription
-          examId={shownExamId}
-          onExamDescriptionClose={onExamDescriptionClose}
-        />
+        <ExamInfoProvider examId={shownExamId}>
+          <ExamDescription onExamDescriptionClose={onExamDescriptionClose} />
+        </ExamInfoProvider>
       )}
     </>
   );
