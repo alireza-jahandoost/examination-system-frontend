@@ -1,4 +1,9 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+} from "../../../../test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
 
 import { wait, wrapWithWidth } from "../../../../utilities/tests.utility";

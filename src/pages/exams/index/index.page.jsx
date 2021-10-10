@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Header from "./header.component";
 import Search from "./search.component";

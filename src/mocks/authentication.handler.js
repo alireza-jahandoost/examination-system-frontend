@@ -13,7 +13,7 @@ const authenticationHandler = [
               name: "Ms. Mazie Doyle",
               email: "fkub@example.org",
             },
-            token: "1|5oJJWKCFo2GbfLe4DIDIw0ynESMcKBh50wPbUuZG",
+            token: "authorizationToken",
           },
         })
       );
@@ -44,7 +44,7 @@ const authenticationHandler = [
               name: "test",
               email: "test@test.com",
             },
-            token: "35|Uf1yen4tOgDAldua7JZvtc67Y7ryogQj8Y297shJ",
+            token: "authorizationToken",
           },
         })
       );

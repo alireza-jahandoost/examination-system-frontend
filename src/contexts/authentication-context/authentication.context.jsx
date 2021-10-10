@@ -1,4 +1,4 @@
-import { useState, createContext, useContext } from "react";
+import { useState, createContext, useEffect, useContext } from "react";
 import { NotificationContext } from "../notification-context/notification.context";
 import {
   loginRequest,
@@ -9,11 +9,25 @@ export const AuthenticationContext = createContext();
 
 export const AuthenticationProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
   const [token, setToken] = useState(null);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [popover, setPopover] = useState("");
   const { createNotification } = useContext(NotificationContext);
+
+  useEffect(() => {
+    if (user) {
+      setIsUserAuthenticated(true);
+    } else {
+      setIsUserAuthenticated(false);
+      setToken(null);
+    }
+  }, [user]);
+
+  const showUserLoginPopover = () => {
+    setPopover("login");
+  };
 
   const resetErrors = () => {
     if (errors) {
@@ -100,6 +114,9 @@ export const AuthenticationProvider = ({ children }) => {
         popover,
         changePopover,
         resetErrors,
+        token,
+        isUserAuthenticated,
+        showUserLoginPopover,
       }}
     >
       {children}

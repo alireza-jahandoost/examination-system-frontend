@@ -6,7 +6,7 @@ import { AuthenticationContext } from "../../../contexts/authentication-context/
 const LoginPopover = () => {
   const { changePopover } = useContext(AuthenticationContext);
   return (
-    <Popover onPopoverClose={() => changePopover("")}>
+    <Popover zIndex={20} onPopoverClose={() => changePopover("")}>
       <div className="d-flex h-100 w-100 justify-content-center align-items-center">
         <div
           style={{ width: "min(80%, 1080px)", height: "70%" }}

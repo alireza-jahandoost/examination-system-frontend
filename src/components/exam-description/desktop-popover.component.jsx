@@ -1,13 +1,14 @@
 import { useContext } from "react";
-import { Button, Row, Col, Container, Form } from "react-bootstrap";
+import { Row, Col, Container, Form } from "react-bootstrap";
 import UserInfo from "../user-info/user-info.component";
 import ExamTime from "./exam-time.component";
 import PasswordInput from "./password-input.component";
 import { ExamInfoContext } from "../../contexts/exam-info-context/exam-info.context";
 import ExamDescriptionLoading from "./exam-description-loading.component";
+import RegisterToExamButton from "./register-to-exam-button.component";
 
 const DesktopPopover = () => {
-  const { canUserRegister, exam } = useContext(ExamInfoContext);
+  const { exam, isUserRegisteredToExam } = useContext(ExamInfoContext);
   const isPasswordRequired = exam ? exam.has_password : false;
 
   if (!exam) {
@@ -76,14 +77,14 @@ const DesktopPopover = () => {
                 xs="3"
                 className="d-flex align-items-center justify-content-center"
               >
-                <Button
-                  variant="light"
-                  className="w-75 py-3 text-success rounded-pill"
-                  type="submit"
-                  disabled={!canUserRegister}
-                >
-                  Register
-                </Button>
+                {isUserRegisteredToExam ? (
+                  <p>Registered</p>
+                ) : (
+                  <RegisterToExamButton
+                    variant="light"
+                    className="w-75 py-3 text-success rounded-pill"
+                  />
+                )}
               </Col>
             </Form>
           </Container>

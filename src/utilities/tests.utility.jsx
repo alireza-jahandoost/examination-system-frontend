@@ -2,7 +2,7 @@ import { Context as ResponsiveContext } from "react-responsive";
 import { act } from "@testing-library/react";
 import { rest } from "msw";
 
-import { server } from "../mocks/server";
+import { server, handlers } from "../mocks/server";
 import urlRoutes from "../constants/urlRoutes.constant";
 import "../mocks/server";
 
@@ -31,7 +31,12 @@ export const wait = (time) =>
 
   operation: reset the handler with these times for this exam
    */
-export const asignExamShowStartAndEnd = (examId, start, end) => {
+export const asignExamShowStartAndEnd = (
+  examId,
+  start,
+  end,
+  hasPassword = false
+) => {
   const formatted_start_date =
     start.getFullYear() +
     "-" +
@@ -59,7 +64,7 @@ export const asignExamShowStartAndEnd = (examId, start, end) => {
     end.getSeconds();
 
   server.resetHandlers(
-    rest.get(urlRoutes["exams.show"](1), (req, res, ctx) => {
+    rest.get(urlRoutes["exams.show"](examId), (req, res, ctx) => {
       return res(
         ctx.json({
           data: {
@@ -67,7 +72,7 @@ export const asignExamShowStartAndEnd = (examId, start, end) => {
               exam_id: 1,
               exam_name: "Dolorum repellendus fuga nihil illo.",
               needs_confirmation: false,
-              has_password: false,
+              has_password: hasPassword,
               start_of_exam: formatted_start_date,
               end_of_exam: formatted_end_date,
               total_score: 100,
@@ -76,10 +81,12 @@ export const asignExamShowStartAndEnd = (examId, start, end) => {
               owner_id: 33,
               owner_name: "Mrs. Alanna Bogan Jr.",
               owner_link: "http://localhost:8000/api/users/33",
+              is_registered: false,
             },
           },
         })
       );
-    })
+    }),
+    ...handlers
   );
 };

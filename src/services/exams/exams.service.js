@@ -12,10 +12,14 @@ export const examsIndexRequest = async (page) => {
   });
 };
 
-export const examsShowRequest = async (examId) => {
+export const examsShowRequest = async (examId, token = "") => {
+  const hdrs = {
+    accept: "application/json",
+  };
+  if (token) {
+    hdrs.authorization = `Bearer ${token}`;
+  }
   return axios.get(urlRoutes["exams.show"](examId), {
-    headers: {
-      accept: "application/json",
-    },
+    headers: hdrs,
   });
 };

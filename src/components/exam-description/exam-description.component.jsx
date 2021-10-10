@@ -4,7 +4,7 @@ import DesktopPopover from "./desktop-popover.component";
 import MobilePopover from "./mobile-popover.component";
 import Popover from "../popover/popover.component";
 
-const ExamDescription = ({ examId, onExamDescriptionClose }) => {
+const ExamDescription = ({ onExamDescriptionClose }) => {
   const isXLargeOrBigger = useMediaQuery({
     query: `(min-width: ${breakpoints.xl}px)`,
   });

@@ -1,6 +1,6 @@
 import CloseButton from "react-bootstrap/CloseButton";
 
-const Popover = ({ onPopoverClose, children }) => {
+const Popover = ({ onPopoverClose, children, zIndex = 10 }) => {
   return (
     <div
       style={{
@@ -9,7 +9,7 @@ const Popover = ({ onPopoverClose, children }) => {
         height: "100%",
         top: 0,
         backgroundColor: "rgba(0, 0, 0, 0.5)",
-        zIndex: "10",
+        zIndex: zIndex,
       }}
     >
       <CloseButton
