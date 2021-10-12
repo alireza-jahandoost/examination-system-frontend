@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Header from "./header.component";
 import Search from "./search.component";
@@ -7,12 +7,14 @@ import { examsIndexRequest } from "../../../services/exams/exams.service";
 import ExamCard from "../../../components/exam-card/exam-card.component";
 import ExamDescription from "../../../components/exam-description/exam-description.component";
 import { ExamInfoProvider } from "../../../contexts/exam-info-context/exam-info.context";
+import { useMountedState } from "react-use";
 
 const ExamsIndex = () => {
   const [exams, setExams] = useState([]);
   const [page, setPage] = useState(1);
   const [isFinished, setIsFinished] = useState(false);
   const [shownExamId, setShownExamId] = useState(-1);
+  const isMounted = useMountedState();
 
   const onExamDescriptionClose = () => {
     setShownExamId(-1);
@@ -21,10 +23,12 @@ const ExamsIndex = () => {
   const fetchExams = async () => {
     const response = await examsIndexRequest(page);
     const { data, meta } = await response.data;
-    setIsFinished(meta.current_page === meta.last_page);
-    setPage((prevPage) => prevPage + 1);
-    setExams((prevExams) => [...prevExams, ...data.exams]);
-    setIsFetching(false);
+    if (isMounted()) {
+      setIsFinished(meta.current_page === meta.last_page);
+      setPage((prevPage) => prevPage + 1);
+      setExams((prevExams) => [...prevExams, ...data.exams]);
+      setIsFetching(false);
+    }
   };
 
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchExams, isFinished);

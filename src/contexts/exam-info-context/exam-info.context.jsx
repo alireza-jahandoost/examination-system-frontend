@@ -3,6 +3,7 @@ import useRemainingTime from "../../hooks/useRemainingTime";
 import { examsShowRequest } from "../../services/exams/exams.service";
 import { AuthenticationContext } from "../authentication-context/authentication.context";
 import { NotificationContext } from "../notification-context/notification.context";
+import { useMountedState } from "react-use";
 
 import {
   convertDateTimeToObject,
@@ -22,20 +23,17 @@ export const ExamInfoProvider = ({ children, examId }) => {
   const [examPassword, setExamPassword] = useState("");
   const [isUserRegisteredToExam, setIsUserRegisteredToExam] = useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
+  const isMounted = useMountedState();
   useEffect(() => {
-    let isCleaningStarted = false;
     examsShowRequest(examId, token)
       .then((response) => response.data.data)
       .then((data) => {
-        if (!isCleaningStarted) {
+        if (isMounted()) {
           setExam(data.exam);
           setIsUserRegisteredToExam(data.exam.is_registered);
         }
       });
-    return () => {
-      isCleaningStarted = true;
-    };
-  }, [examId]);
+  }, [examId, isMounted, token]);
 
   useEffect(() => {
     if (isUserRegisteredToExam) {

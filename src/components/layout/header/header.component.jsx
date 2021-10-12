@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { useMediaQuery } from "react-responsive";
 import breakpoints from "../../../constants/breakpoints.constant";

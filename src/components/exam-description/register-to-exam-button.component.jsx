@@ -4,13 +4,6 @@ import { ExamInfoContext } from "../../contexts/exam-info-context/exam-info.cont
 
 const RegisterToExamButton = ({ ...props }) => {
   const { exam, canUserRegister, registerToExam } = useContext(ExamInfoContext);
-  if (canUserRegister !== true && canUserRegister !== false) {
-    console.log(
-      "we have an issue here",
-      typeof canUserRegister,
-      canUserRegister
-    );
-  }
   return (
     <Button
       {...props}

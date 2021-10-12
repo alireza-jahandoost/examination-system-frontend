@@ -1,19 +1,19 @@
 import { createContext, useState, useEffect } from "react";
 import NotificationAlert from "../../components/notification-alert/notification-alert.component";
+import { useMountedState } from "react-use";
 
 export const NotificationContext = createContext();
 
 export const NotificationProvider = ({ children }) => {
   const [notification, setNotification] = useState(null);
+  const isMounted = useMountedState();
   useEffect(() => {
-    let isCleanupStated = false;
     if (notification) {
       setTimeout(() => {
-        if (!isCleanupStated) setNotification(null);
+        if (isMounted()) setNotification(null);
       }, notification.time);
     }
-    return () => (isCleanupStated = true);
-  }, [notification]);
+  }, [notification, isMounted]);
 
   const createNotification = (message, time) => {
     setNotification({ message, time });
