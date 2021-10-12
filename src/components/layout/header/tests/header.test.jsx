@@ -5,7 +5,7 @@ import { wrapWithWidth } from "../../../../utilities/tests.utility";
 import breakpoints from "../../../../constants/breakpoints.constant";
 
 describe("check initial conditions", () => {
-  test("in size less than large, header will contain brand, exams, about us, contact us, login, register and search", () => {
+  test("in size less than large, header will contain brand, exams, about us, contact us, login, register", () => {
     render(wrapWithWidth(<Header />, breakpoints.lg - 1));
 
     const brandContainer = screen.getByRole("banner");
@@ -28,8 +28,5 @@ describe("check initial conditions", () => {
 
     const registerLink = screen.getByRole("button", { name: /register/i });
     expect(registerLink).toBeInTheDocument();
-
-    const searchContainer = screen.getByRole("search");
-    expect(searchContainer).toBeInTheDocument();
   });
 });

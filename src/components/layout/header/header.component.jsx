@@ -1,12 +1,10 @@
 import { useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
 import { Navbar, Container, Nav } from "react-bootstrap";
-import { useMediaQuery } from "react-responsive";
-import breakpoints from "../../../constants/breakpoints.constant";
 import { AuthenticationContext } from "../../../contexts/authentication-context/authentication.context";
 import LoginPopover from "./login-popover.component";
 import RegisterPopover from "./register-popover.component";
 
-import Search from "./search.component";
 const Header = () => {
   const { user, popover, changePopover } = useContext(AuthenticationContext);
 
@@ -16,30 +14,34 @@ const Header = () => {
     }
   }, [user, popover, changePopover]);
 
-  const isLargeOrBigger = useMediaQuery({ minWidth: breakpoints.lg });
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
           <div role="banner">
-            <Navbar.Brand title="Visit the main page" href="#home">
+            <Navbar.Brand as={Link} title="Visit the main page" to="/">
               React-Bootstrap
             </Navbar.Brand>
           </div>
-          {!isLargeOrBigger && <Search className="ms-auto me-2" />}
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#exams">Exams</Nav.Link>
-              <Nav.Link href="#about-us">About us</Nav.Link>
-              <Nav.Link href="#contact-us">Contact us</Nav.Link>
+              <Nav.Link as={Link} to="/exams">
+                Exams
+              </Nav.Link>
+              <Nav.Link as={Link} to="about-us" href="#about-us">
+                About us
+              </Nav.Link>
+              <Nav.Link as={Link} to="/contact-us" href="#contact-us">
+                Contact us
+              </Nav.Link>
             </Nav>
             <Nav>
-              {isLargeOrBigger && <Search className="ms-auto me-2" />}
-
               {user ? (
                 <>
-                  <Nav.Link href="#profile">Profile</Nav.Link>
+                  <Nav.Link as={Link} to="/profile" href="#profile">
+                    Profile
+                  </Nav.Link>
                   <Nav.Link role="button">Logout</Nav.Link>
                 </>
               ) : (
