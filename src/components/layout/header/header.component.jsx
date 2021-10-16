@@ -15,8 +15,8 @@ const Header = () => {
   }, [user, popover, changePopover]);
 
   return (
-    <div>
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <div style={{ paddingBottom: "56px" }}>
+      <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
           <div role="banner">
             <Navbar.Brand as={Link} title="Visit the main page" to="/">

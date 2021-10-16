@@ -1,0 +1,15 @@
+button.sidebar-item {
+  background-color: inherit;
+  border: 0;
+}
+
+.sidebar-item:hover {
+  color: rgb(1, 70, 0) !important;
+}
+
+a.sidebar-item {
+  border-bottom: 2px solid transparent;
+}
+a.sidebar-item:hover {
+  border-bottom: 2px solid rgb(1, 70, 0);
+}
