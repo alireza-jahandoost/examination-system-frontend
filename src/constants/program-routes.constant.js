@@ -1,9 +1,13 @@
 const programRoutes = {
+  // Profile
   profile: "/profile",
-  createdExams: "/profile/created-exams",
-  createNewExam: "/profile/create-new-exam",
-  participatedExams: "/profile/participated-exams",
   settings: "/profile/settings",
+
+  // Exams
+  indexAllExams: "/exams",
+  indexParticipatedExams: "/exams/participated-exams",
+  indexCreatedExams: "/exams/created-exams",
+  createExam: "/exams/create-new-exam",
 };
 
 export default programRoutes;

@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import Header from "./header.component";
+import IndexExamHeader from "./index-exams-header.component";
 import Search from "./search.component";
-import useInfiniteScroll from "../../../hooks/useInfiniteScroll";
-import { examsIndexRequest } from "../../../services/exams/exams.service";
-import ExamCard from "../../../components/exam-card/exam-card.component";
-import ExamDescription from "../../../components/exam-description/exam-description.component";
-import { ExamInfoProvider } from "../../../contexts/exam-info-context/exam-info.context";
+import useInfiniteScroll from "../../../../hooks/useInfiniteScroll";
+import { examsIndexRequest } from "../../../../services/exams/exams.service";
+import ExamCard from "../../../../components/exam-card/exam-card.component";
+import ExamDescription from "../../../../components/exam-description/exam-description.component";
+import { ExamInfoProvider } from "../../../../contexts/exam-info-context/exam-info.context";
 import { useMountedState } from "react-use";
 
-const ExamsIndex = () => {
+const IndexAllExams = () => {
   const [exams, setExams] = useState([]);
   const [page, setPage] = useState(1);
   const [isFinished, setIsFinished] = useState(false);
@@ -44,7 +44,7 @@ const ExamsIndex = () => {
   return (
     <>
       <div>
-        <Header />
+        <IndexExamHeader />
         <Container className="p-5">
           <Search />
           <div className="mt-5">
@@ -74,4 +74,4 @@ const ExamsIndex = () => {
   );
 };
 
-export default ExamsIndex;
+export default IndexAllExams;

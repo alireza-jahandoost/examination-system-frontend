@@ -1,13 +1,13 @@
 import {
   screen,
   renderWithRouter,
-} from ".../../../../test-utils/testing-library-utils";
+} from "../../../../../test-utils/testing-library-utils";
 import {
   asignExamShowStartAndEnd,
   wrapWithWidth,
   wait,
-} from "../../../../utilities/tests.utility";
-import App from "../../../../App";
+} from "../../../../../utilities/tests.utility";
+import App from "../../../../../App";
 import userEvent from "@testing-library/user-event";
 
 describe("an authenticated user can register in an started exam that did not finished", () => {

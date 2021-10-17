@@ -1,4 +1,5 @@
 import { useState, createContext, useEffect, useContext } from "react";
+import { Redirect } from "react-router-dom";
 import { NotificationContext } from "../notification-context/notification.context";
 import {
   loginRequest,
@@ -103,6 +104,21 @@ export const AuthenticationProvider = ({ children }) => {
       });
   };
 
+  const redirectIfNotAuthenticated = (component, location) => {
+    if (isUserAuthenticated) {
+      return component;
+    } else {
+      return (
+        <Redirect
+          to={{
+            pathname: "/",
+            state: { from: location },
+          }}
+        />
+      );
+    }
+  };
+
   return (
     <AuthenticationContext.Provider
       value={{
@@ -117,6 +133,7 @@ export const AuthenticationProvider = ({ children }) => {
         token,
         isUserAuthenticated,
         showUserLoginPopover,
+        redirectIfNotAuthenticated,
       }}
     >
       {children}

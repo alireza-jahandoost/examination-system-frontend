@@ -27,21 +27,21 @@ const Sidebar = (props) => {
         className="my-3"
         open={open}
         label="created exams"
-        href={programRoutes.createdExams}
+        href={programRoutes.indexCreatedExams}
         iconName="window-restore"
       />
       <SidebarItem
         className="my-3"
         open={open}
         label="create new exam"
-        href={programRoutes.createNewExam}
+        href={programRoutes.createExam}
         iconName="plus-square"
       />
       <SidebarItem
         className="my-3"
         open={open}
         label="participated exams"
-        href={programRoutes.participatedExams}
+        href={programRoutes.indexParticipatedExams}
         iconName="vial"
       />
       <SidebarItem

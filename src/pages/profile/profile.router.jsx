@@ -1,13 +1,14 @@
-import Sidebar from "../../components/sidebar/sidebar.component";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import programRoutes from "../../constants/program-routes.constant";
+import OverviewPage from "./overview/overview.page";
+import SettingsPage from "./settings/settings.page";
 
 const ProfileRouter = () => {
   return (
-    <div className="d-flex flex-row">
-      <Sidebar />
-      <div className="flex-grow-1">
-        <h1>Profile</h1>
-      </div>
-    </div>
+    <Switch>
+      <Route exact path={programRoutes.profile} component={OverviewPage} />
+      <Route exact path={programRoutes.settings} component={SettingsPage} />
+    </Switch>
   );
 };
 

@@ -3,18 +3,18 @@ import {
   screen,
   fireEvent,
   waitFor,
-} from "../../../../test-utils/testing-library-utils";
+} from "../../../../../test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
 
-import { wait, wrapWithWidth } from "../../../../utilities/tests.utility";
-import Index from "../index.page";
+import { wait, wrapWithWidth } from "../../../../../utilities/tests.utility";
+import IndexAllExams from "../index-all-exams.page";
 
 const PAGE_SIZE = 18;
 const TOTAL_NUMBER_OF_EXAMS = 50;
 
 describe("initial conditions", () => {
   test("there is a search section to search exams", () => {
-    render(<Index />);
+    render(<IndexAllExams />);
 
     const searchSection = screen.getByRole("search");
     expect(searchSection).toBeInTheDocument();
@@ -26,7 +26,7 @@ describe("initial conditions", () => {
       PAGE_SIZE +
       " exams must be loaded",
     async () => {
-      render(<Index />);
+      render(<IndexAllExams />);
 
       const loading = screen.getByText(/loading.../i);
       expect(loading).toBeInTheDocument();
@@ -44,7 +44,7 @@ describe("check exams loadings", () => {
   test(
     "with scrolling, every time " + PAGE_SIZE + " exams must be added",
     async () => {
-      render(<Index />);
+      render(<IndexAllExams />);
 
       const loading = screen.getByText(/loading.../i);
       expect(loading).toBeInTheDocument();
@@ -68,7 +68,7 @@ describe("check exams loadings", () => {
   );
 
   test("when all of the exams loaded, user mustn't see any Loading", async () => {
-    render(<Index />);
+    render(<IndexAllExams />);
 
     const loading = screen.getByText(/loading.../i);
     expect(loading).toBeInTheDocument();
@@ -110,7 +110,7 @@ describe("check exams loadings", () => {
 
 describe("check opening and closing the exam descriptions", () => {
   test("user can close exam description by button, on Desktop", async () => {
-    render(wrapWithWidth(<Index />, 1300));
+    render(wrapWithWidth(<IndexAllExams />, 1300));
     const moreDetailsButtons = await screen.findAllByRole("button", {
       name: /more details/i,
     });
@@ -128,7 +128,7 @@ describe("check opening and closing the exam descriptions", () => {
     expect(nullRegisterButton).not.toBeInTheDocument();
   });
   test("user can close exam description by button, on Mobile", async () => {
-    render(wrapWithWidth(<Index />, 800));
+    render(wrapWithWidth(<IndexAllExams />, 800));
     const moreDetailsButtons = await screen.findAllByRole("button", {
       name: /more details/i,
     });
