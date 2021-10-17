@@ -26,5 +26,5 @@ test("profile routes are not accessible without authentication", async () => {
   const profileLink = await screen.findByRole("link", { name: /profile/i });
   userEvent.click(profileLink);
 
-  expect(window.location.pathname).toBe("/profile");
+  expect(window.location.pathname).toBe(programRoutes.profile);
 });

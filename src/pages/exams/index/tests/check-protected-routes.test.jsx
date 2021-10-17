@@ -29,7 +29,11 @@ test("created-exams route is not accessible without authentication", async () =>
   const profileLink = await screen.findByRole("link", { name: /profile/i });
   userEvent.click(profileLink);
 
-  expect(window.location.pathname).toBe("/profile");
+  const createdExams = screen.getByRole("link", { name: /created exams/i });
+  expect(createdExams).toBeEnabled();
+  userEvent.click(createdExams);
+
+  expect(window.location.pathname).toBe(programRoutes.indexCreatedExams);
 });
 
 test("participated-exams route is not accessible without authentication", async () => {
@@ -55,7 +59,13 @@ test("participated-exams route is not accessible without authentication", async 
   const profileLink = await screen.findByRole("link", { name: /profile/i });
   userEvent.click(profileLink);
 
-  expect(window.location.pathname).toBe("/profile");
+  const participatedExams = screen.getByRole("link", {
+    name: /participated exams/i,
+  });
+  expect(participatedExams).toBeEnabled();
+  userEvent.click(participatedExams);
+
+  expect(window.location.pathname).toBe(programRoutes.indexParticipatedExams);
 });
 
 test("create-exam route is not accessible without authentication", async () => {
@@ -81,5 +91,11 @@ test("create-exam route is not accessible without authentication", async () => {
   const profileLink = await screen.findByRole("link", { name: /profile/i });
   userEvent.click(profileLink);
 
-  expect(window.location.pathname).toBe("/profile");
+  const createExam = screen.getByRole("link", {
+    name: /create new exam/i,
+  });
+  expect(createExam).toBeEnabled();
+  userEvent.click(createExam);
+
+  expect(window.location.pathname).toBe(programRoutes.createExam);
 });

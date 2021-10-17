@@ -23,21 +23,21 @@ const ProfileRouter = () => {
         exact
         path={programRoutes.indexParticipatedExams}
         render={({ location }) =>
-          redirectIfNotAuthenticated(IndexParticipatedExamsPage, location)
+          redirectIfNotAuthenticated(<IndexParticipatedExamsPage />, location)
         }
       />
       <Route
         exact
         path={programRoutes.indexCreatedExams}
         render={({ location }) =>
-          redirectIfNotAuthenticated(IndexCreatedExamsPage, location)
+          redirectIfNotAuthenticated(<IndexCreatedExamsPage />, location)
         }
       />
       <Route
         exact
         path={programRoutes.createExam}
         render={({ location }) =>
-          redirectIfNotAuthenticated(CreateExamPage, location)
+          redirectIfNotAuthenticated(<CreateExamPage />, location)
         }
       />
     </Switch>
