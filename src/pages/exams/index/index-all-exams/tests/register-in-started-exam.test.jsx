@@ -24,7 +24,7 @@ describe("an authenticated user can register in an started exam that did not fin
       new Date(Date.now() + 3600 * 1000)
     );
     renderWithRouter(wrapWithWidth(<App />, 1300), {
-      route: programRoutes.indexAllExams,
+      route: programRoutes.indexAllExams(),
     });
     await wait(300);
 
@@ -83,7 +83,7 @@ describe("an authenticated user can register in an started exam that did not fin
       new Date(Date.now() + 3600 * 1000)
     );
     renderWithRouter(wrapWithWidth(<App />, 500), {
-      route: programRoutes.indexAllExams,
+      route: programRoutes.indexAllExams(),
     });
     await wait(300);
 
@@ -142,7 +142,7 @@ describe("an authenticated user can register in an started exam that did not fin
       true
     );
     renderWithRouter(wrapWithWidth(<App />, 1300), {
-      route: programRoutes.indexAllExams,
+      route: programRoutes.indexAllExams(),
     });
     await wait(300);
 
@@ -207,7 +207,7 @@ describe("an authenticated user can register in an started exam that did not fin
       true
     );
     renderWithRouter(wrapWithWidth(<App />, 500), {
-      route: programRoutes.indexAllExams,
+      route: programRoutes.indexAllExams(),
     });
     await wait(300);
 

@@ -6,8 +6,8 @@ import SettingsPage from "./settings/settings.page";
 const ProfileRouter = () => {
   return (
     <Switch>
-      <Route exact path={programRoutes.profile} component={OverviewPage} />
-      <Route exact path={programRoutes.settings} component={SettingsPage} />
+      <Route exact path={programRoutes.profile()} component={OverviewPage} />
+      <Route exact path={programRoutes.settings()} component={SettingsPage} />
     </Switch>
   );
 };

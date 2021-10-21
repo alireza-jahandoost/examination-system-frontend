@@ -24,7 +24,7 @@ describe("unauthenticated user can register to exam if authenticate with opened 
       new Date(Date.now() + 3600 * 1000)
     );
     renderWithRouter(wrapWithWidth(<App />, 1300), {
-      route: programRoutes.indexAllExams,
+      route: programRoutes.indexAllExams(),
     });
     await wait(200);
 
@@ -82,7 +82,7 @@ describe("unauthenticated user can register to exam if authenticate with opened 
       new Date(Date.now() + 3600 * 1000)
     );
     renderWithRouter(wrapWithWidth(<App />, 500), {
-      route: programRoutes.indexAllExams,
+      route: programRoutes.indexAllExams(),
     });
     await wait(200);
 
@@ -140,7 +140,7 @@ describe("unauthenticated user can register to exam if authenticate with opened 
       new Date(Date.now() + 3600 * 1000)
     );
     renderWithRouter(wrapWithWidth(<App />, 1300), {
-      route: programRoutes.indexAllExams,
+      route: programRoutes.indexAllExams(),
     });
     await wait(200);
 
@@ -218,7 +218,7 @@ describe("unauthenticated user can register to exam if authenticate with opened 
       new Date(Date.now() + 3600 * 1000)
     );
     renderWithRouter(wrapWithWidth(<App />, 500), {
-      route: programRoutes.indexAllExams,
+      route: programRoutes.indexAllExams(),
     });
     await wait(200);
 

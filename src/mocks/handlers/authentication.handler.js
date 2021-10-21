@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import urlRoutes from "../../constants/urlRoutes.constant";
+import apiRoutes from "../../constants/api-routes.constant";
 import {
   userMock,
   userEmail,
@@ -16,7 +16,7 @@ import {
 } from "../errors/failed-register.error";
 
 const authenticationHandler = [
-  rest.post(urlRoutes["login"], (req, res, ctx) => {
+  rest.post(apiRoutes.authentication.login(), (req, res, ctx) => {
     const { email, password } = req.body;
     if (email === userEmail && password === correctPassword) {
       return res(ctx.json(userMock));
@@ -24,7 +24,7 @@ const authenticationHandler = [
       return res(ctx.status(401), ctx.json(invalidCriteriaError));
     }
   }),
-  rest.post(urlRoutes["register"], (req, res, ctx) => {
+  rest.post(apiRoutes.authentication.register(), (req, res, ctx) => {
     const { email, password, password_confirmation } = req.body;
     if (
       email === userEmail &&

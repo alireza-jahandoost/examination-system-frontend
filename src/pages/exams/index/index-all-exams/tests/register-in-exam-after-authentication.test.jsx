@@ -24,7 +24,7 @@ describe("authenticated user can register to exam", () => {
       new Date(Date.now() + 3600 * 1000)
     );
     renderWithRouter(wrapWithWidth(<App />, 1300), {
-      route: programRoutes.indexAllExams,
+      route: programRoutes.indexAllExams(),
     });
     await wait(200);
 
@@ -82,7 +82,7 @@ describe("authenticated user can register to exam", () => {
       new Date(Date.now() + 3600 * 1000)
     );
     renderWithRouter(wrapWithWidth(<App />, 500), {
-      route: programRoutes.indexAllExams,
+      route: programRoutes.indexAllExams(),
     });
     await wait(200);
 
@@ -141,7 +141,7 @@ describe("authenticated user can register to exam", () => {
       true
     );
     renderWithRouter(wrapWithWidth(<App />, 1300), {
-      route: programRoutes.indexAllExams,
+      route: programRoutes.indexAllExams(),
     });
     await wait(200);
 
@@ -206,7 +206,7 @@ describe("authenticated user can register to exam", () => {
       true
     );
     renderWithRouter(wrapWithWidth(<App />, 500), {
-      route: programRoutes.indexAllExams,
+      route: programRoutes.indexAllExams(),
     });
     await wait(200);
 
@@ -271,7 +271,7 @@ describe("authenticated user can register to exam", () => {
       true
     );
     renderWithRouter(wrapWithWidth(<App />, 1300), {
-      route: programRoutes.indexAllExams,
+      route: programRoutes.indexAllExams(),
     });
     await wait(200);
 
@@ -336,7 +336,7 @@ describe("authenticated user can register to exam", () => {
       true
     );
     renderWithRouter(wrapWithWidth(<App />, 500), {
-      route: programRoutes.indexAllExams,
+      route: programRoutes.indexAllExams(),
     });
     await wait(200);
 
@@ -401,7 +401,7 @@ describe("authenticated user can register to exam", () => {
       true
     );
     renderWithRouter(wrapWithWidth(<App />, 1300), {
-      route: programRoutes.indexAllExams,
+      route: programRoutes.indexAllExams(),
     });
     await wait(200);
 
@@ -484,7 +484,7 @@ describe("authenticated user can register to exam", () => {
       true
     );
     renderWithRouter(wrapWithWidth(<App />, 1300), {
-      route: programRoutes.indexAllExams,
+      route: programRoutes.indexAllExams(),
     });
     await wait(200);
 
@@ -567,7 +567,7 @@ describe("authenticated user can register to exam", () => {
       true
     );
     renderWithRouter(wrapWithWidth(<App />, 1300), {
-      route: programRoutes.indexAllExams,
+      route: programRoutes.indexAllExams(),
     });
     await wait(200);
 
@@ -649,7 +649,7 @@ describe("authenticated user can register to exam", () => {
       true
     );
     renderWithRouter(wrapWithWidth(<App />, 1300), {
-      route: programRoutes.indexAllExams,
+      route: programRoutes.indexAllExams(),
     });
     await wait(200);
 

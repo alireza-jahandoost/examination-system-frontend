@@ -1,8 +1,8 @@
-import urlRoutes from "../../constants/urlRoutes.constant";
+import apiRoutes from "../../constants/api-routes.constant";
 import axios from "axios";
 
 export const examsIndexRequest = async (page) => {
-  return axios(urlRoutes["exams.index"], {
+  return axios(apiRoutes.exams.indexAllExams(), {
     params: {
       page: page,
     },
@@ -19,7 +19,7 @@ export const examsShowRequest = async (examId, token = "") => {
   if (token) {
     hdrs.authorization = `Bearer ${token}`;
   }
-  return axios.get(urlRoutes["exams.show"](examId), {
+  return axios.get(apiRoutes.exams.showExam(examId), {
     headers: hdrs,
   });
 };

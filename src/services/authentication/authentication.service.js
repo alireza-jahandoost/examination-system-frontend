@@ -1,4 +1,4 @@
-import urlRoutes from "../../constants/urlRoutes.constant";
+import apiRoutes from "../../constants/api-routes.constant";
 import axios from "axios";
 
 export const registerRequest = async (
@@ -8,7 +8,7 @@ export const registerRequest = async (
   password_confirmation
 ) => {
   return axios.post(
-    urlRoutes["register"],
+    apiRoutes.authentication.register(),
     { name, email, password, password_confirmation },
     {
       headers: {
@@ -20,7 +20,7 @@ export const registerRequest = async (
 
 export const loginRequest = async (email, password) => {
   return axios.post(
-    urlRoutes["login"],
+    apiRoutes.authentication.login(),
     { email, password },
     {
       headers: {

@@ -1,4 +1,4 @@
-import urlRoutes from "../../constants/urlRoutes.constant";
+import apiRoutes from "../../constants/api-routes.constant";
 import axios from "axios";
 
 export const registerToExamRequest = (examId, token, password = "") => {
@@ -6,7 +6,7 @@ export const registerToExamRequest = (examId, token, password = "") => {
   if (password) {
     bodyObject.password = password;
   }
-  return axios.post(urlRoutes["participants.register"](examId), bodyObject, {
+  return axios.post(apiRoutes.exams.registerInExam(examId), bodyObject, {
     headers: {
       accept: "application/json",
       Authorization: `Bearer ${token}`,

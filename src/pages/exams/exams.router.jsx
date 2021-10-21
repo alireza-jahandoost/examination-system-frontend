@@ -15,27 +15,27 @@ const ProfileRouter = () => {
     <Switch>
       <Route
         exact
-        path={programRoutes.indexAllExams}
+        path={programRoutes.indexAllExams()}
         component={IndexAllExamsPage}
       />
 
       <Route
         exact
-        path={programRoutes.indexParticipatedExams}
+        path={programRoutes.indexParticipatedExams()}
         render={({ location }) =>
           redirectIfNotAuthenticated(<IndexParticipatedExamsPage />, location)
         }
       />
       <Route
         exact
-        path={programRoutes.indexCreatedExams}
+        path={programRoutes.indexCreatedExams()}
         render={({ location }) =>
           redirectIfNotAuthenticated(<IndexCreatedExamsPage />, location)
         }
       />
       <Route
         exact
-        path={programRoutes.createExam}
+        path={programRoutes.createExam()}
         render={({ location }) =>
           redirectIfNotAuthenticated(<CreateExamPage />, location)
         }

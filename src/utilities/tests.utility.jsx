@@ -3,7 +3,7 @@ import { act } from "@testing-library/react";
 import { rest } from "msw";
 
 import { server, handlers } from "../mocks/server";
-import urlRoutes from "../constants/urlRoutes.constant";
+import apiRoutes from "../constants/api-routes.constant";
 import "../mocks/server";
 
 export const wrapWithWidth = (component, size) => {
@@ -64,7 +64,7 @@ export const asignExamShowStartAndEnd = (
     end.getSeconds();
 
   server.resetHandlers(
-    rest.get(urlRoutes["exams.show"](examId), (req, res, ctx) => {
+    rest.get(apiRoutes.exams.showExam(examId), (req, res, ctx) => {
       return res(
         ctx.json({
           data: {

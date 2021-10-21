@@ -4,6 +4,7 @@ import { Navbar, Container, Nav } from "react-bootstrap";
 import { AuthenticationContext } from "../../../contexts/authentication-context/authentication.context";
 import LoginPopover from "./login-popover.component";
 import RegisterPopover from "./register-popover.component";
+import programRoutes from "../../../constants/program-routes.constant";
 
 const Header = () => {
   const { user, popover, changePopover } = useContext(AuthenticationContext);
@@ -26,20 +27,20 @@ const Header = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link as={Link} to="/exams">
+              <Nav.Link as={Link} to={programRoutes.indexAllExams()}>
                 Exams
               </Nav.Link>
-              <Nav.Link as={Link} to="about-us" href="#about-us">
+              <Nav.Link as={Link} to={programRoutes.aboutUs()}>
                 About us
               </Nav.Link>
-              <Nav.Link as={Link} to="/contact-us" href="#contact-us">
+              <Nav.Link as={Link} to={programRoutes.contactUs()}>
                 Contact us
               </Nav.Link>
             </Nav>
             <Nav>
               {user ? (
                 <>
-                  <Nav.Link as={Link} to="/profile" href="#profile">
+                  <Nav.Link as={Link} to={programRoutes.profile()}>
                     Profile
                   </Nav.Link>
                   <Nav.Link role="button">Logout</Nav.Link>

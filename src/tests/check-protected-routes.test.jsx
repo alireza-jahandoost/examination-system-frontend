@@ -4,8 +4,8 @@ import App from "../App";
 import userEvent from "@testing-library/user-event";
 import { userEmail, correctPassword } from "../mocks/mocks/authentication.mock";
 
-test("profile routes are not accessible without authentication", async () => {
-  renderWithRouter(<App />, { route: programRoutes.profile });
+test.only("profile routes are not accessible without authentication", async () => {
+  renderWithRouter(<App />, { route: programRoutes.profile() });
 
   expect(window.location.pathname).toBe("/");
 
@@ -27,5 +27,5 @@ test("profile routes are not accessible without authentication", async () => {
   const profileLink = await screen.findByRole("link", { name: /profile/i });
   userEvent.click(profileLink);
 
-  expect(window.location.pathname).toBe(programRoutes.profile);
+  expect(window.location.pathname).toBe(programRoutes.profile());
 });

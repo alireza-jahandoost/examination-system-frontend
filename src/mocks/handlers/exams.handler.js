@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import urlRoutes from "../../constants/urlRoutes.constant";
+import apiRoutes from "../../constants/api-routes.constant";
 import {
   pageOneExamsIndex,
   pageTwoExamsIndex,
@@ -12,7 +12,7 @@ import {
 } from "../mocks/exams.mock";
 
 const examsHandler = [
-  rest.get(urlRoutes["exams.index"], (req, res, ctx) => {
+  rest.get(apiRoutes.exams.indexAllExams(), (req, res, ctx) => {
     const valueOfPage = req.url.searchParams.get("page");
     const page = Number(valueOfPage);
     switch (page) {
@@ -29,7 +29,7 @@ const examsHandler = [
         return res(ctx.json(notFoundPageExamsIndex(page)));
     }
   }),
-  rest.get(`${urlRoutes["exams.index"]}/:examId`, (req, res, ctx) => {
+  rest.get(`${apiRoutes.exams.indexAllExams()}/:examId`, (req, res, ctx) => {
     let { examId } = req.params;
     examId = Number(examId);
 

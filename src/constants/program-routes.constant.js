@@ -1,17 +1,22 @@
 const programRoutes = {
   // Profile
-  profile: "/profile",
-  settings: "/profile/settings",
+  profile: () => `/profile`,
+  settings: () => `/profile/settings`,
+
+  // Pages
+  aboutUs: () => `/about-us`,
+  contactUs: () => `/contact-us`,
 
   // Exams
-  indexAllExams: "/exams",
-  indexParticipatedExams: "/exams/participated-exams",
-  indexCreatedExams: "/exams/created-exams",
-  createExam: "/exams/create-new-exam",
+  examsRoot: () => `/exams`,
+  indexAllExams: () => `/exams`,
+  indexParticipatedExams: () => `/exams/participated-exams`,
+  indexCreatedExams: () => `/exams/created-exams`,
+  createExam: () => `/exams/create-new-exam`,
 
   // Authentication
-  login: `/login`,
-  register: `/register`,
+  login: () => `/login`,
+  register: () => `/register`,
 };
 
 export default programRoutes;
