@@ -9,6 +9,12 @@ import {
 } from "../../../../../utilities/tests.utility";
 import App from "../../../../../App";
 import userEvent from "@testing-library/user-event";
+import {
+  userEmail,
+  userName,
+  correctPassword,
+} from "../../../../../mocks/mocks/authentication.mock";
+import programRoutes from "../../../../../constants/program-routes.constant";
 
 describe("unauthenticated user can register to exam if authenticate with opened popover", () => {
   test("unauthenticated user can try to register to exam, then see the login page, login and register to exam in desktop", async () => {
@@ -17,7 +23,9 @@ describe("unauthenticated user can register to exam if authenticate with opened 
       new Date(Date.now() + 5000 * 60),
       new Date(Date.now() + 3600 * 1000)
     );
-    renderWithRouter(wrapWithWidth(<App />, 1300), { route: "/exams" });
+    renderWithRouter(wrapWithWidth(<App />, 1300), {
+      route: programRoutes.indexAllExams,
+    });
     await wait(200);
 
     // open exam description
@@ -42,8 +50,8 @@ describe("unauthenticated user can register to exam if authenticate with opened 
 
     userEvent.clear(loginEmailField);
     userEvent.clear(loginPasswordField);
-    userEvent.type(loginEmailField, "fkub@example.org");
-    userEvent.type(loginPasswordField, "password");
+    userEvent.type(loginEmailField, userEmail);
+    userEvent.type(loginPasswordField, correctPassword);
 
     const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
     expect(loginSubmitButton).toBeEnabled();
@@ -73,7 +81,9 @@ describe("unauthenticated user can register to exam if authenticate with opened 
       new Date(Date.now() + 5000 * 60),
       new Date(Date.now() + 3600 * 1000)
     );
-    renderWithRouter(wrapWithWidth(<App />, 500), { route: "/exams" });
+    renderWithRouter(wrapWithWidth(<App />, 500), {
+      route: programRoutes.indexAllExams,
+    });
     await wait(200);
 
     // open exam description
@@ -98,8 +108,8 @@ describe("unauthenticated user can register to exam if authenticate with opened 
 
     userEvent.clear(loginEmailField);
     userEvent.clear(loginPasswordField);
-    userEvent.type(loginEmailField, "fkub@example.org");
-    userEvent.type(loginPasswordField, "password");
+    userEvent.type(loginEmailField, userEmail);
+    userEvent.type(loginPasswordField, correctPassword);
 
     const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
     expect(loginSubmitButton).toBeEnabled();
@@ -129,7 +139,9 @@ describe("unauthenticated user can register to exam if authenticate with opened 
       new Date(Date.now() + 5000 * 60),
       new Date(Date.now() + 3600 * 1000)
     );
-    renderWithRouter(wrapWithWidth(<App />, 1300), { route: "/exams" });
+    renderWithRouter(wrapWithWidth(<App />, 1300), {
+      route: programRoutes.indexAllExams,
+    });
     await wait(200);
 
     // open exam description
@@ -168,10 +180,10 @@ describe("unauthenticated user can register to exam if authenticate with opened 
     userEvent.clear(registerPasswordField);
     userEvent.clear(registerConfirmPasswordField);
 
-    userEvent.type(registerNameField, "test");
-    userEvent.type(registerEmailField, "test@test.com");
-    userEvent.type(registerPasswordField, "1stStrongPassword");
-    userEvent.type(registerConfirmPasswordField, "1stStrongPassword");
+    userEvent.type(registerNameField, userName);
+    userEvent.type(registerEmailField, userEmail);
+    userEvent.type(registerPasswordField, correctPassword);
+    userEvent.type(registerConfirmPasswordField, correctPassword);
 
     const registerSubmitButton = screen.getByRole("button", {
       name: "REGISTER",
@@ -205,7 +217,9 @@ describe("unauthenticated user can register to exam if authenticate with opened 
       new Date(Date.now() + 5000 * 60),
       new Date(Date.now() + 3600 * 1000)
     );
-    renderWithRouter(wrapWithWidth(<App />, 500), { route: "/exams" });
+    renderWithRouter(wrapWithWidth(<App />, 500), {
+      route: programRoutes.indexAllExams,
+    });
     await wait(200);
 
     // open exam description
@@ -244,10 +258,10 @@ describe("unauthenticated user can register to exam if authenticate with opened 
     userEvent.clear(registerPasswordField);
     userEvent.clear(registerConfirmPasswordField);
 
-    userEvent.type(registerNameField, "test");
-    userEvent.type(registerEmailField, "test@test.com");
-    userEvent.type(registerPasswordField, "1stStrongPassword");
-    userEvent.type(registerConfirmPasswordField, "1stStrongPassword");
+    userEvent.type(registerNameField, userName);
+    userEvent.type(registerEmailField, userEmail);
+    userEvent.type(registerPasswordField, correctPassword);
+    userEvent.type(registerConfirmPasswordField, correctPassword);
 
     const registerSubmitButton = screen.getByRole("button", {
       name: "REGISTER",

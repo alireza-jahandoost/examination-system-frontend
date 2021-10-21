@@ -9,6 +9,12 @@ import {
 } from "../../../../../utilities/tests.utility";
 import App from "../../../../../App";
 import userEvent from "@testing-library/user-event";
+import {
+  userEmail,
+  correctPassword,
+} from "../../../../../mocks/mocks/authentication.mock";
+import programRoutes from "../../../../../constants/program-routes.constant";
+import { examsPassword } from "../../../../../mocks/mocks/participants.mock";
 
 describe("an authenticated user can register in an started exam that did not finished", () => {
   test("user can authenticate and then register to started exam in desktop", async () => {
@@ -17,7 +23,9 @@ describe("an authenticated user can register in an started exam that did not fin
       new Date(Date.now() - 5000 * 60),
       new Date(Date.now() + 3600 * 1000)
     );
-    renderWithRouter(wrapWithWidth(<App />, 1300), { route: "/exams" });
+    renderWithRouter(wrapWithWidth(<App />, 1300), {
+      route: programRoutes.indexAllExams,
+    });
     await wait(300);
 
     // click login button
@@ -31,8 +39,8 @@ describe("an authenticated user can register in an started exam that did not fin
 
     userEvent.clear(loginEmailField);
     userEvent.clear(loginPasswordField);
-    userEvent.type(loginEmailField, "fkub@example.org");
-    userEvent.type(loginPasswordField, "password");
+    userEvent.type(loginEmailField, userEmail);
+    userEvent.type(loginPasswordField, correctPassword);
 
     const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
     userEvent.click(loginSubmitButton);
@@ -74,7 +82,9 @@ describe("an authenticated user can register in an started exam that did not fin
       new Date(Date.now() - 5000 * 60),
       new Date(Date.now() + 3600 * 1000)
     );
-    renderWithRouter(wrapWithWidth(<App />, 500), { route: "/exams" });
+    renderWithRouter(wrapWithWidth(<App />, 500), {
+      route: programRoutes.indexAllExams,
+    });
     await wait(300);
 
     // click login button
@@ -88,8 +98,8 @@ describe("an authenticated user can register in an started exam that did not fin
 
     userEvent.clear(loginEmailField);
     userEvent.clear(loginPasswordField);
-    userEvent.type(loginEmailField, "fkub@example.org");
-    userEvent.type(loginPasswordField, "password");
+    userEvent.type(loginEmailField, userEmail);
+    userEvent.type(loginPasswordField, correctPassword);
 
     const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
     userEvent.click(loginSubmitButton);
@@ -131,7 +141,9 @@ describe("an authenticated user can register in an started exam that did not fin
       new Date(Date.now() + 3600 * 1000),
       true
     );
-    renderWithRouter(wrapWithWidth(<App />, 1300), { route: "/exams" });
+    renderWithRouter(wrapWithWidth(<App />, 1300), {
+      route: programRoutes.indexAllExams,
+    });
     await wait(300);
 
     // click login button
@@ -145,8 +157,8 @@ describe("an authenticated user can register in an started exam that did not fin
 
     userEvent.clear(loginEmailField);
     userEvent.clear(loginPasswordField);
-    userEvent.type(loginEmailField, "fkub@example.org");
-    userEvent.type(loginPasswordField, "password");
+    userEvent.type(loginEmailField, userEmail);
+    userEvent.type(loginPasswordField, correctPassword);
 
     const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
     userEvent.click(loginSubmitButton);
@@ -168,7 +180,7 @@ describe("an authenticated user can register in an started exam that did not fin
       /exam password/i
     );
     userEvent.clear(registerExamPasswordField);
-    userEvent.type(registerExamPasswordField, "password");
+    userEvent.type(registerExamPasswordField, examsPassword);
 
     const registerButton = screen.getByRole("button", {
       name: /register to exam/i,
@@ -194,7 +206,9 @@ describe("an authenticated user can register in an started exam that did not fin
       new Date(Date.now() + 3600 * 1000),
       true
     );
-    renderWithRouter(wrapWithWidth(<App />, 500), { route: "/exams" });
+    renderWithRouter(wrapWithWidth(<App />, 500), {
+      route: programRoutes.indexAllExams,
+    });
     await wait(300);
 
     // click login button
@@ -208,8 +222,8 @@ describe("an authenticated user can register in an started exam that did not fin
 
     userEvent.clear(loginEmailField);
     userEvent.clear(loginPasswordField);
-    userEvent.type(loginEmailField, "fkub@example.org");
-    userEvent.type(loginPasswordField, "password");
+    userEvent.type(loginEmailField, userEmail);
+    userEvent.type(loginPasswordField, correctPassword);
 
     const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
     userEvent.click(loginSubmitButton);
@@ -231,7 +245,7 @@ describe("an authenticated user can register in an started exam that did not fin
       /exam password/i
     );
     userEvent.clear(registerExamPasswordField);
-    userEvent.type(registerExamPasswordField, "password");
+    userEvent.type(registerExamPasswordField, examsPassword);
 
     const registerButton = screen.getByRole("button", {
       name: /register to exam/i,

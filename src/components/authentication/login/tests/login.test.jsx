@@ -1,7 +1,10 @@
 import { render, screen } from "../../../../test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
 import Login from "../login.component";
-import { AuthenticationProvider } from "../../../../contexts/authentication-context/authentication.context";
+import {
+  userEmail,
+  correctPassword,
+} from "../../../../mocks/mocks/authentication.mock";
 
 test("user can login with login component", async () => {
   render(<Login />);
@@ -10,10 +13,10 @@ test("user can login with login component", async () => {
   const passwordField = screen.getByLabelText(/password/i);
 
   userEvent.clear(examField);
-  userEvent.type(examField, "fkub@example.org");
+  userEvent.type(examField, userEmail);
 
   userEvent.clear(passwordField);
-  userEvent.type(passwordField, "password");
+  userEvent.type(passwordField, correctPassword);
 
   const loginButton = screen.getByRole("button", { name: /login/i });
 
@@ -34,10 +37,10 @@ test("user will see 'loading...' in button and button will be disabled when the 
   const passwordField = screen.getByLabelText(/password/i);
 
   userEvent.clear(examField);
-  userEvent.type(examField, "fkub@example.org");
+  userEvent.type(examField, userEmail);
 
   userEvent.clear(passwordField);
-  userEvent.type(passwordField, "password");
+  userEvent.type(passwordField, correctPassword);
 
   const loginButton = screen.getByRole("button", { name: /login/i });
 
@@ -63,7 +66,7 @@ test("user will not see 'loading...' in button when the response is given and we
   const passwordField = screen.getByLabelText(/password/i);
 
   userEvent.clear(examField);
-  userEvent.type(examField, "fkub@example.org");
+  userEvent.type(examField, userEmail);
 
   userEvent.clear(passwordField);
   userEvent.type(passwordField, "wrongPassword");
@@ -93,10 +96,10 @@ test("user will see the errors if he/she's login was unsuccessful", async () => 
   const passwordField = screen.getByLabelText(/password/i);
 
   userEvent.clear(examField);
-  userEvent.type(examField, "test@example.org");
+  userEvent.type(examField, "wrong.email@example.org");
 
   userEvent.clear(passwordField);
-  userEvent.type(passwordField, "password");
+  userEvent.type(passwordField, correctPassword);
 
   const loginButton = screen.getByRole("button", { name: /login/i });
 

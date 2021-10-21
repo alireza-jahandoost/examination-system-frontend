@@ -1,6 +1,13 @@
 import { render, screen } from "../../../../test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
 import Register from "../register.component";
+import {
+  userEmail,
+  userName,
+  repeatedEmail,
+  correctPassword,
+  shortPassword,
+} from "../../../../mocks/mocks/authentication.mock";
 
 test("user can register to the site", async () => {
   render(<Register />);
@@ -15,10 +22,10 @@ test("user can register to the site", async () => {
   userEvent.clear(passwordField);
   userEvent.clear(confirmPasswordField);
 
-  userEvent.type(nameField, "test");
-  userEvent.type(emailField, "test@test.com");
-  userEvent.type(passwordField, "1stStrongPassword");
-  userEvent.type(confirmPasswordField, "1stStrongPassword");
+  userEvent.type(nameField, userName);
+  userEvent.type(emailField, userEmail);
+  userEvent.type(passwordField, correctPassword);
+  userEvent.type(confirmPasswordField, correctPassword);
 
   const registerButton = screen.getByRole("button", { name: /register/i });
 
@@ -44,10 +51,10 @@ test("user will see 'loading...' message in register button when request is pend
   userEvent.clear(passwordField);
   userEvent.clear(confirmPasswordField);
 
-  userEvent.type(nameField, "test");
-  userEvent.type(emailField, "test@test.com");
-  userEvent.type(passwordField, "1stStrongPassword");
-  userEvent.type(confirmPasswordField, "1stStrongPassword");
+  userEvent.type(nameField, userName);
+  userEvent.type(emailField, userEmail);
+  userEvent.type(passwordField, correctPassword);
+  userEvent.type(confirmPasswordField, correctPassword);
 
   const registerButton = screen.getByRole("button", { name: /register/i });
 
@@ -78,10 +85,10 @@ test("user will not see 'loading...' message in register button when the respons
   userEvent.clear(passwordField);
   userEvent.clear(confirmPasswordField);
 
-  userEvent.type(nameField, "test");
-  userEvent.type(emailField, "test@test.com");
-  userEvent.type(passwordField, "weak");
-  userEvent.type(confirmPasswordField, "weak");
+  userEvent.type(nameField, userName);
+  userEvent.type(emailField, userEmail);
+  userEvent.type(passwordField, shortPassword);
+  userEvent.type(confirmPasswordField, shortPassword);
 
   const registerButton = screen.getByRole("button", { name: /register/i });
 
@@ -116,10 +123,10 @@ test("user can register after he faced to error", async () => {
   userEvent.clear(passwordField);
   userEvent.clear(confirmPasswordField);
 
-  userEvent.type(nameField, "test");
-  userEvent.type(emailField, "test@test.com");
-  userEvent.type(passwordField, "weak");
-  userEvent.type(confirmPasswordField, "weak");
+  userEvent.type(nameField, userName);
+  userEvent.type(emailField, userEmail);
+  userEvent.type(passwordField, shortPassword);
+  userEvent.type(confirmPasswordField, shortPassword);
 
   const registerButton = screen.getByRole("button", { name: /register/i });
 
@@ -133,8 +140,8 @@ test("user can register after he faced to error", async () => {
   userEvent.clear(passwordField);
   userEvent.clear(confirmPasswordField);
 
-  userEvent.type(passwordField, "1stStrongPassword");
-  userEvent.type(confirmPasswordField, "1stStrongPassword");
+  userEvent.type(passwordField, correctPassword);
+  userEvent.type(confirmPasswordField, correctPassword);
 
   userEvent.click(registerButton);
 
@@ -163,9 +170,9 @@ test("user will see error if his passwords did not match", async () => {
   userEvent.clear(passwordField);
   userEvent.clear(confirmPasswordField);
 
-  userEvent.type(nameField, "test");
-  userEvent.type(emailField, "test@test.com");
-  userEvent.type(passwordField, "1stStrongPassword");
+  userEvent.type(nameField, userName);
+  userEvent.type(emailField, userEmail);
+  userEvent.type(passwordField, correctPassword);
   userEvent.type(confirmPasswordField, "2ndStrongPassword");
 
   const registerButton = screen.getByRole("button", { name: /register/i });
@@ -191,10 +198,10 @@ test("user will see error if his email was already in use", async () => {
   userEvent.clear(passwordField);
   userEvent.clear(confirmPasswordField);
 
-  userEvent.type(nameField, "test");
-  userEvent.type(emailField, "repeated@test.com");
-  userEvent.type(passwordField, "1stStrongPassword");
-  userEvent.type(confirmPasswordField, "1stStrongPassword");
+  userEvent.type(nameField, userName);
+  userEvent.type(emailField, repeatedEmail);
+  userEvent.type(passwordField, correctPassword);
+  userEvent.type(confirmPasswordField, correctPassword);
 
   const registerButton = screen.getByRole("button", { name: /register/i });
 

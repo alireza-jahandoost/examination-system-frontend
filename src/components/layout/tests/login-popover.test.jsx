@@ -6,6 +6,13 @@ import {
 import userEvent from "@testing-library/user-event";
 import Layout from "../layout.component";
 import { wait } from "../../../utilities/tests.utility";
+import {
+  userEmail,
+  userName,
+  repeatedEmail,
+  correctPassword,
+  shortPassword,
+} from ".../../../mocks/mocks/authentication.mock";
 
 describe("check login functionality", () => {
   test("user can click 'login' button and then login to his account", async () => {
@@ -18,9 +25,9 @@ describe("check login functionality", () => {
     const passwordField = screen.getByLabelText(/password/i);
 
     userEvent.clear(emailField);
-    userEvent.type(emailField, "fkub@example.org");
+    userEvent.type(emailField, userEmail);
     userEvent.clear(passwordField);
-    userEvent.type(passwordField, "password");
+    userEvent.type(passwordField, correctPassword);
 
     const submitButton = screen.getByRole("button", { name: "LOGIN" });
     userEvent.click(submitButton);
@@ -39,7 +46,7 @@ describe("check login functionality", () => {
     const passwordField = screen.getByLabelText(/password/i);
 
     userEvent.clear(emailField);
-    userEvent.type(emailField, "fkub@example.org");
+    userEvent.type(emailField, userEmail);
     userEvent.clear(passwordField);
     userEvent.type(passwordField, "wrongPassword");
 
@@ -50,9 +57,9 @@ describe("check login functionality", () => {
     expect(errorMessage).toBeInTheDocument();
 
     userEvent.clear(emailField);
-    userEvent.type(emailField, "fkub@example.org");
+    userEvent.type(emailField, userEmail);
     userEvent.clear(passwordField);
-    userEvent.type(passwordField, "password");
+    userEvent.type(passwordField, correctPassword);
 
     userEvent.click(submitButton);
 
@@ -98,9 +105,9 @@ describe("check popover functionality", () => {
     const passwordField = screen.getByLabelText(/password/i);
 
     userEvent.clear(emailField);
-    userEvent.type(emailField, "fkub@example.org");
+    userEvent.type(emailField, userEmail);
     userEvent.clear(passwordField);
-    userEvent.type(passwordField, "password");
+    userEvent.type(passwordField, correctPassword);
 
     const submitButton = screen.getByRole("button", { name: "LOGIN" });
     userEvent.click(submitButton);
@@ -136,9 +143,9 @@ describe("header after logging in", () => {
     const passwordField = screen.getByLabelText(/password/i);
 
     userEvent.clear(emailField);
-    userEvent.type(emailField, "fkub@example.org");
+    userEvent.type(emailField, userEmail);
     userEvent.clear(passwordField);
-    userEvent.type(passwordField, "password");
+    userEvent.type(passwordField, correctPassword);
 
     const submitButton = screen.getByRole("button", { name: "LOGIN" });
     userEvent.click(submitButton);
@@ -168,9 +175,9 @@ describe("header after logging in", () => {
     const passwordField = screen.getByLabelText(/password/i);
 
     userEvent.clear(emailField);
-    userEvent.type(emailField, "fkub@example.org");
+    userEvent.type(emailField, userEmail);
     userEvent.clear(passwordField);
-    userEvent.type(passwordField, "password");
+    userEvent.type(passwordField, correctPassword);
 
     const submitButton = screen.getByRole("button", { name: "LOGIN" });
     userEvent.click(submitButton);

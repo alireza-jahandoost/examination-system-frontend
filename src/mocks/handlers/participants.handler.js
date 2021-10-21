@@ -1,5 +1,6 @@
 import { rest } from "msw";
-import urlConfig from "../constants/urlConfig.constant";
+import { examsPassword } from "../mocks/participants.mock";
+import urlConfig from "../../constants/urlConfig.constant";
 
 const baseUrl = urlConfig.baseUrl;
 
@@ -16,13 +17,13 @@ const participantsHandler = [
       case 3: // for without password exams that are finished
         return res(ctx.status(403));
       case 4: // for have password exams that are not started
-        if (password === "password") {
+        if (password === examsPassword) {
           return res(ctx.status(201));
         } else {
           return res(ctx.status(403));
         }
       case 5: // for have password exams that are started
-        if (password === "password") {
+        if (password === examsPassword) {
           return res(ctx.status(201));
         } else {
           return res(ctx.status(403));

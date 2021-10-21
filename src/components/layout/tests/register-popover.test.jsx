@@ -6,6 +6,13 @@ import {
 import userEvent from "@testing-library/user-event";
 import Layout from "../layout.component";
 import { wait } from "../../../utilities/tests.utility";
+import {
+  userEmail,
+  userName,
+  repeatedEmail,
+  correctPassword,
+  shortPassword,
+} from ".../../../mocks/mocks/authentication.mock";
 
 describe("check register functionality", () => {
   test("user can click register button and then register to the site", async () => {
@@ -24,10 +31,10 @@ describe("check register functionality", () => {
     userEvent.clear(passwordField);
     userEvent.clear(confirmPasswordField);
 
-    userEvent.type(nameField, "test");
-    userEvent.type(emailField, "test@test.com");
-    userEvent.type(passwordField, "1stStrongPassword");
-    userEvent.type(confirmPasswordField, "1stStrongPassword");
+    userEvent.type(nameField, userName);
+    userEvent.type(emailField, userEmail);
+    userEvent.type(passwordField, correctPassword);
+    userEvent.type(confirmPasswordField, correctPassword);
 
     const submitButton = screen.getByRole("button", { name: "REGISTER" });
 
@@ -56,10 +63,10 @@ describe("check register functionality", () => {
     userEvent.clear(passwordField);
     userEvent.clear(confirmPasswordField);
 
-    userEvent.type(nameField, "test");
-    userEvent.type(emailField, "test@test.com");
-    userEvent.type(passwordField, "weak");
-    userEvent.type(confirmPasswordField, "weak");
+    userEvent.type(nameField, userName);
+    userEvent.type(emailField, userEmail);
+    userEvent.type(passwordField, shortPassword);
+    userEvent.type(confirmPasswordField, shortPassword);
 
     const submitButton = screen.getByRole("button", { name: "REGISTER" });
 
@@ -73,8 +80,8 @@ describe("check register functionality", () => {
     userEvent.clear(passwordField);
     userEvent.clear(confirmPasswordField);
 
-    userEvent.type(passwordField, "1stStrongPassword");
-    userEvent.type(confirmPasswordField, "1stStrongPassword");
+    userEvent.type(passwordField, correctPassword);
+    userEvent.type(confirmPasswordField, correctPassword);
 
     userEvent.click(submitButton);
 
@@ -140,10 +147,10 @@ describe("check popover functionality", () => {
     userEvent.clear(passwordField);
     userEvent.clear(confirmPasswordField);
 
-    userEvent.type(nameField, "test");
-    userEvent.type(emailField, "test@test.com");
-    userEvent.type(passwordField, "1stStrongPassword");
-    userEvent.type(confirmPasswordField, "1stStrongPassword");
+    userEvent.type(nameField, userName);
+    userEvent.type(emailField, userEmail);
+    userEvent.type(passwordField, correctPassword);
+    userEvent.type(confirmPasswordField, correctPassword);
 
     const submitButton = screen.getByRole("button", { name: "REGISTER" });
 
@@ -194,9 +201,9 @@ describe("check popover functionality", () => {
     userEvent.clear(confirmPasswordField);
 
     userEvent.type(nameFieldAgain, "test");
-    userEvent.type(emailField, "test@test.com");
-    userEvent.type(passwordField, "1stStrongPassword");
-    userEvent.type(confirmPasswordField, "1stStrongPassword");
+    userEvent.type(emailField, userEmail);
+    userEvent.type(passwordField, correctPassword);
+    userEvent.type(confirmPasswordField, correctPassword);
 
     const submitButton = screen.getByRole("button", { name: "REGISTER" });
 
@@ -227,10 +234,10 @@ describe("check header after registration", () => {
     userEvent.clear(passwordField);
     userEvent.clear(confirmPasswordField);
 
-    userEvent.type(nameField, "test");
-    userEvent.type(emailField, "test@test.com");
-    userEvent.type(passwordField, "1stStrongPassword");
-    userEvent.type(confirmPasswordField, "1stStrongPassword");
+    userEvent.type(nameField, userName);
+    userEvent.type(emailField, userEmail);
+    userEvent.type(passwordField, correctPassword);
+    userEvent.type(confirmPasswordField, correctPassword);
 
     const submitButton = screen.getByRole("button", { name: "REGISTER" });
 
@@ -266,10 +273,10 @@ describe("check header after registration", () => {
     userEvent.clear(passwordField);
     userEvent.clear(confirmPasswordField);
 
-    userEvent.type(nameField, "test");
-    userEvent.type(emailField, "test@test.com");
-    userEvent.type(passwordField, "1stStrongPassword");
-    userEvent.type(confirmPasswordField, "1stStrongPassword");
+    userEvent.type(nameField, userName);
+    userEvent.type(emailField, userEmail);
+    userEvent.type(passwordField, correctPassword);
+    userEvent.type(confirmPasswordField, correctPassword);
 
     const submitButton = screen.getByRole("button", { name: "REGISTER" });
 

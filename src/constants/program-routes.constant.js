@@ -8,6 +8,10 @@ const programRoutes = {
   indexParticipatedExams: "/exams/participated-exams",
   indexCreatedExams: "/exams/created-exams",
   createExam: "/exams/create-new-exam",
+
+  // Authentication
+  login: `/login`,
+  register: `/register`,
 };
 
 export default programRoutes;

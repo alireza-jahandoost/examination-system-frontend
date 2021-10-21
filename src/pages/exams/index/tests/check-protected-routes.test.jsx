@@ -5,6 +5,10 @@ import {
 import programRoutes from "../../../../constants/program-routes.constant";
 import App from "../../../../App";
 import userEvent from "@testing-library/user-event";
+import {
+  userEmail,
+  correctPassword,
+} from "../../../../mocks/mocks/authentication.mock";
 
 test("created-exams route is not accessible without authentication", async () => {
   renderWithRouter(<App />, { route: programRoutes.indexCreatedExams });
@@ -20,8 +24,8 @@ test("created-exams route is not accessible without authentication", async () =>
   userEvent.clear(emailField);
   userEvent.clear(passwordField);
 
-  userEvent.type(emailField, "fkub@example.org");
-  userEvent.type(passwordField, "password");
+  userEvent.type(emailField, userEmail);
+  userEvent.type(passwordField, correctPassword);
 
   const submitButton = screen.getByRole("button", { name: "LOGIN" });
   userEvent.click(submitButton);
@@ -50,8 +54,8 @@ test("participated-exams route is not accessible without authentication", async 
   userEvent.clear(emailField);
   userEvent.clear(passwordField);
 
-  userEvent.type(emailField, "fkub@example.org");
-  userEvent.type(passwordField, "password");
+  userEvent.type(emailField, userEmail);
+  userEvent.type(passwordField, correctPassword);
 
   const submitButton = screen.getByRole("button", { name: "LOGIN" });
   userEvent.click(submitButton);
@@ -82,8 +86,8 @@ test("create-exam route is not accessible without authentication", async () => {
   userEvent.clear(emailField);
   userEvent.clear(passwordField);
 
-  userEvent.type(emailField, "fkub@example.org");
-  userEvent.type(passwordField, "password");
+  userEvent.type(emailField, userEmail);
+  userEvent.type(passwordField, correctPassword);
 
   const submitButton = screen.getByRole("button", { name: "LOGIN" });
   userEvent.click(submitButton);

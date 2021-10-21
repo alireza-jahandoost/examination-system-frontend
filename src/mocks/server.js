@@ -2,9 +2,9 @@
 
 import { setupServer } from "msw/node";
 
-import examsHandler from "./exams.handler";
-import authenticationHandler from "./authentication.handler";
-import participantsHandler from "./participants.handler";
+import examsHandler from "./handlers/exams.handler";
+import authenticationHandler from "./handlers/authentication.handler";
+import participantsHandler from "./handlers/participants.handler";
 
 // This configures a request mocking server with the given request handlers.
 

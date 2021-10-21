@@ -1,7 +1,13 @@
 import { render, screen } from "../../../test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
 import Layout from "../layout.component";
-import { wait } from "../../../utilities/tests.utility";
+import {
+  userEmail,
+  userName,
+  repeatedEmail,
+  correctPassword,
+  shortPassword,
+} from "../../../mocks/mocks/authentication.mock";
 
 describe("check errors of login and register don't have conflict", () => {
   test("if user get error from login, he can close the popover and register to site", async () => {
@@ -18,7 +24,7 @@ describe("check errors of login and register don't have conflict", () => {
 
     userEvent.clear(loginEmailField);
     userEvent.clear(loginPasswordField);
-    userEvent.type(loginEmailField, "test@test.com");
+    userEvent.type(loginEmailField, userEmail);
     userEvent.type(loginPasswordField, "wrongPassword");
 
     const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
@@ -48,10 +54,10 @@ describe("check errors of login and register don't have conflict", () => {
     userEvent.clear(registerPasswordField);
     userEvent.clear(registerConfirmPasswordField);
 
-    userEvent.type(registerNameField, "test");
-    userEvent.type(registerEmailField, "test@test.com");
-    userEvent.type(registerPasswordField, "1stStrongPassword");
-    userEvent.type(registerConfirmPasswordField, "1stStrongPassword");
+    userEvent.type(registerNameField, userName);
+    userEvent.type(registerEmailField, userEmail);
+    userEvent.type(registerPasswordField, correctPassword);
+    userEvent.type(registerConfirmPasswordField, correctPassword);
 
     const registerSubmitButton = screen.getByRole("button", {
       name: "REGISTER",
@@ -85,10 +91,10 @@ describe("check errors of login and register don't have conflict", () => {
     userEvent.clear(registerPasswordField);
     userEvent.clear(registerConfirmPasswordField);
 
-    userEvent.type(registerNameField, "test");
-    userEvent.type(registerEmailField, "test@test.com");
-    userEvent.type(registerPasswordField, "weak");
-    userEvent.type(registerConfirmPasswordField, "weak");
+    userEvent.type(registerNameField, userName);
+    userEvent.type(registerEmailField, userEmail);
+    userEvent.type(registerPasswordField, shortPassword);
+    userEvent.type(registerConfirmPasswordField, shortPassword);
 
     const registerSubmitButton = screen.getByRole("button", {
       name: "REGISTER",
@@ -117,8 +123,8 @@ describe("check errors of login and register don't have conflict", () => {
 
     userEvent.clear(loginEmailField);
     userEvent.clear(loginPasswordField);
-    userEvent.type(loginEmailField, "fkub@example.org");
-    userEvent.type(loginPasswordField, "password");
+    userEvent.type(loginEmailField, userEmail);
+    userEvent.type(loginPasswordField, correctPassword);
 
     const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
     userEvent.click(loginSubmitButton);
@@ -142,7 +148,7 @@ describe("check user can move from login to register popover", () => {
 
     userEvent.clear(loginEmailField);
     userEvent.clear(loginPasswordField);
-    userEvent.type(loginEmailField, "test@test.com");
+    userEvent.type(loginEmailField, userEmail);
     userEvent.type(loginPasswordField, "wrongPassword");
 
     const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
@@ -172,10 +178,10 @@ describe("check user can move from login to register popover", () => {
     userEvent.clear(registerPasswordField);
     userEvent.clear(registerConfirmPasswordField);
 
-    userEvent.type(registerNameField, "test");
-    userEvent.type(registerEmailField, "test@test.com");
-    userEvent.type(registerPasswordField, "1stStrongPassword");
-    userEvent.type(registerConfirmPasswordField, "1stStrongPassword");
+    userEvent.type(registerNameField, userName);
+    userEvent.type(registerEmailField, userEmail);
+    userEvent.type(registerPasswordField, correctPassword);
+    userEvent.type(registerConfirmPasswordField, correctPassword);
 
     const registerSubmitButton = screen.getByRole("button", {
       name: "REGISTER",
@@ -210,10 +216,10 @@ describe("check user can move from register to login popover", () => {
     userEvent.clear(registerPasswordField);
     userEvent.clear(registerConfirmPasswordField);
 
-    userEvent.type(registerNameField, "test");
-    userEvent.type(registerEmailField, "test@test.com");
-    userEvent.type(registerPasswordField, "weak");
-    userEvent.type(registerConfirmPasswordField, "weak");
+    userEvent.type(registerNameField, userName);
+    userEvent.type(registerEmailField, userEmail);
+    userEvent.type(registerPasswordField, shortPassword);
+    userEvent.type(registerConfirmPasswordField, shortPassword);
 
     const registerSubmitButton = screen.getByRole("button", {
       name: "REGISTER",
@@ -239,8 +245,8 @@ describe("check user can move from register to login popover", () => {
 
     userEvent.clear(loginEmailField);
     userEvent.clear(loginPasswordField);
-    userEvent.type(loginEmailField, "fkub@example.org");
-    userEvent.type(loginPasswordField, "password");
+    userEvent.type(loginEmailField, userEmail);
+    userEvent.type(loginPasswordField, correctPassword);
 
     const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
     userEvent.click(loginSubmitButton);
@@ -264,7 +270,7 @@ describe("check that errors are removed when the component is unmounted and moun
 
     userEvent.clear(loginEmailField);
     userEvent.clear(loginPasswordField);
-    userEvent.type(loginEmailField, "test@test.com");
+    userEvent.type(loginEmailField, userEmail);
     userEvent.type(loginPasswordField, "wrongPassword");
 
     const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
@@ -301,7 +307,7 @@ describe("check that errors are removed when the component is unmounted and moun
 
     userEvent.clear(loginEmailField);
     userEvent.clear(loginPasswordField);
-    userEvent.type(loginEmailField, "test@test.com");
+    userEvent.type(loginEmailField, userEmail);
     userEvent.type(loginPasswordField, "wrongPassword");
 
     const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
@@ -338,10 +344,10 @@ describe("check that errors are removed when the component is unmounted and moun
     userEvent.clear(registerPasswordField);
     userEvent.clear(registerConfirmPasswordField);
 
-    userEvent.type(registerNameField, "test");
-    userEvent.type(registerEmailField, "test@test.com");
-    userEvent.type(registerPasswordField, "weak");
-    userEvent.type(registerConfirmPasswordField, "weak");
+    userEvent.type(registerNameField, userName);
+    userEvent.type(registerEmailField, userEmail);
+    userEvent.type(registerPasswordField, shortPassword);
+    userEvent.type(registerConfirmPasswordField, shortPassword);
 
     const registerSubmitButton = screen.getByRole("button", {
       name: "REGISTER",
@@ -389,10 +395,10 @@ describe("check that errors are removed when the component is unmounted and moun
     userEvent.clear(registerPasswordField);
     userEvent.clear(registerConfirmPasswordField);
 
-    userEvent.type(registerNameField, "test");
-    userEvent.type(registerEmailField, "test@test.com");
-    userEvent.type(registerPasswordField, "weak");
-    userEvent.type(registerConfirmPasswordField, "weak");
+    userEvent.type(registerNameField, userName);
+    userEvent.type(registerEmailField, userEmail);
+    userEvent.type(registerPasswordField, shortPassword);
+    userEvent.type(registerConfirmPasswordField, shortPassword);
 
     const registerSubmitButton = screen.getByRole("button", {
       name: "REGISTER",

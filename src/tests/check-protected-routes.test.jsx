@@ -2,6 +2,7 @@ import { screen, renderWithRouter } from "../test-utils/testing-library-utils";
 import programRoutes from "../constants/program-routes.constant";
 import App from "../App";
 import userEvent from "@testing-library/user-event";
+import { userEmail, correctPassword } from "../mocks/mocks/authentication.mock";
 
 test("profile routes are not accessible without authentication", async () => {
   renderWithRouter(<App />, { route: programRoutes.profile });
@@ -17,8 +18,8 @@ test("profile routes are not accessible without authentication", async () => {
   userEvent.clear(emailField);
   userEvent.clear(passwordField);
 
-  userEvent.type(emailField, "fkub@example.org");
-  userEvent.type(passwordField, "password");
+  userEvent.type(emailField, userEmail);
+  userEvent.type(passwordField, correctPassword);
 
   const submitButton = screen.getByRole("button", { name: "LOGIN" });
   userEvent.click(submitButton);

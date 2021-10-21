@@ -9,6 +9,12 @@ import {
 } from "../../../../../utilities/tests.utility";
 import App from "../../../../../App";
 import userEvent from "@testing-library/user-event";
+import {
+  userEmail,
+  correctPassword,
+} from "../../../../../mocks/mocks/authentication.mock";
+import { examsPassword } from "../../../../../mocks/mocks/participants.mock";
+import programRoutes from "../../../../../constants/program-routes.constant";
 
 describe("authenticated user can register to exam", () => {
   test("user can authenticate and then register to not started exam in desktop", async () => {
@@ -17,7 +23,9 @@ describe("authenticated user can register to exam", () => {
       new Date(Date.now() + 5000 * 60),
       new Date(Date.now() + 3600 * 1000)
     );
-    renderWithRouter(wrapWithWidth(<App />, 1300), { route: "/exams" });
+    renderWithRouter(wrapWithWidth(<App />, 1300), {
+      route: programRoutes.indexAllExams,
+    });
     await wait(200);
 
     // click login button
@@ -31,8 +39,8 @@ describe("authenticated user can register to exam", () => {
 
     userEvent.clear(loginEmailField);
     userEvent.clear(loginPasswordField);
-    userEvent.type(loginEmailField, "fkub@example.org");
-    userEvent.type(loginPasswordField, "password");
+    userEvent.type(loginEmailField, userEmail);
+    userEvent.type(loginPasswordField, correctPassword);
 
     const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
     userEvent.click(loginSubmitButton);
@@ -73,7 +81,9 @@ describe("authenticated user can register to exam", () => {
       new Date(Date.now() + 5000 * 60),
       new Date(Date.now() + 3600 * 1000)
     );
-    renderWithRouter(wrapWithWidth(<App />, 500), { route: "/exams" });
+    renderWithRouter(wrapWithWidth(<App />, 500), {
+      route: programRoutes.indexAllExams,
+    });
     await wait(200);
 
     // click login button
@@ -87,8 +97,8 @@ describe("authenticated user can register to exam", () => {
 
     userEvent.clear(loginEmailField);
     userEvent.clear(loginPasswordField);
-    userEvent.type(loginEmailField, "fkub@example.org");
-    userEvent.type(loginPasswordField, "password");
+    userEvent.type(loginEmailField, userEmail);
+    userEvent.type(loginPasswordField, correctPassword);
 
     const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
     userEvent.click(loginSubmitButton);
@@ -130,7 +140,9 @@ describe("authenticated user can register to exam", () => {
       new Date(Date.now() + 3600 * 1000),
       true
     );
-    renderWithRouter(wrapWithWidth(<App />, 1300), { route: "/exams" });
+    renderWithRouter(wrapWithWidth(<App />, 1300), {
+      route: programRoutes.indexAllExams,
+    });
     await wait(200);
 
     // click login button
@@ -144,8 +156,8 @@ describe("authenticated user can register to exam", () => {
 
     userEvent.clear(loginEmailField);
     userEvent.clear(loginPasswordField);
-    userEvent.type(loginEmailField, "fkub@example.org");
-    userEvent.type(loginPasswordField, "password");
+    userEvent.type(loginEmailField, userEmail);
+    userEvent.type(loginPasswordField, correctPassword);
 
     const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
     userEvent.click(loginSubmitButton);
@@ -167,7 +179,7 @@ describe("authenticated user can register to exam", () => {
       /exam password/i
     );
     userEvent.clear(registerExamPasswordField);
-    userEvent.type(registerExamPasswordField, "password");
+    userEvent.type(registerExamPasswordField, examsPassword);
 
     const registerButton = screen.getByRole("button", {
       name: /register to exam/i,
@@ -193,7 +205,9 @@ describe("authenticated user can register to exam", () => {
       new Date(Date.now() + 3600 * 1000),
       true
     );
-    renderWithRouter(wrapWithWidth(<App />, 500), { route: "/exams" });
+    renderWithRouter(wrapWithWidth(<App />, 500), {
+      route: programRoutes.indexAllExams,
+    });
     await wait(200);
 
     // click login button
@@ -207,8 +221,8 @@ describe("authenticated user can register to exam", () => {
 
     userEvent.clear(loginEmailField);
     userEvent.clear(loginPasswordField);
-    userEvent.type(loginEmailField, "fkub@example.org");
-    userEvent.type(loginPasswordField, "password");
+    userEvent.type(loginEmailField, userEmail);
+    userEvent.type(loginPasswordField, correctPassword);
 
     const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
     userEvent.click(loginSubmitButton);
@@ -230,7 +244,7 @@ describe("authenticated user can register to exam", () => {
       /exam password/i
     );
     userEvent.clear(registerExamPasswordField);
-    userEvent.type(registerExamPasswordField, "password");
+    userEvent.type(registerExamPasswordField, examsPassword);
 
     const registerButton = screen.getByRole("button", {
       name: /register to exam/i,
@@ -256,7 +270,9 @@ describe("authenticated user can register to exam", () => {
       new Date(Date.now() + 3600 * 1000),
       true
     );
-    renderWithRouter(wrapWithWidth(<App />, 1300), { route: "/exams" });
+    renderWithRouter(wrapWithWidth(<App />, 1300), {
+      route: programRoutes.indexAllExams,
+    });
     await wait(200);
 
     // click login button
@@ -270,8 +286,8 @@ describe("authenticated user can register to exam", () => {
 
     userEvent.clear(loginEmailField);
     userEvent.clear(loginPasswordField);
-    userEvent.type(loginEmailField, "fkub@example.org");
-    userEvent.type(loginPasswordField, "password");
+    userEvent.type(loginEmailField, userEmail);
+    userEvent.type(loginPasswordField, correctPassword);
 
     const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
     userEvent.click(loginSubmitButton);
@@ -319,7 +335,9 @@ describe("authenticated user can register to exam", () => {
       new Date(Date.now() + 3600 * 1000),
       true
     );
-    renderWithRouter(wrapWithWidth(<App />, 500), { route: "/exams" });
+    renderWithRouter(wrapWithWidth(<App />, 500), {
+      route: programRoutes.indexAllExams,
+    });
     await wait(200);
 
     // click login button
@@ -333,8 +351,8 @@ describe("authenticated user can register to exam", () => {
 
     userEvent.clear(loginEmailField);
     userEvent.clear(loginPasswordField);
-    userEvent.type(loginEmailField, "fkub@example.org");
-    userEvent.type(loginPasswordField, "password");
+    userEvent.type(loginEmailField, userEmail);
+    userEvent.type(loginPasswordField, correctPassword);
 
     const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
     userEvent.click(loginSubmitButton);
@@ -382,7 +400,9 @@ describe("authenticated user can register to exam", () => {
       new Date(Date.now() + 3600 * 1000),
       true
     );
-    renderWithRouter(wrapWithWidth(<App />, 1300), { route: "/exams" });
+    renderWithRouter(wrapWithWidth(<App />, 1300), {
+      route: programRoutes.indexAllExams,
+    });
     await wait(200);
 
     // click login button
@@ -396,8 +416,8 @@ describe("authenticated user can register to exam", () => {
 
     userEvent.clear(loginEmailField);
     userEvent.clear(loginPasswordField);
-    userEvent.type(loginEmailField, "fkub@example.org");
-    userEvent.type(loginPasswordField, "password");
+    userEvent.type(loginEmailField, userEmail);
+    userEvent.type(loginPasswordField, correctPassword);
 
     const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
     userEvent.click(loginSubmitButton);
@@ -440,7 +460,7 @@ describe("authenticated user can register to exam", () => {
 
     //register again with correct password
     userEvent.clear(registerExamPasswordField);
-    userEvent.type(registerExamPasswordField, "password");
+    userEvent.type(registerExamPasswordField, examsPassword);
 
     expect(registerButton).toBeEnabled();
     userEvent.click(registerButton);
@@ -463,7 +483,9 @@ describe("authenticated user can register to exam", () => {
       new Date(Date.now() + 3600 * 1000),
       true
     );
-    renderWithRouter(wrapWithWidth(<App />, 1300), { route: "/exams" });
+    renderWithRouter(wrapWithWidth(<App />, 1300), {
+      route: programRoutes.indexAllExams,
+    });
     await wait(200);
 
     // click login button
@@ -477,8 +499,8 @@ describe("authenticated user can register to exam", () => {
 
     userEvent.clear(loginEmailField);
     userEvent.clear(loginPasswordField);
-    userEvent.type(loginEmailField, "fkub@example.org");
-    userEvent.type(loginPasswordField, "password");
+    userEvent.type(loginEmailField, userEmail);
+    userEvent.type(loginPasswordField, correctPassword);
 
     const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
     userEvent.click(loginSubmitButton);
@@ -521,7 +543,7 @@ describe("authenticated user can register to exam", () => {
 
     //register again with correct password
     userEvent.clear(registerExamPasswordField);
-    userEvent.type(registerExamPasswordField, "password");
+    userEvent.type(registerExamPasswordField, examsPassword);
 
     expect(registerButton).toBeEnabled();
     userEvent.click(registerButton);
@@ -544,7 +566,9 @@ describe("authenticated user can register to exam", () => {
       new Date(Date.now() + 3600 * 1000),
       true
     );
-    renderWithRouter(wrapWithWidth(<App />, 1300), { route: "/exams" });
+    renderWithRouter(wrapWithWidth(<App />, 1300), {
+      route: programRoutes.indexAllExams,
+    });
     await wait(200);
 
     // click login button
@@ -558,8 +582,8 @@ describe("authenticated user can register to exam", () => {
 
     userEvent.clear(loginEmailField);
     userEvent.clear(loginPasswordField);
-    userEvent.type(loginEmailField, "fkub@example.org");
-    userEvent.type(loginPasswordField, "password");
+    userEvent.type(loginEmailField, userEmail);
+    userEvent.type(loginPasswordField, correctPassword);
 
     const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
     userEvent.click(loginSubmitButton);
@@ -624,7 +648,9 @@ describe("authenticated user can register to exam", () => {
       new Date(Date.now() + 3600 * 1000),
       true
     );
-    renderWithRouter(wrapWithWidth(<App />, 1300), { route: "/exams" });
+    renderWithRouter(wrapWithWidth(<App />, 1300), {
+      route: programRoutes.indexAllExams,
+    });
     await wait(200);
 
     // click login button
@@ -638,8 +664,8 @@ describe("authenticated user can register to exam", () => {
 
     userEvent.clear(loginEmailField);
     userEvent.clear(loginPasswordField);
-    userEvent.type(loginEmailField, "fkub@example.org");
-    userEvent.type(loginPasswordField, "password");
+    userEvent.type(loginEmailField, userEmail);
+    userEvent.type(loginPasswordField, correctPassword);
 
     const loginSubmitButton = screen.getByRole("button", { name: "LOGIN" });
     userEvent.click(loginSubmitButton);
