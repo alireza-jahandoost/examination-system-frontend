@@ -46,6 +46,7 @@ describe("an authenticated user can register in an started exam that did not fin
     const ElementmoreDetailsButton = moreDetailsButtons[0];
 
     userEvent.click(ElementmoreDetailsButton);
+    await wait(100);
 
     // end
 
@@ -102,7 +103,7 @@ describe("an authenticated user can register in an started exam that did not fin
     const ElementmoreDetailsButton = moreDetailsButtons[0];
 
     userEvent.click(ElementmoreDetailsButton);
-
+    await wait(100);
     // end
 
     // register to exam description without password
@@ -159,6 +160,7 @@ describe("an authenticated user can register in an started exam that did not fin
     const ElementmoreDetailsButton = moreDetailsButtons[3];
 
     userEvent.click(ElementmoreDetailsButton);
+    await wait(100);
     // end
 
     // register to exam description with password
@@ -221,6 +223,7 @@ describe("an authenticated user can register in an started exam that did not fin
     const ElementmoreDetailsButton = moreDetailsButtons[3];
 
     userEvent.click(ElementmoreDetailsButton);
+    await wait(100);
     // end
 
     // register to exam description with password

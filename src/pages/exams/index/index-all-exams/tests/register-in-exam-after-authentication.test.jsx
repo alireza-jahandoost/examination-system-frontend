@@ -46,6 +46,7 @@ describe("authenticated user can register to exam", () => {
     const ElementmoreDetailsButton = moreDetailsButtons[0];
 
     userEvent.click(ElementmoreDetailsButton);
+    await wait(100);
     // end
 
     // register to exam description without password
@@ -101,6 +102,7 @@ describe("authenticated user can register to exam", () => {
     const ElementmoreDetailsButton = moreDetailsButtons[0];
 
     userEvent.click(ElementmoreDetailsButton);
+    await wait(100);
     // end
 
     // register to exam description without password
@@ -157,6 +159,7 @@ describe("authenticated user can register to exam", () => {
     const ElementmoreDetailsButton = moreDetailsButtons[3];
 
     userEvent.click(ElementmoreDetailsButton);
+    await wait(100);
     // end
 
     // register to exam description with password
@@ -219,6 +222,7 @@ describe("authenticated user can register to exam", () => {
     const ElementmoreDetailsButton = moreDetailsButtons[3];
 
     userEvent.click(ElementmoreDetailsButton);
+    await wait(100);
     // end
 
     // register to exam description with password
@@ -281,6 +285,7 @@ describe("authenticated user can register to exam", () => {
     const ElementmoreDetailsButton = moreDetailsButtons[3];
 
     userEvent.click(ElementmoreDetailsButton);
+    await wait(100);
     // end
 
     // register to exam description with wrong password
@@ -343,6 +348,7 @@ describe("authenticated user can register to exam", () => {
     const ElementmoreDetailsButton = moreDetailsButtons[3];
 
     userEvent.click(ElementmoreDetailsButton);
+    await wait(100);
     // end
 
     // register to exam description with wrong password
@@ -405,6 +411,7 @@ describe("authenticated user can register to exam", () => {
     const ElementmoreDetailsButton = moreDetailsButtons[3];
 
     userEvent.click(ElementmoreDetailsButton);
+    await wait(100);
     // end
 
     // register to exam description with wrong password
@@ -485,6 +492,7 @@ describe("authenticated user can register to exam", () => {
     const ElementmoreDetailsButton = moreDetailsButtons[3];
 
     userEvent.click(ElementmoreDetailsButton);
+    await wait(100);
     // end
 
     // register to exam description with wrong password
@@ -565,6 +573,7 @@ describe("authenticated user can register to exam", () => {
     const ElementmoreDetailsButton = moreDetailsButtons[3];
 
     userEvent.click(ElementmoreDetailsButton);
+    await wait(100);
     // end
 
     // register to exam description with wrong password
@@ -598,6 +607,7 @@ describe("authenticated user can register to exam", () => {
 
     // reopen exam description
     userEvent.click(ElementmoreDetailsButton);
+    await wait(100);
     // end
 
     // check removed error
@@ -643,6 +653,7 @@ describe("authenticated user can register to exam", () => {
     const ElementmoreDetailsButton = moreDetailsButtons[3];
 
     userEvent.click(ElementmoreDetailsButton);
+    await wait(100);
     // end
 
     // register to exam description with wrong password
@@ -676,6 +687,7 @@ describe("authenticated user can register to exam", () => {
 
     // reopen exam description
     userEvent.click(ElementmoreDetailsButton);
+    await wait(100);
     // end
 
     // check removed error
