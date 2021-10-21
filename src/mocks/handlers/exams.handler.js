@@ -9,7 +9,10 @@ import {
   examShowId_2,
   examShowId_3,
   examShowId_4,
+  examShowId_5_withPassword,
 } from "../mocks/exams.mock";
+
+import { undefinedExamName } from "../errors/failed-exam-creation.error";
 
 const examsHandler = [
   rest.get(apiRoutes.exams.indexAllExams(), (req, res, ctx) => {
@@ -48,6 +51,28 @@ const examsHandler = [
 
       default:
         return res(ctx.status(404));
+    }
+  }),
+  rest.post(`${apiRoutes.exams.indexAllExams()}`, (req, res, ctx) => {
+    const {
+      exam_name,
+      needs_confirmation,
+      start_of_exam,
+      end_of_exam,
+      total_score,
+      password,
+    } = req.body;
+    console.log(req);
+
+    if (exam_name === undefined) {
+      return res.json(undefinedExamName);
+    }
+    if (!needs_confirmation || !start_of_exam || !end_of_exam || !total_score) {
+      throw Error("unforeseen input variables");
+    } else if (!password) {
+      return res.json(examShowId_1);
+    } else {
+      return res.json(examShowId_5_withPassword);
     }
   }),
 ];

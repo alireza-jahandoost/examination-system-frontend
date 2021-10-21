@@ -930,3 +930,23 @@ export const examShowId_4 = {
     },
   },
 };
+
+export const examShowId_5_withPassword = {
+  data: {
+    exam: {
+      exam_id: 53,
+      exam_name: "test",
+      needs_confirmation: false,
+      has_password: true,
+      start_of_exam: "2021-11-11 11:11:11",
+      end_of_exam: "2021-11-11 11:11:11",
+      total_score: 20,
+      creation_time: "2021-10-21T15:47:26.000000Z",
+      last_update: "2021-10-21T15:47:26.000000Z",
+      owner_id: 1,
+      owner_name: "Eli Abernathy",
+      owner_link: "http://localhost:8000/api/users/1",
+      is_registered: false,
+    },
+  },
+};
