@@ -5,6 +5,7 @@ import TextInput from "../../../components/inputs/text-input.component";
 import NumberInput from "../../../components/inputs/number-input.component";
 import TextareaInput from "../../../components/inputs/textarea-input.component";
 import CheckboxInput from "../../../components/inputs/checkbox-input.component";
+import PasswordInput from "../../../components/inputs/password-input.component";
 
 const CreateExamForm = () => {
   const [needsPassword, setNeedsPassword] = useState(false);
@@ -81,7 +82,7 @@ const CreateExamForm = () => {
         </Col>
         {needsPassword && (
           <Col xs={12} md={6} xl={4}>
-            <TextInput
+            <PasswordInput
               label="Password"
               id="exam-password"
               inputProps={{ placeholder: "Exam's Password" }}
