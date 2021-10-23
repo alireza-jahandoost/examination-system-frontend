@@ -53,7 +53,7 @@ const examsHandler = [
         return res(ctx.status(404));
     }
   }),
-  rest.post(`${apiRoutes.exams.indexAllExams()}`, (req, res, ctx) => {
+  rest.post(`${apiRoutes.exams.createExam()}`, (req, res, ctx) => {
     const {
       exam_name,
       needs_confirmation,
@@ -62,17 +62,21 @@ const examsHandler = [
       total_score,
       password,
     } = req.body;
-    console.log(req);
 
-    if (exam_name === undefined) {
-      return res.json(undefinedExamName);
+    if (!exam_name) {
+      return res(ctx.json(undefinedExamName), ctx.status(422));
     }
-    if (!needs_confirmation || !start_of_exam || !end_of_exam || !total_score) {
+    if (
+      needs_confirmation === undefined ||
+      start_of_exam === undefined ||
+      end_of_exam === undefined ||
+      total_score === undefined
+    ) {
       throw Error("unforeseen input variables");
     } else if (!password) {
-      return res.json(examShowId_1);
+      return res(ctx.json(examShowId_1), ctx.status(201));
     } else {
-      return res.json(examShowId_5_withPassword);
+      return res(ctx.json(examShowId_5_withPassword), ctx.status(201));
     }
   }),
 ];

@@ -23,3 +23,12 @@ export const examsShowRequest = async (examId, token = "") => {
     headers: hdrs,
   });
 };
+
+export const examsStoreRequest = (token, body) => {
+  return axios.post(apiRoutes.exams.createExam(), body, {
+    headers: {
+      accept: "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  });
+};

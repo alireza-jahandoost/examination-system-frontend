@@ -1,8 +1,12 @@
 import { render } from "@testing-library/react";
-import { AuthenticationProvider } from "../contexts/authentication-context/authentication.context";
+import {
+  AuthenticationProvider,
+  AuthenticationContext,
+} from "../contexts/authentication-context/authentication.context";
 import { BrowserRouter as Router } from "react-router-dom";
 import { NotificationProvider } from "../contexts/notification-context/notification.context";
 import { MemoryRouter } from "react-router-dom";
+import { userMock } from "../mocks/mocks/authentication.mock";
 
 const wrapper = ({ children }) => {
   return (
@@ -24,6 +28,43 @@ export const renderWithRouter = (
   window.history.pushState({}, "Test page", route);
 
   return render(ui, { wrapper: withContexts ? wrapper : MemoryRouter });
+};
+
+export const renderWithAuthentication = (
+  ui,
+  { route = "/", authenticationProviderProps = {} } = {}
+) => {
+  window.history.pushState({}, "Test page", route);
+
+  const authenticatedUserWrapper = ({ children }) => {
+    return (
+      <Router>
+        <NotificationProvider>
+          <AuthenticationContext.Provider
+            value={{
+              user: userMock.data.user,
+              login: jest.fn(),
+              register: jest.fn(),
+              errors: {},
+              isLoading: false,
+              popover: "",
+              changePopover: jest.fn(),
+              resetErrors: jest.fn(),
+              token: userMock.data.token,
+              isUserAuthenticated: true,
+              showUserLoginPopover: jest.fn(),
+              redirectIfNotAuthenticated: jest.fn(),
+              ...authenticationProviderProps,
+            }}
+          >
+            {children}
+          </AuthenticationContext.Provider>
+        </NotificationProvider>
+      </Router>
+    );
+  };
+
+  return render(ui, { wrapper: authenticatedUserWrapper });
 };
 
 export * from "@testing-library/react";

@@ -13,6 +13,7 @@ const programRoutes = {
   indexParticipatedExams: () => `/exams/participated-exams`,
   indexCreatedExams: () => `/exams/created-exams`,
   createExam: () => `/exams/create-new-exam`,
+  updateExam: (examId) => `/exams/${examId}/edit`,
 
   // Authentication
   login: () => `/login`,
