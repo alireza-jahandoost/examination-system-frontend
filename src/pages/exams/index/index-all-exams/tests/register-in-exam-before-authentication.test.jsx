@@ -25,6 +25,7 @@ describe("unauthenticated user can register to exam if authenticate with opened 
     );
     renderWithRouter(wrapWithWidth(<App />, 1300), {
       route: programRoutes.indexAllExams(),
+      withContexts: true,
     });
     await wait(200);
 
@@ -83,6 +84,7 @@ describe("unauthenticated user can register to exam if authenticate with opened 
     );
     renderWithRouter(wrapWithWidth(<App />, 500), {
       route: programRoutes.indexAllExams(),
+      withContexts: true,
     });
     await wait(200);
 
@@ -141,6 +143,7 @@ describe("unauthenticated user can register to exam if authenticate with opened 
     );
     renderWithRouter(wrapWithWidth(<App />, 1300), {
       route: programRoutes.indexAllExams(),
+      withContexts: true,
     });
     await wait(200);
 
@@ -219,6 +222,7 @@ describe("unauthenticated user can register to exam if authenticate with opened 
     );
     renderWithRouter(wrapWithWidth(<App />, 500), {
       route: programRoutes.indexAllExams(),
+      withContexts: true,
     });
     await wait(200);
 

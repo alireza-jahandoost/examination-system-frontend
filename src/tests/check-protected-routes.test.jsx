@@ -5,7 +5,10 @@ import userEvent from "@testing-library/user-event";
 import { userEmail, correctPassword } from "../mocks/mocks/authentication.mock";
 
 test.only("profile routes are not accessible without authentication", async () => {
-  renderWithRouter(<App />, { route: programRoutes.profile() });
+  renderWithRouter(<App />, {
+    route: programRoutes.profile(),
+    withContexts: true,
+  });
 
   expect(window.location.pathname).toBe("/");
 

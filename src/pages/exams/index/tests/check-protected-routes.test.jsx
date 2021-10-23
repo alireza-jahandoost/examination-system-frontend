@@ -11,7 +11,10 @@ import {
 } from "../../../../mocks/mocks/authentication.mock";
 
 test("created-exams route is not accessible without authentication", async () => {
-  renderWithRouter(<App />, { route: programRoutes.indexCreatedExams() });
+  renderWithRouter(<App />, {
+    route: programRoutes.indexCreatedExams(),
+    withContexts: true,
+  });
 
   expect(window.location.pathname).toBe("/");
 
@@ -41,7 +44,10 @@ test("created-exams route is not accessible without authentication", async () =>
 });
 
 test("participated-exams route is not accessible without authentication", async () => {
-  renderWithRouter(<App />, { route: programRoutes.indexParticipatedExams() });
+  renderWithRouter(<App />, {
+    route: programRoutes.indexParticipatedExams(),
+    withContexts: true,
+  });
 
   expect(window.location.pathname).toBe("/");
 
@@ -73,7 +79,10 @@ test("participated-exams route is not accessible without authentication", async 
 });
 
 test("create-exam route is not accessible without authentication", async () => {
-  renderWithRouter(<App />, { route: programRoutes.createExam() });
+  renderWithRouter(<App />, {
+    route: programRoutes.createExam(),
+    withContexts: true,
+  });
 
   expect(window.location.pathname).toBe("/");
 

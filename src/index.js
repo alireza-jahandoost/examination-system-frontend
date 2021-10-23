@@ -2,12 +2,21 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter as Router } from "react-router-dom";
+import { AuthenticationProvider } from "./contexts/authentication-context/authentication.context";
+import { NotificationProvider } from "./contexts/notification-context/notification.context";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <NotificationProvider>
+        <AuthenticationProvider>
+          <App />
+        </AuthenticationProvider>
+      </NotificationProvider>
+    </Router>
   </React.StrictMode>,
   document.getElementById("root")
 );
