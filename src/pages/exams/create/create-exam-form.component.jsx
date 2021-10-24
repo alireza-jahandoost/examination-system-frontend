@@ -16,6 +16,7 @@ import { examsStoreRequest } from "../../../services/exams/exams.service";
 
 import { AuthenticationContext } from "../../../contexts/authentication-context/authentication.context";
 import { NotificationContext } from "../../../contexts/notification-context/notification.context";
+import { convertToUTC } from "../../../utilities/dateAndTime.utility";
 
 const CreateExamForm = () => {
   const [needsPassword, setNeedsPassword] = useState(false);
@@ -32,12 +33,6 @@ const CreateExamForm = () => {
   const { createNotification } = useContext(NotificationContext);
   const isMounted = useMountedState();
   const history = useHistory();
-
-  const convertToUTC = (datetime) => {
-    return moment(datetime, "YYYY-MM-DD HH:mm:ss")
-      .utc()
-      .format("YYYY-MM-DD HH:mm:ss");
-  };
 
   const handleSubmit = (e) => {
     const bodyOfRequest = {

@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const convertDateTimeToObject = (dateTimeString) => {
   const [firstPart, secondPart] = dateTimeString.split(" ");
 
@@ -61,4 +63,10 @@ export const convertObjectToString = (obj) => {
     output = output + obj.minutes + " minute" + (obj.minutes > 1 ? "s" : "");
   }
   return output;
+};
+
+export const convertToUTC = (datetime) => {
+  return moment(datetime, "YYYY-MM-DD HH:mm:ss")
+    .utc()
+    .format("YYYY-MM-DD HH:mm:ss");
 };
