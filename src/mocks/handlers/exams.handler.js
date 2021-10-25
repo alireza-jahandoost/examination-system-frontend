@@ -32,7 +32,7 @@ const examsHandler = [
         return res(ctx.json(notFoundPageExamsIndex(page)));
     }
   }),
-  rest.get(`${apiRoutes.exams.indexAllExams()}/:examId`, (req, res, ctx) => {
+  rest.get(apiRoutes.exams.showExam(":examId"), (req, res, ctx) => {
     let { examId } = req.params;
     examId = Number(examId);
 
@@ -53,7 +53,7 @@ const examsHandler = [
         return res(ctx.status(404));
     }
   }),
-  rest.post(`${apiRoutes.exams.createExam()}`, (req, res, ctx) => {
+  rest.post(apiRoutes.exams.createExam(), (req, res, ctx) => {
     const {
       exam_name,
       needs_confirmation,
@@ -96,7 +96,7 @@ const examsHandler = [
         return res(ctx.json(notFoundPageExamsIndex(page)));
     }
   }),
-  rest.put(`${apiRoutes.exams.indexAllExams()}/:examId`, (req, res, ctx) => {
+  rest.put(apiRoutes.exams.updateExam(":examId"), (req, res, ctx) => {
     let { examId } = req.params;
     examId = Number(examId);
     const {
