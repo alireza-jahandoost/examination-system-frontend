@@ -27,35 +27,35 @@ const Sidebar = (props) => {
           className="my-3"
           open={open}
           label="overview"
-          href={programRoutes.profile}
+          href={programRoutes.profile()}
           iconName="columns"
         />
         <SidebarItem
           className="my-3"
           open={open}
           label="created exams"
-          href={programRoutes.indexCreatedExams}
+          href={programRoutes.indexCreatedExams()}
           iconName="window-restore"
         />
         <SidebarItem
           className="my-3"
           open={open}
           label="create new exam"
-          href={programRoutes.createExam}
+          href={programRoutes.createExam()}
           iconName="plus-square"
         />
         <SidebarItem
           className="my-3"
           open={open}
           label="participated exams"
-          href={programRoutes.indexParticipatedExams}
+          href={programRoutes.indexParticipatedExams()}
           iconName="vial"
         />
         <SidebarItem
           className="my-3"
           open={open}
           label="settings"
-          href={programRoutes.settings}
+          href={programRoutes.settings()}
           iconName="cogs"
         />
       </div>

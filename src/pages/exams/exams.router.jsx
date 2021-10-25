@@ -7,6 +7,8 @@ import IndexParticipatedExamsPage from "./index/index-participated-exams/partici
 import IndexCreatedExamsPage from "./index/index-created-exams/created-exams.page";
 
 import CreateExamPage from "./create/create-exam.page";
+
+import UpdateExamPage from "./update/update-exam.page";
 import { AuthenticationContext } from "../../contexts/authentication-context/authentication.context";
 
 const ProfileRouter = () => {
@@ -38,6 +40,13 @@ const ProfileRouter = () => {
         path={programRoutes.createExam()}
         render={({ location }) =>
           redirectIfNotAuthenticated(<CreateExamPage />, location)
+        }
+      />
+      <Route
+        exact
+        path={programRoutes.updateExam(":examId")}
+        render={({ location }) =>
+          redirectIfNotAuthenticated(<UpdateExamPage />, location)
         }
       />
     </Switch>

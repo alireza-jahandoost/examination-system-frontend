@@ -12,6 +12,18 @@ export const examsIndexRequest = async (page) => {
   });
 };
 
+export const ownedExamsIndexRequest = async (token, page = 1) => {
+  return axios(apiRoutes.exams.indexCreatedExams(), {
+    params: {
+      page: page,
+    },
+    headers: {
+      accept: "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 export const examsShowRequest = async (examId, token = "") => {
   const hdrs = {
     accept: "application/json",
