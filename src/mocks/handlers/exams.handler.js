@@ -79,6 +79,59 @@ const examsHandler = [
       return res(ctx.json(examShowId_5_withPassword), ctx.status(201));
     }
   }),
+  rest.get(apiRoutes.exams.indexCreatedExams(), (req, res, ctx) => {
+    const valueOfPage = req.url.searchParams.get("page");
+    const page = Number(valueOfPage);
+    switch (page) {
+      case 1:
+        return res(ctx.json(pageOneExamsIndex));
+
+      case 2:
+        return res(ctx.json(pageTwoExamsIndex));
+
+      case 3:
+        return res(ctx.json(pageThreeExamsIndex));
+
+      default:
+        return res(ctx.json(notFoundPageExamsIndex(page)));
+    }
+  }),
+  rest.put(`${apiRoutes.exams.indexAllExams()}/:examId`, (req, res, ctx) => {
+    let { examId } = req.params;
+    examId = Number(examId);
+    const {
+      exam_name,
+      needs_confirmation,
+      start_of_exam,
+      end_of_exam,
+      total_score,
+      password,
+    } = req.body;
+
+    return res(
+      ctx.json({
+        data: {
+          exam: {
+            exam_id: examId,
+            exam_name: exam_name || examShowId_1.data.exam.exam_name,
+            needs_confirmation:
+              needs_confirmation || examShowId_1.data.exam.needs_confirmation,
+            has_password: password ? true : examShowId_1.data.exam.password,
+            start_of_exam:
+              start_of_exam || examShowId_1.data.exam.start_of_exam,
+            end_of_exam: end_of_exam || examShowId_1.data.exam.end_of_exam,
+            total_score: total_score || examShowId_1.data.exam.total_score,
+            creation_time: "2021-10-21T15:38:28.000000Z",
+            last_update: "2021-10-25T11:35:56.000000Z",
+            owner_id: 1,
+            owner_name: "Eli Abernathy",
+            owner_link: "http://localhost:8000/api/users/1",
+            is_registered: false,
+          },
+        },
+      })
+    );
+  }),
 ];
 
 export default examsHandler;
