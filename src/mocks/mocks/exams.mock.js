@@ -866,6 +866,7 @@ export const examShowId_1 = {
       owner_name: "Mrs. Alanna Bogan Jr.",
       owner_link: "http://localhost:8000/api/users/33",
       is_registered: false,
+      published: false,
     },
   },
 };
@@ -886,6 +887,7 @@ export const examShowId_2 = {
       owner_name: "Miss Isabell Boehm",
       owner_link: "http://localhost:8000/api/users/24",
       is_registered: true,
+      published: true,
     },
   },
 };
@@ -907,6 +909,7 @@ export const examShowId_3 = {
       owner_name: "Lauriane Hahn",
       owner_link: "http://localhost:8000/api/users/12",
       is_registered: false,
+      published: true,
     },
   },
 };
@@ -927,6 +930,7 @@ export const examShowId_4 = {
       owner_name: "Hertha DuBuque",
       owner_link: "http://localhost:8000/api/users/20",
       is_registered: false,
+      published: true,
     },
   },
 };
@@ -947,6 +951,7 @@ export const examShowId_5_withPassword = {
       owner_name: "Eli Abernathy",
       owner_link: "http://localhost:8000/api/users/1",
       is_registered: false,
+      published: true,
     },
   },
 };

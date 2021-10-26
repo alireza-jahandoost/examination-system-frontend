@@ -2,7 +2,6 @@ import { useState, useContext } from "react";
 import { Alert, Button, Row, Col, Form } from "react-bootstrap";
 import { useMountedState } from "react-use";
 import { useHistory } from "react-router-dom";
-import moment from "moment";
 
 import TextInput from "../../../components/inputs/text-input.component";
 import NumberInput from "../../../components/inputs/number-input.component";

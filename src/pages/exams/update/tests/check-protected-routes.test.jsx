@@ -42,7 +42,6 @@ test("update-exam route is not accessible without authentication", async () => {
   userEvent.click(createdExams);
   await wait(300);
 
-  console.log(window.location.pathname);
   const editFirstExamLink = (await screen.findAllByText(/edit exam/i))[0];
   userEvent.click(editFirstExamLink);
 
