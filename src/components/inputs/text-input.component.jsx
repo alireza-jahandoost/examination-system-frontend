@@ -7,6 +7,7 @@ const TextInput = ({
   id,
   placeholder,
   onChange,
+  readOnly = false,
   ...props
 }) => {
   return (
@@ -17,6 +18,7 @@ const TextInput = ({
         value={value}
         placeholder={placeholder}
         onChange={onChange}
+        readOnly={readOnly}
       />
       {error && <p className="text-danger">{error}</p>}
     </Form.Group>

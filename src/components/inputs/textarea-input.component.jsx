@@ -8,12 +8,14 @@ const TextareaInput = ({
   placeholder,
   onChange,
   rows = 3,
+  readOnly = false,
   ...props
 }) => {
   return (
     <Form.Group {...props} controlId={id}>
       <Form.Label> {label} </Form.Label>
       <Form.Control
+        readOnly={readOnly}
         as="textarea"
         value={value}
         placeholder={placeholder}

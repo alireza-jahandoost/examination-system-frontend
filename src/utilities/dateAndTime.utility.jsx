@@ -70,3 +70,10 @@ export const convertToUTC = (datetime) => {
     .utc()
     .format("YYYY-MM-DD HH:mm:ss");
 };
+
+export const convertFromUTC = (datetime) => {
+  return moment
+    .utc(datetime, "YYYY-MM-DD HH:mm:ss")
+    .local()
+    .format("YYYY-MM-DD HH:mm:ss");
+};

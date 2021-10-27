@@ -7,12 +7,14 @@ const CheckboxInput = ({
   inputProps,
   onChange,
   error,
+  readOnly = false,
   ...props
 }) => {
   return (
     <Form.Group controlId={id} {...props}>
       <Form.Check
         type="checkbox"
+        readOnly={readOnly}
         checked={!!checked}
         {...inputProps}
         label={label}

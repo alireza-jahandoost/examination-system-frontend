@@ -7,6 +7,7 @@ const TextInput = ({
   id,
   placeholder,
   onChange,
+  readOnly = false,
   ...props
 }) => {
   return (
@@ -14,6 +15,7 @@ const TextInput = ({
       <Form.Label> {label} </Form.Label>
       <Form.Control
         type="password"
+        readOnly={readOnly}
         value={value}
         placeholder={placeholder}
         onChange={onChange}

@@ -44,3 +44,12 @@ export const examsStoreRequest = (token, body) => {
     },
   });
 };
+
+export const examsUpdateRequest = (token, body, examId) => {
+  return axios.put(apiRoutes.exams.updateExam(examId), body, {
+    headers: {
+      accept: "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  });
+};

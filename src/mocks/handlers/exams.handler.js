@@ -13,6 +13,7 @@ import {
 } from "../mocks/exams.mock";
 
 import { undefinedExamName } from "../errors/failed-exam-creation.error";
+import { wrongStartExamFormat } from "../errors/failed-exam-update.error";
 
 const examsHandler = [
   rest.get(apiRoutes.exams.indexAllExams(), (req, res, ctx) => {
@@ -107,6 +108,10 @@ const examsHandler = [
       total_score,
       password,
     } = req.body;
+
+    if (start_of_exam === "Invalid date") {
+      return res(ctx.status(422), ctx.json(wrongStartExamFormat));
+    }
 
     return res(
       ctx.json({
