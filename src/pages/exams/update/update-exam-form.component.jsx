@@ -117,6 +117,7 @@ const UpdateExamForm = ({ examId }) => {
       .then((response) => {
         if (isMounted()) {
           setIsLoading(false);
+          setExamPassword("");
           setExam(response.exam);
           setExamStart(convertFromUTC(response.exam.start_of_exam));
           setExamEnd(convertFromUTC(response.exam.end_of_exam));
@@ -226,30 +227,23 @@ const UpdateExamForm = ({ examId }) => {
         </Col>
       </Row>
       <Row className="mt-3">
-        <Col xs={12} md={6} xl={3}>
-          <CheckboxInput
-            error={errors.needs_password}
-            readOnly={isPublished}
-            checked={!!needsPassword}
-            onChange={(e) => setNeedsPassword(e.target.checked)}
-            label="Needs Password?"
-            id="needs-password"
+        <Col xs={12} md={6} xl={4}>
+          <PasswordInput
+            error={errors.password}
+            label="Password"
+            id="exam-password"
+            placeholder="Exam's Password"
+            value={examPassword}
+            onChange={(e) => {
+              setExamPassword(e.target.value);
+            }}
           />
+          <p className="text-muted small">
+            {exam.has_password
+              ? "* You already set the password, fill the above input to change it"
+              : "* You have not set the password yet, fill the above input to set it"}
+          </p>
         </Col>
-        {needsPassword && (
-          <Col xs={12} md={6} xl={4}>
-            <PasswordInput
-              error={errors.password}
-              label="Password"
-              id="exam-password"
-              placeholder="Exam's Password"
-              value={examPassword}
-              onChange={(e) => {
-                setExamPassword(e.target.value);
-              }}
-            />
-          </Col>
-        )}
       </Row>
       <Row className="mt-3">
         <Col>

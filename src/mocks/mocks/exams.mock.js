@@ -951,7 +951,7 @@ export const examShowId_5_withPassword = {
       owner_name: "Eli Abernathy",
       owner_link: "http://localhost:8000/api/users/1",
       is_registered: false,
-      published: true,
+      published: false,
     },
   },
 };

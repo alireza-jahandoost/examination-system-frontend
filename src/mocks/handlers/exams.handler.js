@@ -50,6 +50,9 @@ const examsHandler = [
       case 4:
         return res(ctx.json(examShowId_4));
 
+      case 5:
+        return res(ctx.json(examShowId_5_withPassword));
+
       default:
         return res(ctx.status(404));
     }
@@ -113,29 +116,64 @@ const examsHandler = [
       return res(ctx.status(422), ctx.json(wrongStartExamFormat));
     }
 
-    return res(
-      ctx.json({
-        data: {
-          exam: {
-            exam_id: examId,
-            exam_name: exam_name || examShowId_1.data.exam.exam_name,
-            needs_confirmation:
-              needs_confirmation || examShowId_1.data.exam.needs_confirmation,
-            has_password: password ? true : examShowId_1.data.exam.password,
-            start_of_exam:
-              start_of_exam || examShowId_1.data.exam.start_of_exam,
-            end_of_exam: end_of_exam || examShowId_1.data.exam.end_of_exam,
-            total_score: total_score || examShowId_1.data.exam.total_score,
-            creation_time: "2021-10-21T15:38:28.000000Z",
-            last_update: "2021-10-25T11:35:56.000000Z",
-            owner_id: 1,
-            owner_name: "Eli Abernathy",
-            owner_link: "http://localhost:8000/api/users/1",
-            is_registered: false,
+    if (examId === 1) {
+      return res(
+        ctx.json({
+          data: {
+            exam: {
+              exam_id: examId,
+              exam_name: exam_name || examShowId_1.data.exam.exam_name,
+              needs_confirmation:
+                needs_confirmation || examShowId_1.data.exam.needs_confirmation,
+              has_password: password ? true : examShowId_1.data.exam.password,
+              start_of_exam:
+                start_of_exam || examShowId_1.data.exam.start_of_exam,
+              end_of_exam: end_of_exam || examShowId_1.data.exam.end_of_exam,
+              total_score: total_score || examShowId_1.data.exam.total_score,
+              creation_time: "2021-10-21T15:38:28.000000Z",
+              last_update: "2021-10-25T11:35:56.000000Z",
+              owner_id: 1,
+              owner_name: "Eli Abernathy",
+              owner_link: "http://localhost:8000/api/users/1",
+              is_registered: false,
+            },
           },
-        },
-      })
-    );
+        })
+      );
+    } else if (examId === 5) {
+      return res(
+        ctx.json({
+          data: {
+            exam: {
+              exam_id: examId,
+              exam_name:
+                exam_name || examShowId_5_withPassword.data.exam.exam_name,
+              needs_confirmation:
+                needs_confirmation ||
+                examShowId_5_withPassword.data.exam.needs_confirmation,
+              has_password: password
+                ? true
+                : examShowId_5_withPassword.data.exam.password,
+              start_of_exam:
+                start_of_exam ||
+                examShowId_5_withPassword.data.exam.start_of_exam,
+              end_of_exam:
+                end_of_exam || examShowId_5_withPassword.data.exam.end_of_exam,
+              total_score:
+                total_score || examShowId_5_withPassword.data.exam.total_score,
+              creation_time: "2021-10-21T15:38:28.000000Z",
+              last_update: "2021-10-25T11:35:56.000000Z",
+              owner_id: 1,
+              owner_name: "Eli Abernathy",
+              owner_link: "http://localhost:8000/api/users/1",
+              is_registered: false,
+            },
+          },
+        })
+      );
+    } else {
+      throw Error("invalid examId");
+    }
   }),
 ];
 

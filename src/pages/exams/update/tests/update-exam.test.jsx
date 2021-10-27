@@ -454,3 +454,61 @@ describe("user will save 'all changes saved' after pressing 'save changes' after
     ).not.toBeInTheDocument();
   });
 });
+
+describe("check password part", () => {
+  const hasPasswordMessage = /you already set the password, fill the above input to change it/i;
+  const noPasswordMessage = /you have not set the password yet, fill the above input to set it/i;
+
+  test("user will see a message if he already has a password", async () => {
+    renderWithAuthentication(<UpdateExamForm examId={5} />);
+
+    const loadingMessage = screen.getByText(/loading/i);
+    expect(loadingMessage).toBeInTheDocument();
+
+    expect(await screen.findByText(hasPasswordMessage)).toBeInTheDocument();
+  });
+  test("user will see a message if he does not have a password", async () => {
+    renderWithAuthentication(<UpdateExamForm examId={1} />);
+
+    const loadingMessage = screen.getByText(/loading/i);
+    expect(loadingMessage).toBeInTheDocument();
+
+    expect(await screen.findByText(noPasswordMessage)).toBeInTheDocument();
+  });
+  test("user can change its password if he has password", async () => {
+    renderWithAuthentication(<UpdateExamForm examId={5} />);
+    const loadingMessage = screen.getByText(/loading/i);
+    expect(loadingMessage).toBeInTheDocument();
+
+    expect(await screen.findByText(hasPasswordMessage)).toBeInTheDocument();
+
+    const passwordInput = screen.getByPlaceholderText(/exam's password/i);
+
+    userEvent.clear(passwordInput);
+    userEvent.type(passwordInput, "password");
+
+    const saveButton = screen.getByRole("button", { name: /save changes/i });
+    userEvent.click(saveButton);
+
+    expect(await screen.findByText(/all changes saved/i)).toBeInTheDocument();
+    expect(await screen.findByText(hasPasswordMessage)).toBeInTheDocument();
+  });
+  test("user can change its password if he does not have password", async () => {
+    renderWithAuthentication(<UpdateExamForm examId={1} />);
+    const loadingMessage = screen.getByText(/loading/i);
+    expect(loadingMessage).toBeInTheDocument();
+
+    expect(await screen.findByText(noPasswordMessage)).toBeInTheDocument();
+
+    const passwordInput = screen.getByPlaceholderText(/exam's password/i);
+
+    userEvent.clear(passwordInput);
+    userEvent.type(passwordInput, "password");
+
+    const saveButton = screen.getByRole("button", { name: /save changes/i });
+    userEvent.click(saveButton);
+
+    expect(await screen.findByText(/all changes saved/i)).toBeInTheDocument();
+    expect(await screen.findByText(hasPasswordMessage)).toBeInTheDocument();
+  });
+});
