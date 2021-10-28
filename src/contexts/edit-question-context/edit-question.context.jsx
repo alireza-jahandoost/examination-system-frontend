@@ -2,7 +2,7 @@ import { useState, createContext } from "react";
 
 export const EditQuestionContext = createContext();
 
-export const EditQuestionProvider = ({ children }) => {
+export const EditQuestionProvider = ({ children, examId }) => {
   const [question, setQuestion] = useState({});
   const [questionTypeId, setQuestionTypeId] = useState(0);
   const [questionText, setQuestionText] = useState("");

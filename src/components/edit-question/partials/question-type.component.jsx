@@ -5,10 +5,10 @@ const QuestionType = ({
   selectedValue, // the value of selected object
   onChange,
   disabled = false,
+  suffix = "",
 }) => {
-  // TODO: unique the id of selects
   return (
-    <Form.Group as={Row} controlId="question-type">
+    <Form.Group as={Row} controlId={`question-type-${suffix}`}>
       <Form.Label> Question Type </Form.Label>
       <Form.Select
         defaultValue={selectedValue}

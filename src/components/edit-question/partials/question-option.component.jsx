@@ -8,9 +8,9 @@ const QuestionOption = ({
   deleteOption,
   changeOption,
   error = "",
+  suffix = "",
   readOnly = false,
 }) => {
-  // TODO: id must be unique
   return (
     <div>
       <TextInput
@@ -18,7 +18,7 @@ const QuestionOption = ({
         label="Question option"
         hiddenLabel={true}
         value={value}
-        id="question-option"
+        id={`question-option-${suffix}`}
         placeholder="question option"
         onChange={(e) => changeOption({ value: e.target.value })}
         readOnly={readOnly}
@@ -32,6 +32,7 @@ const QuestionOption = ({
         readOnly={readOnly}
         answer={answer}
         onChange={(newAnswer) => changeOption({ answer: newAnswer })}
+        suffix={suffix}
       />
     </div>
   );

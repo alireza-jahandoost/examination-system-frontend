@@ -20,6 +20,7 @@ const QuestionAnswers = ({ readOnly = false }) => {
               changeState({ ...changedState, id: answer.id })
             }
             readOnly={readOnly}
+            suffix={`not-created-${answer.id}`}
           />
         );
       })}

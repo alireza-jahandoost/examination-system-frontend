@@ -1,19 +1,23 @@
 import { ButtonGroup, ToggleButton } from "react-bootstrap";
 
-const AnswerIndicator = ({ answer, onChange, readOnly = false }) => {
+const AnswerIndicator = ({
+  answer,
+  onChange,
+  readOnly = false,
+  suffix = "",
+}) => {
   const handleChange = (e) => {
     if (!readOnly) {
       onChange(e.target.value === "1" ? true : false);
     }
   };
-  // TODO:  id and name must be unique
   return (
     <ButtonGroup>
       <ToggleButton
-        id={`radio-correct-answer`}
+        id={`radio-correct-answer-${suffix}`}
         type="radio"
         variant="outline-success"
-        name="answer-indicator"
+        name={`answer-indicator-${suffix}`}
         value={1}
         checked={answer}
         onChange={handleChange}
@@ -21,10 +25,10 @@ const AnswerIndicator = ({ answer, onChange, readOnly = false }) => {
         Correct Answer
       </ToggleButton>
       <ToggleButton
-        id={`radio-wrong-answer`}
+        id={`radio-wrong-answer-${suffix}`}
         type="radio"
         variant="outline-danger"
-        name="answer-indicator"
+        name={`answer-indicator-${suffix}`}
         value={0}
         checked={!answer}
         onChange={handleChange}

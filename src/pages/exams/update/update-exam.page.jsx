@@ -6,6 +6,7 @@ import UpdateExamForm from "./update-exam-form.component";
 import EditQuestion from "../../../components/edit-question/edit-question.component";
 import ElementContainer from "./element-container.component";
 import { QuestionTypesProvider } from "../../../contexts/question-type-context/question-types.context";
+import { EditQuestionProvider } from "../../../contexts/edit-question-context/edit-question.context";
 
 const UpdateExamPage = () => {
   const { examId } = useParams();
@@ -22,7 +23,9 @@ const UpdateExamPage = () => {
             {questions.map((question) => {
               return (
                 <ElementContainer>
-                  <EditQuestion examId={examId} />
+                  <EditQuestionProvider examId={examId}>
+                    <EditQuestion />
+                  </EditQuestionProvider>
                 </ElementContainer>
               );
             })}

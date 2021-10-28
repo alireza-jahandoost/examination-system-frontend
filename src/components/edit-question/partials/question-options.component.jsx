@@ -25,6 +25,7 @@ const QuestionOptions = ({ readOnly = false }) => {
                 from: "notCreated",
               })
             }
+            suffix={`not-created-${option.id}`}
           />
         );
       })}
