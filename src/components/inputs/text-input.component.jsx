@@ -7,13 +7,19 @@ const TextInput = ({
   id,
   placeholder,
   onChange,
+  hiddenLabel = false,
   readOnly = false,
   ...props
 }) => {
+  const additionalAttributes = {};
+  if (hiddenLabel) {
+    additionalAttributes["aria-label"] = label;
+  }
   return (
     <Form.Group {...props} controlId={id}>
-      <Form.Label> {label} </Form.Label>
+      {hiddenLabel === false && <Form.Label> {label} </Form.Label>}
       <Form.Control
+        {...additionalAttributes}
         type="text"
         value={value}
         placeholder={placeholder}

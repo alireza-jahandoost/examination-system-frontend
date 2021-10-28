@@ -5,6 +5,7 @@ import Sidebar from "../../../components/sidebar/sidebar.component";
 import UpdateExamForm from "./update-exam-form.component";
 import EditQuestion from "../../../components/edit-question/edit-question.component";
 import ElementContainer from "./element-container.component";
+import { QuestionTypesProvider } from "../../../contexts/question-type-context/question-types.context";
 
 const UpdateExamPage = () => {
   const { examId } = useParams();
@@ -17,13 +18,15 @@ const UpdateExamPage = () => {
           <ElementContainer>
             <UpdateExamForm examId={examId} />
           </ElementContainer>
-          {questions.map((question) => {
-            return (
-              <ElementContainer>
-                <EditQuestion examId={examId} />
-              </ElementContainer>
-            );
-          })}
+          <QuestionTypesProvider>
+            {questions.map((question) => {
+              return (
+                <ElementContainer>
+                  <EditQuestion examId={examId} />
+                </ElementContainer>
+              );
+            })}
+          </QuestionTypesProvider>
           <Button
             className="w-100"
             onClick={() =>

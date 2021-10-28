@@ -9,13 +9,7 @@ import QuestionOptions from "./partials/question-options.component";
 const EditQuestion = ({ examId }) => {
   return (
     <EditQuestionProvider>
-      <div>
-        <QuestionType />
-        <QuestionText />
-        <QuestionAnswers />
-        <QuestionOptions />
-        <QuestionScore />
-      </div>
+      <div>Edit Questions</div>
     </EditQuestionProvider>
   );
 };
