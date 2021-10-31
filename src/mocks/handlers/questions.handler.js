@@ -46,11 +46,7 @@ const questionsHandler = [
     if (!question_text) {
       return res(ctx.status(422), ctx.json(questionTextIsRequired));
     }
-    if (
-      question_score === undefined ||
-      can_be_shuffled === undefined ||
-      question_type_id === undefined
-    ) {
+    if (question_score === undefined || question_type_id === undefined) {
       throw Error("not handled request");
     }
 
