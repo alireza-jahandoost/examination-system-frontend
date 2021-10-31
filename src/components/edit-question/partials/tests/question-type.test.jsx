@@ -3,9 +3,9 @@ import { render, screen } from "../../../../test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
 
 const options = [
-  { value: "first", label: "1st" },
-  { value: "second", label: "2nd" },
-  { value: "third", label: "3rd" },
+  { value: "1", label: "descriptive" },
+  { value: "2", label: "fill the blank" },
+  { value: "3", label: "multiple answer" },
 ];
 
 test("selected question type must be equal to the input value", async () => {

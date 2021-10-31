@@ -15,11 +15,12 @@ const QuestionType = ({
         onChange={onChange}
         disabled={disabled}
       >
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
+        {options &&
+          options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
       </Form.Select>
     </Form.Group>
   );
