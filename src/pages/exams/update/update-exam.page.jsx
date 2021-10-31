@@ -5,7 +5,7 @@ import Sidebar from "../../../components/sidebar/sidebar.component";
 import UpdateExamForm from "./update-exam-form.component";
 import EditQuestion from "../../../components/edit-question/edit-question.component";
 import ElementContainer from "./element-container.component";
-import { QuestionTypesProvider } from "../../../contexts/question-type-context/question-types.context";
+import { QuestionTypesProvider } from "../../../contexts/question-types-context/question-types.context";
 import { EditQuestionProvider } from "../../../contexts/edit-question-context/edit-question.context";
 
 const UpdateExamPage = () => {

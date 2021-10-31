@@ -1,5 +1,5 @@
 import QuestionScore from "../question-score.component";
-import { render, screen } from "../../../../test-utils/testing-library-utils";
+import { render, screen } from "../../../test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
 
 test("the value of component must be shown in input", async () => {

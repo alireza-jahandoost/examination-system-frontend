@@ -1,4 +1,4 @@
-import TextareaInput from "../../inputs/textarea-input.component";
+import TextareaInput from "../inputs/textarea-input.component";
 
 const QuestionText = ({
   value,

@@ -1,5 +1,5 @@
 import AnswerIndicator from "./answer-indicator.component";
-import TextInput from "../../inputs/text-input.component";
+import TextInput from "../inputs/text-input.component";
 import DeleteButton from "./delete-button.component";
 
 const QuestionOption = ({

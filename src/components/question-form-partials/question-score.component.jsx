@@ -1,4 +1,4 @@
-import NumberInput from "../../inputs/number-input.component";
+import NumberInput from "../inputs/number-input.component";
 
 const QuestionScore = ({
   value,

@@ -1,5 +1,5 @@
 import QuestionText from "../question-text.component";
-import { render, screen } from "../../../../test-utils/testing-library-utils";
+import { render, screen } from "../../../test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
 
 test("the value must be shown in the input", async () => {

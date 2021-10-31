@@ -1,6 +1,6 @@
-import { render, screen } from "../../../../test-utils/testing-library-utils";
+import { render, screen } from "../../../test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
-import { EditQuestionContext } from "../../../../contexts/edit-question-context/edit-question.context";
+import { EditQuestionContext } from "../../../contexts/edit-question-context/edit-question.context";
 import QuestionOptions from "../question-options.component";
 
 describe("check question options for not created options", () => {

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { EditQuestionContext } from "../../../contexts/edit-question-context/edit-question.context";
+import { EditQuestionContext } from "../../contexts/edit-question-context/edit-question.context";
 import QuestionOption from "./question-option.component";
 import AddNewItem from "./add-new-item.component";
 
