@@ -46,7 +46,11 @@ const questionsHandler = [
     if (!question_text) {
       return res(ctx.status(422), ctx.json(questionTextIsRequired));
     }
-    if (!question_score || !can_be_shuffled || !question_type_id) {
+    if (
+      question_score === undefined ||
+      can_be_shuffled === undefined ||
+      question_type_id === undefined
+    ) {
       throw Error("not handled request");
     }
 
@@ -64,7 +68,7 @@ const questionsHandler = [
   }),
 
   rest.put(
-    apiRoutes.updateQuestion(":examId", "questionId"),
+    apiRoutes.questions.updateQuestion(":examId", "questionId"),
     (req, res, ctx) => {
       const { question_text, question_score, can_be_shuffled } = req.body;
       const { questionId } = req.params;

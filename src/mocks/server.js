@@ -6,6 +6,7 @@ import examsHandler from "./handlers/exams.handler";
 import authenticationHandler from "./handlers/authentication.handler";
 import participantsHandler from "./handlers/participants.handler";
 import questionTypesHandler from "./handlers/question-types.handler";
+import questionsHandler from "./handlers/questions.handler";
 
 // This configures a request mocking server with the given request handlers.
 
@@ -14,6 +15,7 @@ export const handlers = [
   ...authenticationHandler,
   ...participantsHandler,
   ...questionTypesHandler,
+  ...questionsHandler,
 ];
 
 export const server = setupServer(...handlers);

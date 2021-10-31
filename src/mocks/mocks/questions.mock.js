@@ -1,4 +1,4 @@
-import questionTypesIndex from "./question-types.mock";
+import { questionTypesIndex } from "./question-types.mock";
 
 export const questionsIndex = {
   data: {
