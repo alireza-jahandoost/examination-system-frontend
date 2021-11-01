@@ -11,7 +11,7 @@ const QuestionType = ({
     <Form.Group as={Row} controlId={`question-type-${suffix}`}>
       <Form.Label> Question Type </Form.Label>
       <Form.Select
-        defaultValue={selectedValue}
+        value={selectedValue}
         onChange={onChange}
         disabled={disabled}
       >

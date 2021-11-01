@@ -88,12 +88,13 @@ export const questionsStoreTemp = ({
   question_score,
   can_be_shuffled = false,
   question_type_id,
+  question_id,
 }) => {
   const question_type = questionTypesIndex.data.types[question_type_id - 1];
   return {
     data: {
       question: {
-        question_id: Math.floor(Math.random() * 100) + 1,
+        question_id: question_id,
         question_text: question_text,
         question_score: question_score,
         can_be_shuffled: can_be_shuffled,

@@ -9,7 +9,10 @@ import {
   questionsStoreTemp,
   questionsUpdateTemp,
 } from "../mocks/questions.mock";
-import { questionTextIsRequired } from "../errors/failed-question-creation.error";
+import {
+  questionTextIsRequired,
+  questionScoreIsRequired,
+} from "../errors/failed-question-creation.error";
 import { questionScoreMustBeANumber } from "../errors/failed-question-update.error";
 
 const questionsHandler = [
@@ -46,7 +49,10 @@ const questionsHandler = [
     if (!question_text) {
       return res(ctx.status(422), ctx.json(questionTextIsRequired));
     }
-    if (question_score === undefined || question_type_id === undefined) {
+    if (!question_score) {
+      return res(ctx.status(422), ctx.json(questionScoreIsRequired));
+    }
+    if (question_type_id === undefined) {
       throw Error("not handled request");
     }
 
@@ -57,6 +63,7 @@ const questionsHandler = [
           question_text,
           question_score,
           can_be_shuffled,
+          question_id: question_type_id,
           question_type_id,
         })
       )

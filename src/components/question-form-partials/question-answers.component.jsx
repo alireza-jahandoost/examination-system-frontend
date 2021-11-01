@@ -1,20 +1,22 @@
-import { useContext } from "react";
-import { EditQuestionContext } from "../../contexts/edit-question-context/edit-question.context";
 import QuestionAnswer from "./question-answer.component";
 import AddNewItem from "./add-new-item.component";
 
-const QuestionAnswers = ({ readOnly = false }) => {
-  const { notCreatedStates, deleteState, addState, changeState } = useContext(
-    EditQuestionContext
-  );
-
+const QuestionAnswers = ({
+  readOnly = false,
+  notCreatedStates,
+  deleteState,
+  addState,
+  changeState,
+  error = "",
+}) => {
   return (
     <div>
+      {error && <p className="text-danger">*{error}</p>}
       {notCreatedStates.map((answer) => {
         return (
           <QuestionAnswer
             key={answer.id}
-            value={answer.value}
+            value={answer.text_part}
             deleteAnswer={() => deleteState(answer.id)}
             changeAnswer={(changedState) =>
               changeState({ ...changedState, id: answer.id })

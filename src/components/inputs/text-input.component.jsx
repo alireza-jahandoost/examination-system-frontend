@@ -9,11 +9,15 @@ const TextInput = ({
   onChange,
   hiddenLabel = false,
   readOnly = false,
+  required = false,
   ...props
 }) => {
   const additionalAttributes = {};
   if (hiddenLabel) {
     additionalAttributes["aria-label"] = label;
+  }
+  if (required) {
+    additionalAttributes["required"] = "required";
   }
   return (
     <Form.Group {...props} controlId={id}>

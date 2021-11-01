@@ -65,9 +65,13 @@ const statesHandler = [
       const { integer_part, text_part } = req.body;
       const { questionId } = req.params;
 
-      switch (questionId) {
+      switch (Number(questionId)) {
         case 2:
-          if (integer_part !== undefined) {
+          if (
+            integer_part !== undefined ||
+            text_part === undefined ||
+            text_part === ""
+          ) {
             return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
           }
           return res(ctx.json(stateConstructor(1, 0, text_part)));
@@ -102,7 +106,7 @@ const statesHandler = [
       const { integer_part, text_part } = req.body;
       const { questionId } = req.params;
 
-      switch (questionId) {
+      switch (Number(questionId)) {
         case 2:
           if (integer_part !== undefined) {
             return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));

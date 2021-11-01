@@ -1,13 +1,12 @@
 import { render, screen } from "../../../test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
-import { EditQuestionContext } from "../../../contexts/edit-question-context/edit-question.context";
 import QuestionAnswers from "../question-answers.component";
 
 describe("check question answers for not created answers", () => {
   const answers = [
-    { value: "first answer", id: 1 },
-    { value: "second answer", id: 2 },
-    { value: "third answer", id: 3 },
+    { text_part: "first answer", id: 1 },
+    { text_part: "second answer", id: 2 },
+    { text_part: "third answer", id: 3 },
   ];
 
   test("for every answer, there must be an input with its value", () => {
@@ -15,20 +14,16 @@ describe("check question answers for not created answers", () => {
     const addAnswer = jest.fn();
     const changeAnswer = jest.fn();
     render(
-      <EditQuestionContext.Provider
-        value={{
-          notCreatedStates: answers,
-          addState: addAnswer,
-          deleteState: deleteAnswer,
-          changeState: changeAnswer,
-        }}
-      >
-        <QuestionAnswers />
-      </EditQuestionContext.Provider>
+      <QuestionAnswers
+        notCreatedStates={answers}
+        addState={addAnswer}
+        deleteState={deleteAnswer}
+        changeState={changeAnswer}
+      />
     );
 
     for (const current of answers) {
-      expect(screen.getByDisplayValue(current.value)).toBeInTheDocument();
+      expect(screen.getByDisplayValue(current.text_part)).toBeInTheDocument();
     }
   });
 
@@ -37,16 +32,12 @@ describe("check question answers for not created answers", () => {
     const addAnswer = jest.fn();
     const changeAnswer = jest.fn();
     render(
-      <EditQuestionContext.Provider
-        value={{
-          notCreatedStates: answers,
-          addState: addAnswer,
-          deleteState: deleteAnswer,
-          changeState: changeAnswer,
-        }}
-      >
-        <QuestionAnswers />
-      </EditQuestionContext.Provider>
+      <QuestionAnswers
+        notCreatedStates={answers}
+        addState={addAnswer}
+        deleteState={deleteAnswer}
+        changeState={changeAnswer}
+      />
     );
 
     const addAnswerButton = screen.getByRole("button", {
@@ -63,16 +54,12 @@ describe("check question answers for not created answers", () => {
     const addAnswer = jest.fn();
     const changeAnswer = jest.fn();
     render(
-      <EditQuestionContext.Provider
-        value={{
-          notCreatedStates: answers,
-          addState: addAnswer,
-          deleteState: deleteAnswer,
-          changeState: changeAnswer,
-        }}
-      >
-        <QuestionAnswers />
-      </EditQuestionContext.Provider>
+      <QuestionAnswers
+        notCreatedStates={answers}
+        addState={addAnswer}
+        deleteState={deleteAnswer}
+        changeState={changeAnswer}
+      />
     );
 
     const firstDeleteButton = screen.getAllByRole("button", {
@@ -89,16 +76,12 @@ describe("check question answers for not created answers", () => {
     const addAnswer = jest.fn();
     const changeAnswer = jest.fn();
     render(
-      <EditQuestionContext.Provider
-        value={{
-          notCreatedStates: answers,
-          addState: addAnswer,
-          deleteState: deleteAnswer,
-          changeState: changeAnswer,
-        }}
-      >
-        <QuestionAnswers />
-      </EditQuestionContext.Provider>
+      <QuestionAnswers
+        notCreatedStates={answers}
+        addState={addAnswer}
+        deleteState={deleteAnswer}
+        changeState={changeAnswer}
+      />
     );
 
     const newValue = "new new value";
@@ -114,16 +97,13 @@ describe("check question answers for not created answers", () => {
     const addAnswer = jest.fn();
     const changeAnswer = jest.fn();
     render(
-      <EditQuestionContext.Provider
-        value={{
-          notCreatedStates: answers,
-          addState: addAnswer,
-          deleteState: deleteAnswer,
-          changeState: changeAnswer,
-        }}
-      >
-        <QuestionAnswers readOnly={true} />
-      </EditQuestionContext.Provider>
+      <QuestionAnswers
+        readOnly={true}
+        notCreatedStates={answers}
+        addState={addAnswer}
+        deleteState={deleteAnswer}
+        changeState={changeAnswer}
+      />
     );
 
     const newValue = "new new value";
