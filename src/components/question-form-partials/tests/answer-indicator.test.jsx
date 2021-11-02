@@ -116,3 +116,35 @@ describe("check readonly property", () => {
     expect(onChange).toHaveBeenCalledTimes(0);
   });
 });
+
+describe("setting buttons contents", () => {
+  test("default button contents must be correct answer and wrong answer", () => {
+    const onChange = jest.fn();
+    render(<AnswerIndicator answer={true} onChange={onChange} />);
+
+    expect(
+      screen.getByRole("radio", { name: /correct answer/i })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("radio", { name: /wrong answer/i })
+    ).toBeInTheDocument();
+  });
+
+  test("if there is any buttonLabels in props, they must be shown", () => {
+    const onChange = jest.fn();
+    const greenButton = "something green";
+    const redButton = "something red";
+    render(
+      <AnswerIndicator
+        answer={true}
+        onChange={onChange}
+        buttonLabels={[greenButton, redButton]}
+      />
+    );
+
+    expect(
+      screen.getByRole("radio", { name: greenButton })
+    ).toBeInTheDocument();
+    expect(screen.getByRole("radio", { name: redButton })).toBeInTheDocument();
+  });
+});

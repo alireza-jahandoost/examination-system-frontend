@@ -5,6 +5,7 @@ const AnswerIndicator = ({
   onChange,
   readOnly = false,
   suffix = "",
+  buttonLabels = ["Correct Answer", "Wrong Answer"],
 }) => {
   const handleChange = (e) => {
     if (!readOnly) {
@@ -22,7 +23,7 @@ const AnswerIndicator = ({
         checked={answer}
         onChange={handleChange}
       >
-        Correct Answer
+        {buttonLabels[0]}
       </ToggleButton>
       <ToggleButton
         id={`radio-wrong-answer-${suffix}`}
@@ -33,7 +34,7 @@ const AnswerIndicator = ({
         checked={!answer}
         onChange={handleChange}
       >
-        Wrong Answer
+        {buttonLabels[1]}
       </ToggleButton>
     </ButtonGroup>
   );

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useContext } from "react";
+import { useState, useEffect, useRef, useMemo, useContext } from "react";
 import { useMountedState } from "react-use";
 import axios from "axios";
 
@@ -12,6 +12,7 @@ import QuestionText from "../question-form-partials/question-text.component";
 import QuestionScore from "../question-form-partials/question-score.component";
 import QuestionOptions from "../question-form-partials/question-options.component";
 import QuestionAnswers from "../question-form-partials/question-answers.component";
+import AnswerIndicator from "../question-form-partials/answer-indicator.component";
 
 import apiRoutes from "../../constants/api-routes.constant";
 
@@ -32,18 +33,37 @@ const CreateQuestion = ({ examId, addQuestion }) => {
   const { questionTypes } = useContext(QuestionTypesContext);
   const { token } = useContext(AuthenticationContext);
   const isMounted = useMountedState();
-  const [availableStateId, setAvailableStateId] = useState(1);
+  const nextStateId = useRef(1);
+  const parts = useMemo(() => {
+    if (questionTypes.length === 0) return {};
+    return questionParts(questionTypes[questionTypeId - 1].type_name);
+  }, [questionTypeId, questionTypes]);
 
   useEffect(() => {
-    if (states.length > 0 && states[states.length - 1].id >= availableStateId) {
-      setAvailableStateId(states[states.length - 1].id + 1);
+    if (
+      states.length > 0 &&
+      states[states.length - 1].id >= nextStateId.current
+    ) {
+      nextStateId.current = states[states.length - 1].id + 1;
     }
-  }, [states, availableStateId]);
+  }, [states]);
+
+  useEffect(() => {
+    const newStates = [];
+    for (let i = 0; i < parts.defaultStates; i++) {
+      newStates.push({
+        text_part: "",
+        integer_part: 0,
+        id: nextStateId.current,
+      });
+    }
+    setStates(newStates);
+  }, [parts]);
 
   const addState = () => {
     setStates((prevStates) => [
       ...prevStates,
-      { text_part: "", integer_part: 0, id: availableStateId },
+      { text_part: "", integer_part: 0, id: nextStateId.current },
     ]);
   };
 
@@ -55,7 +75,6 @@ const CreateQuestion = ({ examId, addQuestion }) => {
   };
 
   const changeState = ({ id, text_part = null, integer_part = null }) => {
-    // TODO: change another integer parts to false if necessary
     const newStates = states.map((state) => {
       if (state.id === id) {
         const newObj = {};
@@ -79,11 +98,6 @@ const CreateQuestion = ({ examId, addQuestion }) => {
     });
     setStates(newStates);
   };
-
-  const parts = useMemo(() => {
-    if (questionTypes.length === 0) return {};
-    return questionParts(questionTypes[questionTypeId - 1].type_name);
-  }, [questionTypeId, questionTypes]);
 
   const handleCreate = (e) => {
     e.preventDefault();
@@ -112,7 +126,9 @@ const CreateQuestion = ({ examId, addQuestion }) => {
             if (!parts.questionAnswers) {
               bodyOfRequest.integer_part = state.integer_part;
             }
-            bodyOfRequest.text_part = state.text_part;
+            if (!parts.questionAnswer) {
+              bodyOfRequest.text_part = state.text_part;
+            }
             return statesStoreRequest(
               examId,
               question.question_id,
@@ -193,6 +209,19 @@ const CreateQuestion = ({ examId, addQuestion }) => {
           error={errors.question_options}
         />
       )}
+      {parts.questionAnswer &&
+        (states[0] ? (
+          <AnswerIndicator
+            answer={states[0].integer_part}
+            onChange={(e) =>
+              changeState({ id: states[0].id, integer_part: e ? 1 : 0 })
+            }
+            suffix={`not-created-question`}
+            buttonLabels={["true", "false"]}
+          />
+        ) : (
+          <p>Loading...</p>
+        ))}
       {parts.questionScore && (
         <QuestionScore
           value={questionScore}
