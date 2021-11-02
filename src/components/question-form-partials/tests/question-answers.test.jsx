@@ -120,4 +120,24 @@ describe("check question answers for not created answers", () => {
     userEvent.click(firstDeleteButton);
     expect(deleteAnswer).toHaveBeenCalledTimes(0);
   });
+
+  test("if there is any errors, it must be shown with class text-danger", async () => {
+    const deleteAnswer = jest.fn();
+    const addAnswer = jest.fn();
+    const changeAnswer = jest.fn();
+    const error = "something went wrong";
+    render(
+      <QuestionAnswers
+        notCreatedStates={answers}
+        addState={addAnswer}
+        deleteState={deleteAnswer}
+        changeState={changeAnswer}
+        error={error}
+      />
+    );
+
+    const errorMessage = screen.getByText(error, { exact: false });
+    expect(errorMessage).toBeInTheDocument();
+    expect(errorMessage).toHaveClass("text-danger");
+  });
 });

@@ -20,7 +20,7 @@ const QuestionOption = ({
         value={value}
         id={`question-option-${suffix}`}
         placeholder="question option"
-        onChange={(e) => changeOption({ value: e.target.value })}
+        onChange={(e) => changeOption({ text_part: e.target.value })}
         readOnly={readOnly}
       />
       <DeleteButton

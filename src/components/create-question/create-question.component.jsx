@@ -43,7 +43,7 @@ const CreateQuestion = ({ examId, addQuestion }) => {
   const addState = () => {
     setStates((prevStates) => [
       ...prevStates,
-      { text_part: "", integer_part: "", id: availableStateId },
+      { text_part: "", integer_part: 0, id: availableStateId },
     ]);
   };
 
@@ -84,8 +84,13 @@ const CreateQuestion = ({ examId, addQuestion }) => {
       question_score: questionScore,
       question_type_id: questionTypeId,
     };
+    // TODO: customize for different types
     if (!isStatesValid(states, questionTypeId)) {
-      setErrors({ question_answers: "You must fill all the states" });
+      if (parts.questionAnswers) {
+        setErrors({ question_answers: "You must fill all the states" });
+      } else if (parts.questionOptions) {
+        setErrors({ question_options: "You must fill all the states" });
+      }
       return;
     }
 
@@ -168,6 +173,15 @@ const CreateQuestion = ({ examId, addQuestion }) => {
           deleteState={deleteState}
           changeState={changeState}
           error={errors.question_answers}
+        />
+      )}
+      {parts.questionOptions && (
+        <QuestionOptions
+          notCreatedStates={states}
+          deleteState={deleteState}
+          addState={addState}
+          changeState={changeState}
+          error={errors.question_options}
         />
       )}
       {parts.questionScore && (

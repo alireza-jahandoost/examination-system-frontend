@@ -1,34 +1,29 @@
 import { render, screen } from "../../../test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
-import { EditQuestionContext } from "../../../contexts/edit-question-context/edit-question.context";
 import QuestionOptions from "../question-options.component";
 
 describe("check question options for not created options", () => {
   const options = [
-    { value: "first option", id: 1, answer: true },
-    { value: "second option", id: 2, answer: false },
-    { value: "third option", id: 3, answer: true },
+    { text_part: "first option", id: 1, integer_part: true },
+    { text_part: "second option", id: 2, integer_part: false },
+    { text_part: "third option", id: 3, integer_part: true },
   ];
 
-  test("options given from context will be displayed", () => {
+  test("options given from props will be displayed", () => {
     const deleteOption = jest.fn();
     const addOption = jest.fn();
     const changeOption = jest.fn();
     render(
-      <EditQuestionContext.Provider
-        value={{
-          notCreatedStates: options,
-          addState: addOption,
-          deleteState: deleteOption,
-          changeState: changeOption,
-        }}
-      >
-        <QuestionOptions />
-      </EditQuestionContext.Provider>
+      <QuestionOptions
+        notCreatedStates={options}
+        addState={addOption}
+        deleteState={deleteOption}
+        changeState={changeOption}
+      />
     );
 
     for (const current of options) {
-      expect(screen.getByDisplayValue(current.value)).toBeInTheDocument();
+      expect(screen.getByDisplayValue(current.text_part)).toBeInTheDocument();
     }
   });
 
@@ -37,16 +32,12 @@ describe("check question options for not created options", () => {
     const addOption = jest.fn();
     const changeOption = jest.fn();
     render(
-      <EditQuestionContext.Provider
-        value={{
-          notCreatedStates: options,
-          addState: addOption,
-          deleteState: deleteOption,
-          changeState: changeOption,
-        }}
-      >
-        <QuestionOptions />
-      </EditQuestionContext.Provider>
+      <QuestionOptions
+        notCreatedStates={options}
+        addState={addOption}
+        deleteState={deleteOption}
+        changeState={changeOption}
+      />
     );
 
     const deleteButton = screen.getAllByRole("button", {
@@ -63,16 +54,12 @@ describe("check question options for not created options", () => {
     const addOption = jest.fn();
     const changeOption = jest.fn();
     render(
-      <EditQuestionContext.Provider
-        value={{
-          notCreatedStates: options,
-          addState: addOption,
-          deleteState: deleteOption,
-          changeState: changeOption,
-        }}
-      >
-        <QuestionOptions />
-      </EditQuestionContext.Provider>
+      <QuestionOptions
+        notCreatedStates={options}
+        addState={addOption}
+        deleteState={deleteOption}
+        changeState={changeOption}
+      />
     );
 
     const addOptionButton = screen.getByRole("button", {
@@ -89,16 +76,13 @@ describe("check question options for not created options", () => {
     const addOption = jest.fn();
     const changeOption = jest.fn();
     render(
-      <EditQuestionContext.Provider
-        value={{
-          notCreatedStates: options,
-          addState: addOption,
-          deleteState: deleteOption,
-          changeState: changeOption,
-        }}
-      >
-        <QuestionOptions readOnly={true} />
-      </EditQuestionContext.Provider>
+      <QuestionOptions
+        readOnly={true}
+        notCreatedStates={options}
+        addState={addOption}
+        deleteState={deleteOption}
+        changeState={changeOption}
+      />
     );
 
     const addOptionButton = screen.getByRole("button", {
@@ -122,16 +106,12 @@ describe("check question options for not created options", () => {
     const addOption = jest.fn();
     const changeOption = jest.fn();
     render(
-      <EditQuestionContext.Provider
-        value={{
-          notCreatedStates: options,
-          addState: addOption,
-          deleteState: deleteOption,
-          changeState: changeOption,
-        }}
-      >
-        <QuestionOptions />
-      </EditQuestionContext.Provider>
+      <QuestionOptions
+        notCreatedStates={options}
+        addState={addOption}
+        deleteState={deleteOption}
+        changeState={changeOption}
+      />
     );
 
     const newValue = "new new new";
@@ -146,7 +126,26 @@ describe("check question options for not created options", () => {
     expect(changeOption).toHaveBeenCalledWith({
       id: 2,
       answer: true,
-      from: "notCreated",
     });
+  });
+
+  test("if there is any error, it must be displayed with class text-danger", () => {
+    const deleteOption = jest.fn();
+    const addOption = jest.fn();
+    const changeOption = jest.fn();
+    const error = "something went wrong";
+    render(
+      <QuestionOptions
+        notCreatedStates={options}
+        addState={addOption}
+        deleteState={deleteOption}
+        changeState={changeOption}
+        error={error}
+      />
+    );
+
+    const errorMessage = screen.getByText(error, { exact: false });
+    expect(errorMessage).toBeInTheDocument();
+    expect(errorMessage).toHaveClass("text-danger");
   });
 });
