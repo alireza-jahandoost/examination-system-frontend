@@ -119,7 +119,7 @@ test("on changing the answer, the 'changeOption' must be called with new value",
 
   userEvent.click(correctCheckbox);
   expect(changeOption).toHaveBeenCalledTimes(1);
-  expect(changeOption).toHaveBeenCalledWith({ answer: true });
+  expect(changeOption).toHaveBeenCalledWith({ integer_part: 1 });
 });
 
 test("on changing the input, the 'changeOption' must be called with new value", () => {

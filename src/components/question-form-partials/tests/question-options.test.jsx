@@ -125,7 +125,7 @@ describe("check question options for not created options", () => {
     userEvent.click(secondCorrectAnswerRadio);
     expect(changeOption).toHaveBeenCalledWith({
       id: 2,
-      answer: true,
+      integer_part: 1,
     });
   });
 

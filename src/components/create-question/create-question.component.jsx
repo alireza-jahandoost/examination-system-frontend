@@ -55,6 +55,7 @@ const CreateQuestion = ({ examId, addQuestion }) => {
   };
 
   const changeState = ({ id, text_part = null, integer_part = null }) => {
+    // TODO: change another integer parts to false if necessary
     const newStates = states.map((state) => {
       if (state.id === id) {
         const newObj = {};
@@ -65,6 +66,14 @@ const CreateQuestion = ({ examId, addQuestion }) => {
           newObj.integer_part = integer_part;
         }
         return { ...state, ...newObj };
+      }
+      if (
+        parts.questionOptions !== false &&
+        parts.questionOptions.justOneTrueAnswer &&
+        integer_part &&
+        state.integer_part
+      ) {
+        return { ...state, integer_part: 0 };
       }
       return state;
     });

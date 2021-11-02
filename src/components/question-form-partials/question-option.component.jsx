@@ -31,7 +31,9 @@ const QuestionOption = ({
       <AnswerIndicator
         readOnly={readOnly}
         answer={answer}
-        onChange={(newAnswer) => changeOption({ answer: newAnswer })}
+        onChange={(newAnswer) =>
+          changeOption({ integer_part: Number(newAnswer) })
+        }
         suffix={suffix}
       />
     </div>

@@ -5,7 +5,14 @@ export const questionParts = (questionTypeName) => {
     questionScore: true,
     questionOptions:
       questionTypeName === "multiple answer" ||
-      questionTypeName === "select the answer",
+      questionTypeName === "select the answer"
+        ? {
+            booleanIntegerPart:
+              questionTypeName === "multiple answer" ||
+              questionTypeName === "select the answer",
+            justOneTrueAnswer: questionTypeName === "select the answer",
+          }
+        : false,
     questionAnswers: questionTypeName === "fill the blank",
   };
 };
@@ -20,6 +27,7 @@ export const isStatesValid = (states, questionTypeId) => {
       );
       return invalidFillTheBlankElement === undefined ? true : false;
     case 3:
+    case 4:
       const invalidMultipleAnswerElement = states.find(
         (state) => state.text_part === ""
       );
