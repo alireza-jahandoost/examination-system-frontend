@@ -26,7 +26,7 @@ const questionsHandler = [
     apiRoutes.questions.showQuestion(":examId", ":questionId"),
     (req, res, ctx) => {
       const { questionId } = req.params;
-      switch (questionId) {
+      switch (Number(questionId)) {
         case 1:
           return res(ctx.json(questionsShowId_1));
         case 2:
@@ -77,13 +77,13 @@ const questionsHandler = [
   }),
 
   rest.put(
-    apiRoutes.questions.updateQuestion(":examId", "questionId"),
+    apiRoutes.questions.updateQuestion(":examId", ":questionId"),
     (req, res, ctx) => {
       const { question_text, question_score, can_be_shuffled } = req.body;
       const { questionId } = req.params;
 
       const changed_question_score = Number(question_score);
-      if (changed_question_score != changed_question_score) {
+      if (question_score !== undefined && question_score <= 0) {
         return res(ctx.status(422), ctx.json(questionScoreMustBeANumber));
       }
 

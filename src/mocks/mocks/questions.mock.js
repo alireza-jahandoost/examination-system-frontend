@@ -27,7 +27,7 @@ export const questionsShowId_1 = {
   data: {
     question: {
       question_text: "Aut ut assumenda expedita hic.",
-      question_score: 80,
+      question_score: 10,
       can_be_shuffled: true,
       question_type: {
         question_type_link:
@@ -42,7 +42,7 @@ export const questionsShowId_2 = {
   data: {
     question: {
       question_text: "Rem error nesciunt quos aut.",
-      question_score: 66,
+      question_score: 10,
       can_be_shuffled: true,
       question_type: {
         question_type_link:
@@ -57,7 +57,7 @@ export const questionsShowId_3 = {
   data: {
     question: {
       question_text: "Id quia voluptas magnam officiis et.",
-      question_score: 69,
+      question_score: 10,
       can_be_shuffled: false,
       question_type: {
         question_type_link:
