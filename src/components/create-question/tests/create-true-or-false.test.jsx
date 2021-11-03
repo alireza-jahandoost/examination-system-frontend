@@ -5,18 +5,7 @@ import {
 } from "../../../test-utils/testing-library-utils";
 import CreateQuestion from "../create-question.component";
 import userEvent from "@testing-library/user-event";
-import { QuestionTypesProvider } from "../../../contexts/question-types-context/question-types.context";
-
-const selectValues = {
-  descriptive: "1",
-  fillTheBlank: "2",
-  multipleAnswer: "3",
-  selectTheAnswer: "4",
-  trueOrFalse: "5",
-  ordering: "6",
-};
-
-const wrapper = (ui) => <QuestionTypesProvider>{ui}</QuestionTypesProvider>;
+import { wrapper, selectValues } from "./partials";
 
 describe("create true or false questions", () => {
   test("create question with answer true", async () => {
