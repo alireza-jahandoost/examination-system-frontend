@@ -6,6 +6,8 @@ import {
   questionsShowId_2,
   questionsShowId_3,
   questionsShowId_4,
+  questionsShowId_5,
+  questionsShowId_6,
   questionsStoreTemp,
   questionsUpdateTemp,
 } from "../mocks/questions.mock";
@@ -33,6 +35,10 @@ const questionsHandler = [
           return res(ctx.json(questionsShowId_3));
         case 4:
           return res(ctx.json(questionsShowId_4));
+        case 5:
+          return res(ctx.json(questionsShowId_5));
+        case 6:
+          return res(ctx.json(questionsShowId_6));
         default:
           return res(ctx.status(404));
       }

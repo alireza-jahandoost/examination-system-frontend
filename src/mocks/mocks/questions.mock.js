@@ -31,8 +31,8 @@ export const questionsShowId_1 = {
       can_be_shuffled: true,
       question_type: {
         question_type_link:
-          "http://localhost:8000/api/question_types/select-the-answer",
-        question_type_name: "select the answer",
+          "http://localhost:8000/api/question_types/descriptive",
+        question_type_name: "descriptive",
       },
     },
   },
@@ -46,8 +46,8 @@ export const questionsShowId_2 = {
       can_be_shuffled: true,
       question_type: {
         question_type_link:
-          "http://localhost:8000/api/question_types/select-the-answer",
-        question_type_name: "select the answer",
+          "http://localhost:8000/api/question_types/fill-the-blank",
+        question_type_name: "fill the blank",
       },
     },
   },
@@ -61,8 +61,8 @@ export const questionsShowId_3 = {
       can_be_shuffled: false,
       question_type: {
         question_type_link:
-          "http://localhost:8000/api/question_types/select-the-answer",
-        question_type_name: "select the answer",
+          "http://localhost:8000/api/question_types/multiple-answers",
+        question_type_name: "multiple answers",
       },
     },
   },
@@ -78,6 +78,35 @@ export const questionsShowId_4 = {
         question_type_link:
           "http://localhost:8000/api/question_types/select-the-answer",
         question_type_name: "select the answer",
+      },
+    },
+  },
+};
+
+export const questionsShowId_5 = {
+  data: {
+    question: {
+      question_text: "Error officia animi quidem temporibus at.",
+      question_score: 10,
+      can_be_shuffled: false,
+      question_type: {
+        question_type_link:
+          "http://localhost:8000/api/question_types/true-or-false",
+        question_type_name: "true or false",
+      },
+    },
+  },
+};
+
+export const questionsShowId_6 = {
+  data: {
+    question: {
+      question_text: "Error officia animi quidem temporibus at.",
+      question_score: 10,
+      can_be_shuffled: false,
+      question_type: {
+        question_type_link: "http://localhost:8000/api/question_types/ordering",
+        question_type_name: "ordering",
       },
     },
   },
