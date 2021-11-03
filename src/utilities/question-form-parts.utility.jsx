@@ -37,6 +37,11 @@ export const isStatesValid = (states, questionTypeId) => {
       return invalidMultipleAnswerElement === undefined ? true : false;
     case 5:
       return states.length === 1;
+    case 6:
+      const invalidOrderingElement = states.find(
+        (state) => state.text_part === "" || !state.integer_part
+      );
+      return invalidOrderingElement === undefined ? true : false;
     default:
       return false;
   }

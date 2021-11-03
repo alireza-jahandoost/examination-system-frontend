@@ -9,6 +9,7 @@ import CreateFillTheBlank from "./create-fill-the-blank.component";
 import CreateMultipleAnswers from "./create-multiple-answers.component";
 import CreateSelectTheAnswer from "./create-select-the-answer.component";
 import CreateTrueOrFalse from "./create-true-or-false.component";
+import CreateOrdering from "./create-ordering.component";
 
 const CreateQuestion = ({ examId, addQuestion }) => {
   const [questionTypeId, setQuestionTypeId] = useState(1);
@@ -40,6 +41,11 @@ const CreateQuestion = ({ examId, addQuestion }) => {
     case 5:
       questionForm = (
         <CreateTrueOrFalse examId={examId} addQuestion={addQuestion} />
+      );
+      break;
+    case 6:
+      questionForm = (
+        <CreateOrdering examId={examId} addQuestion={addQuestion} />
       );
       break;
     default:
