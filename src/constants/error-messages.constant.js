@@ -9,6 +9,9 @@ const errorMessages = {
     question_answers: {
       emptyAnswer: "the question answer field is required",
     },
+    question_options: {
+      emptyOption: "the question option field is required",
+    },
   },
 };
 

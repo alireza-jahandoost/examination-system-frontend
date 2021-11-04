@@ -98,10 +98,10 @@ const EditQuestion = ({ examId, questionId }) => {
     if (createdStates) {
       createdStates.forEach((createdState) => {
         const createdStateBody = {};
-        if (createdState.integer_part) {
+        if (createdState.integer_part !== undefined) {
           createdStateBody.integer_part = createdState.integer_part;
         }
-        if (createdState.text_part) {
+        if (createdState.text_part !== undefined) {
           createdStateBody.text_part = createdState.text_part;
         }
         requests.push(
@@ -214,13 +214,14 @@ const EditQuestion = ({ examId, questionId }) => {
         />
       );
       break;
-    case "multiple answers":
+    case "multiple answer":
       questionForm = (
         <EditMultipleAnswers
           question={question}
           errors={errors}
           updateQuestion={updateQuestion}
           addError={addError}
+          states={states}
         />
       );
       break;
@@ -231,6 +232,7 @@ const EditQuestion = ({ examId, questionId }) => {
           errors={errors}
           updateQuestion={updateQuestion}
           addError={addError}
+          states={states}
         />
       );
       break;
@@ -241,6 +243,7 @@ const EditQuestion = ({ examId, questionId }) => {
           errors={errors}
           updateQuestion={updateQuestion}
           addError={addError}
+          states={states}
         />
       );
       break;
@@ -251,6 +254,7 @@ const EditQuestion = ({ examId, questionId }) => {
           errors={errors}
           updateQuestion={updateQuestion}
           addError={addError}
+          states={states}
         />
       );
       break;

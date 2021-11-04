@@ -96,7 +96,7 @@ const questionsHandler = [
           question_type_name = "fill the blank";
           break;
         case 3:
-          question_type_name = "multiple answers";
+          question_type_name = "multiple answer";
           break;
         case 4:
           question_type_name = "select the answer";

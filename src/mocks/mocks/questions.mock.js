@@ -61,8 +61,8 @@ export const questionsShowId_3 = {
       can_be_shuffled: false,
       question_type: {
         question_type_link:
-          "http://localhost:8000/api/question_types/multiple-answers",
-        question_type_name: "multiple answers",
+          "http://localhost:8000/api/question_types/multiple-answer",
+        question_type_name: "multiple answer",
       },
     },
   },

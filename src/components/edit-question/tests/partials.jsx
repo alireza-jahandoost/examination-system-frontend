@@ -13,6 +13,7 @@ export const errors = {
   zeroOrNegativeQuestionScore:
     errorMessages.questions.question_score.notPositive,
   answerFieldIsEmpty: errorMessages.questions.question_answers.emptyAnswer,
+  optionFieldIsEmpty: errorMessages.questions.question_options.emptyOption,
 };
 
 export const values = {
