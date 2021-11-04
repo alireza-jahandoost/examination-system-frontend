@@ -2,6 +2,7 @@ import { rest } from "msw";
 import apiRoutes from "../../constants/api-routes.constant";
 import {
   stateConstructor,
+  statesIndexEmpty,
   statesIndexFillTheBlank,
   statesIndexMultipleAnswer,
   statesIndexSelectTheAnswer,
@@ -22,7 +23,7 @@ const statesHandler = [
     (req, res, ctx) => {
       const { questionId } = req.params;
 
-      switch (questionId) {
+      switch (Number(questionId)) {
         case 2:
           return res(ctx.json(statesIndexFillTheBlank));
         case 3:
@@ -34,7 +35,7 @@ const statesHandler = [
         case 6:
           return res(ctx.json(statesIndexOrdering));
         default:
-          throw new Error("something went wrong");
+          return res(ctx.json(statesIndexEmpty));
       }
     }
   ),
@@ -74,27 +75,76 @@ const statesHandler = [
           ) {
             return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
           }
-          return res(ctx.json(stateConstructor(1, 0, text_part)));
+          return res(
+            ctx.json({
+              data: {
+                state: stateConstructor(
+                  Math.floor(Math.random() * 1000) + 1,
+                  0,
+                  text_part
+                ),
+              },
+            })
+          );
         case 3:
           if (integer_part === undefined || text_part === undefined) {
             return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
           }
-          return res(ctx.json(stateConstructor(1, integer_part, text_part)));
+          return res(
+            ctx.json({
+              data: {
+                state: stateConstructor(
+                  Math.floor(Math.random() * 1000) + 1,
+                  integer_part,
+                  text_part
+                ),
+              },
+            })
+          );
         case 4:
           if (integer_part === undefined || text_part === undefined) {
             return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
           }
-          return res(ctx.json(stateConstructor(1, integer_part, text_part)));
+          return res(
+            ctx.json({
+              data: {
+                state: stateConstructor(
+                  Math.floor(Math.random() * 1000) + 1,
+                  integer_part,
+                  text_part
+                ),
+              },
+            })
+          );
         case 5:
           if (integer_part === undefined || text_part !== undefined) {
             return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
           }
-          return res(ctx.json(stateConstructor(1, integer_part)));
+          return res(
+            ctx.json({
+              data: {
+                state: stateConstructor(
+                  Math.floor(Math.random() * 1000) + 1,
+                  integer_part
+                ),
+              },
+            })
+          );
         case 6:
           if (integer_part === undefined || text_part === undefined) {
             return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
           }
-          return res(ctx.json(stateConstructor(1, integer_part, text_part)));
+          return res(
+            ctx.json({
+              data: {
+                state: stateConstructor(
+                  Math.floor(Math.random() * 1000) + 1,
+                  integer_part,
+                  text_part
+                ),
+              },
+            })
+          );
         default:
           throw new Error("something went wrong");
       }
@@ -111,27 +161,76 @@ const statesHandler = [
           if (integer_part !== undefined) {
             return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
           }
-          return res(ctx.json(stateConstructor(1, 0, text_part)));
+          return res(
+            ctx.json({
+              data: {
+                state: stateConstructor(
+                  Math.floor(Math.random() * 1000) + 1,
+                  0,
+                  text_part
+                ),
+              },
+            })
+          );
         case 3:
           if (integer_part === undefined || text_part === undefined) {
             return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
           }
-          return res(ctx.json(stateConstructor(1, integer_part, text_part)));
+          return res(
+            ctx.json({
+              data: {
+                state: stateConstructor(
+                  Math.floor(Math.random() * 1000) + 1,
+                  integer_part,
+                  text_part
+                ),
+              },
+            })
+          );
         case 4:
           if (integer_part === undefined || text_part === undefined) {
             return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
           }
-          return res(ctx.json(stateConstructor(1, integer_part, text_part)));
+          return res(
+            ctx.json({
+              data: {
+                state: stateConstructor(
+                  Math.floor(Math.random() * 1000) + 1,
+                  integer_part,
+                  text_part
+                ),
+              },
+            })
+          );
         case 5:
           if (integer_part === undefined || text_part !== undefined) {
             return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
           }
-          return res(ctx.json(stateConstructor(1, integer_part)));
+          return res(
+            ctx.json({
+              data: {
+                state: stateConstructor(
+                  Math.floor(Math.random() * 1000) + 1,
+                  integer_part
+                ),
+              },
+            })
+          );
         case 6:
           if (integer_part === undefined || text_part === undefined) {
             return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
           }
-          return res(ctx.json(stateConstructor(1, integer_part, text_part)));
+          return res(
+            ctx.json({
+              data: {
+                state: stateConstructor(
+                  Math.floor(Math.random() * 1000) + 1,
+                  integer_part,
+                  text_part
+                ),
+              },
+            })
+          );
         default:
           throw new Error("something went wrong");
       }

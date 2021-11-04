@@ -9,6 +9,11 @@ export const stateConstructor = (id, integer_part, text_part = "") => {
     quesiton_link: "http://localhost:8000/api/exams/1/questions/1",
   };
 };
+export const statesIndexEmpty = {
+  data: {
+    states: [],
+  },
+};
 export const statesIndexFillTheBlank = {
   data: {
     states: [

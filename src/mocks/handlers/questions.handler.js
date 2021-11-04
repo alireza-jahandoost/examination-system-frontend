@@ -87,6 +87,29 @@ const questionsHandler = [
         return res(ctx.status(422), ctx.json(questionScoreMustBeANumber));
       }
 
+      let question_type_name;
+      switch (Number(questionId)) {
+        case 1:
+          question_type_name = "descriptive";
+          break;
+        case 2:
+          question_type_name = "fill the blank";
+          break;
+        case 3:
+          question_type_name = "multiple answers";
+          break;
+        case 4:
+          question_type_name = "select the answer";
+          break;
+        case 5:
+          question_type_name = "true or false";
+          break;
+        case 6:
+          question_type_name = "ordering";
+          break;
+        default:
+      }
+
       return res(
         ctx.json(
           questionsUpdateTemp({
@@ -94,6 +117,7 @@ const questionsHandler = [
             question_score: changed_question_score,
             can_be_shuffled,
             question_id: questionId,
+            question_type_name,
           })
         )
       );

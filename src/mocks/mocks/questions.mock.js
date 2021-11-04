@@ -141,21 +141,42 @@ export const questionsUpdateTemp = ({
   question_score,
   can_be_shuffled,
   question_id,
+  question_type_name,
 }) => {
+  let questionInfo;
+  switch (Number(question_id)) {
+    case 1:
+      questionInfo = questionsShowId_1;
+      break;
+    case 2:
+      questionInfo = questionsShowId_2;
+      break;
+    case 3:
+      questionInfo = questionsShowId_3;
+      break;
+    case 4:
+      questionInfo = questionsShowId_4;
+      break;
+    case 5:
+      questionInfo = questionsShowId_5;
+      break;
+    default:
+      questionInfo = questionsShowId_6;
+      break;
+  }
   return {
     data: {
       question: {
         question_id: question_id,
         question_text:
-          question_text || questionsShowId_1.data.question.question_text,
+          question_text || questionInfo.data.question.question_text,
         question_score:
-          question_score || questionsShowId_1.data.question.question_score,
+          question_score || questionInfo.data.question.question_score,
         can_be_shuffled:
-          can_be_shuffled || questionsShowId_1.data.question.can_be_shuffled,
+          can_be_shuffled || questionInfo.data.question.can_be_shuffled,
         question_type: {
-          question_type_link:
-            "http://localhost:8000/api/question_types/descriptive",
-          question_type_name: "descriptive",
+          question_type_link: `http://localhost:8000/api/question_types/${question_type_name}`,
+          question_type_name: question_type_name,
         },
       },
     },

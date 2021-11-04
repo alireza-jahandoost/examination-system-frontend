@@ -6,6 +6,9 @@ const errorMessages = {
     question_score: {
       notPositive: "the question score must be a positive number",
     },
+    question_answers: {
+      emptyAnswer: "the question answer field is required",
+    },
   },
 };
 

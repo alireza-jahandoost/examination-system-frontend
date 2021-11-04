@@ -5,13 +5,14 @@ export const wrapper = (ui) => (
   <QuestionTypesProvider>{ui}</QuestionTypesProvider>
 );
 
-export const savedMessage = /all changes saved/i;
-export const buttonMessage = /save changes/i;
+export const savedMessage = "all changes saved";
+export const buttonMessage = "save changes";
 
 export const errors = {
   emptyQuestionText: errorMessages.questions.question_text.empty,
   zeroOrNegativeQuestionScore:
     errorMessages.questions.question_score.notPositive,
+  answerFieldIsEmpty: errorMessages.questions.question_answers.emptyAnswer,
 };
 
 export const values = {
