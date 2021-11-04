@@ -213,7 +213,6 @@ const statesHandler = [
           if (integer_part === undefined || text_part !== undefined) {
             return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
           }
-          console.log(integer_part);
           return res(
             ctx.json({
               data: {
@@ -223,9 +222,7 @@ const statesHandler = [
           );
         case 6:
           if (
-            (integer_part !== undefined &&
-              Number(integer_part) !== 0 &&
-              Number(integer_part) !== 1) ||
+            (integer_part !== undefined && Number(integer_part) === 0) ||
             (text_part !== undefined && text_part === "")
           ) {
             return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
