@@ -115,10 +115,17 @@ const EditQuestion = ({ examId, questionId }) => {
         const stateBeforeChange = states.find(
           (state) => state.id === changedState.id
         );
-        if (stateBeforeChange.integer_part !== changedState.integer_part) {
+        if (
+          changedState.integer_part !== undefined &&
+          Number(stateBeforeChange.integer_part) !==
+            Number(changedState.integer_part)
+        ) {
           changedStateBody.integer_part = changedState.integer_part;
         }
-        if (stateBeforeChange.text_part !== changedState.text_part) {
+        if (
+          changedState.text_part !== undefined &&
+          stateBeforeChange.text_part !== changedState.text_part
+        ) {
           changedStateBody.text_part = changedState.text_part;
         }
         requests.push(

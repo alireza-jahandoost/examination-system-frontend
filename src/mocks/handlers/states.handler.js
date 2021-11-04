@@ -154,7 +154,8 @@ const statesHandler = [
     apiRoutes.states.updateState(":examid", ":questionId", ":stateId"),
     (req, res, ctx) => {
       const { integer_part, text_part } = req.body;
-      const { questionId } = req.params;
+      const { questionId, stateId } = req.params;
+      const integerStateId = Number(stateId);
 
       switch (Number(questionId)) {
         case 2:
@@ -164,11 +165,7 @@ const statesHandler = [
           return res(
             ctx.json({
               data: {
-                state: stateConstructor(
-                  Math.floor(Math.random() * 1000) + 1,
-                  0,
-                  text_part
-                ),
+                state: stateConstructor(integerStateId, 0, text_part),
               },
             })
           );
@@ -185,7 +182,7 @@ const statesHandler = [
             ctx.json({
               data: {
                 state: stateConstructor(
-                  Math.floor(Math.random() * 1000) + 1,
+                  integerStateId,
                   integer_part,
                   text_part
                 ),
@@ -205,7 +202,7 @@ const statesHandler = [
             ctx.json({
               data: {
                 state: stateConstructor(
-                  Math.floor(Math.random() * 1000) + 1,
+                  integerStateId,
                   integer_part,
                   text_part
                 ),
@@ -216,13 +213,11 @@ const statesHandler = [
           if (integer_part === undefined || text_part !== undefined) {
             return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
           }
+          console.log(integer_part);
           return res(
             ctx.json({
               data: {
-                state: stateConstructor(
-                  Math.floor(Math.random() * 1000) + 1,
-                  integer_part
-                ),
+                state: stateConstructor(integerStateId, integer_part),
               },
             })
           );
@@ -239,7 +234,7 @@ const statesHandler = [
             ctx.json({
               data: {
                 state: stateConstructor(
-                  Math.floor(Math.random() * 1000) + 1,
+                  integerStateId,
                   integer_part,
                   text_part
                 ),

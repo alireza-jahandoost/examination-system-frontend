@@ -1,7 +1,7 @@
 import {
   screen,
+  waitFor,
   renderWithAuthentication,
-  render,
 } from "../../../../test-utils/testing-library-utils";
 import { wait } from "../../../../utilities/tests.utility";
 import userEvent from "@testing-library/user-event";
@@ -143,7 +143,7 @@ test("user can create an exam with password", async () => {
   const changedCreateButton = await screen.findByRole("button", {
     name: /loading\.\.\./i,
   });
-  expect(changedCreateButton).toBeDisabled();
+  await waitFor(() => expect(changedCreateButton).toBeDisabled());
   //end
 
   // check alert without wait
