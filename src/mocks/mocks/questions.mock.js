@@ -4,20 +4,16 @@ export const questionsIndex = {
   data: {
     questions: [
       {
-        question_id: 1,
-        question_link: "http://localhost:8000/api/exams/24/questions/116",
-      },
-      {
         question_id: 2,
-        question_link: "http://localhost:8000/api/exams/24/questions/117",
+        question_link: "http://localhost:8000/api/exams/1/questions/2",
       },
       {
         question_id: 3,
-        question_link: "http://localhost:8000/api/exams/24/questions/118",
+        question_link: "http://localhost:8000/api/exams/1/questions/3",
       },
       {
         question_id: 4,
-        question_link: "http://localhost:8000/api/exams/24/questions/119",
+        question_link: "http://localhost:8000/api/exams/1/questions/4",
       },
     ],
   },
@@ -26,6 +22,7 @@ export const questionsIndex = {
 export const questionsShowId_1 = {
   data: {
     question: {
+      question_id: 1,
       question_text: "Aut ut assumenda expedita hic.",
       question_score: 10,
       can_be_shuffled: true,
@@ -41,6 +38,7 @@ export const questionsShowId_1 = {
 export const questionsShowId_2 = {
   data: {
     question: {
+      question_id: 2,
       question_text: "Rem error nesciunt quos aut.",
       question_score: 10,
       can_be_shuffled: true,
@@ -56,6 +54,7 @@ export const questionsShowId_2 = {
 export const questionsShowId_3 = {
   data: {
     question: {
+      question_id: 3,
       question_text: "Id quia voluptas magnam officiis et.",
       question_score: 10,
       can_be_shuffled: false,
@@ -71,6 +70,7 @@ export const questionsShowId_3 = {
 export const questionsShowId_4 = {
   data: {
     question: {
+      question_id: 4,
       question_text: "Error officia animi quidem temporibus at.",
       question_score: 10,
       can_be_shuffled: false,
@@ -86,6 +86,7 @@ export const questionsShowId_4 = {
 export const questionsShowId_5 = {
   data: {
     question: {
+      question_id: 5,
       question_text: "Error officia animi quidem temporibus at.",
       question_score: 10,
       can_be_shuffled: false,
@@ -101,6 +102,7 @@ export const questionsShowId_5 = {
 export const questionsShowId_6 = {
   data: {
     question: {
+      question_id: 6,
       question_text: "Error officia animi quidem temporibus at.",
       question_score: 10,
       can_be_shuffled: false,

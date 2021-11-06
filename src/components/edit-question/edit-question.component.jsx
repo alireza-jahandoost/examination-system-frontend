@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { useMountedState } from "react-use";
 
 import { AuthenticationContext } from "../../contexts/authentication-context/authentication.context";
 
@@ -29,6 +30,7 @@ const EditQuestion = ({ examId, questionId }) => {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const { token } = useContext(AuthenticationContext);
+  const isMounted = useMountedState();
 
   const addError = (newErrors) => {
     setErrors(newErrors);
@@ -48,24 +50,26 @@ const EditQuestion = ({ examId, questionId }) => {
       .all(requests)
       .then(
         axios.spread((...responses) => {
-          const questionsShowResponse = responses[0];
-          const statesIndexResponse = responses[1];
-          const { question } = questionsShowResponse.data.data;
-          setQuestion(question);
-          const { states: newStates } = statesIndexResponse.data.data;
-          const changedStates = newStates.map((state) => ({
-            text_part: state.text_part,
-            id: state.state_id,
-            integer_part: state.integer_part,
-          }));
-          setStates(changedStates);
-          setIsLoading(false);
+          if (isMounted()) {
+            const questionsShowResponse = responses[0];
+            const statesIndexResponse = responses[1];
+            const { question } = questionsShowResponse.data.data;
+            setQuestion(question);
+            const { states: newStates } = statesIndexResponse.data.data;
+            const changedStates = newStates.map((state) => ({
+              text_part: state.text_part,
+              id: state.state_id,
+              integer_part: state.integer_part,
+            }));
+            setStates(changedStates);
+            setIsLoading(false);
+          }
         })
       )
       .catch((errors) => {
         console.error(errors);
       });
-  }, [questionId, examId, token]);
+  }, [questionId, examId, token, isMounted]);
 
   const updateQuestion = ({
     question_text,
@@ -266,7 +270,6 @@ const EditQuestion = ({ examId, questionId }) => {
       );
       break;
     default:
-    case undefined:
       questionForm = <p>Loading...</p>;
       break;
   }
