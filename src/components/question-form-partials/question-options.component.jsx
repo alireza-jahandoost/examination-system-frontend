@@ -7,6 +7,7 @@ const QuestionOptions = ({
   deleteState,
   addState,
   changeState,
+  suffix = "",
   error = "",
 }) => {
   return (
@@ -26,12 +27,11 @@ const QuestionOptions = ({
                 id: option.id,
               })
             }
-            suffix={`not-created-${option.id}`}
+            suffix={`${suffix}-option-${option.id}`}
           />
         );
       })}
       <div className="mt-2">
-        {" "}
         <AddNewItem onClick={() => addState()} disabled={readOnly}>
           create a new option
         </AddNewItem>

@@ -58,3 +58,18 @@ test("user can not change the question if it is published", async () => {
 
   expect(firstQuestionTextInput).not.toHaveValue(newValue);
 });
+
+test("there must not be more than 2 radio buttons with similar name", async () => {
+  renderWithAuthentication(wrapper(<UpdateExam />), {
+    route: programRoutes.updateExam(1),
+  });
+  await wait(300);
+
+  const radios = screen.getAllByRole("radio");
+
+  for (let i = 0; i < radios.length; i += 2) {
+    for (let j = i + 2; j < radios.length; j++) {
+      expect(radios[i].name).not.toBe(radios[j].name);
+    }
+  }
+});

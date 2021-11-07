@@ -9,6 +9,7 @@ const QuestionAnswers = ({
   addState,
   changeState,
   error = "",
+  suffix = "",
 }) => {
   return (
     <div>
@@ -23,7 +24,7 @@ const QuestionAnswers = ({
               changeState({ ...changedState, id: answer.id })
             }
             readOnly={readOnly}
-            suffix={`not-created-${answer.id}`}
+            suffix={`${suffix}-answer-${answer.id}`}
           />
         );
       })}
