@@ -7,8 +7,11 @@ import { convertFromUTC } from "../../utilities/dateAndTime.utility";
 import {
   examsShowRequest,
   examsUpdateRequest,
+  examsPublishRequest,
+  examsUnpublishRequest,
 } from "../../services/exams/exams.service";
 import { questionsIndexRequest } from "../../services/questions/questions.service";
+import { NotificationContext } from "../notification-context/notification.context";
 
 export const UpdateExamContext = createContext();
 
@@ -29,6 +32,7 @@ export const UpdateExamProvider = ({ children }) => {
   const isMounted = useMountedState();
   const { examId } = useParams();
   const [questions, setQuestions] = useState([]);
+  const { createNotification } = useContext(NotificationContext);
 
   useEffect(() => {
     if (!exam) {
@@ -119,6 +123,28 @@ export const UpdateExamProvider = ({ children }) => {
       });
   };
 
+  const publishExam = () => {
+    examsPublishRequest(token, examId)
+      .then(() => {
+        setIsPublished(true);
+        createNotification("you published this exam successfully", 3000);
+      })
+      .catch((err) => {
+        setErrors({ message: err?.response?.data?.data?.message });
+      });
+  };
+
+  const unpublishExam = () => {
+    examsUnpublishRequest(token, examId)
+      .then(() => {
+        setIsPublished(false);
+        createNotification("you unpublished this exam successfully", 3000);
+      })
+      .catch((err) =>
+        setErrors({ message: "something went wrong, please try again later" })
+      );
+  };
+
   const value = {
     exam,
     examId,
@@ -145,6 +171,8 @@ export const UpdateExamProvider = ({ children }) => {
     addQuestion: (newQuestion) =>
       setQuestions((prev) => [...prev, newQuestion]),
     handleUpdate,
+    publishExam,
+    unpublishExam,
   };
 
   return (

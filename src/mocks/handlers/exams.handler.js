@@ -11,6 +11,7 @@ import {
   examShowId_4,
   examShowId_5_withPassword,
 } from "../mocks/exams.mock";
+import { invalidSum } from "../errors/failed-publish.error";
 
 import { undefinedExamName } from "../errors/failed-exam-creation.error";
 import { wrongStartExamFormat } from "../errors/failed-exam-update.error";
@@ -174,6 +175,23 @@ const examsHandler = [
     } else {
       throw Error("invalid examId");
     }
+  }),
+  rest.put(apiRoutes.exams.publishExam(":examId"), (req, res, ctx) => {
+    const { examId } = req.params;
+
+    switch (Number(examId)) {
+      // for successful states
+      case 1:
+        return res(ctx.status(202));
+      // for unsuccessful states
+      case 3:
+        return res(ctx.json(invalidSum), ctx.status(401));
+      default:
+        return res(ctx.status(404));
+    }
+  }),
+  rest.put(apiRoutes.exams.unpublishExam(":examId"), (req, res, ctx) => {
+    return res(ctx.status(202));
   }),
 ];
 

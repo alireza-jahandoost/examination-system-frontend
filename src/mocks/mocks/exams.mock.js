@@ -909,7 +909,7 @@ export const examShowId_3 = {
       owner_name: "Lauriane Hahn",
       owner_link: "http://localhost:8000/api/users/12",
       is_registered: false,
-      published: true,
+      published: false,
     },
   },
 };

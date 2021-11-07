@@ -53,3 +53,29 @@ export const examsUpdateRequest = (token, body, examId) => {
     },
   });
 };
+
+export const examsPublishRequest = (token, examId) => {
+  return axios.put(
+    apiRoutes.exams.publishExam(examId),
+    {},
+    {
+      headers: {
+        accept: "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+export const examsUnpublishRequest = (token, examId) => {
+  return axios.put(
+    apiRoutes.exams.unpublishExam(examId),
+    {},
+    {
+      headers: {
+        accept: "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};

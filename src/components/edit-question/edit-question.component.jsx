@@ -147,51 +147,55 @@ const EditQuestion = ({ examId, questionId, readOnly = false }) => {
       .all(requests)
       .then(
         axios.spread((...responses) => {
-          let start = 0,
-            end = responses.length - 1;
-          if (questionChanged) {
-            const questionResponse = responses[0];
-            const { question: receivedQuestion } = questionResponse.data.data;
-            setQuestion(receivedQuestion);
-            start = 1;
-          }
-
-          const statesWithoutRemovedStates = deletedStateIds
-            ? [
-                ...states.filter((state) => {
-                  if (deletedStateIds.includes(state.id)) {
-                    return false;
-                  }
-                  return true;
-                }),
-              ]
-            : [...states];
-          start += deletedStateIds ? deletedStateIds.length : 0;
-          if (createdStates) {
-            for (let i = start; i < start + createdStates.length; i++) {
-              const { state: createdState } = responses[i].data.data;
-              statesWithoutRemovedStates.push({
-                text_part: createdState.text_part,
-                integer_part: createdState.integer_part,
-                id: createdState.state_id,
-              });
+          if (isMounted()) {
+            let start = 0,
+              end = responses.length - 1;
+            if (questionChanged) {
+              const questionResponse = responses[0];
+              const { question: receivedQuestion } = questionResponse.data.data;
+              setQuestion(receivedQuestion);
+              start = 1;
             }
-            start += createdStates.length;
-          }
 
-          for (let i = start; i <= end; i++) {
-            const { state: changedState } = responses[i].data.data;
-            for (let j = 0; j < statesWithoutRemovedStates.length; j++) {
-              if (statesWithoutRemovedStates[j].id === changedState.state_id) {
-                statesWithoutRemovedStates[j].text_part =
-                  changedState.text_part;
-                statesWithoutRemovedStates[j].integer_part =
-                  changedState.integer_part;
+            const statesWithoutRemovedStates = deletedStateIds
+              ? [
+                  ...states.filter((state) => {
+                    if (deletedStateIds.includes(state.id)) {
+                      return false;
+                    }
+                    return true;
+                  }),
+                ]
+              : [...states];
+            start += deletedStateIds ? deletedStateIds.length : 0;
+            if (createdStates) {
+              for (let i = start; i < start + createdStates.length; i++) {
+                const { state: createdState } = responses[i].data.data;
+                statesWithoutRemovedStates.push({
+                  text_part: createdState.text_part,
+                  integer_part: createdState.integer_part,
+                  id: createdState.state_id,
+                });
+              }
+              start += createdStates.length;
+            }
+
+            for (let i = start; i <= end; i++) {
+              const { state: changedState } = responses[i].data.data;
+              for (let j = 0; j < statesWithoutRemovedStates.length; j++) {
+                if (
+                  statesWithoutRemovedStates[j].id === changedState.state_id
+                ) {
+                  statesWithoutRemovedStates[j].text_part =
+                    changedState.text_part;
+                  statesWithoutRemovedStates[j].integer_part =
+                    changedState.integer_part;
+                }
               }
             }
-          }
 
-          setStates(statesWithoutRemovedStates);
+            setStates(statesWithoutRemovedStates);
+          }
         })
       )
       .catch((errors) => {

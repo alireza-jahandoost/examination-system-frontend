@@ -10,11 +10,18 @@ import { UpdateExamContext } from "../../../contexts/update-exam/update-exam.con
 
 const UpdateExamPage = () => {
   const [addQuestionFormVisible, setAddQuestionFormVisible] = useState(false);
-  const { examId, questions, addQuestion, isLoading, isPublished } = useContext(
-    UpdateExamContext
-  );
+  const {
+    exam,
+    examId,
+    questions,
+    addQuestion,
+    isLoading,
+    isPublished,
+    publishExam,
+    unpublishExam,
+  } = useContext(UpdateExamContext);
 
-  if (isLoading) {
+  if (isLoading || !exam) {
     return <p> Loading... </p>;
   }
   return (
@@ -22,6 +29,19 @@ const UpdateExamPage = () => {
       <Sidebar />
       <div className="flex-grow-1">
         <Container className="my-3">
+          <ElementContainer>
+            <Button
+              onClick={() => {
+                if (!isPublished) {
+                  publishExam();
+                } else {
+                  unpublishExam();
+                }
+              }}
+            >
+              {isPublished ? "unpublish" : "publish"} exam
+            </Button>
+          </ElementContainer>
           <ElementContainer>
             <UpdateExamForm examId={examId} />
           </ElementContainer>
