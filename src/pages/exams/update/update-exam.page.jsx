@@ -38,14 +38,16 @@ const UpdateExamPage = () => {
               );
             })}
             {addQuestionFormVisible ? (
-              <CreateQuestion
-                readOnly={isPublished}
-                examId={examId}
-                addQuestion={(questionObject) => {
-                  addQuestion(questionObject);
-                  setAddQuestionFormVisible(false);
-                }}
-              />
+              <ElementContainer>
+                <CreateQuestion
+                  readOnly={isPublished}
+                  examId={examId}
+                  addQuestion={(questionObject) => {
+                    addQuestion(questionObject);
+                    setAddQuestionFormVisible(false);
+                  }}
+                />
+              </ElementContainer>
             ) : (
               <Button
                 className="w-100"

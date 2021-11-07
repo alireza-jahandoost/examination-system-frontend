@@ -1,3 +1,4 @@
+import { Row, Col } from "react-bootstrap";
 import QuestionAnswer from "./question-answer.component";
 import AddNewItem from "./add-new-item.component";
 
@@ -26,9 +27,13 @@ const QuestionAnswers = ({
           />
         );
       })}
-      <AddNewItem disabled={readOnly} onClick={addState}>
-        create a new answer
-      </AddNewItem>
+      <Row className="mt-2">
+        <Col>
+          <AddNewItem disabled={readOnly} onClick={addState}>
+            create a new answer
+          </AddNewItem>
+        </Col>
+      </Row>
     </div>
   );
 };

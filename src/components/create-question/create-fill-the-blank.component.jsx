@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useContext } from "react";
 import { useMountedState } from "react-use";
 import axios from "axios";
 
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Row, Col } from "react-bootstrap";
 
 import { AuthenticationContext } from "../../contexts/authentication-context/authentication.context";
 
@@ -121,33 +121,49 @@ const CreateFillTheBlank = ({ examId, addQuestion, readOnly = false }) => {
   };
 
   return (
-    <Form onSubmit={handleCreate}>
+    <Form className="my-4" onSubmit={handleCreate}>
       {errors.message && <p className="text-danger"> *{errors.message} </p>}
-      <QuestionText
-        value={questionText}
-        onChange={(e) => setQuestionText(e.target.value)}
-        suffix={`not-created-question`}
-        error={errors.question_text}
-        readOnly={readOnly}
-      />
-      <QuestionAnswers
-        notCreatedStates={states}
-        addState={addState}
-        deleteState={deleteState}
-        changeState={changeState}
-        error={errors.question_answers}
-        readOnly={readOnly}
-      />
-      <QuestionScore
-        value={questionScore}
-        error={errors.question_score}
-        onChange={(e) => setQuestionScore(e.target.value)}
-        suffix={`not-created-question`}
-        readOnly={readOnly}
-      />
-      <Button disabled={readOnly} variant="primary" type="submit">
-        Create
-      </Button>
+      <Row>
+        <Col>
+          <QuestionText
+            value={questionText}
+            onChange={(e) => setQuestionText(e.target.value)}
+            suffix={`not-created-question`}
+            error={errors.question_text}
+            readOnly={readOnly}
+          />
+        </Col>
+      </Row>
+      <Row className="mt-3">
+        <Col>
+          <QuestionAnswers
+            notCreatedStates={states}
+            addState={addState}
+            deleteState={deleteState}
+            changeState={changeState}
+            error={errors.question_answers}
+            readOnly={readOnly}
+          />
+        </Col>
+      </Row>
+      <Row className="mt-3">
+        <Col md={6} xl={3}>
+          <QuestionScore
+            value={questionScore}
+            error={errors.question_score}
+            onChange={(e) => setQuestionScore(e.target.value)}
+            suffix={`not-created-question`}
+            readOnly={readOnly}
+          />
+        </Col>
+      </Row>
+      <Row className="mt-3">
+        <Col>
+          <Button disabled={readOnly} variant="primary" type="submit">
+            Create
+          </Button>
+        </Col>
+      </Row>
     </Form>
   );
 };

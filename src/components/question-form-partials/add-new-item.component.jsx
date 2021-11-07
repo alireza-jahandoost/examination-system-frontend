@@ -4,8 +4,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 const AddNewItem = ({ children, ...props }) => {
   return (
     <Button {...props}>
-      {children}
-      <FontAwesomeIcon icon={faPlus} />
+      {children} <FontAwesomeIcon icon={faPlus} />
     </Button>
   );
 };

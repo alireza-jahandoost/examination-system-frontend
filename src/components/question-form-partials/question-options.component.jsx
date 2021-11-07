@@ -30,9 +30,12 @@ const QuestionOptions = ({
           />
         );
       })}
-      <AddNewItem onClick={() => addState()} disabled={readOnly}>
-        create a new option
-      </AddNewItem>
+      <div className="mt-2">
+        {" "}
+        <AddNewItem onClick={() => addState()} disabled={readOnly}>
+          create a new option
+        </AddNewItem>
+      </div>
     </div>
   );
 };

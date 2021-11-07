@@ -13,7 +13,7 @@ const AnswerIndicator = ({
     }
   };
   return (
-    <ButtonGroup>
+    <ButtonGroup className="w-100">
       <ToggleButton
         id={`radio-correct-answer-${suffix}`}
         type="radio"
