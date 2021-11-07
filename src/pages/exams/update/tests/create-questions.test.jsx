@@ -3,22 +3,17 @@ import {
   renderWithAuthentication,
   waitFor,
 } from "../../../../test-utils/testing-library-utils";
-import { Route } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import UpdateExam from "../update-exam.page";
-import { convertFromUTC } from "../../../../utilities/dateAndTime.utility";
 import { wait } from "../../../../utilities/tests.utility";
-import { examShowId_1, examShowId_2 } from "../../../../mocks/mocks/exams.mock";
 import programRoutes from "../../../../constants/program-routes.constant";
+import { wrapper } from "./partials";
 
 test("if the exam is not published, user can add question", async () => {
-  renderWithAuthentication(
-    <Route path={programRoutes.updateExam(":examId")} component={UpdateExam} />,
-    {
-      route: programRoutes.updateExam(1),
-    }
-  );
-  await wait(100);
+  renderWithAuthentication(wrapper(<UpdateExam />), {
+    route: programRoutes.updateExam(1),
+  });
+  await wait(300);
 
   // click new question button
   const addQuestionButton = screen.getByRole("button", {
@@ -77,13 +72,10 @@ test("if the exam is not published, user can add question", async () => {
   // end
 });
 
-test.skip("if the exam is published, user can not add question", async () => {
-  renderWithAuthentication(
-    <Route path={programRoutes.updateExam(":examId")} component={UpdateExam} />,
-    {
-      route: programRoutes.updateExam(2),
-    }
-  );
+test("if the exam is published, user can not add question", async () => {
+  renderWithAuthentication(wrapper(<UpdateExam />), {
+    route: programRoutes.updateExam(2),
+  });
   await wait(100);
 
   // check create button is disabled

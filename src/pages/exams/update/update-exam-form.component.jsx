@@ -1,6 +1,5 @@
-import { useEffect, useState, useContext, useMemo } from "react";
+import { useContext } from "react";
 import { Alert, Button, Row, Col, Form } from "react-bootstrap";
-import { useMountedState } from "react-use";
 
 import TextInput from "../../../components/inputs/text-input.component";
 import NumberInput from "../../../components/inputs/number-input.component";
@@ -8,86 +7,33 @@ import TextareaInput from "../../../components/inputs/textarea-input.component";
 import CheckboxInput from "../../../components/inputs/checkbox-input.component";
 import PasswordInput from "../../../components/inputs/password-input.component";
 
-import {
-  examsUpdateRequest,
-  examsShowRequest,
-} from "../../../services/exams/exams.service";
+import { convertToUTC } from "../../../utilities/dateAndTime.utility";
 
-import { AuthenticationContext } from "../../../contexts/authentication-context/authentication.context";
-import { NotificationContext } from "../../../contexts/notification-context/notification.context";
-import {
-  convertToUTC,
-  convertFromUTC,
-} from "../../../utilities/dateAndTime.utility";
+import { UpdateExamContext } from "../../../contexts/update-exam/update-exam.context";
 
 const UpdateExamForm = ({ examId }) => {
-  const [needsPassword, setNeedsPassword] = useState(false);
-  const [exam, setExam] = useState(null);
-  const [examName, setExamName] = useState("");
-  const [examDescription, setExamDescription] = useState("");
-  const [examStart, setExamStart] = useState("");
-  const [examEnd, setExamEnd] = useState("");
-  const [totalScore, setTotalScore] = useState(0);
-  const [examPassword, setExamPassword] = useState("");
-  const [needsConfirmation, setNeedsConfirmation] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState({});
-  const [isPublished, setIsPublished] = useState(false);
-  const [isAnyChangeExist, setIsAnyChangeExist] = useState(false);
-  const { token } = useContext(AuthenticationContext);
-  const { createNotification } = useContext(NotificationContext);
-  const isMounted = useMountedState();
-
-  useEffect(() => {
-    if (!exam) {
-      return;
-    }
-    if (
-      examName !== exam.exam_name ||
-      examDescription !== exam.exam_description ||
-      totalScore !== exam.total_score ||
-      examPassword !== "" ||
-      needsConfirmation !== exam.needs_confirmation ||
-      examStart !== convertFromUTC(exam.start_of_exam) ||
-      examEnd !== convertFromUTC(exam.end_of_exam)
-    ) {
-      setIsAnyChangeExist(true);
-    } else {
-      setIsAnyChangeExist(false);
-    }
-  }, [
-    examName,
-    examDescription,
-    examStart,
-    examEnd,
-    totalScore,
-    examPassword,
-    needsConfirmation,
+  const {
     exam,
-  ]);
-
-  useEffect(() => {
-    if (!token) {
-      return;
-    }
-    examsShowRequest(examId, token)
-      .then((response) => response.data.data)
-      .then((response) => {
-        if (isMounted()) {
-          setExam(response.exam);
-          setExamName(response.exam.exam_name);
-          setExamDescription(response.exam.exam_description);
-          setExamStart(convertFromUTC(response.exam.start_of_exam));
-          setExamEnd(convertFromUTC(response.exam.end_of_exam));
-          setTotalScore(response.exam.total_score);
-          setNeedsConfirmation(response.exam.needs_confirmation);
-          setIsPublished(response.exam.published);
-        }
-      })
-      .catch((err) => {
-        setErrors({ message: "an error occured, please try again later" });
-      });
-  }, [examId, isMounted, token]);
+    examName,
+    changeExamName,
+    examDescription,
+    changeExamDescription,
+    examStart,
+    changeExamStart,
+    examEnd,
+    changeExamEnd,
+    totalScore,
+    changeTotalScore,
+    examPassword,
+    changeExamPassword,
+    needsConfirmation,
+    changeNeedsConfirmation,
+    isLoading,
+    errors,
+    isPublished,
+    isAnyChangeExist,
+    handleUpdate,
+  } = useContext(UpdateExamContext);
 
   const handleSubmit = (e) => {
     const bodyOfRequest = {};
@@ -111,26 +57,7 @@ const UpdateExamForm = ({ examId }) => {
     }
     bodyOfRequest.password = examPassword;
     e.preventDefault();
-    setIsLoading(true);
-    examsUpdateRequest(token, bodyOfRequest, examId)
-      .then((response) => response.data.data)
-      .then((response) => {
-        if (isMounted()) {
-          setIsLoading(false);
-          setExamPassword("");
-          setExam(response.exam);
-          setExamStart(convertFromUTC(response.exam.start_of_exam));
-          setExamEnd(convertFromUTC(response.exam.end_of_exam));
-          setErrors({});
-        }
-      })
-      .catch((err) => {
-        if (isMounted()) {
-          const { message, errors } = err.response.data;
-          setErrors({ message, ...errors });
-          setIsLoading(false);
-        }
-      });
+    handleUpdate(bodyOfRequest);
   };
 
   if (!exam) {
@@ -148,7 +75,7 @@ const UpdateExamForm = ({ examId }) => {
             id="exam-name"
             value={examName}
             onChange={(e) => {
-              setExamName(e.target.value);
+              changeExamName(e.target.value);
             }}
             placeholder="Exam Name"
           />
@@ -163,7 +90,7 @@ const UpdateExamForm = ({ examId }) => {
             id="exam-description"
             value={examDescription}
             onChange={(e) => {
-              setExamDescription(e.target.value);
+              changeExamDescription(e.target.value);
             }}
             placeholder="Exam Description"
           />
@@ -179,7 +106,7 @@ const UpdateExamForm = ({ examId }) => {
             placeholder="Exam's Start"
             value={examStart}
             onChange={(e) => {
-              setExamStart(e.target.value);
+              changeExamStart(e.target.value);
             }}
           />
         </Col>
@@ -192,7 +119,7 @@ const UpdateExamForm = ({ examId }) => {
             placeholder="Exam's End"
             value={examEnd}
             onChange={(e) => {
-              setExamEnd(e.target.value);
+              changeExamEnd(e.target.value);
             }}
           />
         </Col>
@@ -207,7 +134,7 @@ const UpdateExamForm = ({ examId }) => {
             placeholder="Total Score"
             value={totalScore}
             onChange={(e) => {
-              setTotalScore(Number(e.target.value));
+              changeTotalScore(Number(e.target.value));
             }}
           />
         </Col>
@@ -221,7 +148,7 @@ const UpdateExamForm = ({ examId }) => {
             id="confirmation-required"
             checked={needsConfirmation}
             onChange={(e) => {
-              setNeedsConfirmation(e.target.checked);
+              changeNeedsConfirmation(e.target.checked);
             }}
           />
         </Col>
@@ -235,7 +162,7 @@ const UpdateExamForm = ({ examId }) => {
             placeholder="Exam's Password"
             value={examPassword}
             onChange={(e) => {
-              setExamPassword(e.target.value);
+              changeExamPassword(e.target.value);
             }}
           />
           <p className="text-muted small">

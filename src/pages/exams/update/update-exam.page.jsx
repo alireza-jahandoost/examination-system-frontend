@@ -1,5 +1,4 @@
-import { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useContext } from "react";
 import { Container, Button } from "react-bootstrap";
 import Sidebar from "../../../components/sidebar/sidebar.component";
 import UpdateExamForm from "./update-exam-form.component";
@@ -7,25 +6,17 @@ import EditQuestion from "../../../components/edit-question/edit-question.compon
 import CreateQuestion from "../../../components/create-question/create-question.component";
 import ElementContainer from "./element-container.component";
 import { QuestionTypesProvider } from "../../../contexts/question-types-context/question-types.context";
-import { AuthenticationContext } from "../../../contexts/authentication-context/authentication.context";
-import { questionsIndexRequest } from "../../../services/questions/questions.service";
+import { UpdateExamContext } from "../../../contexts/update-exam/update-exam.context";
 
 const UpdateExamPage = () => {
-  const { examId } = useParams();
-  const [questions, setQuestions] = useState([]);
   const [addQuestionFormVisible, setAddQuestionFormVisible] = useState(false);
-  const { token } = useContext(AuthenticationContext);
+  const { examId, questions, addQuestion, isLoading, isPublished } = useContext(
+    UpdateExamContext
+  );
 
-  useEffect(() => {
-    if (!token) {
-      return;
-    }
-    questionsIndexRequest(examId, token)
-      .then((response) => response.data.data)
-      .then(({ questions }) => setQuestions(questions))
-      .catch((err) => console.error(err));
-  }, [examId, token]);
-
+  if (isLoading) {
+    return <p> Loading... </p>;
+  }
   return (
     <div className="d-flex flex-row">
       <Sidebar />
@@ -49,10 +40,7 @@ const UpdateExamPage = () => {
               <CreateQuestion
                 examId={examId}
                 addQuestion={(questionObject) => {
-                  setQuestions((prevQuestions) => [
-                    ...prevQuestions,
-                    questionObject,
-                  ]);
+                  addQuestion(questionObject);
                   setAddQuestionFormVisible(false);
                 }}
               />
@@ -60,6 +48,7 @@ const UpdateExamPage = () => {
               <Button
                 className="w-100"
                 onClick={() => setAddQuestionFormVisible(true)}
+                disabled={isPublished}
               >
                 Add Question
               </Button>

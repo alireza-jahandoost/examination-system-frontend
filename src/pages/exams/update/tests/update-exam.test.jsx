@@ -7,10 +7,14 @@ import userEvent from "@testing-library/user-event";
 import UpdateExamForm from "../update-exam-form.component";
 import { convertFromUTC } from "../../../../utilities/dateAndTime.utility";
 import { wait } from "../../../../utilities/tests.utility";
-import { examShowId_1, examShowId_2 } from "../../../../mocks/mocks/exams.mock";
+import { examShowId_1 } from "../../../../mocks/mocks/exams.mock";
+import { wrapper } from "./partials";
+import programRoutes from "../../../../constants/program-routes.constant";
 
 test("user will see the current values of exam in inputs after the loading", async () => {
-  renderWithAuthentication(<UpdateExamForm examId={1} />);
+  renderWithAuthentication(wrapper(<UpdateExamForm examId={1} />), {
+    route: programRoutes.updateExam(1),
+  });
 
   const loadingMessage = screen.getByText(/loading/i);
   expect(loadingMessage).toBeInTheDocument();
@@ -51,7 +55,9 @@ test("user will see the current values of exam in inputs after the loading", asy
 });
 
 test("the inputs must be read only if exam published", async () => {
-  renderWithAuthentication(<UpdateExamForm examId={2} />);
+  renderWithAuthentication(wrapper(<UpdateExamForm examId={2} />), {
+    route: programRoutes.updateExam(2),
+  });
 
   const loadingMessage = screen.getByText(/loading/i);
   expect(loadingMessage).toBeInTheDocument();
@@ -87,7 +93,9 @@ test("the inputs must be read only if exam published", async () => {
 });
 
 test("the inputs must not be read only if exam did not publish", async () => {
-  renderWithAuthentication(<UpdateExamForm examId={1} />);
+  renderWithAuthentication(wrapper(<UpdateExamForm examId={1} />), {
+    route: programRoutes.updateExam(1),
+  });
 
   const loadingMessage = screen.getByText(/loading/i);
   expect(loadingMessage).toBeInTheDocument();
@@ -123,7 +131,9 @@ test("the inputs must not be read only if exam did not publish", async () => {
 });
 
 test("if user click save button it must change to saved", async () => {
-  renderWithAuthentication(<UpdateExamForm examId={1} />);
+  renderWithAuthentication(wrapper(<UpdateExamForm examId={1} />), {
+    route: programRoutes.updateExam(1),
+  });
 
   const loadingMessage = screen.getByText(/loading/i);
   expect(loadingMessage).toBeInTheDocument();
@@ -155,7 +165,9 @@ test("if user click save button it must change to saved", async () => {
 });
 
 test("if the inputs dont change the save button must not be appeared", async () => {
-  renderWithAuthentication(<UpdateExamForm examId={1} />);
+  renderWithAuthentication(wrapper(<UpdateExamForm examId={1} />), {
+    route: programRoutes.updateExam(1),
+  });
 
   const loadingMessage = screen.getByText(/loading/i);
   expect(loadingMessage).toBeInTheDocument();
@@ -305,7 +317,9 @@ test("if the inputs dont change the save button must not be appeared", async () 
 });
 
 test("user will see the errors if his information is not correct and after correcting, errors must be disappeared", async () => {
-  renderWithAuthentication(<UpdateExamForm examId={1} />);
+  renderWithAuthentication(wrapper(<UpdateExamForm examId={1} />), {
+    route: programRoutes.updateExam(1),
+  });
 
   const loadingMessage = screen.getByText(/loading/i);
   expect(loadingMessage).toBeInTheDocument();
@@ -339,7 +353,9 @@ test("user will see the errors if his information is not correct and after corre
 
 describe("user will save 'all changes saved' after pressing 'save changes' after changing every input", () => {
   test("check name input", async () => {
-    renderWithAuthentication(<UpdateExamForm examId={1} />);
+    renderWithAuthentication(wrapper(<UpdateExamForm examId={1} />), {
+      route: programRoutes.updateExam(1),
+    });
 
     const loadingMessage = screen.getByText(/loading/i);
     expect(loadingMessage).toBeInTheDocument();
@@ -361,7 +377,9 @@ describe("user will save 'all changes saved' after pressing 'save changes' after
     ).not.toBeInTheDocument();
   });
   test("check confirmation checkbox", async () => {
-    renderWithAuthentication(<UpdateExamForm examId={1} />);
+    renderWithAuthentication(wrapper(<UpdateExamForm examId={1} />), {
+      route: programRoutes.updateExam(1),
+    });
 
     const loadingMessage = screen.getByText(/loading/i);
     expect(loadingMessage).toBeInTheDocument();
@@ -383,7 +401,9 @@ describe("user will save 'all changes saved' after pressing 'save changes' after
   });
 
   test("check exam start input", async () => {
-    renderWithAuthentication(<UpdateExamForm examId={1} />);
+    renderWithAuthentication(wrapper(<UpdateExamForm examId={1} />), {
+      route: programRoutes.updateExam(1),
+    });
 
     const loadingMessage = screen.getByText(/loading/i);
     expect(loadingMessage).toBeInTheDocument();
@@ -406,7 +426,9 @@ describe("user will save 'all changes saved' after pressing 'save changes' after
   });
 
   test("check exam end input", async () => {
-    renderWithAuthentication(<UpdateExamForm examId={1} />);
+    renderWithAuthentication(wrapper(<UpdateExamForm examId={1} />), {
+      route: programRoutes.updateExam(1),
+    });
 
     const loadingMessage = screen.getByText(/loading/i);
     expect(loadingMessage).toBeInTheDocument();
@@ -429,7 +451,9 @@ describe("user will save 'all changes saved' after pressing 'save changes' after
   });
 
   test("check total score input", async () => {
-    renderWithAuthentication(<UpdateExamForm examId={1} />);
+    renderWithAuthentication(wrapper(<UpdateExamForm examId={1} />), {
+      route: programRoutes.updateExam(1),
+    });
 
     const loadingMessage = screen.getByText(/loading/i);
     expect(loadingMessage).toBeInTheDocument();
@@ -460,7 +484,9 @@ describe("check password part", () => {
   const noPasswordMessage = /you have not set the password yet, fill the above input to set it/i;
 
   test("user will see a message if he already has a password", async () => {
-    renderWithAuthentication(<UpdateExamForm examId={5} />);
+    renderWithAuthentication(wrapper(<UpdateExamForm examId={5} />), {
+      route: programRoutes.updateExam(5),
+    });
 
     const loadingMessage = screen.getByText(/loading/i);
     expect(loadingMessage).toBeInTheDocument();
@@ -468,7 +494,9 @@ describe("check password part", () => {
     expect(await screen.findByText(hasPasswordMessage)).toBeInTheDocument();
   });
   test("user will see a message if he does not have a password", async () => {
-    renderWithAuthentication(<UpdateExamForm examId={1} />);
+    renderWithAuthentication(wrapper(<UpdateExamForm examId={1} />), {
+      route: programRoutes.updateExam(1),
+    });
 
     const loadingMessage = screen.getByText(/loading/i);
     expect(loadingMessage).toBeInTheDocument();
@@ -476,7 +504,9 @@ describe("check password part", () => {
     expect(await screen.findByText(noPasswordMessage)).toBeInTheDocument();
   });
   test("user can change its password if he has password", async () => {
-    renderWithAuthentication(<UpdateExamForm examId={5} />);
+    renderWithAuthentication(wrapper(<UpdateExamForm examId={5} />), {
+      route: programRoutes.updateExam(5),
+    });
     const loadingMessage = screen.getByText(/loading/i);
     expect(loadingMessage).toBeInTheDocument();
 
@@ -494,7 +524,9 @@ describe("check password part", () => {
     expect(await screen.findByText(hasPasswordMessage)).toBeInTheDocument();
   });
   test("user can change its password if he does not have password", async () => {
-    renderWithAuthentication(<UpdateExamForm examId={1} />);
+    renderWithAuthentication(wrapper(<UpdateExamForm examId={1} />), {
+      route: programRoutes.updateExam(1),
+    });
     const loadingMessage = screen.getByText(/loading/i);
     expect(loadingMessage).toBeInTheDocument();
 

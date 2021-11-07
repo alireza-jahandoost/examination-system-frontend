@@ -10,6 +10,7 @@ import CreateExamPage from "./create/create-exam.page";
 
 import UpdateExamPage from "./update/update-exam.page";
 import { AuthenticationContext } from "../../contexts/authentication-context/authentication.context";
+import { UpdateExamProvider } from "../../contexts/update-exam/update-exam.context";
 
 const ProfileRouter = () => {
   const { redirectIfNotAuthenticated } = useContext(AuthenticationContext);
@@ -46,7 +47,12 @@ const ProfileRouter = () => {
         exact
         path={programRoutes.updateExam(":examId")}
         render={({ location }) =>
-          redirectIfNotAuthenticated(<UpdateExamPage />, location)
+          redirectIfNotAuthenticated(
+            <UpdateExamProvider>
+              <UpdateExamPage />
+            </UpdateExamProvider>,
+            location
+          )
         }
       />
     </Switch>
