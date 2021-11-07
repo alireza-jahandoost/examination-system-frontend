@@ -13,6 +13,7 @@ const EditFillTheBlank = ({
   updateQuestion,
   addError,
   states,
+  readOnly = false,
 }) => {
   const [questionText, setQuestionText] = useState(question.question_text);
   const [questionScore, setQuestionScore] = useState(question.question_score);
@@ -166,6 +167,7 @@ const EditFillTheBlank = ({
         onChange={(e) => setQuestionText(e.target.value)}
         suffix={`question-${question.question_id}`}
         error={errors.question_text}
+        readOnly={readOnly}
       />
       <QuestionAnswers
         notCreatedStates={currentStates}
@@ -173,15 +175,17 @@ const EditFillTheBlank = ({
         deleteState={deleteState}
         changeState={changeState}
         error={errors.question_answers}
+        readOnly={readOnly}
       />
       <QuestionScore
         value={questionScore}
         error={errors.question_score}
         onChange={(e) => setQuestionScore(e.target.value)}
         suffix={`question-${question.question_id}`}
+        readOnly={readOnly}
       />
       {hasChange ? (
-        <Button variant="primary" type="submit">
+        <Button disabled={readOnly} variant="primary" type="submit">
           save changes
         </Button>
       ) : (

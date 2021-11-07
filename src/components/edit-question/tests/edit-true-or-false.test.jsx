@@ -13,186 +13,236 @@ import {
 } from "./partials";
 import { wait } from "../../../utilities/tests.utility";
 
-test("at the beginning, there is not any update button and there is 'all changes saved' phrase", async () => {
-  renderWithAuthentication(wrapper(<EditQuestion examId={1} questionId={5} />));
+describe("check update feature", () => {
+  test("at the beginning, there is not any update button and there is 'all changes saved' phrase", async () => {
+    renderWithAuthentication(
+      wrapper(<EditQuestion examId={1} questionId={5} />)
+    );
 
-  expect(screen.getByText(/loading\.\.\./i)).toBeInTheDocument();
-  await wait(100);
-  expect(await screen.findByText(savedMessage)).toBeInTheDocument();
-  expect(
-    screen.queryByRole("button", { name: buttonMessage })
-  ).not.toBeInTheDocument();
+    expect(screen.getByText(/loading\.\.\./i)).toBeInTheDocument();
+    await wait(100);
+    expect(await screen.findByText(savedMessage)).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: buttonMessage })
+    ).not.toBeInTheDocument();
+  });
+
+  test("user can change text description and update", async () => {
+    renderWithAuthentication(
+      wrapper(<EditQuestion examId={1} questionId={5} />)
+    );
+    await wait(100);
+
+    expect(await screen.findByText(savedMessage)).toBeInTheDocument();
+
+    // change question text
+    const questionTextInput = await screen.findByRole("textbox", {
+      name: /question text/i,
+    });
+    userEvent.clear(questionTextInput);
+    userEvent.type(questionTextInput, values.newQuestionText);
+    // end
+
+    expect(screen.queryByText(savedMessage)).not.toBeInTheDocument();
+
+    // click update button
+    const updateButton = await screen.findByRole("button", {
+      name: buttonMessage,
+    });
+    userEvent.click(updateButton);
+    // end
+
+    await wait(100);
+
+    // check for update
+    expect(await screen.findByText(savedMessage)).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: buttonMessage })
+    ).not.toBeInTheDocument();
+    // end
+  });
+
+  test("user can change question score and update", async () => {
+    renderWithAuthentication(
+      wrapper(<EditQuestion examId={1} questionId={5} />)
+    );
+    await wait(100);
+
+    expect(await screen.findByText(savedMessage)).toBeInTheDocument();
+
+    // change question score
+    const questionScoreInput = await screen.findByRole("spinbutton", {
+      name: /question score/i,
+    });
+    userEvent.clear(questionScoreInput);
+    userEvent.type(questionScoreInput, values.newQuestionScore);
+    // end
+
+    expect(screen.queryByText(savedMessage)).not.toBeInTheDocument();
+
+    // click update button
+    const updateButton = await screen.findByRole("button", {
+      name: buttonMessage,
+    });
+    userEvent.click(updateButton);
+    // end
+
+    // check for update
+    expect(await screen.findByText(savedMessage)).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: buttonMessage })
+    ).not.toBeInTheDocument();
+    // end
+  });
+
+  test("user can change the answer of question and update", async () => {
+    renderWithAuthentication(
+      wrapper(<EditQuestion examId={1} questionId={5} />)
+    );
+    await wait(100);
+
+    expect(await screen.findByText(savedMessage)).toBeInTheDocument();
+
+    // change the answer of question
+    const radioButtons = screen.getAllByRole("button");
+    if (radioButtons[0].checked) {
+      userEvent.click(radioButtons[1]);
+    } else {
+      userEvent.click(radioButtons[0]);
+    }
+
+    await wait(100);
+
+    expect(screen.queryByText(savedMessage)).not.toBeInTheDocument();
+
+    // click update button
+    const updateButton = await screen.findByRole("button", {
+      name: buttonMessage,
+    });
+    userEvent.click(updateButton);
+    // end
+
+    // check for update
+    expect(await screen.findByText(savedMessage)).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: buttonMessage })
+    ).not.toBeInTheDocument();
+    // end
+  });
+
+  test("question text must not be empty and user will see error", async () => {
+    renderWithAuthentication(
+      wrapper(<EditQuestion examId={1} questionId={5} />)
+    );
+    await wait(100);
+
+    expect(await screen.findByText(savedMessage)).toBeInTheDocument();
+
+    // change question text
+    const questionTextInput = await screen.findByRole("textbox", {
+      name: /question text/i,
+    });
+    userEvent.clear(questionTextInput);
+    userEvent.type(questionTextInput, "");
+    // end
+
+    expect(screen.queryByText(savedMessage)).not.toBeInTheDocument();
+
+    // click update button
+    const updateButton = await screen.findByRole("button", {
+      name: buttonMessage,
+    });
+    userEvent.click(updateButton);
+    // end
+
+    // check error
+    expect(
+      await screen.findByText(errors.emptyQuestionText, { exact: false })
+    ).toBeInTheDocument();
+    // end
+
+    // check update did not happened
+    expect(screen.queryByText(savedMessage)).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: buttonMessage })
+    ).toBeInTheDocument();
+    // end
+  });
+
+  test("question score must be a positive number and will cause an error", async () => {
+    renderWithAuthentication(
+      wrapper(<EditQuestion examId={1} questionId={5} />)
+    );
+    await wait(100);
+
+    expect(await screen.findByText(savedMessage)).toBeInTheDocument();
+
+    // change question score
+    const questionScoreInput = await screen.findByRole("spinbutton", {
+      name: /question score/i,
+    });
+    userEvent.clear(questionScoreInput);
+    userEvent.type(questionScoreInput, "-1");
+    // end
+
+    expect(screen.queryByText(savedMessage)).not.toBeInTheDocument();
+
+    // click update button
+    const updateButton = await screen.findByRole("button", {
+      name: buttonMessage,
+    });
+    userEvent.click(updateButton);
+    // end
+
+    // check error
+    expect(
+      await screen.findByText(errors.zeroOrNegativeQuestionScore, {
+        exact: false,
+      })
+    ).toBeInTheDocument();
+    // end
+
+    // check update did not happened
+    expect(screen.queryByText(savedMessage)).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: buttonMessage })
+    ).toBeInTheDocument();
+    // end
+  });
 });
 
-test("user can change text description and update", async () => {
-  renderWithAuthentication(wrapper(<EditQuestion examId={1} questionId={5} />));
-  await wait(100);
+describe("check readonly property", () => {
+  test("check all the textbox fields are readonly", async () => {
+    renderWithAuthentication(
+      wrapper(<EditQuestion readOnly={true} examId={1} questionId={5} />)
+    );
+    await wait(100);
 
-  expect(await screen.findByText(savedMessage)).toBeInTheDocument();
-
-  // change question text
-  const questionTextInput = await screen.findByRole("textbox", {
-    name: /question text/i,
+    const textboxInputs = screen.getAllByRole("textbox");
+    for (let i = 0; i < textboxInputs.length; i++) {
+      expect(textboxInputs[i]).toHaveAttribute("readonly");
+    }
   });
-  userEvent.clear(questionTextInput);
-  userEvent.type(questionTextInput, values.newQuestionText);
-  // end
+  test("check all the spinbutton fields are readonly", async () => {
+    renderWithAuthentication(
+      wrapper(<EditQuestion readOnly={true} examId={1} questionId={5} />)
+    );
+    await wait(100);
 
-  expect(screen.queryByText(savedMessage)).not.toBeInTheDocument();
-
-  // click update button
-  const updateButton = await screen.findByRole("button", {
-    name: buttonMessage,
+    const spinButtons = screen.getAllByRole("spinbutton");
+    for (let i = 0; i < spinButtons.length; i++) {
+      expect(spinButtons[i]).toHaveAttribute("readonly");
+    }
   });
-  userEvent.click(updateButton);
-  // end
+  test("check all the radio buttons are disabled", async () => {
+    renderWithAuthentication(
+      wrapper(<EditQuestion readOnly={true} examId={1} questionId={5} />)
+    );
+    await wait(100);
 
-  await wait(100);
-
-  // check for update
-  expect(await screen.findByText(savedMessage)).toBeInTheDocument();
-  expect(
-    screen.queryByRole("button", { name: buttonMessage })
-  ).not.toBeInTheDocument();
-  // end
-});
-
-test("user can change question score and update", async () => {
-  renderWithAuthentication(wrapper(<EditQuestion examId={1} questionId={5} />));
-  await wait(100);
-
-  expect(await screen.findByText(savedMessage)).toBeInTheDocument();
-
-  // change question score
-  const questionScoreInput = await screen.findByRole("spinbutton", {
-    name: /question score/i,
+    const radioButtons = screen.getAllByRole("radio");
+    for (let i = 0; i < radioButtons.length; i++) {
+      expect(radioButtons[i]).toHaveAttribute("disabled");
+    }
   });
-  userEvent.clear(questionScoreInput);
-  userEvent.type(questionScoreInput, values.newQuestionScore);
-  // end
-
-  expect(screen.queryByText(savedMessage)).not.toBeInTheDocument();
-
-  // click update button
-  const updateButton = await screen.findByRole("button", {
-    name: buttonMessage,
-  });
-  userEvent.click(updateButton);
-  // end
-
-  // check for update
-  expect(await screen.findByText(savedMessage)).toBeInTheDocument();
-  expect(
-    screen.queryByRole("button", { name: buttonMessage })
-  ).not.toBeInTheDocument();
-  // end
-});
-
-test("user can change the answer of question and update", async () => {
-  renderWithAuthentication(wrapper(<EditQuestion examId={1} questionId={5} />));
-  await wait(100);
-
-  expect(await screen.findByText(savedMessage)).toBeInTheDocument();
-
-  // change the answer of question
-  const radioButtons = screen.getAllByRole("button");
-  if (radioButtons[0].checked) {
-    userEvent.click(radioButtons[1]);
-  } else {
-    userEvent.click(radioButtons[0]);
-  }
-
-  await wait(100);
-
-  expect(screen.queryByText(savedMessage)).not.toBeInTheDocument();
-
-  // click update button
-  const updateButton = await screen.findByRole("button", {
-    name: buttonMessage,
-  });
-  userEvent.click(updateButton);
-  // end
-
-  // check for update
-  expect(await screen.findByText(savedMessage)).toBeInTheDocument();
-  expect(
-    screen.queryByRole("button", { name: buttonMessage })
-  ).not.toBeInTheDocument();
-  // end
-});
-
-test("question text must not be empty and user will see error", async () => {
-  renderWithAuthentication(wrapper(<EditQuestion examId={1} questionId={5} />));
-  await wait(100);
-
-  expect(await screen.findByText(savedMessage)).toBeInTheDocument();
-
-  // change question text
-  const questionTextInput = await screen.findByRole("textbox", {
-    name: /question text/i,
-  });
-  userEvent.clear(questionTextInput);
-  userEvent.type(questionTextInput, "");
-  // end
-
-  expect(screen.queryByText(savedMessage)).not.toBeInTheDocument();
-
-  // click update button
-  const updateButton = await screen.findByRole("button", {
-    name: buttonMessage,
-  });
-  userEvent.click(updateButton);
-  // end
-
-  // check error
-  expect(
-    await screen.findByText(errors.emptyQuestionText, { exact: false })
-  ).toBeInTheDocument();
-  // end
-
-  // check update did not happened
-  expect(screen.queryByText(savedMessage)).not.toBeInTheDocument();
-  expect(
-    screen.getByRole("button", { name: buttonMessage })
-  ).toBeInTheDocument();
-  // end
-});
-
-test("question score must be a positive number and will cause an error", async () => {
-  renderWithAuthentication(wrapper(<EditQuestion examId={1} questionId={5} />));
-  await wait(100);
-
-  expect(await screen.findByText(savedMessage)).toBeInTheDocument();
-
-  // change question score
-  const questionScoreInput = await screen.findByRole("spinbutton", {
-    name: /question score/i,
-  });
-  userEvent.clear(questionScoreInput);
-  userEvent.type(questionScoreInput, "-1");
-  // end
-
-  expect(screen.queryByText(savedMessage)).not.toBeInTheDocument();
-
-  // click update button
-  const updateButton = await screen.findByRole("button", {
-    name: buttonMessage,
-  });
-  userEvent.click(updateButton);
-  // end
-
-  // check error
-  expect(
-    await screen.findByText(errors.zeroOrNegativeQuestionScore, {
-      exact: false,
-    })
-  ).toBeInTheDocument();
-  // end
-
-  // check update did not happened
-  expect(screen.queryByText(savedMessage)).not.toBeInTheDocument();
-  expect(
-    screen.getByRole("button", { name: buttonMessage })
-  ).toBeInTheDocument();
-  // end
 });

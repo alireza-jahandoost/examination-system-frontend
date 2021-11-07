@@ -6,7 +6,13 @@ import QuestionScore from "../question-form-partials/question-score.component";
 
 import errorMessages from "../../constants/error-messages.constant";
 
-const EditDescriptive = ({ question, errors, updateQuestion, addError }) => {
+const EditDescriptive = ({
+  question,
+  errors,
+  updateQuestion,
+  addError,
+  readOnly = false,
+}) => {
   const [questionText, setQuestionText] = useState(question.question_text);
   const [questionScore, setQuestionScore] = useState(question.question_score);
   const [hasChange, setHasChange] = useState(false);
@@ -59,15 +65,17 @@ const EditDescriptive = ({ question, errors, updateQuestion, addError }) => {
         onChange={(e) => setQuestionText(e.target.value)}
         suffix={`question-${question.question_id}`}
         error={errors.question_text}
+        readOnly={readOnly}
       />
       <QuestionScore
         value={questionScore}
         error={errors.question_score}
         onChange={(e) => setQuestionScore(e.target.value)}
         suffix={`question-${question.question_id}`}
+        readOnly={readOnly}
       />
       {hasChange ? (
-        <Button variant="primary" type="submit">
+        <Button disabled={readOnly} variant="primary" type="submit">
           save changes
         </Button>
       ) : (

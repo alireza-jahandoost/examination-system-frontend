@@ -24,7 +24,7 @@ import EditSelectTheAnswer from "./edit-select-the-answer.component";
 import EditTrueOrFalse from "./edit-true-or-false.component";
 import EditOrdering from "./edit-ordering.component";
 
-const EditQuestion = ({ examId, questionId }) => {
+const EditQuestion = ({ examId, questionId, readOnly = false }) => {
   const [question, setQuestion] = useState(null);
   const [states, setStates] = useState(null);
   const [errors, setErrors] = useState({});
@@ -207,6 +207,7 @@ const EditQuestion = ({ examId, questionId }) => {
     case "descriptive":
       questionForm = (
         <EditDescriptive
+          readOnly={readOnly}
           question={question}
           errors={errors}
           updateQuestion={updateQuestion}
@@ -217,6 +218,7 @@ const EditQuestion = ({ examId, questionId }) => {
     case "fill the blank":
       questionForm = (
         <EditFillTheBlank
+          readOnly={readOnly}
           question={question}
           errors={errors}
           updateQuestion={updateQuestion}
@@ -228,6 +230,7 @@ const EditQuestion = ({ examId, questionId }) => {
     case "multiple answer":
       questionForm = (
         <EditMultipleAnswers
+          readOnly={readOnly}
           question={question}
           errors={errors}
           updateQuestion={updateQuestion}
@@ -239,6 +242,7 @@ const EditQuestion = ({ examId, questionId }) => {
     case "select the answer":
       questionForm = (
         <EditSelectTheAnswer
+          readOnly={readOnly}
           question={question}
           errors={errors}
           updateQuestion={updateQuestion}
@@ -250,6 +254,7 @@ const EditQuestion = ({ examId, questionId }) => {
     case "true or false":
       questionForm = (
         <EditTrueOrFalse
+          readOnly={readOnly}
           question={question}
           errors={errors}
           updateQuestion={updateQuestion}
@@ -261,6 +266,7 @@ const EditQuestion = ({ examId, questionId }) => {
     case "ordering":
       questionForm = (
         <EditOrdering
+          readOnly={readOnly}
           question={question}
           errors={errors}
           updateQuestion={updateQuestion}
