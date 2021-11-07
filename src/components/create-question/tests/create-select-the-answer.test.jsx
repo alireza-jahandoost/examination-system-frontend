@@ -6,6 +6,7 @@ import {
 import CreateQuestion from "../create-question.component";
 import userEvent from "@testing-library/user-event";
 import { wrapper, selectValues } from "./partials";
+import { wait } from "../../../utilities/tests.utility";
 
 describe("create select the answer questions", () => {
   test("user can create a select the answer question without options", async () => {
@@ -311,5 +312,83 @@ describe("create select the answer questions", () => {
     // end
 
     await waitFor(() => expect(addQuestion).toHaveBeenCalledTimes(1));
+  });
+});
+
+describe("check readonly property", () => {
+  test("check all the textbox fields are readonly", async () => {
+    const addQuestion = jest.fn();
+    render(
+      wrapper(
+        <CreateQuestion examId={1} readOnly={true} addQuestion={addQuestion} />
+      )
+    );
+
+    // change question type
+    const questionTypeSelector = await screen.findByRole("combobox", {
+      name: /question type/i,
+    });
+
+    userEvent.selectOptions(questionTypeSelector, [
+      selectValues.selectTheAnswer,
+    ]);
+    // end
+
+    await wait(100);
+
+    const textboxInputs = screen.getAllByRole("textbox");
+    for (let i = 0; i < textboxInputs.length; i++) {
+      expect(textboxInputs[i]).toHaveAttribute("readonly");
+    }
+  });
+  test("check all the spinbutton fields are readonly", async () => {
+    const addQuestion = jest.fn();
+    render(
+      wrapper(
+        <CreateQuestion examId={1} readOnly={true} addQuestion={addQuestion} />
+      )
+    );
+
+    // change question type
+    const questionTypeSelector = await screen.findByRole("combobox", {
+      name: /question type/i,
+    });
+
+    userEvent.selectOptions(questionTypeSelector, [
+      selectValues.selectTheAnswer,
+    ]);
+    // end
+
+    await wait(100);
+
+    const spinButtons = screen.getAllByRole("spinbutton");
+    for (let i = 0; i < spinButtons.length; i++) {
+      expect(spinButtons[i]).toHaveAttribute("readonly");
+    }
+  });
+  test("check all the buttons are disabled", async () => {
+    const addQuestion = jest.fn();
+    render(
+      wrapper(
+        <CreateQuestion examId={1} readOnly={true} addQuestion={addQuestion} />
+      )
+    );
+
+    // change question type
+    const questionTypeSelector = await screen.findByRole("combobox", {
+      name: /question type/i,
+    });
+
+    userEvent.selectOptions(questionTypeSelector, [
+      selectValues.selectTheAnswer,
+    ]);
+    // end
+
+    await wait(100);
+
+    const buttons = screen.getAllByRole("button");
+    for (let i = 0; i < buttons.length; i++) {
+      expect(buttons[i]).toHaveAttribute("disabled");
+    }
   });
 });

@@ -17,7 +17,7 @@ import { isStatesValid } from "../../utilities/question-form-parts.utility";
 import { questionsStoreRequest } from "../../services/questions/questions.service";
 import { statesStoreRequest } from "../../services/states/states.service";
 
-const CreateSelectTheAnswer = ({ examId, addQuestion }) => {
+const CreateSelectTheAnswer = ({ examId, addQuestion, readOnly = false }) => {
   const [errors, setErrors] = useState({});
   const [states, setStates] = useState([]);
   const [questionText, setQuestionText] = useState("");
@@ -135,6 +135,7 @@ const CreateSelectTheAnswer = ({ examId, addQuestion }) => {
         onChange={(e) => setQuestionText(e.target.value)}
         suffix={`not-created-question`}
         error={errors.question_text}
+        readOnly={readOnly}
       />
       <QuestionOptions
         notCreatedStates={states}
@@ -142,14 +143,16 @@ const CreateSelectTheAnswer = ({ examId, addQuestion }) => {
         addState={addState}
         changeState={changeState}
         error={errors.question_options}
+        readOnly={readOnly}
       />
       <QuestionScore
         value={questionScore}
         error={errors.question_score}
         onChange={(e) => setQuestionScore(e.target.value)}
         suffix={`not-created-question`}
+        readOnly={readOnly}
       />
-      <Button variant="primary" type="submit">
+      <Button disabled={readOnly} variant="primary" type="submit">
         Create
       </Button>
     </Form>

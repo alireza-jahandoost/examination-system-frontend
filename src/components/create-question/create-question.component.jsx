@@ -11,7 +11,7 @@ import CreateSelectTheAnswer from "./create-select-the-answer.component";
 import CreateTrueOrFalse from "./create-true-or-false.component";
 import CreateOrdering from "./create-ordering.component";
 
-const CreateQuestion = ({ examId, addQuestion }) => {
+const CreateQuestion = ({ examId, addQuestion, readOnly = false }) => {
   const [questionTypeId, setQuestionTypeId] = useState(1);
   const { questionTypes } = useContext(QuestionTypesContext);
 
@@ -20,32 +20,56 @@ const CreateQuestion = ({ examId, addQuestion }) => {
   switch (Number(questionTypeId)) {
     case 1:
       questionForm = (
-        <CreateDescriptive examId={examId} addQuestion={addQuestion} />
+        <CreateDescriptive
+          examId={examId}
+          addQuestion={addQuestion}
+          readOnly={readOnly}
+        />
       );
       break;
     case 2:
       questionForm = (
-        <CreateFillTheBlank examId={examId} addQuestion={addQuestion} />
+        <CreateFillTheBlank
+          examId={examId}
+          addQuestion={addQuestion}
+          readOnly={readOnly}
+        />
       );
       break;
     case 3:
       questionForm = (
-        <CreateMultipleAnswers examId={examId} addQuestion={addQuestion} />
+        <CreateMultipleAnswers
+          examId={examId}
+          addQuestion={addQuestion}
+          readOnly={readOnly}
+        />
       );
       break;
     case 4:
       questionForm = (
-        <CreateSelectTheAnswer examId={examId} addQuestion={addQuestion} />
+        <CreateSelectTheAnswer
+          examId={examId}
+          addQuestion={addQuestion}
+          readOnly={readOnly}
+        />
       );
       break;
     case 5:
       questionForm = (
-        <CreateTrueOrFalse examId={examId} addQuestion={addQuestion} />
+        <CreateTrueOrFalse
+          examId={examId}
+          addQuestion={addQuestion}
+          readOnly={readOnly}
+        />
       );
       break;
     case 6:
       questionForm = (
-        <CreateOrdering examId={examId} addQuestion={addQuestion} />
+        <CreateOrdering
+          examId={examId}
+          addQuestion={addQuestion}
+          readOnly={readOnly}
+        />
       );
       break;
     default:

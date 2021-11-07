@@ -22,6 +22,7 @@ const AnswerIndicator = ({
         value={1}
         checked={answer}
         onChange={handleChange}
+        disabled={readOnly}
       >
         {buttonLabels[0]}
       </ToggleButton>
@@ -33,6 +34,7 @@ const AnswerIndicator = ({
         value={0}
         checked={!answer}
         onChange={handleChange}
+        disabled={readOnly}
       >
         {buttonLabels[1]}
       </ToggleButton>

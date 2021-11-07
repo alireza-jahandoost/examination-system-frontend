@@ -15,7 +15,7 @@ import apiRoutes from "../../constants/api-routes.constant";
 import { questionsStoreRequest } from "../../services/questions/questions.service";
 import { statesStoreRequest } from "../../services/states/states.service";
 
-const CreateTrueOrFalse = ({ examId, addQuestion }) => {
+const CreateTrueOrFalse = ({ examId, addQuestion, readOnly = false }) => {
   const [errors, setErrors] = useState({});
   const [answer, setAnswer] = useState(false);
   const [questionText, setQuestionText] = useState("");
@@ -86,20 +86,23 @@ const CreateTrueOrFalse = ({ examId, addQuestion }) => {
         onChange={(e) => setQuestionText(e.target.value)}
         suffix={`not-created-question`}
         error={errors.question_text}
+        readOnly={readOnly}
       />
       <AnswerIndicator
         answer={answer}
         onChange={(e) => changeState({ integer_part: e ? 1 : 0 })}
         suffix={`not-created-question`}
         buttonLabels={["true", "false"]}
+        readOnly={readOnly}
       />
       <QuestionScore
         value={questionScore}
         error={errors.question_score}
         onChange={(e) => setQuestionScore(e.target.value)}
         suffix={`not-created-question`}
+        readOnly={readOnly}
       />
-      <Button variant="primary" type="submit">
+      <Button disabled={readOnly} variant="primary" type="submit">
         Create
       </Button>
     </Form>
