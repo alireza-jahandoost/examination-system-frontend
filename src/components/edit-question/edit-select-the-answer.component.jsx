@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
 
 import QuestionText from "../question-form-partials/question-text.component";
 import QuestionScore from "../question-form-partials/question-score.component";
@@ -166,37 +166,53 @@ const EditSelectTheAnswer = ({
   ]);
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} className="my-4">
       {errors.message && <p className="text-danger"> *{errors.message} </p>}
-      <QuestionText
-        value={questionText}
-        onChange={(e) => setQuestionText(e.target.value)}
-        suffix={`question-${question.question_id}`}
-        error={errors.question_text}
-        readOnly={readOnly}
-      />
-      <QuestionOptions
-        notCreatedStates={currentStates}
-        addState={addState}
-        deleteState={deleteState}
-        changeState={changeState}
-        error={errors.question_options}
-        readOnly={readOnly}
-      />
-      <QuestionScore
-        value={questionScore}
-        error={errors.question_score}
-        onChange={(e) => setQuestionScore(e.target.value)}
-        suffix={`question-${question.question_id}`}
-        readOnly={readOnly}
-      />
-      {hasChange ? (
-        <Button disabled={readOnly} variant="primary" type="submit">
-          save changes
-        </Button>
-      ) : (
-        <p> all changes saved </p>
-      )}
+      <Row>
+        <Col>
+          <QuestionText
+            value={questionText}
+            onChange={(e) => setQuestionText(e.target.value)}
+            suffix={`question-${question.question_id}`}
+            error={errors.question_text}
+            readOnly={readOnly}
+          />
+        </Col>
+      </Row>
+      <Row className="mt-3">
+        <Col>
+          <QuestionOptions
+            notCreatedStates={currentStates}
+            addState={addState}
+            deleteState={deleteState}
+            changeState={changeState}
+            error={errors.question_options}
+            readOnly={readOnly}
+          />
+        </Col>
+      </Row>
+      <Row className="mt-3">
+        <Col md={6} xl={3}>
+          <QuestionScore
+            value={questionScore}
+            error={errors.question_score}
+            onChange={(e) => setQuestionScore(e.target.value)}
+            suffix={`question-${question.question_id}`}
+            readOnly={readOnly}
+          />
+        </Col>
+      </Row>
+      <Row className="mt-3">
+        <Col>
+          {hasChange ? (
+            <Button disabled={readOnly} variant="primary" type="submit">
+              save changes
+            </Button>
+          ) : (
+            <p> all changes saved </p>
+          )}
+        </Col>
+      </Row>
     </Form>
   );
 };

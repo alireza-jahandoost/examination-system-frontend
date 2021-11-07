@@ -3,11 +3,11 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 
 import QuestionText from "../question-form-partials/question-text.component";
 import QuestionScore from "../question-form-partials/question-score.component";
-import QuestionAnswers from "../question-form-partials/question-answers.component";
+import QuestionOptions from "../question-form-partials/question-options.component";
 
 import errorMessages from "../../constants/error-messages.constant";
 
-const EditFillTheBlank = ({
+const EditSelectTheAnswer = ({
   question,
   errors,
   updateQuestion,
@@ -33,7 +33,7 @@ const EditFillTheBlank = ({
   const addState = () => {
     setCurrentStates((prevStates) => [
       ...prevStates,
-      { text_part: "", id: nextStateId.current },
+      { text_part: "", integer_part: 0, id: nextStateId.current },
     ]);
   };
 
@@ -44,14 +44,19 @@ const EditFillTheBlank = ({
     setCurrentStates([...newStates]);
   };
 
-  const changeState = ({ id, text_part = null }) => {
+  const changeState = ({ id, text_part = null, integer_part = null }) => {
     const newStates = currentStates.map((state) => {
       if (state.id === id) {
         const newObj = {};
         if (text_part !== null) {
           newObj.text_part = text_part;
         }
+        if (integer_part !== null) {
+          newObj.integer_part = integer_part;
+        }
         return { ...state, ...newObj };
+      } else if (integer_part === 1) {
+        return { ...state, integer_part: 0 };
       }
       return state;
     });
@@ -81,7 +86,7 @@ const EditFillTheBlank = ({
     const invalidState = currentStates.find((state) => state.text_part === "");
     if (invalidState !== undefined) {
       addError({
-        question_answers: errorMessages.questions.question_answers.emptyAnswer,
+        question_options: errorMessages.questions.question_options.emptyOption,
       });
       return;
     }
@@ -107,7 +112,8 @@ const EditFillTheBlank = ({
       const matchedState = states.find((state) => state.id === currentState.id);
       if (
         matchedState !== undefined &&
-        matchedState.text_part !== currentState.text_part
+        (matchedState.text_part !== currentState.text_part ||
+          matchedState.integer_part !== currentState.integer_part)
       ) {
         return true;
       }
@@ -175,18 +181,18 @@ const EditFillTheBlank = ({
       </Row>
       <Row className="mt-3">
         <Col>
-          <QuestionAnswers
+          <QuestionOptions
             notCreatedStates={currentStates}
             addState={addState}
             deleteState={deleteState}
             changeState={changeState}
-            error={errors.question_answers}
+            error={errors.question_options}
             readOnly={readOnly}
           />
         </Col>
       </Row>
       <Row className="mt-3">
-        <Col md={6} xl={3}>
+        <Col>
           <QuestionScore
             value={questionScore}
             error={errors.question_score}
@@ -211,4 +217,4 @@ const EditFillTheBlank = ({
   );
 };
 
-export default EditFillTheBlank;
+export default EditSelectTheAnswer;
