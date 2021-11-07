@@ -30,6 +30,7 @@ const UpdateExamPage = () => {
               return (
                 <ElementContainer key={question.question_id}>
                   <EditQuestion
+                    readOnly={isPublished}
                     examId={examId}
                     questionId={question.question_id}
                   />
@@ -38,6 +39,7 @@ const UpdateExamPage = () => {
             })}
             {addQuestionFormVisible ? (
               <CreateQuestion
+                readOnly={isPublished}
                 examId={examId}
                 addQuestion={(questionObject) => {
                   addQuestion(questionObject);
