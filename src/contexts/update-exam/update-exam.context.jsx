@@ -128,6 +128,7 @@ export const UpdateExamProvider = ({ children }) => {
       .then(() => {
         setIsPublished(true);
         createNotification("you published this exam successfully", 3000);
+        setErrors({});
       })
       .catch((err) => {
         setErrors({ message: err?.response?.data?.data?.message });
@@ -139,6 +140,7 @@ export const UpdateExamProvider = ({ children }) => {
       .then(() => {
         setIsPublished(false);
         createNotification("you unpublished this exam successfully", 3000);
+        setErrors({});
       })
       .catch((err) =>
         setErrors({ message: "something went wrong, please try again later" })
