@@ -43,6 +43,7 @@ export const renderWithAuthentication = (
           <AuthenticationContext.Provider
             value={{
               user: userMock.data.user,
+              isAuthLoaded: true,
               login: jest.fn(),
               register: jest.fn(),
               errors: {},

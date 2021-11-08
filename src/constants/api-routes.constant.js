@@ -65,6 +65,7 @@ const apiRoutes = {
   },
   users: {
     showUser: (userId) => `${prefix}/users/${userId}`,
+    getCurrentUser: () => `${prefix}/current_user`,
   },
 };
 

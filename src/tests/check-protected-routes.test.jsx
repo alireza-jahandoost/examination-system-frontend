@@ -1,16 +1,20 @@
-import { screen, renderWithRouter } from "../test-utils/testing-library-utils";
+import {
+  waitFor,
+  screen,
+  renderWithRouter,
+} from "../test-utils/testing-library-utils";
 import programRoutes from "../constants/program-routes.constant";
 import App from "../App";
 import userEvent from "@testing-library/user-event";
 import { userEmail, correctPassword } from "../mocks/mocks/authentication.mock";
 
-test.only("profile routes are not accessible without authentication", async () => {
+test("profile routes are not accessible without authentication", async () => {
   renderWithRouter(<App />, {
     route: programRoutes.profile(),
     withContexts: true,
   });
 
-  expect(window.location.pathname).toBe("/");
+  await waitFor(() => expect(window.location.pathname).toBe("/"));
 
   const loginButton = screen.getByRole("button", { name: /login/i });
   userEvent.click(loginButton);

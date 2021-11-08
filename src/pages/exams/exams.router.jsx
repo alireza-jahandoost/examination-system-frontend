@@ -13,7 +13,14 @@ import { AuthenticationContext } from "../../contexts/authentication-context/aut
 import { UpdateExamProvider } from "../../contexts/update-exam/update-exam.context";
 
 const ProfileRouter = () => {
-  const { redirectIfNotAuthenticated } = useContext(AuthenticationContext);
+  const { redirectIfNotAuthenticated, isAuthLoaded } = useContext(
+    AuthenticationContext
+  );
+
+  if (!isAuthLoaded) {
+    return <p> Loading... </p>;
+  }
+
   return (
     <Switch>
       <Route

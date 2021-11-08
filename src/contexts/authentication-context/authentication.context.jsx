@@ -1,21 +1,71 @@
-import { useState, createContext, useEffect, useContext } from "react";
+import {
+  useState,
+  useCallback,
+  createContext,
+  useEffect,
+  useContext,
+} from "react";
+import { useMountedState } from "react-use";
 import { Redirect } from "react-router-dom";
 import { NotificationContext } from "../notification-context/notification.context";
 import {
   loginRequest,
   registerRequest,
 } from "../../services/authentication/authentication.service";
+import { getCurrentUserRequest } from "../../services/users/users.service";
 
 export const AuthenticationContext = createContext();
 
 export const AuthenticationProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
+  const [isAuthLoaded, setIsAuthLoaded] = useState(false);
   const [token, setToken] = useState(null);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [popover, setPopover] = useState("");
   const { createNotification } = useContext(NotificationContext);
+  const isMounted = useMountedState();
+
+  const authenticateUser = useCallback(
+    (user, token, message = null) => {
+      setUser(user);
+      setToken(token);
+      setErrors({});
+      localStorage.setItem("token", token);
+      if (message) {
+        createNotification(message, 3000);
+      }
+    },
+    [createNotification]
+  );
+
+  useEffect(() => {
+    if (isAuthLoaded) {
+      return;
+    }
+    const savedToken = localStorage.getItem("token");
+    if (savedToken) {
+      getCurrentUserRequest(savedToken)
+        .then((response) => response.data.data)
+        .then(({ user: receivedUser }) => {
+          if (isMounted()) {
+            authenticateUser(receivedUser, savedToken);
+            setIsAuthLoaded(true);
+          }
+        })
+        .catch(() => {
+          if (isMounted()) {
+            if (localStorage.getItem("token")) {
+              localStorage.removeItem("token");
+            }
+            setIsAuthLoaded(true);
+          }
+        });
+    } else {
+      setIsAuthLoaded(true);
+    }
+  }, [isAuthLoaded, authenticateUser, isMounted]);
 
   useEffect(() => {
     if (user) {
@@ -52,11 +102,10 @@ export const AuthenticationProvider = ({ children }) => {
     loginRequest(email, password)
       .then((response) => response.data.data)
       .then(({ user, token }) => {
-        setUser(user);
-        setToken(token);
-        setErrors({});
-        createNotification("You logged in successfully", 3000);
-        setIsLoading(false);
+        if (isMounted()) {
+          authenticateUser(user, token, "you logged in successfully");
+          setIsLoading(false);
+        }
         return true;
       })
       .catch((err) => {
@@ -64,8 +113,10 @@ export const AuthenticationProvider = ({ children }) => {
         if (err.response?.data?.data?.message) {
           correntErrors.message = err.response.data.data.message;
         }
-        setErrors(correntErrors);
-        setIsLoading(false);
+        if (isMounted()) {
+          setErrors(correntErrors);
+          setIsLoading(false);
+        }
         return false;
       });
   };
@@ -74,32 +125,30 @@ export const AuthenticationProvider = ({ children }) => {
     setIsLoading(true);
     registerRequest(name, email, password, password_confirmation)
       .then((response) => {
-        if (response.data.hasOwnProperty("errors")) {
-          throw response.data;
-        }
         return response.data.data;
       })
       .then(({ user, token }) => {
-        setUser(user);
-        setToken(token);
-        setErrors({});
-        createNotification("You registered successfully", 3000);
-        setIsLoading(false);
+        if (isMounted()) {
+          authenticateUser(user, token, "you registered successfully");
+          setIsLoading(false);
+        }
         return true;
       })
       .catch((requestErrors) => {
-        const err = requestErrors.response.data;
-        const correntErrors = { ...errors };
-        if (err.message) {
-          correntErrors.message = err.message;
+        if (isMounted()) {
+          const err = requestErrors.response.data;
+          const correntErrors = { ...errors };
+          if (err.message) {
+            correntErrors.message = err.message;
+          }
+          if (err.errors) {
+            Object.keys(err.errors).forEach((error) => {
+              correntErrors[error] = err.errors[error];
+            });
+          }
+          setErrors(correntErrors);
+          setIsLoading(false);
         }
-        if (err.errors) {
-          Object.keys(err.errors).forEach((error) => {
-            correntErrors[error] = err.errors[error];
-          });
-        }
-        setErrors(correntErrors);
-        setIsLoading(false);
         return false;
       });
   };
@@ -127,6 +176,7 @@ export const AuthenticationProvider = ({ children }) => {
         register,
         errors,
         isLoading,
+        isAuthLoaded,
         popover,
         changePopover,
         resetErrors,

@@ -8,6 +8,7 @@ import participantsHandler from "./handlers/participants.handler";
 import questionTypesHandler from "./handlers/question-types.handler";
 import questionsHandler from "./handlers/questions.handler";
 import statesHandler from "./handlers/states.handler";
+import usersHandler from "./handlers/users.handler";
 
 // This configures a request mocking server with the given request handlers.
 
@@ -18,6 +19,7 @@ export const handlers = [
   ...questionTypesHandler,
   ...questionsHandler,
   ...statesHandler,
+  ...usersHandler,
 ];
 
 export const server = setupServer(...handlers);

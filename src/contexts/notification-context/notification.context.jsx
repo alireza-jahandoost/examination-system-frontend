@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useCallback, useState, useEffect } from "react";
 import NotificationAlert from "../../components/notification-alert/notification-alert.component";
 import { useMountedState } from "react-use";
 
@@ -15,9 +15,9 @@ export const NotificationProvider = ({ children }) => {
     }
   }, [notification, isMounted]);
 
-  const createNotification = (message, time) => {
+  const createNotification = useCallback((message, time) => {
     setNotification({ message, time });
-  };
+  }, []);
   return (
     <NotificationContext.Provider
       value={{

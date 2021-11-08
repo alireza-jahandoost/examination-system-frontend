@@ -8,7 +8,12 @@ import { AuthenticationContext } from "./contexts/authentication-context/authent
 import programRoutes from "./constants/program-routes.constant";
 
 const MainRouter = () => {
-  const { redirectIfNotAuthenticated } = useContext(AuthenticationContext);
+  const { redirectIfNotAuthenticated, isAuthLoaded } = useContext(
+    AuthenticationContext
+  );
+  if (!isAuthLoaded) {
+    return <p> Loading... </p>;
+  }
   return (
     <Switch>
       <Route path={programRoutes.examsRoot()} component={ExamsRouter} />

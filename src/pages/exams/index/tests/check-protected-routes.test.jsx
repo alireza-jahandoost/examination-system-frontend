@@ -1,6 +1,7 @@
 import {
   screen,
   renderWithRouter,
+  waitFor,
 } from "../../../../test-utils/testing-library-utils";
 import programRoutes from "../../../../constants/program-routes.constant";
 import App from "../../../../App";
@@ -16,7 +17,7 @@ test("created-exams route is not accessible without authentication", async () =>
     withContexts: true,
   });
 
-  expect(window.location.pathname).toBe("/");
+  await waitFor(() => expect(window.location.pathname).toBe("/"));
 
   const loginButton = screen.getByRole("button", { name: /login/i });
   userEvent.click(loginButton);
@@ -49,7 +50,7 @@ test("participated-exams route is not accessible without authentication", async 
     withContexts: true,
   });
 
-  expect(window.location.pathname).toBe("/");
+  await waitFor(() => expect(window.location.pathname).toBe("/"));
 
   const loginButton = screen.getByRole("button", { name: /login/i });
   userEvent.click(loginButton);
