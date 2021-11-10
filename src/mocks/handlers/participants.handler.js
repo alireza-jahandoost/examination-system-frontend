@@ -32,6 +32,17 @@ const participantsHandler = [
         return res(ctx.status(404));
     }
   }),
+  rest.put(apiRoutes.participants.finishExam(":examId"), (req, res, ctx) => {
+    const { examId } = req.params;
+    switch (Number(examId)) {
+      case 1:
+        return res(ctx.status(202));
+      case 2:
+        return res(ctx.status(403));
+      default:
+        return res(ctx.status(401));
+    }
+  }),
 ];
 
 export default participantsHandler;
