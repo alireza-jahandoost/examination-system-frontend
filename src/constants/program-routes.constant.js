@@ -14,6 +14,9 @@ const programRoutes = {
   indexCreatedExams: () => `/exams/created-exams`,
   createExam: () => `/exams/create-new-exam`,
   updateExam: (examId) => `/exams/${examId}/edit`,
+  examiningOverview: (examId) => `/examining/${examId}/overview`,
+  examiningQuestion: (examId, questionId) =>
+    `/examining/${examId}/question/${questionId}`,
 
   // Authentication
   login: () => `/login`,
