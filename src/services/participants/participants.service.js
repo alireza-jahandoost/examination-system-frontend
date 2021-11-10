@@ -13,3 +13,16 @@ export const registerToExamRequest = (examId, token, password = "") => {
     },
   });
 };
+
+export const finishExamRequest = (examId, token) => {
+  return axios.put(
+    apiRoutes.participants.finishExam(examId),
+    {},
+    {
+      headers: {
+        accept: "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
