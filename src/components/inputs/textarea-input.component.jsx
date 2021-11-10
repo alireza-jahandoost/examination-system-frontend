@@ -9,12 +9,22 @@ const TextareaInput = ({
   onChange,
   rows = 3,
   readOnly = false,
+  hiddenLabel = false,
+  required = false,
   ...props
 }) => {
+  const additionalAttributes = {};
+  if (hiddenLabel) {
+    additionalAttributes["aria-label"] = label;
+  }
+  if (required) {
+    additionalAttributes["required"] = "required";
+  }
   return (
     <Form.Group {...props} controlId={id}>
-      <Form.Label> {label} </Form.Label>
+      {hiddenLabel === false && <Form.Label> {label} </Form.Label>}
       <Form.Control
+        {...additionalAttributes}
         readOnly={readOnly}
         as="textarea"
         value={value}
