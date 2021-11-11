@@ -62,7 +62,7 @@ test("user can create an exam without password and he will see loading... in cre
   const changedCreateButton = await screen.findByRole("button", {
     name: /loading\.\.\./i,
   });
-  expect(changedCreateButton).toBeDisabled();
+  await waitFor(() => expect(changedCreateButton).toBeDisabled());
   //end
 
   // check alert with wait
@@ -205,7 +205,7 @@ test("user will see errors if he completed the information wrong", async () => {
   const changedCreateButton = await screen.findByRole("button", {
     name: /loading\.\.\./i,
   });
-  expect(changedCreateButton).toBeDisabled();
+  await waitFor(() => expect(changedCreateButton).toBeDisabled());
   //end
 
   // check error
@@ -289,7 +289,7 @@ test("user will redirect to update the exams page after creating the exam", asyn
   const changedCreateButton = await screen.findByRole("button", {
     name: /loading\.\.\./i,
   });
-  expect(changedCreateButton).toBeDisabled();
+  await waitFor(() => expect(changedCreateButton).toBeDisabled());
   //end
 
   // check alert without wait

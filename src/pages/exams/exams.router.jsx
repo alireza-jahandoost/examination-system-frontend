@@ -12,7 +12,9 @@ import UpdateExamPage from "./update/update-exam.page";
 import { AuthenticationContext } from "../../contexts/authentication-context/authentication.context";
 import { UpdateExamProvider } from "../../contexts/update-exam/update-exam.context";
 
-const ProfileRouter = () => {
+import ExaminingRouter from "./examining/examining.router";
+
+const ExamsRouter = () => {
   const { redirectIfNotAuthenticated, isAuthLoaded } = useContext(
     AuthenticationContext
   );
@@ -62,8 +64,13 @@ const ProfileRouter = () => {
           )
         }
       />
+
+      <Route
+        path={programRoutes.examining(":examId")}
+        component={ExaminingRouter}
+      />
     </Switch>
   );
 };
 
-export default ProfileRouter;
+export default ExamsRouter;
