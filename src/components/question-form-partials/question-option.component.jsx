@@ -1,5 +1,5 @@
 import { Row, Col } from "react-bootstrap";
-import AnswerIndicator from "./answer-indicator.component";
+import AnswerIndicator from "../answer-indicator/answer-indicator.component";
 import TextInput from "../inputs/text-input.component";
 import DeleteButton from "./delete-button.component";
 

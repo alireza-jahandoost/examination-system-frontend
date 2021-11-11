@@ -3,7 +3,7 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 
 import QuestionText from "../question-form-partials/question-text.component";
 import QuestionScore from "../question-form-partials/question-score.component";
-import AnswerIndicator from "../question-form-partials/answer-indicator.component";
+import AnswerIndicator from "../answer-indicator/answer-indicator.component";
 
 import errorMessages from "../../constants/error-messages.constant";
 

@@ -8,7 +8,7 @@ import { AuthenticationContext } from "../../contexts/authentication-context/aut
 
 import QuestionText from "../question-form-partials/question-text.component";
 import QuestionScore from "../question-form-partials/question-score.component";
-import AnswerIndicator from "../question-form-partials/answer-indicator.component";
+import AnswerIndicator from "../answer-indicator/answer-indicator.component";
 
 import apiRoutes from "../../constants/api-routes.constant";
 
