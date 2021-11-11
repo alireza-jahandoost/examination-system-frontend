@@ -148,3 +148,41 @@ describe("setting buttons contents", () => {
     expect(screen.getByRole("radio", { name: redButton })).toBeInTheDocument();
   });
 });
+
+describe("check when we do not have any answer", () => {
+  describe("if the noAnswer was true, none of the radios must be checked", () => {
+    test("if answer is true", () => {
+      const onChange = jest.fn();
+      render(
+        <AnswerIndicator answer={true} onChange={onChange} noAnswer={true} />
+      );
+
+      const radios = screen.getAllByRole("radio");
+      expect(radios).toHaveLength(2);
+      expect(radios[0]).not.toBeChecked();
+      expect(radios[1]).not.toBeChecked();
+    });
+
+    test("if answer is false", () => {
+      const onChange = jest.fn();
+      render(
+        <AnswerIndicator answer={false} onChange={onChange} noAnswer={true} />
+      );
+
+      const radios = screen.getAllByRole("radio");
+      expect(radios).toHaveLength(2);
+      expect(radios[0]).not.toBeChecked();
+      expect(radios[1]).not.toBeChecked();
+    });
+
+    test("if answer is undefined", () => {
+      const onChange = jest.fn();
+      render(<AnswerIndicator onChange={onChange} noAnswer={true} />);
+
+      const radios = screen.getAllByRole("radio");
+      expect(radios).toHaveLength(2);
+      expect(radios[0]).not.toBeChecked();
+      expect(radios[1]).not.toBeChecked();
+    });
+  });
+});

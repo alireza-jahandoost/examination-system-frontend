@@ -5,6 +5,7 @@ const AnswerIndicator = ({
   onChange,
   readOnly = false,
   suffix = "",
+  noAnswer = false,
   buttonLabels = ["Correct Answer", "Wrong Answer"],
 }) => {
   const handleChange = (e) => {
@@ -20,7 +21,7 @@ const AnswerIndicator = ({
         variant="outline-success"
         name={`answer-indicator-${suffix}`}
         value={1}
-        checked={answer}
+        checked={!noAnswer && answer}
         onChange={handleChange}
         disabled={readOnly}
       >
@@ -32,7 +33,7 @@ const AnswerIndicator = ({
         variant="outline-danger"
         name={`answer-indicator-${suffix}`}
         value={0}
-        checked={!answer}
+        checked={!noAnswer && !answer}
         onChange={handleChange}
         disabled={readOnly}
       >
