@@ -1,4 +1,8 @@
-import { render, screen } from "../../../../test-utils/testing-library-utils";
+import {
+  waitFor,
+  render,
+  screen,
+} from "../../../../test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
 import Register from "../register.component";
 import {
@@ -60,10 +64,13 @@ test("user will see 'loading...' message in register button when request is pend
 
   userEvent.click(registerButton);
 
-  const changedRegisterButton = await screen.findByRole("button", {
-    name: /loading\.\.\./i,
-  });
-  expect(changedRegisterButton).toBeDisabled();
+  await waitFor(() =>
+    expect(
+      screen.getByRole("button", {
+        name: /loading\.\.\./i,
+      })
+    ).toBeDisabled()
+  );
 
   const registerMessage = await screen.findByText(
     /you registered successfully/i
@@ -94,10 +101,13 @@ test("user will not see 'loading...' message in register button when the respons
 
   userEvent.click(registerButton);
 
-  const changedRegisterButton = await screen.findByRole("button", {
-    name: /loading\.\.\./i,
-  });
-  expect(changedRegisterButton).toBeDisabled();
+  await waitFor(() =>
+    expect(
+      screen.getByRole("button", {
+        name: /loading\.\.\./i,
+      })
+    ).toBeDisabled()
+  );
 
   const errorMessage = await screen.findByText(
     /the password must be at least 8 characters/i

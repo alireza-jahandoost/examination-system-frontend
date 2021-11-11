@@ -1,4 +1,8 @@
-import { render, screen } from "../../../../test-utils/testing-library-utils";
+import {
+  waitFor,
+  render,
+  screen,
+} from "../../../../test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
 import Login from "../login.component";
 import {
@@ -46,10 +50,13 @@ test("user will see 'loading...' in button and button will be disabled when the 
 
   userEvent.click(loginButton);
 
-  const changedLoginButton = await screen.findByRole("button", {
-    name: /loading\.\.\./i,
-  });
-  expect(changedLoginButton).toBeDisabled();
+  await waitFor(() =>
+    expect(
+      screen.getByRole("button", {
+        name: /loading\.\.\./i,
+      })
+    ).toBeDisabled()
+  );
 
   const textMessage = await screen.findByRole(
     "alert",
@@ -75,10 +82,13 @@ test("user will not see 'loading...' in button when the response is given and we
 
   userEvent.click(loginButton);
 
-  const changedLoginButton = await screen.findByRole("button", {
-    name: /loading\.\.\./i,
-  });
-  expect(changedLoginButton).toBeDisabled();
+  await waitFor(() =>
+    expect(
+      screen.getByRole("button", {
+        name: /loading\.\.\./i,
+      })
+    ).toBeDisabled()
+  );
 
   const errorMessage = await screen.findByText(/invalid email or password/i);
   expect(errorMessage).toBeInTheDocument();
