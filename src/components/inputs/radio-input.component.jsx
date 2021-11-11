@@ -1,6 +1,6 @@
 import CheckboxAndRadioInput from "./checkbox-and-radio-input.component";
 
-const CheckboxInput = ({
+const RadioInput = ({
   label,
   checked,
   id,
@@ -12,7 +12,7 @@ const CheckboxInput = ({
 }) => {
   return (
     <CheckboxAndRadioInput
-      type="checkbox"
+      type="radio"
       label={label}
       checked={checked}
       id={id}
@@ -25,4 +25,4 @@ const CheckboxInput = ({
   );
 };
 
-export default CheckboxInput;
+export default RadioInput;
