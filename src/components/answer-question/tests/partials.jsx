@@ -72,7 +72,16 @@ const getStates = (questionTypeId) => {
 
 export const wrapper = (
   ui,
-  { questionTypeId, question, states, hasChange, answers, changeAnswers }
+  {
+    questionTypeId,
+    question,
+    states,
+    hasChange,
+    answers,
+    changeAnswers,
+    updateAnswers,
+    isLoading,
+  }
 ) => {
   const value = {
     question: question || getQuestion(questionTypeId),
@@ -80,6 +89,8 @@ export const wrapper = (
     hasChange: hasChange || false,
     answers: answers || [],
     changeAnswers: changeAnswers || jest.fn(),
+    updateAnswers: updateAnswers || jest.fn(),
+    isLoading: isLoading || false,
   };
 
   const WrappedElement = (
