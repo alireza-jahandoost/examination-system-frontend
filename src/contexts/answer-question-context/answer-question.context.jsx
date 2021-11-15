@@ -12,6 +12,7 @@ import {
   deleteAnswersRequest,
   storeAnswerRequest,
 } from "../../services/answers/answers.service";
+import { statesIndexRequest } from "../../services/states/states.service";
 
 export const AnswerQuestionContext = createContext();
 
@@ -25,6 +26,7 @@ export const AnswerQuestionProvider = ({ children }) => {
   const { token } = useContext(AuthenticationContext);
   const { participant } = useContext(ExaminingContext);
   const [errors, setErrors] = useState({});
+  const [states, setStates] = useState([]);
   const isMounted = useMountedState();
 
   useEffect(() => {
@@ -34,13 +36,15 @@ export const AnswerQuestionProvider = ({ children }) => {
       !questionId ||
       !participant ||
       question ||
-      answers.length > 0
+      answers.length > 0 ||
+      states.length > 0
     ) {
       return;
     }
     const requests = [
       questionsShowRequest(examId, questionId, token),
       indexAnswersRequest(questionId, participant.participant_id, token),
+      statesIndexRequest(examId, questionId, token),
     ];
 
     axios
@@ -52,6 +56,8 @@ export const AnswerQuestionProvider = ({ children }) => {
 
             const indexAnswersResponse = responses[1];
 
+            const indexStatesResponse = responses[2];
+
             const {
               question: receivedQuestion,
             } = questionsShowResponse.data.data;
@@ -60,6 +66,9 @@ export const AnswerQuestionProvider = ({ children }) => {
             const { answers: receivedAnswers } = indexAnswersResponse.data.data;
             setAnswers(receivedAnswers);
             setCurrentAnswers(receivedAnswers);
+
+            const { states: receivedStates } = indexStatesResponse.data.data;
+            setStates(receivedStates);
 
             setIsContextLoaded(true);
           }
@@ -72,7 +81,16 @@ export const AnswerQuestionProvider = ({ children }) => {
           });
         }
       });
-  }, [examId, participant, questionId, token, question, answers, isMounted]);
+  }, [
+    examId,
+    participant,
+    questionId,
+    token,
+    question,
+    answers,
+    isMounted,
+    states,
+  ]);
 
   const changeAnswers = (newAnswers) => {
     setCurrentAnswers(newAnswers);
@@ -125,6 +143,7 @@ export const AnswerQuestionProvider = ({ children }) => {
     answers: currentAnswers,
     changeAnswers,
     updateAnswers,
+    states,
   };
 
   return (

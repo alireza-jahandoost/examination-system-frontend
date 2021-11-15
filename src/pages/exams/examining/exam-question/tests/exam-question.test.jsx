@@ -16,6 +16,11 @@ import {
   indexOrdering,
 } from "../../../../../mocks/mocks/answers.mock";
 import { randomString } from "../../../../../utilities/tests.utility";
+import {
+  statesIndexMultipleAnswer,
+  statesIndexSelectTheAnswer,
+  statesIndexOrdering,
+} from "../../../../../mocks/mocks/states.mock";
 
 describe("check isContextLoaded", () => {
   test("if isContextLoaded of examining context is false, loading message must be shown in the exam question page", () => {
@@ -214,9 +219,210 @@ describe("check fill the blank questions", () => {
   });
 });
 
-test.skip("user can answer multiple answers question", async () => {});
+describe("check multiple answers questions", () => {
+  test("if the question has answer, the answers must be loaded correctly", async () => {
+    const { WrappedElement } = wrapper(<ExamQuestionPage />, {
+      participantId: 2,
+    });
+    renderWithAuthentication(WrappedElement, {
+      route: programRoutes.examiningQuestion(1, 3),
+    });
 
-test.skip("user can answer select the answer question", async () => {});
+    const checkboxes = await screen.findAllByRole("checkbox");
+
+    const answers = indexMultipleAnswers.data.answers.map((answer) =>
+      Number(answer.integer_part)
+    );
+    const states = statesIndexMultipleAnswer.data.states;
+    const checked = [],
+      unchecked = [];
+    for (let i = 0; i < states.length; i++) {
+      if (answers.includes(Number(states[i].state_id))) {
+        checked.push(i);
+      } else {
+        unchecked.push(i);
+      }
+    }
+
+    for (const current of checked) {
+      expect(checkboxes[current]).toBeChecked();
+    }
+    for (const current of unchecked) {
+      expect(checkboxes[current]).not.toBeChecked();
+    }
+  });
+
+  test("if the question has no answer, user can create answers", async () => {
+    const { WrappedElement } = wrapper(<ExamQuestionPage />, {
+      participantId: 1,
+    });
+    renderWithAuthentication(WrappedElement, {
+      route: programRoutes.examiningQuestion(1, 3),
+    });
+
+    const checkboxes = await screen.findAllByRole("checkbox");
+
+    userEvent.click(checkboxes[0]);
+    userEvent.click(checkboxes[1]);
+
+    const saveButton = await screen.findByRole("button", {
+      name: /save changes/i,
+    });
+    userEvent.click(saveButton);
+
+    await waitFor(() =>
+      expect(screen.getByText(/all changes saved/i)).toBeInTheDocument()
+    );
+
+    expect(checkboxes[0]).toBeChecked();
+    expect(checkboxes[1]).toBeChecked();
+    for (let i = 2; i < checkboxes.length; i++) {
+      expect(checkboxes[i]).not.toBeChecked();
+    }
+  });
+
+  test("if the question has answer, user can change the answers", async () => {
+    const { WrappedElement } = wrapper(<ExamQuestionPage />, {
+      participantId: 2,
+    });
+    renderWithAuthentication(WrappedElement, {
+      route: programRoutes.examiningQuestion(1, 3),
+    });
+
+    const checkboxes = await screen.findAllByRole("checkbox");
+
+    userEvent.click(checkboxes[0]);
+    userEvent.click(checkboxes[1]);
+
+    const saveButton = await screen.findByRole("button", {
+      name: /save changes/i,
+    });
+    userEvent.click(saveButton);
+
+    await waitFor(() =>
+      expect(screen.getByText(/all changes saved/i)).toBeInTheDocument()
+    );
+
+    const checked = [],
+      unchecked = [];
+    const answers = indexMultipleAnswers.data.answers.map((answer) =>
+      Number(answer.integer_part)
+    );
+    const states = statesIndexMultipleAnswer.data.states;
+    if (answers.includes(Number(states[0].state_id))) {
+      unchecked.push(0);
+    } else {
+      checked.push(0);
+    }
+
+    if (answers.includes(Number(states[1].state_id))) {
+      unchecked.push(1);
+    } else {
+      checked.push(1);
+    }
+
+    for (let i = 2; i < states.length; i++) {
+      if (answers.includes(Number(states[i].state_id))) {
+        checked.push(i);
+      } else {
+        unchecked.push(i);
+      }
+    }
+
+    for (const current of checked) {
+      expect(checkboxes[current]).toBeChecked();
+    }
+    for (const current of unchecked) {
+      expect(checkboxes[current]).not.toBeChecked();
+    }
+  });
+});
+
+describe("check select the answer questions", () => {
+  test("if question has answer, the answer must be checked when component loaded", async () => {
+    const { WrappedElement } = wrapper(<ExamQuestionPage />, {
+      participantId: 2,
+    });
+    renderWithAuthentication(WrappedElement, {
+      route: programRoutes.examiningQuestion(1, 4),
+    });
+
+    const states = statesIndexSelectTheAnswer.data.states;
+    const answer = Number(indexSelectTheAnswer.data.answers[0].integer_part);
+
+    const checked = states.findIndex(
+      (state) => Number(state.state_id) === answer
+    );
+
+    const radios = await screen.findAllByRole("radio");
+
+    expect(radios[checked]).toBeChecked();
+    for (let i = 0; i < radios.length; i++) {
+      if (i === checked) continue;
+      expect(radios[i]).not.toBeChecked();
+    }
+  });
+
+  test("if question has no answer, user can create new answer", async () => {
+    const { WrappedElement } = wrapper(<ExamQuestionPage />, {
+      participantId: 1,
+    });
+    renderWithAuthentication(WrappedElement, {
+      route: programRoutes.examiningQuestion(1, 4),
+    });
+
+    const radios = await screen.findAllByRole("radio");
+    for (const radio of radios) {
+      expect(radio).not.toBeChecked();
+    }
+
+    userEvent.click(radios[1]);
+    const checked = 1;
+
+    const saveButton = await screen.findByRole("button", {
+      name: /save changes/i,
+    });
+    userEvent.click(saveButton);
+
+    expect(radios[checked]).toBeChecked();
+    for (let i = 0; i < radios.length; i++) {
+      if (i === checked) continue;
+      expect(radios[i]).not.toBeChecked();
+    }
+  });
+
+  test("if question has answer, user can change the answer", async () => {
+    const { WrappedElement } = wrapper(<ExamQuestionPage />, {
+      participantId: 2,
+    });
+    renderWithAuthentication(WrappedElement, {
+      route: programRoutes.examiningQuestion(1, 4),
+    });
+
+    const radios = await screen.findAllByRole("radio");
+
+    const states = statesIndexSelectTheAnswer.data.states;
+    let checked;
+    if (Number(states[0].integer_part) === 1) {
+      userEvent.click(radios[1]);
+      checked = 1;
+    } else {
+      userEvent.click(radios[0]);
+      checked = 0;
+    }
+
+    const saveButton = await screen.findByRole("button", {
+      name: /save changes/i,
+    });
+    userEvent.click(saveButton);
+
+    expect(radios[checked]).toBeChecked();
+    for (let i = 0; i < radios.length; i++) {
+      if (i === checked) continue;
+      expect(radios[i]).not.toBeChecked();
+    }
+  });
+});
 
 test.skip("user can answer true or false question", async () => {});
 

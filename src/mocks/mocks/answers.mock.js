@@ -30,11 +30,11 @@ export const indexMultipleAnswers = {
   data: {
     answers: [
       {
-        integer_part: 512,
+        integer_part: 1,
         text_part: null,
       },
       {
-        integer_part: 513,
+        integer_part: 3,
         text_part: null,
       },
     ],
@@ -45,7 +45,7 @@ export const indexSelectTheAnswer = {
   data: {
     answers: [
       {
-        integer_part: 516,
+        integer_part: 2,
         text_part: null,
       },
     ],
@@ -67,15 +67,15 @@ export const indexOrdering = {
   data: {
     answers: [
       {
-        integer_part: 517,
+        integer_part: 3,
         text_part: null,
       },
       {
-        integer_part: 518,
+        integer_part: 1,
         text_part: null,
       },
       {
-        integer_part: 519,
+        integer_part: 2,
         text_part: null,
       },
     ],
