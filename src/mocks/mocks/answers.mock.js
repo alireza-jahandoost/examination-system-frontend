@@ -78,6 +78,10 @@ export const indexOrdering = {
         integer_part: 2,
         text_part: null,
       },
+      {
+        integer_part: 4,
+        text_part: null,
+      },
     ],
   },
 };

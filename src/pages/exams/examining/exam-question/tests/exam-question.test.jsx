@@ -501,7 +501,48 @@ describe("check true or false question", () => {
   });
 });
 
-test.skip("user can answer ordering question", async () => {});
+describe("check ordering questions", () => {
+  test("if the question is not answered, user can change the order of states", async () => {
+    const { WrappedElement } = wrapper(<ExamQuestionPage />, {
+      participantId: 1,
+    });
+    renderWithAuthentication(WrappedElement, {
+      route: programRoutes.examiningQuestion(1, 6),
+    });
+
+    const upButtons = await screen.findAllByRole("button", { name: /up/i });
+    const lastUpButton = upButtons[upButtons.length - 1];
+
+    userEvent.click(lastUpButton);
+
+    const saveButton = await screen.findByRole("button", {
+      name: /save changes/i,
+    });
+    userEvent.click(saveButton);
+
+    expect(await screen.findByText(/all changes saved/i)).toBeInTheDocument();
+  });
+  test("if the question is answered, user can change the order of states", async () => {
+    const { WrappedElement } = wrapper(<ExamQuestionPage />, {
+      participantId: 2,
+    });
+    renderWithAuthentication(WrappedElement, {
+      route: programRoutes.examiningQuestion(1, 6),
+    });
+
+    const upButtons = await screen.findAllByRole("button", { name: /up/i });
+    const lastUpButton = upButtons[upButtons.length - 1];
+
+    userEvent.click(lastUpButton);
+
+    const saveButton = await screen.findByRole("button", {
+      name: /save changes/i,
+    });
+    userEvent.click(saveButton);
+
+    expect(await screen.findByText(/all changes saved/i)).toBeInTheDocument();
+  });
+});
 
 describe("check next question button", () => {
   test.skip("if nextQuestion is -1, the next question button must be disabled", async () => {});
