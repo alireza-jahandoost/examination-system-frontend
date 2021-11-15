@@ -12,7 +12,7 @@ import {
 
 const answersHandler = [
   rest.post(
-    apiRoutes.answers.indexAnswers(":questionId", ":participantId"),
+    apiRoutes.answers.createAnswer(":questionId", ":participantId"),
     (req, res, ctx) => {
       return res(ctx.status(201));
     }

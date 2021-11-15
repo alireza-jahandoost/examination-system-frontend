@@ -26,3 +26,12 @@ export const finishExamRequest = (examId, token) => {
     }
   );
 };
+
+export const getCurrentParticipantRequest = (examId, token) => {
+  return axios.get(apiRoutes.participants.currentParticipant(examId), {
+    headers: {
+      accept: "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  });
+};
