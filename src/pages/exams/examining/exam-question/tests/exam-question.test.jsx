@@ -424,7 +424,82 @@ describe("check select the answer questions", () => {
   });
 });
 
-test.skip("user can answer true or false question", async () => {});
+describe("check true or false question", () => {
+  test("if the question is not answered, none of the radios must be checked", async () => {
+    const { WrappedElement } = wrapper(<ExamQuestionPage />, {
+      participantId: 1,
+    });
+    renderWithAuthentication(WrappedElement, {
+      route: programRoutes.examiningQuestion(1, 5),
+    });
+
+    const radios = await screen.findAllByRole("radio");
+    for (const radio of radios) {
+      expect(radio).not.toBeChecked();
+    }
+  });
+  test("if the question is answered, that radio must be checked", async () => {
+    const { WrappedElement } = wrapper(<ExamQuestionPage />, {
+      participantId: 2,
+    });
+    renderWithAuthentication(WrappedElement, {
+      route: programRoutes.examiningQuestion(1, 5),
+    });
+
+    const answer = Boolean(indexTrueOrFalse.data.answers[0].integer_part);
+
+    const checked = answer ? 0 : 1;
+
+    const radios = await screen.findAllByRole("radio");
+    expect(radios[checked]).toBeChecked();
+    expect(radios[1 - checked]).not.toBeChecked();
+  });
+  test("if the question is not answered, user can create an answer", async () => {
+    const { WrappedElement } = wrapper(<ExamQuestionPage />, {
+      participantId: 1,
+    });
+    renderWithAuthentication(WrappedElement, {
+      route: programRoutes.examiningQuestion(1, 5),
+    });
+
+    const radios = await screen.findAllByRole("radio");
+    userEvent.click(radios[0]);
+
+    const saveButton = await screen.findByRole("button", {
+      name: /save changes/i,
+    });
+    userEvent.click(saveButton);
+
+    expect(radios[0]).toBeChecked();
+    expect(radios[1]).not.toBeChecked();
+  });
+  test("if the question is answered, user can change the answer", async () => {
+    const { WrappedElement } = wrapper(<ExamQuestionPage />, {
+      participantId: 2,
+    });
+    renderWithAuthentication(WrappedElement, {
+      route: programRoutes.examiningQuestion(1, 5),
+    });
+
+    const answer = Boolean(indexTrueOrFalse.data.answers[0].integer_part);
+
+    const checked = answer ? 0 : 1;
+
+    const radios = await screen.findAllByRole("radio");
+    expect(radios[checked]).toBeChecked();
+    expect(radios[1 - checked]).not.toBeChecked();
+
+    userEvent.click(radios[1 - checked]);
+
+    const saveButton = await screen.findByRole("button", {
+      name: /save changes/i,
+    });
+    userEvent.click(saveButton);
+
+    expect(radios[checked]).not.toBeChecked();
+    expect(radios[1 - checked]).toBeChecked();
+  });
+});
 
 test.skip("user can answer ordering question", async () => {});
 
