@@ -545,13 +545,77 @@ describe("check ordering questions", () => {
 });
 
 describe("check next question button", () => {
-  test.skip("if nextQuestion is -1, the next question button must be disabled", async () => {});
-  test.skip("if nextQuestion is not -1, the next question must be a link to the next question", async () => {});
+  test("if nextQuestion is -1, the next question button must be disabled", async () => {
+    const { WrappedElement } = wrapper(<ExamQuestionPage />, {
+      participantId: 2,
+      nextQuestion: -1,
+    });
+    renderWithAuthentication(WrappedElement, {
+      route: programRoutes.examiningQuestion(1, 1),
+    });
+
+    const nextQuestionButton = await screen.findByRole("button", {
+      name: /next/i,
+    });
+    expect(nextQuestionButton).toBeDisabled();
+  });
+  test("if nextQuestion is not -1, the next question must be a link to the next question", async () => {
+    const { WrappedElement } = wrapper(<ExamQuestionPage />, {
+      participantId: 2,
+      nextQuestion: 2,
+    });
+    renderWithAuthentication(WrappedElement, {
+      route: programRoutes.examiningQuestion(1, 1),
+    });
+
+    const nextQuestionButton = await screen.findByRole("button", {
+      name: /next/i,
+    });
+    expect(nextQuestionButton).toBeEnabled();
+
+    userEvent.click(nextQuestionButton);
+
+    await waitFor(() =>
+      expect(
+        window.location.href.endsWith(programRoutes.examiningQuestion(1, 2))
+      ).toBe(true)
+    );
+  });
 });
 
 describe("check prev question button", () => {
-  test.skip("if prevQuestion is -1, the prev question button must be disabled", async () => {});
-  test.skip("if prevQuestion is not -1, the prev question must be a link to the prev question", async () => {});
+  test("if prevQuestion is -1, the prev question button must be disabled", async () => {
+    const { WrappedElement } = wrapper(<ExamQuestionPage />, {
+      participantId: 2,
+      prevQuestion: -1,
+    });
+    renderWithAuthentication(WrappedElement, {
+      route: programRoutes.examiningQuestion(1, 1),
+    });
+
+    const prevButton = await screen.findByRole("button", { name: /prev/i });
+    expect(prevButton).toBeDisabled();
+  });
+  test("if prevQuestion is not -1, the prev question must be a link to the prev question", async () => {
+    const { WrappedElement } = wrapper(<ExamQuestionPage />, {
+      participantId: 2,
+      prevQuestion: 1,
+    });
+    renderWithAuthentication(WrappedElement, {
+      route: programRoutes.examiningQuestion(1, 2),
+    });
+
+    const prevButton = await screen.findByRole("button", { name: /prev/i });
+    expect(prevButton).toBeEnabled();
+
+    userEvent.click(prevButton);
+
+    await waitFor(() =>
+      expect(
+        window.location.href.endsWith(programRoutes.examiningQuestion(1, 1))
+      ).toBe(true)
+    );
+  });
 });
 
 test.skip("the examTime must be shown in the page correctly", () => {});

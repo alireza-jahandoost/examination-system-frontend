@@ -21,8 +21,21 @@ const getParticipant = (participantId) => {
   return participant.data.participant;
 };
 
-export const wrapper = (ui, { isContextLoaded = true, participantId = 1 }) => {
-  const value = { isContextLoaded, participant: getParticipant(participantId) };
+export const wrapper = (
+  ui,
+  {
+    isContextLoaded = true,
+    participantId = 1,
+    nextQuestion = -1,
+    prevQuestion = -1,
+  }
+) => {
+  const value = {
+    isContextLoaded,
+    participant: getParticipant(participantId),
+    nextQuestion,
+    prevQuestion,
+  };
   const WrappedElement = (
     <Route path={programRoutes.examiningQuestion(":examId", ":questionId")}>
       <ExaminingContext.Provider value={value}>{ui}</ExaminingContext.Provider>
