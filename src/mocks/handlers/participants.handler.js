@@ -1,6 +1,7 @@
 import { rest } from "msw";
 import { examsPassword } from "../mocks/participants.mock";
 import apiRoutes from "../../constants/api-routes.constant";
+import { showParticipant } from "../mocks/participants.mock";
 
 const participantsHandler = [
   rest.post(apiRoutes.exams.registerInExam(":examId"), (req, res, ctx) => {
@@ -43,6 +44,12 @@ const participantsHandler = [
         return res(ctx.status(401));
     }
   }),
+  rest.get(
+    apiRoutes.participants.currentParticipant(":examId"),
+    (req, res, ctx) => {
+      return res(ctx.json(showParticipant));
+    }
+  ),
 ];
 
 export default participantsHandler;

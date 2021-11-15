@@ -30,6 +30,8 @@ const apiRoutes = {
     saveScoreOfQuestion: (questionId, participantId) =>
       `${prefix}/questions/${questionId}/participants/${participantId}/save_score`,
     participatedExams: () => `${prefix}/participated_exams`,
+    currentParticipant: (examId) =>
+      `${prefix}/exams/${examId}/current_participant`,
   },
   questions: {
     indexQuestions: (examId) => `${prefix}/exams/${examId}/questions`,
