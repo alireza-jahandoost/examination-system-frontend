@@ -6,6 +6,29 @@ import {
 import userEvent from "@testing-library/user-event";
 import { wrapper } from "./partials";
 import AnswerQuestion from "../answer-question.component";
+import { randomString } from "../../../utilities/tests.utility";
+
+test("if isContextLoaded is false, the answerQuestionComponent must show loading message", () => {
+  const { WrappedElement } = wrapper(<AnswerQuestion />, {
+    questionTypeId: 1,
+    hasChange: true,
+    isContextLoaded: false,
+  });
+  renderWithAuthentication(WrappedElement);
+
+  expect(screen.getByText(/loading/i)).toBeInTheDocument();
+});
+
+test("if there is error message, it must be shown in the component", () => {
+  const errorMessage = randomString();
+  const { WrappedElement } = wrapper(<AnswerQuestion />, {
+    errors: { message: errorMessage },
+    questionTypeId: 1,
+  });
+  renderWithAuthentication(WrappedElement);
+
+  expect(screen.getByText(errorMessage)).toHaveClass("text-danger");
+});
 
 describe("check saving feature", () => {
   test("if hasChange is true, the save button must be shown", () => {

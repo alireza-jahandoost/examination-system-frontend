@@ -13,9 +13,18 @@ import AnswerOrdering from "./answer-ordering.component";
 import QuestionInfo from "./question-info.component";
 
 const AnswerQuestion = () => {
-  const { hasChange, question, updateAnswers, isLoading } = useContext(
-    AnswerQuestionContext
-  );
+  const {
+    isContextLoaded,
+    hasChange,
+    question,
+    updateAnswers,
+    isLoading,
+    errors,
+  } = useContext(AnswerQuestionContext);
+
+  if (!isContextLoaded) {
+    return <p> Loading... </p>;
+  }
 
   let form;
   switch (question.question_type.question_type_name) {
@@ -47,6 +56,7 @@ const AnswerQuestion = () => {
   return (
     <div>
       <Container>
+        {errors.message && <p className="text-danger">{errors.message}</p>}
         <Form>
           <QuestionInfo
             questionText={question.question_text}

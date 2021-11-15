@@ -81,6 +81,8 @@ export const wrapper = (
     changeAnswers,
     updateAnswers,
     isLoading,
+    isContextLoaded,
+    errors,
   }
 ) => {
   const value = {
@@ -91,6 +93,8 @@ export const wrapper = (
     changeAnswers: changeAnswers || jest.fn(),
     updateAnswers: updateAnswers || jest.fn(),
     isLoading: isLoading || false,
+    isContextLoaded: isContextLoaded === undefined ? true : isContextLoaded,
+    errors: errors || {},
   };
 
   const WrappedElement = (
