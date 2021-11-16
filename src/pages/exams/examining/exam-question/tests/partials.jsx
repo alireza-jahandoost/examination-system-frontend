@@ -9,6 +9,8 @@ import {
 const getParticipant = (participantId) => {
   let participant;
   switch (participantId) {
+    case 0:
+      return null;
     case 1:
       participant = showParticipantId1;
       break;
@@ -28,6 +30,17 @@ export const wrapper = (
     participantId = 1,
     nextQuestion = -1,
     prevQuestion = -1,
+    finishExam = jest.fn(),
+    examTime = {
+      isExamStarted: true,
+      isExamFinished: false,
+      examTimeDuration: { seconds: 10, minutes: 10, hours: 10, days: 0 },
+      seconds: 1,
+      minutes: 1,
+      hours: 1,
+      days: 0,
+    },
+    isUserFinishedExam = false,
   }
 ) => {
   const value = {
@@ -35,11 +48,14 @@ export const wrapper = (
     participant: getParticipant(participantId),
     nextQuestion,
     prevQuestion,
+    examTime,
+    finishExam,
+    isUserFinishedExam,
   };
   const WrappedElement = (
     <Route path={programRoutes.examiningQuestion(":examId", ":questionId")}>
       <ExaminingContext.Provider value={value}>{ui}</ExaminingContext.Provider>
     </Route>
   );
-  return { WrappedElement };
+  return { WrappedElement, value };
 };

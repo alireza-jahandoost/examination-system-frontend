@@ -618,6 +618,141 @@ describe("check prev question button", () => {
   });
 });
 
-test.skip("the examTime must be shown in the page correctly", () => {});
+describe("check the time of the exam", () => {
+  test("if exam is not started, user must be redirected to the overview", async () => {
+    const { WrappedElement } = wrapper(<ExamQuestionPage />, {
+      participantId: 2,
+      prevQuestion: 1,
+      examTime: {
+        examTimeDuration: { seconds: 10, minutes: 10, hours: 10, days: 0 },
+        isExamStarted: false,
+        isExamFinished: false,
+        seconds: 1,
+        minutes: 1,
+        hours: 1,
+        days: 0,
+      },
+    });
+    renderWithAuthentication(WrappedElement, {
+      route: programRoutes.examiningQuestion(1, 2),
+    });
 
-test.skip("if user clicks on finish exam button, a popover must be shown and if user click again on the button, the finishExam func must be called", async () => {});
+    await waitFor(() =>
+      expect(
+        window.location.href.endsWith(programRoutes.examiningOverview(1))
+      ).toBe(true)
+    );
+  });
+  test("if exam is ended, user must be redirected to the overview", async () => {
+    const { WrappedElement } = wrapper(<ExamQuestionPage />, {
+      participantId: 2,
+      prevQuestion: 1,
+      examTime: {
+        examTimeDuration: { seconds: 10, minutes: 10, hours: 10, days: 0 },
+        isExamStarted: true,
+        isExamFinished: true,
+        seconds: 1,
+        minutes: 1,
+        hours: 1,
+        days: 0,
+      },
+    });
+    renderWithAuthentication(WrappedElement, {
+      route: programRoutes.examiningQuestion(1, 2),
+    });
+
+    await waitFor(() =>
+      expect(
+        window.location.href.endsWith(programRoutes.examiningOverview(1))
+      ).toBe(true)
+    );
+  });
+  test("if user is not registered and exam is started, user must be redirected to the overview", async () => {
+    const { WrappedElement } = wrapper(<ExamQuestionPage />, {
+      participantId: 0,
+      prevQuestion: 1,
+      examTime: {
+        examTimeDuration: { seconds: 10, minutes: 10, hours: 10, days: 0 },
+        isExamStarted: true,
+        isExamFinished: false,
+        seconds: 1,
+        minutes: 1,
+        hours: 1,
+        days: 0,
+      },
+    });
+    renderWithAuthentication(WrappedElement, {
+      route: programRoutes.examiningQuestion(1, 2),
+    });
+
+    await waitFor(() =>
+      expect(
+        window.location.href.endsWith(programRoutes.examiningOverview(1))
+      ).toBe(true)
+    );
+  });
+  test("if exam is started, the remaining time must be shown in the page", async () => {
+    const { WrappedElement } = wrapper(<ExamQuestionPage />, {
+      participantId: 2,
+      prevQuestion: 1,
+      examTime: {
+        examTimeDuration: { seconds: 10, minutes: 10, hours: 10, days: 0 },
+        isExamStarted: true,
+        isExamFinished: false,
+        seconds: 10,
+        minutes: 10,
+        hours: 10,
+        days: 0,
+      },
+    });
+    renderWithAuthentication(WrappedElement, {
+      route: programRoutes.examiningQuestion(1, 2),
+    });
+
+    await waitFor(() =>
+      expect(
+        screen.getByText(`0:10:10:10`, { exact: false })
+      ).toBeInTheDocument()
+    );
+  });
+});
+
+describe("check finishing exam", () => {
+  test("if user clicks on finish exam button, a modal must be shown and if user click again on the button, the finishExam func must be called", async () => {
+    const { WrappedElement, value } = wrapper(<ExamQuestionPage />, {
+      participantId: 2,
+    });
+    renderWithAuthentication(WrappedElement, {
+      route: programRoutes.examiningQuestion(1, 2),
+    });
+
+    const finishExamButton = await screen.findByRole("button", {
+      name: /finish exam/i,
+    });
+    userEvent.click(finishExamButton);
+
+    const confirmFinishExam = await screen.findByRole("button", {
+      name: /yes, finish exam/i,
+    });
+    userEvent.click(confirmFinishExam);
+
+    await waitFor(() => expect(value.finishExam).toHaveBeenCalledTimes(1));
+  });
+
+  test("if isUserFinishedExam is true, user must be redirected to the overview", async () => {
+    const { WrappedElement } = wrapper(<ExamQuestionPage />, {
+      participantId: 2,
+      isUserFinishedExam: true,
+    });
+    renderWithAuthentication(WrappedElement, {
+      route: programRoutes.examiningQuestion(1, 2),
+    });
+
+    await waitFor(() =>
+      expect(
+        window.location.href.endsWith(programRoutes.examiningOverview(1))
+      ).toBe(true)
+    );
+    console.log(window.location.href);
+  });
+});

@@ -1,14 +1,16 @@
 import { useContext } from "react";
 import { Row, Col, Container, Form } from "react-bootstrap";
 import UserInfo from "../user-info/user-info.component";
-import ExamTime from "./exam-time.component";
+import ExamTime from "../exam-time/exam-time.component";
 import PasswordInput from "./password-input.component";
 import { ExamInfoContext } from "../../contexts/exam-info-context/exam-info.context";
 import ExamDescriptionLoading from "./exam-description-loading.component";
 import RegisterToExamButton from "./register-to-exam-button.component";
 
 const MobilePopover = () => {
-  const { exam, isUserRegisteredToExam } = useContext(ExamInfoContext);
+  const { exam, isUserRegisteredToExam, examTime } = useContext(
+    ExamInfoContext
+  );
   const isPasswordRequired = exam ? exam.has_password : false;
 
   if (!exam) {
@@ -75,7 +77,7 @@ const MobilePopover = () => {
                 )}
               </Col>
               <Col xs={6}>
-                <ExamTime fontSize="2vw" color="success" />
+                <ExamTime fontSize="2vw" color="success" examTime={examTime} />
               </Col>
             </Form>
           </Container>
