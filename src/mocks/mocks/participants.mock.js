@@ -29,3 +29,18 @@ export const showParticipantId2 = {
     },
   },
 };
+
+export const showParticipantId3 = {
+  data: {
+    participant: {
+      participant_id: 3,
+      user_id: 3,
+      user_link: "http://localhost:8000/api/users/3",
+      exam_link: "http://localhost:8000/api/exams/1",
+      exam_id: 1,
+      confirmed: false,
+      status: "FINISHED",
+      grade: 20,
+    },
+  },
+};
