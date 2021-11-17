@@ -60,7 +60,8 @@ const AnswerOrdering = () => {
         {answers && answers.length > 0
           ? answers.map((answer, idx) => {
               const state = states.find(
-                (state) => state.state_id === answer.integer_part
+                (state) =>
+                  Number(state.state_id) === Number(answer.integer_part)
               );
               return (
                 <OrderingOption

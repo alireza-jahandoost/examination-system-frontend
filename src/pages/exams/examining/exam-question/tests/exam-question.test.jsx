@@ -15,7 +15,7 @@ import {
   indexTrueOrFalse,
   indexOrdering,
 } from "../../../../../mocks/mocks/answers.mock";
-import { randomString } from "../../../../../utilities/tests.utility";
+import { randomString, wait } from "../../../../../utilities/tests.utility";
 import {
   statesIndexMultipleAnswer,
   statesIndexSelectTheAnswer,
@@ -53,6 +53,7 @@ describe("check button when saving", () => {
 
     await waitFor(() => expect(textbox).toHaveValue(textboxValue));
 
+    // await wait(200);
     const saveButton = await screen.findByRole("button", {
       name: /save changes/i,
     });
@@ -102,6 +103,7 @@ describe("check descriptive questions", () => {
 
     await waitFor(() => expect(textbox).toHaveValue(textboxValue));
 
+    // await wait(200);
     const saveButton = await screen.findByRole("button", {
       name: /save changes/i,
     });
@@ -131,6 +133,7 @@ describe("check descriptive questions", () => {
 
     await waitFor(() => expect(textbox).toHaveValue(textboxValue));
 
+    // await wait(200);
     const saveButton = await screen.findByRole("button", {
       name: /save changes/i,
     });
@@ -179,6 +182,7 @@ describe("check fill the blank questions", () => {
 
     await waitFor(() => expect(textbox).toHaveValue(textboxValue));
 
+    // await wait(200);
     const saveButton = await screen.findByRole("button", {
       name: /save changes/i,
     });
@@ -208,6 +212,7 @@ describe("check fill the blank questions", () => {
 
     await waitFor(() => expect(textbox).toHaveValue(textboxValue));
 
+    // await wait(200);
     const saveButton = await screen.findByRole("button", {
       name: /save changes/i,
     });
@@ -265,6 +270,7 @@ describe("check multiple answers questions", () => {
     userEvent.click(checkboxes[0]);
     userEvent.click(checkboxes[1]);
 
+    // await wait(200);
     const saveButton = await screen.findByRole("button", {
       name: /save changes/i,
     });
@@ -294,6 +300,7 @@ describe("check multiple answers questions", () => {
     userEvent.click(checkboxes[0]);
     userEvent.click(checkboxes[1]);
 
+    // await wait(200);
     const saveButton = await screen.findByRole("button", {
       name: /save changes/i,
     });
@@ -379,6 +386,7 @@ describe("check select the answer questions", () => {
     userEvent.click(radios[1]);
     const checked = 1;
 
+    // await wait(200);
     const saveButton = await screen.findByRole("button", {
       name: /save changes/i,
     });
@@ -411,6 +419,7 @@ describe("check select the answer questions", () => {
       checked = 0;
     }
 
+    // await wait(200);
     const saveButton = await screen.findByRole("button", {
       name: /save changes/i,
     });
@@ -465,6 +474,7 @@ describe("check true or false question", () => {
     const radios = await screen.findAllByRole("radio");
     userEvent.click(radios[0]);
 
+    // await wait(200);
     const saveButton = await screen.findByRole("button", {
       name: /save changes/i,
     });
@@ -491,6 +501,7 @@ describe("check true or false question", () => {
 
     userEvent.click(radios[1 - checked]);
 
+    // await wait(200);
     const saveButton = await screen.findByRole("button", {
       name: /save changes/i,
     });
@@ -515,6 +526,7 @@ describe("check ordering questions", () => {
 
     userEvent.click(lastUpButton);
 
+    // await wait(200);
     const saveButton = await screen.findByRole("button", {
       name: /save changes/i,
     });
@@ -535,6 +547,7 @@ describe("check ordering questions", () => {
 
     userEvent.click(lastUpButton);
 
+    // await wait(200);
     const saveButton = await screen.findByRole("button", {
       name: /save changes/i,
     });

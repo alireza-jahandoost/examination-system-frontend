@@ -41,7 +41,13 @@ const ExamQuestionPage = () => {
     <div>
       <div>
         <ExamTime color="dark" examTime={examTime} />
-        <Button onClick={() => setShowModal(true)}> Finish Exam </Button>
+        <Button
+          onClick={() => {
+            setShowModal(true);
+          }}
+        >
+          Finish Exam
+        </Button>
       </div>
       <div>
         <AnswerQuestionProvider>

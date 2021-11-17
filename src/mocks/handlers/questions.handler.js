@@ -1,7 +1,9 @@
 import { rest } from "msw";
 import apiRoutes from "../../constants/api-routes.constant";
+import programRoutes from "../../constants/program-routes.constant";
 import {
   questionsIndex,
+  questionsIndexAll,
   questionsShowId_1,
   questionsShowId_2,
   questionsShowId_3,
@@ -19,6 +21,9 @@ import { questionScoreMustBeANumber } from "../errors/failed-question-update.err
 
 const questionsHandler = [
   rest.get(apiRoutes.questions.indexQuestions(":examId"), (req, res, ctx) => {
+    if (window.location.href.endsWith(programRoutes.examiningOverview(1))) {
+      return res(ctx.json(questionsIndexAll));
+    }
     return res(ctx.json(questionsIndex));
   }),
 

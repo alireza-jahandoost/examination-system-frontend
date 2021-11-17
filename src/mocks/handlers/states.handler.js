@@ -1,5 +1,6 @@
 import { rest } from "msw";
 import apiRoutes from "../../constants/api-routes.constant";
+import programRoutes from "../../constants/program-routes.constant";
 import {
   stateConstructor,
   statesIndexEmpty,
@@ -21,16 +22,30 @@ const statesHandler = [
   rest.get(
     apiRoutes.states.indexStates(":examId", ":questionId"),
     (req, res, ctx) => {
-      const { questionId } = req.params;
+      const { questionId, examId } = req.params;
 
       switch (Number(questionId)) {
         case 2:
+          if (
+            window.location.href.endsWith(
+              programRoutes.examiningQuestion(examId, questionId)
+            )
+          ) {
+            return res(ctx.json(statesIndexEmpty));
+          }
           return res(ctx.json(statesIndexFillTheBlank));
         case 3:
           return res(ctx.json(statesIndexMultipleAnswer));
         case 4:
           return res(ctx.json(statesIndexSelectTheAnswer));
         case 5:
+          if (
+            window.location.href.endsWith(
+              programRoutes.examiningQuestion(examId, questionId)
+            )
+          ) {
+            return res(ctx.json(statesIndexEmpty));
+          }
           return res(ctx.json(statesIndexTrueOrFalse));
         case 6:
           return res(ctx.json(statesIndexOrdering));
@@ -81,6 +96,7 @@ const statesHandler = [
                 state: stateConstructor(
                   Math.floor(Math.random() * 1000) + 1,
                   0,
+                  questionId,
                   text_part
                 ),
               },
@@ -96,6 +112,7 @@ const statesHandler = [
                 state: stateConstructor(
                   Math.floor(Math.random() * 1000) + 1,
                   integer_part,
+                  questionId,
                   text_part
                 ),
               },
@@ -111,6 +128,7 @@ const statesHandler = [
                 state: stateConstructor(
                   Math.floor(Math.random() * 1000) + 1,
                   integer_part,
+                  questionId,
                   text_part
                 ),
               },
@@ -125,6 +143,7 @@ const statesHandler = [
               data: {
                 state: stateConstructor(
                   Math.floor(Math.random() * 1000) + 1,
+                  questionId,
                   integer_part
                 ),
               },
@@ -140,6 +159,7 @@ const statesHandler = [
                 state: stateConstructor(
                   Math.floor(Math.random() * 1000) + 1,
                   integer_part,
+                  questionId,
                   text_part
                 ),
               },
@@ -165,7 +185,12 @@ const statesHandler = [
           return res(
             ctx.json({
               data: {
-                state: stateConstructor(integerStateId, 0, text_part),
+                state: stateConstructor(
+                  integerStateId,
+                  0,
+                  questionId,
+                  text_part
+                ),
               },
             })
           );
@@ -184,6 +209,7 @@ const statesHandler = [
                 state: stateConstructor(
                   integerStateId,
                   integer_part,
+                  questionId,
                   text_part
                 ),
               },
@@ -204,6 +230,7 @@ const statesHandler = [
                 state: stateConstructor(
                   integerStateId,
                   integer_part,
+                  questionId,
                   text_part
                 ),
               },
@@ -216,7 +243,11 @@ const statesHandler = [
           return res(
             ctx.json({
               data: {
-                state: stateConstructor(integerStateId, integer_part),
+                state: stateConstructor(
+                  integerStateId,
+                  integer_part,
+                  questionId
+                ),
               },
             })
           );
@@ -233,6 +264,7 @@ const statesHandler = [
                 state: stateConstructor(
                   integerStateId,
                   integer_part,
+                  questionId,
                   text_part
                 ),
               },

@@ -27,6 +27,7 @@ test("if the exam is not published, user can add question", async () => {
     screen.queryByRole("button", { name: /add question/i })
   ).not.toBeInTheDocument();
   // end
+  await wait(100);
 
   // fill question text
   const questionTexts = screen.getAllByRole("textbox", {

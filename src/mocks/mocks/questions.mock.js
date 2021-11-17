@@ -19,6 +19,37 @@ export const questionsIndex = {
   },
 };
 
+export const questionsIndexAll = {
+  data: {
+    questions: [
+      {
+        question_id: 1,
+        question_link: "http://localhost:8000/api/exams/1/questions/2",
+      },
+      {
+        question_id: 2,
+        question_link: "http://localhost:8000/api/exams/1/questions/2",
+      },
+      {
+        question_id: 3,
+        question_link: "http://localhost:8000/api/exams/1/questions/2",
+      },
+      {
+        question_id: 4,
+        question_link: "http://localhost:8000/api/exams/1/questions/2",
+      },
+      {
+        question_id: 5,
+        question_link: "http://localhost:8000/api/exams/1/questions/3",
+      },
+      {
+        question_id: 6,
+        question_link: "http://localhost:8000/api/exams/1/questions/4",
+      },
+    ],
+  },
+};
+
 export const questionsShowId_1 = {
   data: {
     question: {

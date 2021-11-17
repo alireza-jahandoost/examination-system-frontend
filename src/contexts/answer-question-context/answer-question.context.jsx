@@ -31,16 +31,30 @@ export const AnswerQuestionProvider = ({ children }) => {
 
   useEffect(() => {
     if (
+      question &&
+      Number(question.question_id) === Number(questionId) &&
+      (states.length === 0 ||
+        Number(states[0].question_id) === Number(questionId))
+    ) {
+      setIsContextLoaded(true);
+    } else {
+      setIsContextLoaded(false);
+    }
+  }, [questionId, question, states]);
+
+  useEffect(() => {
+    if (
       !token ||
       !examId ||
       !questionId ||
       !participant ||
-      question ||
-      answers.length > 0 ||
-      states.length > 0
+      isContextLoaded ||
+      isLoading ||
+      (question && Number(question.question_id) === Number(questionId))
     ) {
       return;
     }
+    setIsLoading(true);
     const requests = [
       questionsShowRequest(examId, questionId, token),
       indexAnswersRequest(questionId, participant.participant_id, token),
@@ -58,19 +72,19 @@ export const AnswerQuestionProvider = ({ children }) => {
 
             const indexStatesResponse = responses[2];
 
-            const {
-              question: receivedQuestion,
-            } = questionsShowResponse.data.data;
-            setQuestion(receivedQuestion);
+            const { states: receivedStates } = indexStatesResponse.data.data;
+            setStates(receivedStates);
 
             const { answers: receivedAnswers } = indexAnswersResponse.data.data;
             setAnswers(receivedAnswers);
             setCurrentAnswers(receivedAnswers);
 
-            const { states: receivedStates } = indexStatesResponse.data.data;
-            setStates(receivedStates);
+            const {
+              question: receivedQuestion,
+            } = questionsShowResponse.data.data;
+            setQuestion(receivedQuestion);
 
-            setIsContextLoaded(true);
+            setIsLoading(false);
           }
         })
       )
@@ -79,6 +93,7 @@ export const AnswerQuestionProvider = ({ children }) => {
           setErrors({
             message: "something went wrong, please try again later",
           });
+          setIsLoading(false);
         }
       });
   }, [
@@ -90,6 +105,8 @@ export const AnswerQuestionProvider = ({ children }) => {
     answers,
     isMounted,
     states,
+    isContextLoaded,
+    isLoading,
   ]);
 
   const changeAnswers = (newAnswers) => {
