@@ -14,6 +14,8 @@ import {
 } from "../../services/answers/answers.service";
 import { statesIndexRequest } from "../../services/states/states.service";
 
+import { questionNeedsState } from "../../utilities/question-form-parts.utility";
+
 export const AnswerQuestionContext = createContext();
 
 export const AnswerQuestionProvider = ({ children }) => {
@@ -30,17 +32,10 @@ export const AnswerQuestionProvider = ({ children }) => {
   const isMounted = useMountedState();
 
   useEffect(() => {
-    if (
-      question &&
-      Number(question.question_id) === Number(questionId) &&
-      (states.length === 0 ||
-        Number(states[0].question_id) === Number(questionId))
-    ) {
-      setIsContextLoaded(true);
-    } else {
+    if (!question || question.question_id !== questionId) {
       setIsContextLoaded(false);
     }
-  }, [questionId, question, states]);
+  }, [questionId, question]);
 
   useEffect(() => {
     if (
@@ -58,7 +53,6 @@ export const AnswerQuestionProvider = ({ children }) => {
     const requests = [
       questionsShowRequest(examId, questionId, token),
       indexAnswersRequest(questionId, participant.participant_id, token),
-      statesIndexRequest(examId, questionId, token),
     ];
 
     axios
@@ -70,11 +64,6 @@ export const AnswerQuestionProvider = ({ children }) => {
 
             const indexAnswersResponse = responses[1];
 
-            const indexStatesResponse = responses[2];
-
-            const { states: receivedStates } = indexStatesResponse.data.data;
-            setStates(receivedStates);
-
             const { answers: receivedAnswers } = indexAnswersResponse.data.data;
             setAnswers(receivedAnswers);
             setCurrentAnswers(receivedAnswers);
@@ -84,10 +73,22 @@ export const AnswerQuestionProvider = ({ children }) => {
             } = questionsShowResponse.data.data;
             setQuestion(receivedQuestion);
 
-            setIsLoading(false);
+            if (questionNeedsState(receivedQuestion)) {
+              return statesIndexRequest(examId, questionId, token);
+            }
           }
         })
       )
+      .then((response) => {
+        if (isMounted()) {
+          if (response) {
+            const { states: receivedStates } = response.data.data;
+            setStates(receivedStates);
+          }
+          setIsLoading(false);
+          setIsContextLoaded(true);
+        }
+      })
       .catch((errors) => {
         if (isMounted()) {
           setErrors({

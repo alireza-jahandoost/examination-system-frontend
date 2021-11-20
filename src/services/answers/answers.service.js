@@ -23,7 +23,7 @@ export const deleteAnswersRequest = (questionId, token) => {
   return axios.delete(apiRoutes.answers.deleteAnswers(questionId), {
     headers: {
       accept: "application/json",
-      authentication: `Bearer ${token}`,
+      authorization: `Bearer ${token}`,
     },
   });
 };

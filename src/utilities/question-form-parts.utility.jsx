@@ -46,3 +46,8 @@ export const isStatesValid = (states, questionTypeId) => {
       return false;
   }
 };
+
+export const questionNeedsState = (question) => {
+  const withoutStateTypes = ["descriptive", "fill the blank", "true or false"];
+  return !withoutStateTypes.includes(question.question_type.question_type_name);
+};

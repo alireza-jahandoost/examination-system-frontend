@@ -24,28 +24,24 @@ const statesHandler = [
     (req, res, ctx) => {
       const { questionId, examId } = req.params;
 
+      const questionsWithoutState = [1, 2, 5];
+      if (
+        window.location.href.endsWith(
+          programRoutes.examiningQuestion(examId, questionId)
+        ) &&
+        questionsWithoutState.includes(Number(questionId))
+      ) {
+        return res(ctx.status(403));
+      }
+
       switch (Number(questionId)) {
         case 2:
-          if (
-            window.location.href.endsWith(
-              programRoutes.examiningQuestion(examId, questionId)
-            )
-          ) {
-            return res(ctx.json(statesIndexEmpty));
-          }
           return res(ctx.json(statesIndexFillTheBlank));
         case 3:
           return res(ctx.json(statesIndexMultipleAnswer));
         case 4:
           return res(ctx.json(statesIndexSelectTheAnswer));
         case 5:
-          if (
-            window.location.href.endsWith(
-              programRoutes.examiningQuestion(examId, questionId)
-            )
-          ) {
-            return res(ctx.json(statesIndexEmpty));
-          }
           return res(ctx.json(statesIndexTrueOrFalse));
         case 6:
           return res(ctx.json(statesIndexOrdering));
