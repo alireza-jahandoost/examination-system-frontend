@@ -5,7 +5,7 @@ import OrderingOption from "./ordering-option.component";
 
 import { AnswerQuestionContext } from "../../contexts/answer-question-context/answer-question.context";
 
-const AnswerOrdering = () => {
+const AnswerOrdering = ({ readOnly = false }) => {
   const { answers, changeAnswers, states } = useContext(AnswerQuestionContext);
 
   const handleChange = (stateId, isUp) => {
@@ -65,6 +65,7 @@ const AnswerOrdering = () => {
               );
               return (
                 <OrderingOption
+                  readOnly={readOnly}
                   key={state.state_id}
                   state={state}
                   downDisabled={idx === states.length - 1}
@@ -77,6 +78,7 @@ const AnswerOrdering = () => {
           : states.map((state, idx) => {
               return (
                 <OrderingOption
+                  readOnly={readOnly}
                   key={state.state_id}
                   state={state}
                   downDisabled={idx === states.length - 1}

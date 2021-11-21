@@ -4,7 +4,7 @@ import { AnswerQuestionContext } from "../../contexts/answer-question-context/an
 
 import AnswerIndicator from "../answer-indicator/answer-indicator.component";
 
-const AnswerTrueOrFalse = () => {
+const AnswerTrueOrFalse = ({ readOnly = false }) => {
   const { answers, changeAnswers } = useContext(AnswerQuestionContext);
 
   const handleChange = (newAnswer) => {
@@ -19,6 +19,7 @@ const AnswerTrueOrFalse = () => {
         suffix="answer-of-question"
         buttonLabels={["True", "False"]}
         noAnswer={!answers || answers.length === 0}
+        readOnly={readOnly}
       />
     </div>
   );

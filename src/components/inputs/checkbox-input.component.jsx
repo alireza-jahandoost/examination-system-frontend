@@ -19,7 +19,7 @@ const CheckboxInput = ({
       inputProps={inputProps}
       onChange={onChange}
       error={error}
-      readOnly={readOnly}
+      disabled={readOnly}
       {...props}
     />
   );

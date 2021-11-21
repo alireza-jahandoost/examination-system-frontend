@@ -76,7 +76,7 @@ test("the inputs must be read only if exam published", async () => {
   const examNeedsConfirmation = screen.getByRole("checkbox", {
     name: /confirmation required/i,
   });
-  expect(examNeedsConfirmation).toHaveAttribute("readonly");
+  expect(examNeedsConfirmation).toBeDisabled();
 
   const examStartTimeField = screen.getByRole("textbox", {
     name: /exam's start/i,

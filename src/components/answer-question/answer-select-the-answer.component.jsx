@@ -4,7 +4,7 @@ import { AnswerQuestionContext } from "../../contexts/answer-question-context/an
 
 import RadioInput from "../inputs/radio-input.component";
 
-const AnswerSelectTheAnswer = () => {
+const AnswerSelectTheAnswer = ({ readOnly = false }) => {
   const { answers, changeAnswers, states } = useContext(AnswerQuestionContext);
 
   const handleChange = (e) => {
@@ -26,6 +26,7 @@ const AnswerSelectTheAnswer = () => {
             }
             id={`option-${state.state_id}`}
             onChange={handleChange}
+            readOnly={readOnly}
             inputProps={{
               "data-state-id": state.state_id,
             }}

@@ -12,7 +12,7 @@ import AnswerOrdering from "./answer-ordering.component";
 
 import QuestionInfo from "./question-info.component";
 
-const AnswerQuestion = () => {
+const AnswerQuestion = ({ readOnly = false }) => {
   const {
     isContextLoaded,
     hasChange,
@@ -29,22 +29,22 @@ const AnswerQuestion = () => {
   let form;
   switch (question.question_type.question_type_name) {
     case "descriptive":
-      form = <AnswerDescriptive />;
+      form = <AnswerDescriptive readOnly={readOnly} />;
       break;
     case "fill the blank":
-      form = <AnswerFillTheBlank />;
+      form = <AnswerFillTheBlank readOnly={readOnly} />;
       break;
     case "multiple answer":
-      form = <AnswerMultipleAnswers />;
+      form = <AnswerMultipleAnswers readOnly={readOnly} />;
       break;
     case "select the answer":
-      form = <AnswerSelectTheAnswer />;
+      form = <AnswerSelectTheAnswer readOnly={readOnly} />;
       break;
     case "true or false":
-      form = <AnswerTrueOrFalse />;
+      form = <AnswerTrueOrFalse readOnly={readOnly} />;
       break;
     case "ordering":
-      form = <AnswerOrdering />;
+      form = <AnswerOrdering readOnly={readOnly} />;
       break;
     default:
   }

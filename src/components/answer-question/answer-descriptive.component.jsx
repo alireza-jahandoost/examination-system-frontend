@@ -4,7 +4,7 @@ import TextareaInput from "../inputs/textarea-input.component";
 
 import { AnswerQuestionContext } from "../../contexts/answer-question-context/answer-question.context";
 
-const AnswerDescriptive = () => {
+const AnswerDescriptive = ({ readOnly = false }) => {
   const { answers, changeAnswers } = useContext(AnswerQuestionContext);
 
   const handleChange = (e) => {
@@ -18,6 +18,7 @@ const AnswerDescriptive = () => {
   return (
     <div>
       <TextareaInput
+        readOnly={readOnly}
         label="Answer of Question"
         value={answers.length ? answers[0].text_part : ""}
         id="answer-of-question"

@@ -8,14 +8,14 @@ const CheckboxAndRadioInput = ({
   onChange,
   error,
   type,
-  readOnly = false,
+  disabled = false,
   ...props
 }) => {
   return (
     <Form.Group controlId={id} {...props}>
       <Form.Check
         type={type}
-        readOnly={readOnly}
+        disabled={disabled}
         checked={!!checked}
         {...inputProps}
         label={label}

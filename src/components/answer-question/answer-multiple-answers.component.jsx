@@ -4,7 +4,7 @@ import CheckboxInput from "../inputs/checkbox-input.component";
 
 import { AnswerQuestionContext } from "../../contexts/answer-question-context/answer-question.context";
 
-const AnswerMultipleAnswers = () => {
+const AnswerMultipleAnswers = ({ readOnly = false }) => {
   const { answers, changeAnswers, states } = useContext(AnswerQuestionContext);
 
   const handleChange = (e) => {
@@ -28,6 +28,7 @@ const AnswerMultipleAnswers = () => {
         const isChecked = answer !== undefined;
         return (
           <CheckboxInput
+            readOnly={readOnly}
             label={state.text_part}
             key={state.state_id}
             checked={isChecked}

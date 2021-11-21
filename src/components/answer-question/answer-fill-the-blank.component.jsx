@@ -4,7 +4,7 @@ import TextInput from "../inputs/text-input.component";
 
 import { AnswerQuestionContext } from "../../contexts/answer-question-context/answer-question.context";
 
-const AnswerFillTheBlank = () => {
+const AnswerFillTheBlank = ({ readOnly = false }) => {
   const { answers, changeAnswers } = useContext(AnswerQuestionContext);
 
   const handleChange = (e) => {
@@ -24,6 +24,7 @@ const AnswerFillTheBlank = () => {
         placeholder="Write your answer"
         onChange={handleChange}
         hiddenLabel={true}
+        readOnly={readOnly}
       />
     </div>
   );
