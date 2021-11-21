@@ -1,5 +1,4 @@
-import { useEffect, createContext, useMemo, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, createContext, useState, useContext } from "react";
 import axios from "axios";
 import { useMountedState } from "react-use";
 
@@ -18,13 +17,12 @@ import { questionNeedsState } from "../../utilities/question-form-parts.utility"
 
 export const AnswerQuestionContext = createContext();
 
-export const AnswerQuestionProvider = ({ children }) => {
+export const AnswerQuestionProvider = ({ children, questionId, examId }) => {
   const [answers, setAnswers] = useState([]);
   const [currentAnswers, setCurrentAnswers] = useState([]);
   const [question, setQuestion] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isContextLoaded, setIsContextLoaded] = useState(false);
-  const { examId, questionId } = useParams();
   const { token } = useContext(AuthenticationContext);
   const { participant } = useContext(ExaminingContext);
   const [errors, setErrors] = useState({});

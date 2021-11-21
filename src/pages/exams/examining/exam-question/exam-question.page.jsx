@@ -21,7 +21,7 @@ const ExamQuestionPage = () => {
     finishExam,
     isUserFinishedExam,
   } = useContext(ExaminingContext);
-  const { examId } = useParams();
+  const { examId, questionId } = useParams();
   const [showModal, setShowModal] = useState(false);
 
   if (!isContextLoaded) {
@@ -50,7 +50,7 @@ const ExamQuestionPage = () => {
         </Button>
       </div>
       <div>
-        <AnswerQuestionProvider>
+        <AnswerQuestionProvider questionId={questionId} examId={examId}>
           <AnswerQuestion />
         </AnswerQuestionProvider>
       </div>
