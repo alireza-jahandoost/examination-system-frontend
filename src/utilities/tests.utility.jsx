@@ -91,57 +91,51 @@ export const asignExamShowStartAndEnd = (
   );
 };
 
-const emptyExams = {
-  data: {
-    exams: [],
-  },
-  links: {
-    first: "http://localhost:8000/api/exams?page=1",
-    last: "http://localhost:8000/api/exams?page=1",
-    prev: null,
-    next: null,
-  },
-  meta: {
-    current_page: 1,
-    from: 1,
-    last_page: 1,
-    links: [
-      {
-        url: "http://localhost:8000/api/exams?page=1",
-        label: "&laquo; Previous",
-        active: false,
-      },
-      {
-        url: "http://localhost:8000/api/exams?page=1",
-        label: "1",
-        active: false,
-      },
-      {
-        url: null,
-        label: "Next &raquo;",
-        active: false,
-      },
-    ],
-    path: "http://localhost:8000/api/exams",
-    per_page: 18,
-    to: null,
-    total: 0,
-  },
+const emptyPaginatedObject = ({ route, objectName }) => {
+  const data = {};
+  data[objectName] = [];
+
+  return {
+    data,
+    links: {
+      first: `${route}?page=1`,
+      last: `${route}?page=1`,
+      prev: null,
+      next: null,
+    },
+    meta: {
+      current_page: 1,
+      from: 1,
+      last_page: 1,
+      links: [
+        {
+          url: `${route}?page=1`,
+          label: "&laquo; Previous",
+          active: false,
+        },
+        {
+          url: `${route}?page=1`,
+          label: "1",
+          active: false,
+        },
+        {
+          url: null,
+          label: "Next &raquo;",
+          active: false,
+        },
+      ],
+      path: route,
+      per_page: 18,
+      to: null,
+      total: 0,
+    },
+  };
 };
 
-export const emptyParticipatedExams = () => {
+export const emptyRequest = ({ route, method, objectName }) => {
   server.resetHandlers(
-    rest.get(apiRoutes.participants.participatedExams(), (req, res, ctx) => {
-      return res(ctx.json(emptyExams));
-    }),
-    ...handlers
-  );
-};
-
-export const emptyCreatedExams = () => {
-  server.resetHandlers(
-    rest.get(apiRoutes.exams.indexCreatedExams(), (req, res, ctx) => {
-      return res(ctx.json(emptyExams));
+    rest[method](route, (req, res, ctx) => {
+      return res(ctx.json(emptyPaginatedObject({ route, objectName })));
     }),
     ...handlers
   );

@@ -6,11 +6,9 @@ import {
 } from "../../../../../test-utils/testing-library-utils";
 import CreatedExamsPage from "../created-exams.page";
 import programRoutes from "../../../../../constants/program-routes.constant";
+import apiRoutes from "../../../../../constants/api-routes.constant";
 import { pageOneExamsIndex } from "../../../../../mocks/mocks/exams.mock";
-import {
-  wait,
-  emptyCreatedExams,
-} from "../../../../../utilities/tests.utility";
+import { wait, emptyRequest } from "../../../../../utilities/tests.utility";
 
 test("first of all, loading must be in the page", async () => {
   renderWithAuthentication(<CreatedExamsPage />, {
@@ -36,7 +34,11 @@ test("after loading, pagination must have link to other pages", async () => {
 });
 
 test("if there is not any created exam, loading must be gone", async () => {
-  emptyCreatedExams();
+  emptyRequest({
+    method: "get",
+    route: apiRoutes.exams.indexCreatedExams(1),
+    objectName: "exams",
+  });
 
   renderWithAuthentication(<CreatedExamsPage />, {
     route: programRoutes.indexParticipatedExams(),

@@ -6,8 +6,9 @@ import {
 } from "../../../../../test-utils/testing-library-utils";
 import ParticipatedExams from "../participated-exams.page";
 import programRoutes from "../../../../../constants/program-routes.constant";
+import apiRoutes from "../../../../../constants/api-routes.constant";
 import { pageOneExamsIndex } from "../../../../../mocks/mocks/exams.mock";
-import { emptyParticipatedExams } from "../../../../../utilities/tests.utility";
+import { emptyRequest } from "../../../../../utilities/tests.utility";
 
 test("first of all, loading must be shown in the page", async () => {
   renderWithAuthentication(<ParticipatedExams />, {
@@ -33,7 +34,11 @@ test("after loading, pagination must have link to other pages", async () => {
 });
 
 test("if there is not any participated exam, loading must be gone", async () => {
-  emptyParticipatedExams();
+  emptyRequest({
+    method: "get",
+    route: apiRoutes.participants.indexParticipants(1),
+    objectName: "exams",
+  });
 
   renderWithAuthentication(<ParticipatedExams />, {
     route: programRoutes.indexParticipatedExams(),
