@@ -91,6 +91,62 @@ export const asignExamShowStartAndEnd = (
   );
 };
 
+const emptyExams = {
+  data: {
+    exams: [],
+  },
+  links: {
+    first: "http://localhost:8000/api/exams?page=1",
+    last: "http://localhost:8000/api/exams?page=1",
+    prev: null,
+    next: null,
+  },
+  meta: {
+    current_page: 1,
+    from: 1,
+    last_page: 1,
+    links: [
+      {
+        url: "http://localhost:8000/api/exams?page=1",
+        label: "&laquo; Previous",
+        active: false,
+      },
+      {
+        url: "http://localhost:8000/api/exams?page=1",
+        label: "1",
+        active: false,
+      },
+      {
+        url: null,
+        label: "Next &raquo;",
+        active: false,
+      },
+    ],
+    path: "http://localhost:8000/api/exams",
+    per_page: 18,
+    to: null,
+    total: 0,
+  },
+};
+
+export const emptyParticipatedExams = () => {
+  server.resetHandlers(
+    rest.get(apiRoutes.participants.participatedExams(), (req, res, ctx) => {
+      return res(ctx.json(emptyExams));
+    }),
+    ...handlers
+  );
+};
+
+export const emptyCreatedExams = () => {
+  server.resetHandlers(
+    rest.get(apiRoutes.exams.indexCreatedExams(), (req, res, ctx) => {
+      return res(ctx.json(emptyExams));
+    }),
+    ...handlers
+  );
+};
+
 export const randomString = (length = 8) => {
   // Declare all characters
   let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

@@ -1,5 +1,4 @@
 import { Pagination } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import PaginationItem from "./pagination-item.component";
 
 const PaginationComponent = ({

@@ -1,5 +1,5 @@
 import { useState, useMemo, useContext, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, Redirect } from "react-router-dom";
 import { Table, Container } from "react-bootstrap";
 import { useMountedState } from "react-use";
 import Sidebar from "../../../../components/sidebar/sidebar.component";
@@ -16,14 +16,19 @@ const ParticipatedExamsPage = () => {
   const [exams, setExams] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [numberOfPages, setNumberOfPages] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const { token } = useContext(AuthenticationContext);
   const location = useLocation();
   const page = useMemo(() => {
-    return new URLSearchParams(location.search).get("page") || 1;
+    return Number(new URLSearchParams(location.search).get("page")) || 1;
   }, [location]);
   const isMounted = useMountedState();
 
   useEffect(() => {
+    if (Number(page) === Number(currentPage) || isLoading) {
+      return;
+    }
+    setIsLoading(true);
     participatedExamsIndexRequest(token, page)
       .then((response) => response.data)
       .then(({ data, meta }) => {
@@ -36,10 +41,18 @@ const ParticipatedExamsPage = () => {
       .then(({ exams }) => {
         if (isMounted()) {
           setExams([...exams]);
+          setIsLoading(false);
         }
       })
       .catch((err) => console.error(err));
-  }, [page, token, isMounted]);
+  }, [page, token, isMounted, currentPage, isLoading]);
+
+  if (
+    !isLoading &&
+    (Number(page) > Number(numberOfPages) || Number(page) <= 0)
+  ) {
+    return <Redirect to={programRoutes.indexParticipatedExams()} />;
+  }
 
   return (
     <div className="d-flex flex-row">
@@ -47,9 +60,9 @@ const ParticipatedExamsPage = () => {
       <Container className="text-center">
         <div className="flex-grow-1">
           <h1>Participated Exams</h1>
-          {exams.length === 0 ? (
+          {isLoading ? (
             <p>Loading...</p>
-          ) : (
+          ) : exams.length > 0 ? (
             <>
               <Table striped bordered hover>
                 <thead>
@@ -92,9 +105,11 @@ const ParticipatedExamsPage = () => {
               <Pagination
                 currentPage={currentPage}
                 numberOfPages={numberOfPages}
-                prefix={programRoutes.indexCreatedExams()}
+                prefix={programRoutes.indexParticipatedExams()}
               />
             </>
+          ) : (
+            <p className="lead"> You have not participated in any exam yet </p>
           )}
         </div>
       </Container>

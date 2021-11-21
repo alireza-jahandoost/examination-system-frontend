@@ -34,6 +34,40 @@ const examsHandler = [
         return res(ctx.json(notFoundPageExamsIndex(page)));
     }
   }),
+  rest.get(apiRoutes.exams.indexCreatedExams(), (req, res, ctx) => {
+    const valueOfPage = req.url.searchParams.get("page");
+    const page = Number(valueOfPage);
+    switch (page) {
+      case 1:
+        return res(ctx.json(pageOneExamsIndex));
+
+      case 2:
+        return res(ctx.json(pageTwoExamsIndex));
+
+      case 3:
+        return res(ctx.json(pageThreeExamsIndex));
+
+      default:
+        return res(ctx.json(notFoundPageExamsIndex(page)));
+    }
+  }),
+  rest.get(apiRoutes.participants.participatedExams(), (req, res, ctx) => {
+    const valueOfPage = req.url.searchParams.get("page");
+    const page = Number(valueOfPage);
+    switch (page) {
+      case 1:
+        return res(ctx.json(pageOneExamsIndex));
+
+      case 2:
+        return res(ctx.json(pageTwoExamsIndex));
+
+      case 3:
+        return res(ctx.json(pageThreeExamsIndex));
+
+      default:
+        return res(ctx.json(notFoundPageExamsIndex(page)));
+    }
+  }),
   rest.get(apiRoutes.exams.showExam(":examId"), (req, res, ctx) => {
     let { examId } = req.params;
     examId = Number(examId);
