@@ -20,6 +20,7 @@ const programRoutes = {
     `/exams/${examId}/question/${questionId}`,
 
   // Participants
+  participantsRoot: (examId) => `/exams/${examId}/participants`,
   indexParticipants: (examId) => `/exams/${examId}/participants`,
   showParticipant: (examId, participantId) =>
     `/exams/${examId}/participants/${participantId}`,

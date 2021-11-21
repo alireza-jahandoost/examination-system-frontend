@@ -5,6 +5,7 @@ import programRoutes from "../../constants/program-routes.constant";
 import IndexAllExamsPage from "./index/index-all-exams/index-all-exams.page";
 import IndexParticipatedExamsPage from "./index/index-participated-exams/participated-exams.page";
 import IndexCreatedExamsPage from "./index/index-created-exams/created-exams.page";
+import ParticipantsRouter from "./participants/participants.router";
 
 import CreateExamPage from "./create/create-exam.page";
 
@@ -18,6 +19,7 @@ const ExamsRouter = () => {
   const { redirectIfNotAuthenticated, isAuthLoaded } = useContext(
     AuthenticationContext
   );
+  console.log("in exams router", window.location.href);
 
   if (!isAuthLoaded) {
     return <p> Loading... </p>;
@@ -62,6 +64,13 @@ const ExamsRouter = () => {
             </UpdateExamProvider>,
             location
           )
+        }
+      />
+
+      <Route
+        path={programRoutes.participantsRoot(":examId")}
+        render={({ location }) =>
+          redirectIfNotAuthenticated(<ParticipantsRouter />, location)
         }
       />
 
