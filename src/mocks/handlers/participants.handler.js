@@ -1,7 +1,13 @@
 import { rest } from "msw";
 import { examsPassword } from "../mocks/participants.mock";
 import apiRoutes from "../../constants/api-routes.constant";
-import { showParticipantId1 } from "../mocks/participants.mock";
+import {
+  indexParticipantsPage1,
+  indexParticipantsPage2,
+  indexParticipantsPage3,
+  indexParticipantsInvalidPage,
+  showParticipantId1,
+} from "../mocks/participants.mock";
 
 const participantsHandler = [
   rest.post(apiRoutes.exams.registerInExam(":examId"), (req, res, ctx) => {
@@ -48,6 +54,22 @@ const participantsHandler = [
     apiRoutes.participants.currentParticipant(":examId"),
     (req, res, ctx) => {
       return res(ctx.json(showParticipantId1));
+    }
+  ),
+  rest.get(
+    apiRoutes.participants.indexParticipants(":examId"),
+    (req, res, ctx) => {
+      const page = req.url.searchParams.get("page");
+      switch (Number(page)) {
+        case 1:
+          return res(ctx.json(indexParticipantsPage1));
+        case 2:
+          return res(ctx.json(indexParticipantsPage2));
+        case 3:
+          return res(ctx.json(indexParticipantsPage3));
+        default:
+          return res(ctx.json(indexParticipantsInvalidPage(Number(page))));
+      }
     }
   ),
 ];

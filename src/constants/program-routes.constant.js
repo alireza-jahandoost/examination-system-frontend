@@ -19,6 +19,11 @@ const programRoutes = {
   examiningQuestion: (examId, questionId) =>
     `/exams/${examId}/question/${questionId}`,
 
+  // Participants
+  indexParticipants: (examId) => `/exams/${examId}/participants`,
+  showParticipant: (examId, participantId) =>
+    `/exams/${examId}/participants/${participantId}`,
+
   // Authentication
   login: () => `/login`,
   register: () => `/register`,

@@ -35,3 +35,15 @@ export const getCurrentParticipantRequest = (examId, token) => {
     },
   });
 };
+
+export const indexParticipantsRequest = (examId, token, page) => {
+  return axios.get(apiRoutes.participants.indexParticipants(examId), {
+    params: {
+      page: page,
+    },
+    headers: {
+      accept: "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  });
+};
