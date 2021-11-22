@@ -6,9 +6,14 @@ import { QuestionGradeContext } from "../../contexts/question-grade-context/ques
 import NumberInput from "../inputs/number-input.component";
 
 const QuestionGrade = ({ canUserChangeGrade = false }) => {
-  const { grade, hasChange, submitGrade, changeGrade, newGrade } = useContext(
-    QuestionGradeContext
-  );
+  const {
+    isContextLoaded,
+    grade,
+    hasChange,
+    submitGrade,
+    changeGrade,
+    newGrade,
+  } = useContext(QuestionGradeContext);
 
   const handleChange = (e) => {
     changeGrade(e.target.value);
@@ -18,6 +23,10 @@ const QuestionGrade = ({ canUserChangeGrade = false }) => {
     e.preventDefault();
     submitGrade();
   };
+
+  if (!isContextLoaded) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div>

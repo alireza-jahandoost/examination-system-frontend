@@ -11,6 +11,7 @@ const Wrapper = (
     changeGrade = jest.fn(),
     submitGrade = jest.fn(),
     hasChange = false,
+    isContextLoaded = true,
   } = {}
 ) => {
   const value = {
@@ -19,6 +20,7 @@ const Wrapper = (
     changeGrade,
     submitGrade,
     hasChange,
+    isContextLoaded,
   };
   const WrappedElement = (
     <QuestionGradeContext.Provider value={value}>
