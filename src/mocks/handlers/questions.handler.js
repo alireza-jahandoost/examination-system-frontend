@@ -21,7 +21,10 @@ import { questionScoreMustBeANumber } from "../errors/failed-question-update.err
 
 const questionsHandler = [
   rest.get(apiRoutes.questions.indexQuestions(":examId"), (req, res, ctx) => {
-    if (window.location.href.endsWith(programRoutes.examiningOverview(1))) {
+    if (
+      window.location.href.endsWith(programRoutes.examiningOverview(1)) ||
+      window.location.href.endsWith(programRoutes.showParticipant(1, 1))
+    ) {
       return res(ctx.json(questionsIndexAll));
     }
     return res(ctx.json(questionsIndex));
