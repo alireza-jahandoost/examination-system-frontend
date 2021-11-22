@@ -19,7 +19,6 @@ const ExamsRouter = () => {
   const { redirectIfNotAuthenticated, isAuthLoaded } = useContext(
     AuthenticationContext
   );
-  console.log("in exams router", window.location.href);
 
   if (!isAuthLoaded) {
     return <p> Loading... </p>;

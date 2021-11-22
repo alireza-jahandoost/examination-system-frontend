@@ -50,7 +50,11 @@ const ExamQuestionPage = () => {
         </Button>
       </div>
       <div>
-        <AnswerQuestionProvider questionId={questionId} examId={examId}>
+        <AnswerQuestionProvider
+          questionId={questionId}
+          examId={examId}
+          participantId={participant.participant_id}
+        >
           <AnswerQuestion />
         </AnswerQuestionProvider>
       </div>

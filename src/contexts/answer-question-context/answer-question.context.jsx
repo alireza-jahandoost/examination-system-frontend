@@ -3,7 +3,6 @@ import axios from "axios";
 import { useMountedState } from "react-use";
 
 import { AuthenticationContext } from "../authentication-context/authentication.context";
-import { ExaminingContext } from "../examining-context/examining.context";
 
 import { questionsShowRequest } from "../../services/questions/questions.service";
 import {
@@ -17,14 +16,18 @@ import { questionNeedsState } from "../../utilities/question-form-parts.utility"
 
 export const AnswerQuestionContext = createContext();
 
-export const AnswerQuestionProvider = ({ children, questionId, examId }) => {
+export const AnswerQuestionProvider = ({
+  children,
+  questionId,
+  examId,
+  participantId,
+}) => {
   const [answers, setAnswers] = useState([]);
   const [currentAnswers, setCurrentAnswers] = useState([]);
   const [question, setQuestion] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isContextLoaded, setIsContextLoaded] = useState(false);
   const { token } = useContext(AuthenticationContext);
-  const { participant } = useContext(ExaminingContext);
   const [errors, setErrors] = useState({});
   const [states, setStates] = useState([]);
   const isMounted = useMountedState();
@@ -40,7 +43,7 @@ export const AnswerQuestionProvider = ({ children, questionId, examId }) => {
       !token ||
       !examId ||
       !questionId ||
-      !participant ||
+      !participantId ||
       isContextLoaded ||
       isLoading ||
       (question && Number(question.question_id) === Number(questionId))
@@ -50,7 +53,7 @@ export const AnswerQuestionProvider = ({ children, questionId, examId }) => {
     setIsLoading(true);
     const requests = [
       questionsShowRequest(examId, questionId, token),
-      indexAnswersRequest(questionId, participant.participant_id, token),
+      indexAnswersRequest(questionId, participantId, token),
     ];
 
     axios
@@ -97,7 +100,7 @@ export const AnswerQuestionProvider = ({ children, questionId, examId }) => {
       });
   }, [
     examId,
-    participant,
+    participantId,
     questionId,
     token,
     question,
