@@ -33,8 +33,8 @@ const ParticipatedExamsPage = () => {
       .then((response) => response.data)
       .then(({ data, meta }) => {
         if (isMounted()) {
-          setCurrentPage(meta.current_page);
-          setNumberOfPages(meta.last_page - meta.from + 1);
+          setCurrentPage(Number(meta.current_page));
+          setNumberOfPages(Number(meta.last_page));
         }
         return data;
       })

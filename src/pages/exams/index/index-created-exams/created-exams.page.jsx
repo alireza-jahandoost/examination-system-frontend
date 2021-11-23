@@ -34,7 +34,7 @@ const CreatedExamsPage = () => {
       .then(({ data, meta }) => {
         if (isMounted()) {
           setCurrentPage(Number(meta.current_page));
-          setNumberOfPages(Number(meta.last_page - meta.from + 1));
+          setNumberOfPages(Number(meta.last_page));
         }
         return data;
       })
@@ -51,6 +51,7 @@ const CreatedExamsPage = () => {
     !isLoading &&
     (Number(page) > Number(numberOfPages) || Number(page) <= 0)
   ) {
+    console.log(page, numberOfPages);
     return <Redirect to={programRoutes.indexCreatedExams()} />;
   }
 
@@ -95,9 +96,18 @@ const CreatedExamsPage = () => {
                         <td>{exam.published ? "YES" : "NO"}</td>
                         <td>{exam.needs_confirmation ? "YES" : "NO"}</td>
                         <td>
-                          <Link to={programRoutes.updateExam(exam.exam_id)}>
-                            edit exam
-                          </Link>
+                          <div>
+                            <Link to={programRoutes.updateExam(exam.exam_id)}>
+                              edit exam
+                            </Link>
+                          </div>
+                          <div>
+                            <Link
+                              to={programRoutes.indexParticipants(exam.exam_id)}
+                            >
+                              participants
+                            </Link>
+                          </div>
                         </td>
                       </tr>
                     );

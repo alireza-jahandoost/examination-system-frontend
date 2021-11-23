@@ -10,7 +10,6 @@ import programRoutes from "../../../../constants/program-routes.constant";
 import { AuthenticationContext } from "../../../../contexts/authentication-context/authentication.context";
 
 import { indexParticipantsRequest } from "../../../../services/participants/participants.service";
-import { convertFromUTC } from "../../../../utilities/dateAndTime.utility";
 
 const IndexParticipantsPage = () => {
   const [participants, setParticipants] = useState([]);
@@ -35,7 +34,7 @@ const IndexParticipantsPage = () => {
       .then(({ data, meta }) => {
         if (isMounted()) {
           setCurrentPage(Number(meta.current_page));
-          setNumberOfPages(Number(meta.last_page - meta.from + 1));
+          setNumberOfPages(Number(meta.last_page));
         }
         return data;
       })
