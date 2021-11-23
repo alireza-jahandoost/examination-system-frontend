@@ -8,13 +8,7 @@ import ParticipantAnswer from "../../../../components/participant-answer/partici
 import { AuthenticationContext } from "../../../../contexts/authentication-context/authentication.context";
 
 import { questionsIndexRequest } from "../../../../services/questions/questions.service";
-// TODO: get questions of this exam from server and show with answer with answer-question component
 
-// TODO: implement handler and mock of grading the questions
-
-// TODO: implement the service of grading the questions
-
-// TODO: get the grade of question and send it to server
 const ShowParticipantPage = () => {
   const { examId, participantId } = useParams();
   const [questions, setQuestions] = useState([]);

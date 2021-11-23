@@ -31,6 +31,17 @@ test("user can see the participant's grade", async () => {
   ).toBeInTheDocument();
 });
 
+test("if canUserChangeGrade is true, user must not see update grade button first of all", async () => {
+  renderWithAuthentication(
+    <QuestionGradeProvider questionId={1} participantId={1}>
+      <QuestionGrade canUserChangeGrade={true} />
+    </QuestionGradeProvider>
+  );
+
+  await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
+  expect(screen.queryByRole("button")).not.toBeInTheDocument();
+});
+
 test("if canUserChangeGrade is true, user can fill the input, press button and then input must be cleared and the grade must be shown to user", async () => {
   renderWithAuthentication(
     <QuestionGradeProvider questionId={1} participantId={1}>

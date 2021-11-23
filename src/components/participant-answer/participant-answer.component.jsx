@@ -1,5 +1,8 @@
 import AnswerQuestion from "../answer-question/answer-question.component";
+import QuestionGrade from "../question-grade/question-grade.component";
+
 import { AnswerQuestionProvider } from "../../contexts/answer-question-context/answer-question.context";
+import { QuestionGradeProvider } from "../../contexts/question-grade-context/question-grade.context";
 
 const ParticipantAnswer = ({ questionId, examId, participantId }) => {
   return (
@@ -11,6 +14,12 @@ const ParticipantAnswer = ({ questionId, examId, participantId }) => {
       >
         <AnswerQuestion readOnly={true} />
       </AnswerQuestionProvider>
+      <QuestionGradeProvider
+        participantId={participantId}
+        questionId={questionId}
+      >
+        <QuestionGrade canUserChangeGrade={true} />
+      </QuestionGradeProvider>
     </div>
   );
 };

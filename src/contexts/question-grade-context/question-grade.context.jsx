@@ -66,7 +66,7 @@ export const QuestionGradeProvider = ({
     newGrade,
     changeGrade: (new_grade) => setNewGrade(new_grade),
     submitGrade,
-    hasChange: grade ? Number(grade.grade) !== Number(newGrade) : false,
+    hasChange: newGrade !== "",
   };
 
   return (

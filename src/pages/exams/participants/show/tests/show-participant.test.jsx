@@ -25,9 +25,6 @@ test("all the inputs must be readonly or disabled except grade inputs", async ()
 
   const textboxes = await screen.findAllByRole("textbox");
   for (const textbox of textboxes) {
-    if (textbox.id.startsWith("grade-of-question")) {
-      continue;
-    }
     expect(textbox).toHaveAttribute("readonly");
   }
 
