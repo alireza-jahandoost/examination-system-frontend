@@ -35,7 +35,7 @@ const Wrapper = (
 };
 
 test("the grade of user must be shown in the question grade component", async () => {
-  const { WrappedElement, value } = Wrapper(<QuestionGrade />);
+  const { WrappedElement, value } = Wrapper(<QuestionGrade questionId={1} />);
   render(WrappedElement);
 
   expect(screen.getByText(value.grade, { exact: false })).toBeInTheDocument();
@@ -43,7 +43,7 @@ test("the grade of user must be shown in the question grade component", async ()
 
 test("if canUserChangeGrade is true and hasChange is true, a button must be shown to user that clicking on that call the submitGrade function", async () => {
   const { WrappedElement, value } = Wrapper(
-    <QuestionGrade canUserChangeGrade={true} />,
+    <QuestionGrade questionId={1} canUserChangeGrade={true} />,
     {
       hasChange: true,
     }
@@ -59,7 +59,7 @@ test("if canUserChangeGrade is true and hasChange is true, a button must be show
 
 test("if canUserChangeGrade is true and hasChange is false, button must not be shown to user", async () => {
   const { WrappedElement } = Wrapper(
-    <QuestionGrade canUserChangeGrade={true} />,
+    <QuestionGrade questionId={1} canUserChangeGrade={true} />,
     {
       hasChange: false,
     }
@@ -73,7 +73,7 @@ test("if canUserChangeGrade is true and hasChange is false, button must not be s
 
 test("the value of the number input must be equal to newGrade", async () => {
   const { WrappedElement, value } = Wrapper(
-    <QuestionGrade canUserChangeGrade={true} />,
+    <QuestionGrade questionId={1} canUserChangeGrade={true} />,
     { newGrade: 12 }
   );
   render(WrappedElement);
@@ -84,7 +84,7 @@ test("the value of the number input must be equal to newGrade", async () => {
 
 test("if canUserChangeGrade is true, user can fill input", async () => {
   const { WrappedElement, value } = Wrapper(
-    <QuestionGrade canUserChangeGrade={true} />
+    <QuestionGrade questionId={1} canUserChangeGrade={true} />
   );
   render(WrappedElement);
 
@@ -101,7 +101,7 @@ test("if canUserChangeGrade is true, user can fill input", async () => {
 
 test("if canUserChangeGrade is false, there must not be any input", async () => {
   const { WrappedElement } = Wrapper(
-    <QuestionGrade canUserChangeGrade={false} />
+    <QuestionGrade questionId={1} canUserChangeGrade={false} />
   );
   render(WrappedElement);
 
@@ -111,7 +111,7 @@ test("if canUserChangeGrade is false, there must not be any input", async () => 
 
 test("if showGradeEnabled is false, the grade must not be shown to user even if it is not undefined", async () => {
   const { WrappedElement } = Wrapper(
-    <QuestionGrade canUserChangeGrade={true} />,
+    <QuestionGrade questionId={1} canUserChangeGrade={true} />,
     { grade: 43, showGradeEnabled: false }
   );
   render(WrappedElement);
@@ -121,10 +121,24 @@ test("if showGradeEnabled is false, the grade must not be shown to user even if 
 
 test("if changeGradeEnabled is false, the grade input must not be shown to user", async () => {
   const { WrappedElement } = Wrapper(
-    <QuestionGrade canUserChangeGrade={true} />,
+    <QuestionGrade questionId={1} canUserChangeGrade={true} />,
     { grade: 43, changeGradeEnabled: false }
   );
   render(WrappedElement);
 
   expect(screen.queryByRole("spinbutton")).not.toBeInTheDocument();
+});
+
+test("the questionId must be affect on id of spinbutton", async () => {
+  const randomId = Math.floor(Math.random() * 100);
+  const { WrappedElement } = Wrapper(
+    <QuestionGrade questionId={randomId} canUserChangeGrade={true} />,
+    { grade: 43 }
+  );
+  render(WrappedElement);
+
+  expect(screen.getByRole("spinbutton")).toHaveAttribute(
+    "id",
+    `grade-of-question-${randomId}`
+  );
 });

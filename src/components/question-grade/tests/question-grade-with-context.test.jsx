@@ -17,7 +17,7 @@ test("first of all, a loading message must be shown to user", async () => {
       questionId={1}
       participantId={1}
     >
-      <QuestionGrade />
+      <QuestionGrade questionId={1} />
     </QuestionGradeProvider>
   );
 
@@ -31,7 +31,7 @@ test("user can see the participant's grade", async () => {
       questionId={1}
       participantId={1}
     >
-      <QuestionGrade />
+      <QuestionGrade questionId={1} />
     </QuestionGradeProvider>
   );
 
@@ -47,7 +47,7 @@ test("if canUserChangeGrade is true, user must not see update grade button first
       questionId={1}
       participantId={1}
     >
-      <QuestionGrade canUserChangeGrade={true} />
+      <QuestionGrade questionId={1} canUserChangeGrade={true} />
     </QuestionGradeProvider>
   );
 
@@ -62,7 +62,7 @@ test("if canUserChangeGrade is true, user can fill the input, press button and t
       questionId={1}
       participantId={1}
     >
-      <QuestionGrade canUserChangeGrade={true} />
+      <QuestionGrade questionId={1} canUserChangeGrade={true} />
     </QuestionGradeProvider>
   );
 
@@ -87,7 +87,7 @@ test("if canUserChangeGrade is false, user must not see any input nor button", a
       questionId={1}
       participantId={1}
     >
-      <QuestionGrade />
+      <QuestionGrade questionId={1} />
     </QuestionGradeProvider>
   );
 
@@ -104,7 +104,7 @@ describe("check participant status", () => {
         participantId={1}
         participantStatus="NOT_FINISHED"
       >
-        <QuestionGrade canUserChangeGrade={true} />
+        <QuestionGrade questionId={1} canUserChangeGrade={true} />
       </QuestionGradeProvider>
     );
 
@@ -124,7 +124,7 @@ describe("check participant status", () => {
         participantId={1}
         participantStatus="IN_PROCESSING"
       >
-        <QuestionGrade canUserChangeGrade={true} />
+        <QuestionGrade questionId={1} canUserChangeGrade={true} />
       </QuestionGradeProvider>
     );
 
@@ -144,7 +144,7 @@ describe("check participant status", () => {
         participantId={1}
         participantStatus="WAIT_FOR_MANUAL_CORRECTING"
       >
-        <QuestionGrade canUserChangeGrade={true} />
+        <QuestionGrade questionId={1} canUserChangeGrade={true} />
       </QuestionGradeProvider>
     );
 
@@ -164,7 +164,7 @@ describe("check participant status", () => {
         participantId={1}
         participantStatus="FINISHED"
       >
-        <QuestionGrade canUserChangeGrade={true} />
+        <QuestionGrade questionId={1} canUserChangeGrade={true} />
       </QuestionGradeProvider>
     );
 
@@ -184,7 +184,7 @@ describe("check participant status", () => {
           participantId={1}
           participantStatus="NOT_FINISHED"
         >
-          <QuestionGrade canUserChangeGrade={true} />
+          <QuestionGrade questionId={1} canUserChangeGrade={true} />
         </QuestionGradeProvider>
       );
 
@@ -202,7 +202,7 @@ describe("check participant status", () => {
           participantId={1}
           participantStatus="IS_PROCESSING"
         >
-          <QuestionGrade canUserChangeGrade={true} />
+          <QuestionGrade questionId={1} canUserChangeGrade={true} />
         </QuestionGradeProvider>
       );
 
@@ -220,7 +220,7 @@ describe("check participant status", () => {
           participantId={1}
           participantStatus="WAIT_FOR_MANUAL_CORRECTING"
         >
-          <QuestionGrade canUserChangeGrade={true} />
+          <QuestionGrade questionId={1} canUserChangeGrade={true} />
         </QuestionGradeProvider>
       );
 
@@ -238,7 +238,7 @@ describe("check participant status", () => {
           participantId={1}
           participantStatus="FINISHED"
         >
-          <QuestionGrade canUserChangeGrade={true} />
+          <QuestionGrade questionId={1} canUserChangeGrade={true} />
         </QuestionGradeProvider>
       );
 
