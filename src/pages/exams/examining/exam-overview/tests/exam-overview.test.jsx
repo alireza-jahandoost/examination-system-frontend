@@ -212,7 +212,7 @@ describe("check when user is authenticated", () => {
       const changeExamPassword = jest.fn();
       const { WrappedElement } = wrapper(<ExamOverview />, {
         examId: 5,
-        participantId: 3,
+        participantId: 1,
         firstQuestion: null,
         registerToExam,
         changeExamPassword,

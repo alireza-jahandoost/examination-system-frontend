@@ -23,7 +23,7 @@ const questionsHandler = [
   rest.get(apiRoutes.questions.indexQuestions(":examId"), (req, res, ctx) => {
     if (
       window.location.href.endsWith(programRoutes.examiningOverview(1)) ||
-      window.location.href.endsWith(programRoutes.showParticipant(1, 1))
+      window.location.href.includes(programRoutes.participantsRoot(1))
     ) {
       return res(ctx.json(questionsIndexAll));
     }

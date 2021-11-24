@@ -47,3 +47,15 @@ export const indexParticipantsRequest = (examId, token, page) => {
     },
   });
 };
+
+export const showParticipantRequest = (examId, participantId, token) => {
+  return axios.get(
+    apiRoutes.participants.showParticipant(examId, participantId),
+    {
+      headers: {
+        accept: "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};

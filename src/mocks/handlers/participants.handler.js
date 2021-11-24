@@ -7,6 +7,9 @@ import {
   indexParticipantsPage3,
   indexParticipantsInvalidPage,
   showParticipantId1,
+  showParticipantId2,
+  showParticipantId3,
+  showParticipantId4,
 } from "../mocks/participants.mock";
 
 const participantsHandler = [
@@ -69,6 +72,27 @@ const participantsHandler = [
           return res(ctx.json(indexParticipantsPage3));
         default:
           return res(ctx.json(indexParticipantsInvalidPage(Number(page))));
+      }
+    }
+  ),
+  rest.get(
+    apiRoutes.participants.showParticipant(":examId", ":participantId"),
+    (req, res, ctx) => {
+      const { participantId } = req.params;
+
+      switch (Number(participantId)) {
+        case 1:
+          return res(ctx.json(showParticipantId1));
+        case 2:
+          return res(ctx.json(showParticipantId2));
+        case 3:
+          return res(ctx.json(showParticipantId3));
+        case 4:
+          return res(ctx.json(showParticipantId4));
+        default:
+          throw new Error(
+            "not expected participant id in participants handler"
+          );
       }
     }
   ),

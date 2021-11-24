@@ -5,7 +5,7 @@ import { QuestionGradeContext } from "../../contexts/question-grade-context/ques
 
 import NumberInput from "../inputs/number-input.component";
 
-const QuestionGrade = ({ canUserChangeGrade = false }) => {
+const QuestionGrade = ({ canUserChangeGrade = false, questionId }) => {
   const {
     isContextLoaded,
     grade,
@@ -41,7 +41,7 @@ const QuestionGrade = ({ canUserChangeGrade = false }) => {
           <NumberInput
             label="Grade"
             value={newGrade}
-            id="grade-of-question"
+            id={`grade-of-question-${questionId}`}
             onChange={handleChange}
           />
         </Form>

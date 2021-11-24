@@ -24,7 +24,7 @@ const ParticipantAnswer = ({
         questionId={questionId}
         participantStatus={participantStatus}
       >
-        <QuestionGrade canUserChangeGrade={true} />
+        <QuestionGrade questionId={questionId} canUserChangeGrade={true} />
       </QuestionGradeProvider>
     </div>
   );
