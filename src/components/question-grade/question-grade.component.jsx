@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
 
 import { QuestionGradeContext } from "../../contexts/question-grade-context/question-grade.context";
 
@@ -37,13 +37,23 @@ const QuestionGrade = ({ canUserChangeGrade = false, questionId }) => {
       )}
       {canUserChangeGrade && changeGradeEnabled && (
         <Form onSubmit={handleSubmit}>
-          {hasChange && <Button type="submit"> update grade </Button>}
-          <NumberInput
-            label="Grade"
-            value={newGrade}
-            id={`grade-of-question-${questionId}`}
-            onChange={handleChange}
-          />
+          <Row>
+            <Col md={6}>
+              <NumberInput
+                label="Grade"
+                value={newGrade}
+                id={`grade-of-question-${questionId}`}
+                onChange={handleChange}
+              />
+            </Col>
+            <Col className="d-flex align-items-end">
+              {hasChange && (
+                <Button type="submit" className="my-2 my-md-0">
+                  update grade
+                </Button>
+              )}
+            </Col>
+          </Row>
         </Form>
       )}
     </div>
