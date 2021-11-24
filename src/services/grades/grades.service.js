@@ -2,7 +2,7 @@ import apiRoutes from "../../constants/api-routes.constant";
 import axios from "axios";
 
 export const getGradeRequest = async (participantId, questionId, token) => {
-  return axios(
+  return axios.get(
     apiRoutes.participants.getGradeOfQuestion(participantId, questionId),
     {
       headers: {

@@ -14,6 +14,7 @@ export const QuestionGradeProvider = ({
   children,
   participantId,
   questionId,
+  participantStatus,
 }) => {
   const [isContextLoaded, setIsContextLoaded] = useState(false);
   const [newGrade, setNewGrade] = useState("");
@@ -21,8 +22,14 @@ export const QuestionGradeProvider = ({
   const { token } = useContext(AuthenticationContext);
   const isMounted = useMountedState();
 
+  const showGradeEnabled = participantStatus === "FINISHED";
+  const changeGradeEnabled =
+    participantStatus === "FINISHED" ||
+    participantStatus === "WAIT_FOR_MANUAL_CORRECTING";
+
   useEffect(() => {
     if (
+      showGradeEnabled &&
       isContextLoaded &&
       (Number(questionId) !== Number(grade.question_id) ||
         Number(participantId) !== Number(grade.participant_id))
@@ -31,10 +38,22 @@ export const QuestionGradeProvider = ({
         setIsContextLoaded(false);
       }
     }
-  }, [isMounted, participantId, questionId, isContextLoaded, grade]);
+  }, [
+    isMounted,
+    participantId,
+    showGradeEnabled,
+    questionId,
+    isContextLoaded,
+    grade,
+  ]);
 
   useEffect(() => {
     if (!token || isContextLoaded) {
+      return;
+    }
+
+    if (!showGradeEnabled) {
+      setIsContextLoaded(true);
       return;
     }
 
@@ -47,7 +66,14 @@ export const QuestionGradeProvider = ({
         }
       })
       .catch((err) => console.error(err));
-  }, [token, isContextLoaded, participantId, questionId, isMounted]);
+  }, [
+    token,
+    isContextLoaded,
+    participantId,
+    questionId,
+    isMounted,
+    showGradeEnabled,
+  ]);
 
   const submitGrade = () => {
     storeGradeRequest(participantId, questionId, token, { grade: newGrade })
@@ -62,11 +88,13 @@ export const QuestionGradeProvider = ({
 
   const value = {
     isContextLoaded,
-    grade: grade ? Number(grade.grade) : null,
+    grade: showGradeEnabled && (grade ? Number(grade.grade) : null),
     newGrade,
     changeGrade: (new_grade) => setNewGrade(new_grade),
     submitGrade,
     hasChange: newGrade !== "",
+    showGradeEnabled,
+    changeGradeEnabled,
   };
 
   return (

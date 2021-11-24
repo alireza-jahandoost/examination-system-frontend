@@ -10,7 +10,12 @@ import { showGrade } from "../../../mocks/mocks/grades.mock";
 
 test("check readonly inputs for descriptive questions", async () => {
   renderWithAuthentication(
-    <ParticipantAnswer examId={1} participantId={1} questionId={1} />
+    <ParticipantAnswer
+      participantStatus="FINISHED"
+      examId={1}
+      participantId={1}
+      questionId={1}
+    />
   );
   await waitForElementToBeRemoved(() => screen.getAllByText(/loading/i));
 
@@ -21,7 +26,12 @@ test("check readonly inputs for descriptive questions", async () => {
 
 test("check readonly inputs for fill the blank questions", async () => {
   renderWithAuthentication(
-    <ParticipantAnswer examId={1} participantId={1} questionId={2} />
+    <ParticipantAnswer
+      participantStatus="FINISHED"
+      examId={1}
+      participantId={1}
+      questionId={2}
+    />
   );
   await waitForElementToBeRemoved(() => screen.getAllByText(/loading/i));
 
@@ -32,7 +42,12 @@ test("check readonly inputs for fill the blank questions", async () => {
 
 test("check readonly inputs for multiple answer questions", async () => {
   renderWithAuthentication(
-    <ParticipantAnswer examId={1} participantId={1} questionId={3} />
+    <ParticipantAnswer
+      participantStatus="FINISHED"
+      examId={1}
+      participantId={1}
+      questionId={3}
+    />
   );
   await waitForElementToBeRemoved(() => screen.getAllByText(/loading/i));
 
@@ -44,7 +59,12 @@ test("check readonly inputs for multiple answer questions", async () => {
 
 test("check readonly inputs for select the answer questions", async () => {
   renderWithAuthentication(
-    <ParticipantAnswer examId={1} participantId={1} questionId={4} />
+    <ParticipantAnswer
+      participantStatus="FINISHED"
+      examId={1}
+      participantId={1}
+      questionId={4}
+    />
   );
   await waitForElementToBeRemoved(() => screen.getAllByText(/loading/i));
 
@@ -56,7 +76,12 @@ test("check readonly inputs for select the answer questions", async () => {
 
 test("check readonly inputs for true or false questions", async () => {
   renderWithAuthentication(
-    <ParticipantAnswer examId={1} participantId={1} questionId={5} />
+    <ParticipantAnswer
+      participantStatus="FINISHED"
+      examId={1}
+      participantId={1}
+      questionId={5}
+    />
   );
   await waitForElementToBeRemoved(() => screen.getAllByText(/loading/i));
 
@@ -68,7 +93,12 @@ test("check readonly inputs for true or false questions", async () => {
 
 test("check readonly inputs for ordering questions", async () => {
   renderWithAuthentication(
-    <ParticipantAnswer examId={1} participantId={1} questionId={6} />
+    <ParticipantAnswer
+      participantStatus="FINISHED"
+      examId={1}
+      participantId={1}
+      questionId={6}
+    />
   );
   await waitForElementToBeRemoved(() => screen.getAllByText(/loading/i));
 
@@ -80,7 +110,12 @@ test("check readonly inputs for ordering questions", async () => {
 
 test("user can see the grade, change it and save it", async () => {
   renderWithAuthentication(
-    <ParticipantAnswer examId={1} participantId={1} questionId={6} />
+    <ParticipantAnswer
+      participantStatus="FINISHED"
+      examId={1}
+      participantId={1}
+      questionId={6}
+    />
   );
 
   expect(

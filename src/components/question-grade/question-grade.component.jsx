@@ -13,6 +13,8 @@ const QuestionGrade = ({ canUserChangeGrade = false }) => {
     submitGrade,
     changeGrade,
     newGrade,
+    showGradeEnabled,
+    changeGradeEnabled,
   } = useContext(QuestionGradeContext);
 
   const handleChange = (e) => {
@@ -30,8 +32,10 @@ const QuestionGrade = ({ canUserChangeGrade = false }) => {
 
   return (
     <div>
-      <p className="lead"> Grade: {isNaN(grade) ? "not calculated" : grade} </p>
-      {canUserChangeGrade && (
+      {showGradeEnabled && (
+        <p className="lead">Grade: {isNaN(grade) ? "not calculated" : grade}</p>
+      )}
+      {canUserChangeGrade && changeGradeEnabled && (
         <Form onSubmit={handleSubmit}>
           {hasChange && <Button type="submit"> update grade </Button>}
           <NumberInput

@@ -110,7 +110,7 @@ export const showParticipantId1 = {
       exam_link: "http://localhost:8000/api/exams/1",
       exam_id: 1,
       confirmed: false,
-      status: "NOT_FINISHED",
+      status: "FINISHED",
       grade: null,
     },
   },

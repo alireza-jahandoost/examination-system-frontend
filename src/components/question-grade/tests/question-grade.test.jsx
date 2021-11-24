@@ -12,6 +12,8 @@ const Wrapper = (
     submitGrade = jest.fn(),
     hasChange = false,
     isContextLoaded = true,
+    showGradeEnabled = true,
+    changeGradeEnabled = true,
   } = {}
 ) => {
   const value = {
@@ -21,6 +23,8 @@ const Wrapper = (
     submitGrade,
     hasChange,
     isContextLoaded,
+    showGradeEnabled,
+    changeGradeEnabled,
   };
   const WrappedElement = (
     <QuestionGradeContext.Provider value={value}>
@@ -103,4 +107,24 @@ test("if canUserChangeGrade is false, there must not be any input", async () => 
 
   expect(screen.queryByRole("spinbutton")).not.toBeInTheDocument();
   expect(screen.queryByRole("button")).not.toBeInTheDocument();
+});
+
+test("if showGradeEnabled is false, the grade must not be shown to user even if it is not undefined", async () => {
+  const { WrappedElement } = Wrapper(
+    <QuestionGrade canUserChangeGrade={true} />,
+    { grade: 43, showGradeEnabled: false }
+  );
+  render(WrappedElement);
+
+  expect(screen.queryByText(43, { exact: false })).not.toBeInTheDocument();
+});
+
+test("if changeGradeEnabled is false, the grade input must not be shown to user", async () => {
+  const { WrappedElement } = Wrapper(
+    <QuestionGrade canUserChangeGrade={true} />,
+    { grade: 43, changeGradeEnabled: false }
+  );
+  render(WrappedElement);
+
+  expect(screen.queryByRole("spinbutton")).not.toBeInTheDocument();
 });
