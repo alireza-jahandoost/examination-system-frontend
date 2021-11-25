@@ -63,13 +63,14 @@ const AnswerQuestion = ({ readOnly = false }) => {
             questionScore={question.question_score}
           />
           {form}
-          {hasChange ? (
-            <Button disabled={isLoading} onClick={handleClick}>
-              {isLoading ? "Loading..." : "save changes"}
-            </Button>
-          ) : (
-            <p> all changes saved </p>
-          )}
+          {!readOnly &&
+            (hasChange ? (
+              <Button disabled={isLoading} onClick={handleClick}>
+                {isLoading ? "Loading..." : "save changes"}
+              </Button>
+            ) : (
+              <p> all changes saved </p>
+            ))}
         </Form>
       </Container>
     </div>

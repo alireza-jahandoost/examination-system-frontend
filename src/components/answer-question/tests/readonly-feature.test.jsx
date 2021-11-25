@@ -75,3 +75,12 @@ test("check ordering question", async () => {
     expect(button).toBeDisabled();
   }
 });
+
+test("'all changes saved' must not be appeared if component is readonly", async () => {
+  const { WrappedElement } = wrapper(<AnswerQuestion readOnly={true} />, {
+    questionTypeId: 1,
+  });
+  renderWithAuthentication(WrappedElement);
+
+  expect(screen.queryByText(/all changes saved/i)).not.toBeInTheDocument();
+});

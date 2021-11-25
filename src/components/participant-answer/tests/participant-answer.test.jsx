@@ -7,6 +7,7 @@ import {
 import userEvent from "@testing-library/user-event";
 import ParticipantAnswer from "../participant-answer.component";
 import { showGrade } from "../../../mocks/mocks/grades.mock";
+import { questionsShowId_1 } from "../../../mocks/mocks/questions.mock";
 
 test("check readonly inputs for descriptive questions", async () => {
   renderWithAuthentication(
@@ -122,7 +123,9 @@ test("user can see the grade, change it and save it", async () => {
     await screen.findByText(showGrade(1, 1).data.grade.grade, { exact: false })
   ).toBeInTheDocument();
 
-  const newGrade = Math.floor(Math.random() * 100).toString();
+  const newGrade = Math.floor(
+    Math.random() * Number(questionsShowId_1.data.question.question_score)
+  ).toString();
 
   const gradeInput = screen.getByRole("spinbutton", { name: /grade/i });
   userEvent.clear(gradeInput);
