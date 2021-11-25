@@ -1,32 +1,18 @@
-import { render, screen } from "../../../../test-utils/testing-library-utils";
+import {
+  renderWithAuthentication,
+  screen,
+} from "../../../../test-utils/testing-library-utils";
+import userEvent from "@testing-library/user-event";
 import Header from "../header.component";
 
-import { wrapWithWidth } from "../../../../utilities/tests.utility";
-import breakpoints from "../../../../constants/breakpoints.constant";
-
-describe("check initial conditions", () => {
-  test("in size less than large, header will contain brand, exams, about us, contact us, login, register", () => {
-    render(wrapWithWidth(<Header />, breakpoints.lg - 1));
-
-    const brandContainer = screen.getByRole("banner");
-    expect(brandContainer).toBeInTheDocument();
-
-    const brandLink = screen.getByTitle(/visit the main page/i);
-    expect(brandLink).toBeInTheDocument();
-
-    const examsLink = screen.getByRole("link", { name: /exams/i });
-    expect(examsLink).toBeInTheDocument();
-
-    const aboutUsLink = screen.getByRole("link", { name: /about us/i });
-    expect(aboutUsLink).toBeInTheDocument();
-
-    const contactUsLink = screen.getByRole("link", { name: /contact us/i });
-    expect(contactUsLink).toBeInTheDocument();
-
-    const loginLink = screen.getByRole("button", { name: /login/i });
-    expect(loginLink).toBeInTheDocument();
-
-    const registerLink = screen.getByRole("button", { name: /register/i });
-    expect(registerLink).toBeInTheDocument();
+test("on clicking on logout, logout function from authentication context must be called", () => {
+  const logoutFunc = jest.fn();
+  renderWithAuthentication(<Header />, {
+    authenticationProviderProps: { logout: logoutFunc },
   });
+
+  const logoutButton = screen.getByRole("button", { name: /logout/i });
+  userEvent.click(logoutButton);
+
+  expect(logoutFunc).toHaveBeenCalledTimes(1);
 });

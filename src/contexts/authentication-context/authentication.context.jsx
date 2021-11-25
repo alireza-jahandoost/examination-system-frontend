@@ -11,6 +11,7 @@ import { NotificationContext } from "../notification-context/notification.contex
 import {
   loginRequest,
   registerRequest,
+  logoutRequest,
 } from "../../services/authentication/authentication.service";
 import { getCurrentUserRequest } from "../../services/users/users.service";
 
@@ -153,6 +154,15 @@ export const AuthenticationProvider = ({ children }) => {
       });
   };
 
+  const logout = () => {
+    logoutRequest(token).then(() => {
+      if (localStorage.getItem("token")) {
+        localStorage.removeItem("token");
+        setUser(null);
+      }
+    });
+  };
+
   const redirectIfNotAuthenticated = (component, location) => {
     if (isUserAuthenticated) {
       return component;
@@ -184,6 +194,7 @@ export const AuthenticationProvider = ({ children }) => {
         isUserAuthenticated,
         showUserLoginPopover,
         redirectIfNotAuthenticated,
+        logout,
       }}
     >
       {children}

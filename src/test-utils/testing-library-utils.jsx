@@ -55,6 +55,7 @@ export const renderWithAuthentication = (
               isUserAuthenticated: true,
               showUserLoginPopover: jest.fn(),
               redirectIfNotAuthenticated: jest.fn(),
+              logout: jest.fn(),
               ...authenticationProviderProps,
             }}
           >

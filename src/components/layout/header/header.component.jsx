@@ -7,7 +7,9 @@ import RegisterPopover from "./register-popover.component";
 import programRoutes from "../../../constants/program-routes.constant";
 
 const Header = () => {
-  const { user, popover, changePopover } = useContext(AuthenticationContext);
+  const { user, logout, popover, changePopover } = useContext(
+    AuthenticationContext
+  );
 
   useEffect(() => {
     if (user && popover !== "") {
@@ -43,7 +45,9 @@ const Header = () => {
                   <Nav.Link as={Link} to={programRoutes.profile()}>
                     Profile
                   </Nav.Link>
-                  <Nav.Link role="button">Logout</Nav.Link>
+                  <Nav.Link onClick={() => logout()} role="button">
+                    Logout
+                  </Nav.Link>
                 </>
               ) : (
                 <>

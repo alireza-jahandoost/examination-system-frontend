@@ -29,3 +29,16 @@ export const loginRequest = async (email, password) => {
     }
   );
 };
+
+export const logoutRequest = (token) => {
+  return axios.post(
+    apiRoutes.authentication.logout(),
+    {},
+    {
+      headers: {
+        accept: "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};

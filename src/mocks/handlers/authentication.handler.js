@@ -59,6 +59,9 @@ const authenticationHandler = [
       return res(ctx.status(404));
     }
   }),
+  rest.post(apiRoutes.authentication.logout(), (req, res, ctx) => {
+    return res(ctx.status(202));
+  }),
 ];
 
 export default authenticationHandler;
