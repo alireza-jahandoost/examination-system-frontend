@@ -75,10 +75,10 @@ const IndexParticipantsPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {participants.map((participant) => {
+                  {participants.map((participant, idx) => {
                     return (
                       <tr key={participant.participant_id}>
-                        <td>{participant.participant_id}</td>
+                        <td>{idx + 1}</td>
                         <td>{participant.status}</td>
                         <td>{participant.confirmed ? "YES" : "NO"}</td>
                         <td>{participant.grade}</td>

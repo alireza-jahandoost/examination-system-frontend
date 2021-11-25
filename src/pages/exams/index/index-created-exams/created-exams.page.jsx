@@ -81,10 +81,10 @@ const CreatedExamsPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {exams.map((exam) => {
+                  {exams.map((exam, idx) => {
                     return (
                       <tr key={exam.exam_id}>
-                        <td>{exam.exam_id}</td>
+                        <td>{idx + 1}</td>
                         <td>{exam.exam_name}</td>
                         <td>{exam.exam_description}</td>
                         <td>{convertFromUTC(exam.start_of_exam)}</td>
