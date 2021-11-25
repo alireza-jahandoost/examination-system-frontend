@@ -42,3 +42,12 @@ export const logoutRequest = (token) => {
     }
   );
 };
+
+export const changePasswordRequest = (body, token) => {
+  return axios.put(apiRoutes.authentication.changePassword(), body, {
+    headers: {
+      accept: "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  });
+};

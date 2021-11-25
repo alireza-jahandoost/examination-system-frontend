@@ -12,6 +12,7 @@ import {
   loginRequest,
   registerRequest,
   logoutRequest,
+  changePasswordRequest,
 } from "../../services/authentication/authentication.service";
 import { getCurrentUserRequest } from "../../services/users/users.service";
 
@@ -178,6 +179,32 @@ export const AuthenticationProvider = ({ children }) => {
     }
   };
 
+  const changePassword = (
+    currentPassword,
+    newPassword,
+    newPasswordConfirmation
+  ) => {
+    setIsLoading(true);
+    changePasswordRequest(
+      {
+        current_password: currentPassword,
+        password: newPassword,
+        password_confirmation: newPasswordConfirmation,
+      },
+      token
+    )
+      .then(() => {
+        setUser(null);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        const newErrors = { ...err.response.data.errors };
+        newErrors.message = err.response.data.message;
+        setErrors(newErrors);
+        setIsLoading(false);
+      });
+  };
+
   return (
     <AuthenticationContext.Provider
       value={{
@@ -195,6 +222,7 @@ export const AuthenticationProvider = ({ children }) => {
         showUserLoginPopover,
         redirectIfNotAuthenticated,
         logout,
+        changePassword,
       }}
     >
       {children}

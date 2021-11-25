@@ -1,6 +1,6 @@
 import { Form } from "react-bootstrap";
 
-const TextInput = ({
+const PasswordInput = ({
   error,
   label,
   value,
@@ -25,4 +25,4 @@ const TextInput = ({
   );
 };
 
-export default TextInput;
+export default PasswordInput;

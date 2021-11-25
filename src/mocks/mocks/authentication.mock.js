@@ -17,4 +17,6 @@ export const repeatedEmail = "repeated@test.com";
 
 export const correctPassword = "1stStrongestPassword";
 
+export const correctNewPassword = "2ndStrongestPassword";
+
 export const shortPassword = "short";

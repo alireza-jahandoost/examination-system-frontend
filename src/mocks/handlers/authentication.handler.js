@@ -14,6 +14,10 @@ import {
   repeatedEmailError,
   passwordMatchError,
 } from "../errors/failed-register.error";
+import {
+  wrongCurrentPassword,
+  passwordConfirmationDoesNotMatch,
+} from "../errors/failed-change-password.error";
 
 const authenticationHandler = [
   rest.post(apiRoutes.authentication.login(), (req, res, ctx) => {
@@ -61,6 +65,16 @@ const authenticationHandler = [
   }),
   rest.post(apiRoutes.authentication.logout(), (req, res, ctx) => {
     return res(ctx.status(202));
+  }),
+  rest.put(apiRoutes.authentication.changePassword(), (req, res, ctx) => {
+    const { current_password, password, password_confirmation } = req.body;
+
+    if (current_password !== correctPassword) {
+      return res(ctx.status(422), ctx.json(wrongCurrentPassword));
+    } else if (password !== password_confirmation) {
+      return res(ctx.status(422), ctx.json(passwordConfirmationDoesNotMatch));
+    }
+    return res(ctx.status(200));
   }),
 ];
 

@@ -1,14 +1,72 @@
-import Sidebar from "../../../components/sidebar/sidebar.component";
+import { useState, useContext } from "react";
+import { Container, Button, Row, Col, Form } from "react-bootstrap";
 
-const OverviewPage = () => {
+import Sidebar from "../../../components/sidebar/sidebar.component";
+import PasswordInput from "../../../components/inputs/password-input.component";
+
+import { AuthenticationContext } from "../../../contexts/authentication-context/authentication.context";
+
+const SettingsPage = () => {
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const { changePassword, isLoading, errors } = useContext(
+    AuthenticationContext
+  );
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    changePassword(currentPassword, newPassword, confirmNewPassword);
+  };
+
   return (
-    <div className="d-flex flex-row">
+    <div className="d-flex flex-row w-100">
       <Sidebar />
-      <div className="flex-grow-1">
-        <h1>Settings</h1>
-      </div>
+      <Container className="text-center">
+        <div className="flex-grow-1">
+          <h1>Settings</h1>
+          <div>
+            <Row>
+              <Col md={8} lg={6}>
+                <h2> Change Password </h2>
+                <Form onSubmit={handleSubmit}>
+                  <PasswordInput
+                    label="Current Password"
+                    error={errors.current_password}
+                    value={currentPassword}
+                    id="current-password"
+                    placeholder="Enter your current password"
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                  />
+                  <PasswordInput
+                    label="New Password"
+                    error={errors.password}
+                    value={newPassword}
+                    id="new-password"
+                    placeholder="Enter your new password"
+                    onChange={(e) => setNewPassword(e.target.value)}
+                  />
+                  <PasswordInput
+                    label="Confirm New Password"
+                    error={errors.password_confirmation}
+                    value={confirmNewPassword}
+                    id="confirm-new-password"
+                    placeholder="Enter your new password again"
+                    onChange={(e) => setConfirmNewPassword(e.target.value)}
+                  />
+                  <Button disabled={isLoading} type="submit">
+                    {" "}
+                    {isLoading ? "Loading..." : "Change Password"}{" "}
+                  </Button>
+                </Form>
+              </Col>
+            </Row>
+          </div>
+        </div>
+      </Container>
     </div>
   );
 };
 
-export default OverviewPage;
+export default SettingsPage;
