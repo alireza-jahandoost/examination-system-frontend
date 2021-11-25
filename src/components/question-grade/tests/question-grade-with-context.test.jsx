@@ -8,7 +8,12 @@ import userEvent from "@testing-library/user-event";
 import QuestionGrade from "../question-grade.component";
 import { QuestionGradeProvider } from "../../../contexts/question-grade-context/question-grade.context";
 import { showGrade } from "../../../mocks/mocks/grades.mock";
+import { questionsShowId_1 } from "../../../mocks/mocks/questions.mock";
 import axios from "axios";
+import {
+  biggerThanScore,
+  smallerThanZero,
+} from "../../../mocks/errors/failed-grade-submission.error";
 
 test("first of all, a loading message must be shown to user", async () => {
   renderWithAuthentication(
@@ -68,7 +73,7 @@ test("if canUserChangeGrade is true, user can fill the input, press button and t
 
   const gradeInput = await screen.findByRole("spinbutton", { name: /grade/i });
   userEvent.clear(gradeInput);
-  const newGrade = "123";
+  const newGrade = questionsShowId_1.data.question.question_score.toString();
   userEvent.type(gradeInput, newGrade);
 
   const submitButton = await screen.findByRole("button", {
@@ -248,5 +253,132 @@ describe("check participant status", () => {
 
       expect(getSpy).toHaveBeenCalledTimes(1);
     });
+  });
+});
+
+describe("check errors", () => {
+  test("if the grade is less than zero, user must see an error", async () => {
+    renderWithAuthentication(
+      <QuestionGradeProvider
+        questionId={1}
+        participantId={1}
+        participantStatus="FINISHED"
+      >
+        <QuestionGrade questionId={1} canUserChangeGrade={true} />
+      </QuestionGradeProvider>
+    );
+
+    await waitFor(() =>
+      expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+    );
+
+    const gradeInput = await screen.findByRole("spinbutton", {
+      name: /grade/i,
+    });
+    userEvent.clear(gradeInput);
+    userEvent.type(gradeInput, "-1");
+
+    const submitGrade = await screen.findByRole("button", {
+      name: /update grade/i,
+    });
+    userEvent.click(submitGrade);
+
+    const error = await screen.findByText(smallerThanZero.errors.grade[0], {
+      exact: false,
+    });
+    expect(error).toHaveClass("text-danger");
+  });
+
+  test("if the grade is more than the score of question, user must see an error", async () => {
+    renderWithAuthentication(
+      <QuestionGradeProvider
+        questionId={1}
+        participantId={1}
+        participantStatus="FINISHED"
+      >
+        <QuestionGrade questionId={1} canUserChangeGrade={true} />
+      </QuestionGradeProvider>
+    );
+
+    await waitFor(() =>
+      expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+    );
+
+    const gradeInput = await screen.findByRole("spinbutton", {
+      name: /grade/i,
+    });
+    userEvent.clear(gradeInput);
+    userEvent.type(
+      gradeInput,
+      (questionsShowId_1.data.question.question_score + 1).toString()
+    );
+
+    const submitGrade = await screen.findByRole("button", {
+      name: /update grade/i,
+    });
+    userEvent.click(submitGrade);
+
+    const error = await screen.findByText(
+      biggerThanScore(questionsShowId_1.data.question.question_score).errors
+        .grade[0],
+      {
+        exact: false,
+      }
+    );
+    expect(error).toHaveClass("text-danger");
+  });
+
+  test("errors must be gone after a successful submit", async () => {
+    renderWithAuthentication(
+      <QuestionGradeProvider
+        questionId={1}
+        participantId={1}
+        participantStatus="FINISHED"
+      >
+        <QuestionGrade questionId={1} canUserChangeGrade={true} />
+      </QuestionGradeProvider>
+    );
+
+    await waitFor(() =>
+      expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+    );
+
+    const gradeInput = await screen.findByRole("spinbutton", {
+      name: /grade/i,
+    });
+    userEvent.clear(gradeInput);
+    userEvent.type(
+      gradeInput,
+      (questionsShowId_1.data.question.question_score + 1).toString()
+    );
+
+    const submitGrade = await screen.findByRole("button", {
+      name: /update grade/i,
+    });
+    userEvent.click(submitGrade);
+
+    const error = await screen.findByText(
+      biggerThanScore(questionsShowId_1.data.question.question_score).errors
+        .grade[0],
+      {
+        exact: false,
+      }
+    );
+    expect(error).toHaveClass("text-danger");
+
+    userEvent.clear(gradeInput);
+    userEvent.type(gradeInput, "0");
+
+    userEvent.click(screen.getByRole("button", { name: /update grade/i }));
+
+    await waitFor(() =>
+      expect(
+        screen.queryByText(
+          biggerThanScore(questionsShowId_1.data.question.question_score).errors
+            .grade[0],
+          { exact: false }
+        )
+      ).not.toBeInTheDocument()
+    );
   });
 });

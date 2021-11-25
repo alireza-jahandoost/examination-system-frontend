@@ -19,6 +19,7 @@ export const QuestionGradeProvider = ({
   const [isContextLoaded, setIsContextLoaded] = useState(false);
   const [newGrade, setNewGrade] = useState("");
   const [grade, setGrade] = useState(null);
+  const [errors, setErrors] = useState({});
   const { token } = useContext(AuthenticationContext);
   const isMounted = useMountedState();
 
@@ -81,9 +82,20 @@ export const QuestionGradeProvider = ({
         if (isMounted()) {
           setGrade((prevGrade) => ({ ...prevGrade, grade: Number(newGrade) }));
           setNewGrade("");
+
+          setErrors({});
         }
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        const newErrors = { ...err.response.data.errors };
+        newErrors.message = err.response.data.message;
+        for (const current in newErrors) {
+          if (Array.isArray(newErrors[current])) {
+            newErrors[current] = newErrors[current][0];
+          }
+        }
+        setErrors(newErrors);
+      });
   };
 
   const value = {
@@ -95,6 +107,7 @@ export const QuestionGradeProvider = ({
     hasChange: newGrade !== "",
     showGradeEnabled,
     changeGradeEnabled,
+    errors,
   };
 
   return (

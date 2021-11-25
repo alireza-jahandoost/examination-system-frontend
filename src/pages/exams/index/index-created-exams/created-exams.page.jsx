@@ -51,7 +51,6 @@ const CreatedExamsPage = () => {
     !isLoading &&
     (Number(page) > Number(numberOfPages) || Number(page) <= 0)
   ) {
-    console.log(page, numberOfPages);
     return <Redirect to={programRoutes.indexCreatedExams()} />;
   }
 

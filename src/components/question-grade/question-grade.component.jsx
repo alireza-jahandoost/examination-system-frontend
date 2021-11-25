@@ -15,6 +15,7 @@ const QuestionGrade = ({ canUserChangeGrade = false, questionId }) => {
     newGrade,
     showGradeEnabled,
     changeGradeEnabled,
+    errors,
   } = useContext(QuestionGradeContext);
 
   const handleChange = (e) => {
@@ -44,6 +45,7 @@ const QuestionGrade = ({ canUserChangeGrade = false, questionId }) => {
                 value={newGrade}
                 id={`grade-of-question-${questionId}`}
                 onChange={handleChange}
+                error={errors.grade}
               />
             </Col>
             <Col className="d-flex align-items-end">

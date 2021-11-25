@@ -23,7 +23,6 @@ const IndexParticipantsPage = () => {
     return Number(new URLSearchParams(location.search).get("page")) || 1;
   }, [location]);
   const isMounted = useMountedState();
-  console.log(window.location.href);
 
   useEffect(() => {
     if (Number(page) === Number(currentPage) || isLoading) {

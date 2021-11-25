@@ -14,6 +14,7 @@ const Wrapper = (
     isContextLoaded = true,
     showGradeEnabled = true,
     changeGradeEnabled = true,
+    errors = {},
   } = {}
 ) => {
   const value = {
@@ -25,6 +26,7 @@ const Wrapper = (
     isContextLoaded,
     showGradeEnabled,
     changeGradeEnabled,
+    errors,
   };
   const WrappedElement = (
     <QuestionGradeContext.Provider value={value}>
@@ -141,4 +143,17 @@ test("the questionId must be affect on id of spinbutton", async () => {
     "id",
     `grade-of-question-${randomId}`
   );
+});
+
+test("if there is any error in context, it must be shown bellow the input", async () => {
+  const errorMessage = "something went wrong, please try again later";
+  const { WrappedElement } = Wrapper(
+    <QuestionGrade questionId={1} canUserChangeGrade={true} />,
+    {
+      errors: { grade: errorMessage },
+    }
+  );
+  render(WrappedElement);
+
+  expect(await screen.findByText(errorMessage)).toHaveClass("text-danger");
 });

@@ -766,6 +766,5 @@ describe("check finishing exam", () => {
         window.location.href.endsWith(programRoutes.examiningOverview(1))
       ).toBe(true)
     );
-    console.log(window.location.href);
   });
 });
