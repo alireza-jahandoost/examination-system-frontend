@@ -104,7 +104,8 @@ describe("check update feature", () => {
     expect(await screen.findByText(savedMessage)).toBeInTheDocument();
 
     // change the answer of question
-    const radioButtons = screen.getAllByRole("button");
+    const AllButtons = screen.getAllByRole("button");
+    const radioButtons = AllButtons.slice(1, 2);
     if (radioButtons[0].checked) {
       userEvent.click(radioButtons[1]);
     } else {

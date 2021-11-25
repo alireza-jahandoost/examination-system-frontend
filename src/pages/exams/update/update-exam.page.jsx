@@ -15,6 +15,7 @@ const UpdateExamPage = () => {
     examId,
     questions,
     addQuestion,
+    deleteQuestion,
     isLoading,
     isPublished,
     publishExam,
@@ -53,6 +54,7 @@ const UpdateExamPage = () => {
                     readOnly={isPublished}
                     examId={examId}
                     questionId={question.question_id}
+                    deleteQuestion={() => deleteQuestion(question.question_id)}
                   />
                 </ElementContainer>
               );

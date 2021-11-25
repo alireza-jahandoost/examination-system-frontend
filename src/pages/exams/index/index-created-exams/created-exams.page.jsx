@@ -82,7 +82,6 @@ const CreatedExamsPage = () => {
                 </thead>
                 <tbody>
                   {exams.map((exam, idx) => {
-                    console.log(exam);
                     return (
                       <tr key={exam.exam_id}>
                         <td>{idx + 1}</td>

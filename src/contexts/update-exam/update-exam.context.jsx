@@ -147,6 +147,13 @@ export const UpdateExamProvider = ({ children }) => {
       );
   };
 
+  const deleteQuestion = (questionId) => {
+    const newQuestions = questions.filter(
+      (question) => Number(question.question_id) !== Number(questionId)
+    );
+    setQuestions(newQuestions);
+  };
+
   const value = {
     exam,
     examId,
@@ -175,6 +182,7 @@ export const UpdateExamProvider = ({ children }) => {
     handleUpdate,
     publishExam,
     unpublishExam,
+    deleteQuestion,
   };
 
   return (
