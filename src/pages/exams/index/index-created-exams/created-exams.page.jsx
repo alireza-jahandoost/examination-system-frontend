@@ -10,7 +10,7 @@ import programRoutes from "../../../../constants/program-routes.constant";
 import { AuthenticationContext } from "../../../../contexts/authentication-context/authentication.context";
 
 import { ownedExamsIndexRequest } from "../../../../services/exams/exams.service";
-import { convertFromUTC } from "../../../../utilities/dateAndTime.utility";
+import { convertFromUTCToHumanReadable } from "../../../../utilities/dateAndTime.utility";
 
 const CreatedExamsPage = () => {
   const [exams, setExams] = useState([]);
@@ -82,16 +82,25 @@ const CreatedExamsPage = () => {
                 </thead>
                 <tbody>
                   {exams.map((exam, idx) => {
+                    console.log(exam);
                     return (
                       <tr key={exam.exam_id}>
                         <td>{idx + 1}</td>
                         <td>{exam.exam_name}</td>
                         <td>{exam.exam_description}</td>
-                        <td>{convertFromUTC(exam.start_of_exam)}</td>
-                        <td>{convertFromUTC(exam.end_of_exam)}</td>
+                        <td>
+                          {convertFromUTCToHumanReadable(exam.start_of_exam)}
+                        </td>
+                        <td>
+                          {convertFromUTCToHumanReadable(exam.end_of_exam)}
+                        </td>
                         <td>{exam.total_score}</td>
-                        <td>{exam.creation_time}</td>
-                        <td>{exam.last_update}</td>
+                        <td>
+                          {convertFromUTCToHumanReadable(exam.creation_time)}
+                        </td>
+                        <td>
+                          {convertFromUTCToHumanReadable(exam.last_update)}
+                        </td>
                         <td>{exam.published ? "YES" : "NO"}</td>
                         <td>{exam.needs_confirmation ? "YES" : "NO"}</td>
                         <td>

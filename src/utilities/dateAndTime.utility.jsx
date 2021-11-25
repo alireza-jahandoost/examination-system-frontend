@@ -66,14 +66,31 @@ export const convertObjectToString = (obj) => {
 };
 
 export const convertToUTC = (datetime) => {
-  return moment(datetime, "YYYY-MM-DD HH:mm:ss")
-    .utc()
-    .format("YYYY-MM-DD HH:mm:ss");
+  let format;
+  if (moment(datetime, "YYYY-MM-DD HH:mm:ss") === datetime) {
+    format = "YYYY-MM-DD HH:mm:ss";
+  } else {
+    format = moment.ISO_8601;
+  }
+  return moment(datetime, format).utc().format("YYYY-MM-DD HH:mm:ss");
 };
 
 export const convertFromUTC = (datetime) => {
-  return moment
-    .utc(datetime, "YYYY-MM-DD HH:mm:ss")
-    .local()
-    .format("YYYY-MM-DD HH:mm:ss");
+  let format;
+  if (moment(datetime, "YYYY-MM-DD HH:mm:ss") === datetime) {
+    format = "YYYY-MM-DD HH:mm:ss";
+  } else {
+    format = moment.ISO_8601;
+  }
+  return moment.utc(datetime, format).local().format("YYYY-MM-DD HH:mm:ss");
+};
+
+export const convertFromUTCToHumanReadable = (datetime) => {
+  let format;
+  if (moment(datetime, "YYYY-MM-DD HH:mm:ss") === datetime) {
+    format = "YYYY-MM-DD HH:mm:ss";
+  } else {
+    format = moment.ISO_8601;
+  }
+  return moment.utc(datetime, format).local().fromNow();
 };
