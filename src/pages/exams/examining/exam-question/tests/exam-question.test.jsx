@@ -558,7 +558,7 @@ describe("check ordering questions", () => {
 });
 
 describe("check next question button", () => {
-  test("if nextQuestion is -1, the next question button must be disabled", async () => {
+  test("if nextQuestion is -1, the next question button must be disabled and if user clicks on that, nothing must be happened", async () => {
     const { WrappedElement } = wrapper(<ExamQuestionPage />, {
       participantId: 2,
       nextQuestion: -1,
@@ -567,10 +567,14 @@ describe("check next question button", () => {
       route: programRoutes.examiningQuestion(1, 1),
     });
 
-    const nextQuestionButton = await screen.findByRole("button", {
+    const nextQuestionButton = await screen.findByRole("link", {
       name: /next/i,
     });
-    expect(nextQuestionButton).toBeDisabled();
+
+    userEvent.click(nextQuestionButton);
+    expect(
+      window.location.href.endsWith(programRoutes.examiningQuestion(1, 1))
+    ).toBe(true);
   });
   test("if nextQuestion is not -1, the next question must be a link to the next question", async () => {
     const { WrappedElement } = wrapper(<ExamQuestionPage />, {
@@ -581,7 +585,7 @@ describe("check next question button", () => {
       route: programRoutes.examiningQuestion(1, 1),
     });
 
-    const nextQuestionButton = await screen.findByRole("button", {
+    const nextQuestionButton = await screen.findByRole("link", {
       name: /next/i,
     });
     expect(nextQuestionButton).toBeEnabled();
@@ -606,8 +610,12 @@ describe("check prev question button", () => {
       route: programRoutes.examiningQuestion(1, 1),
     });
 
-    const prevButton = await screen.findByRole("button", { name: /prev/i });
-    expect(prevButton).toBeDisabled();
+    const prevButton = await screen.findByRole("link", { name: /prev/i });
+
+    userEvent.click(prevButton);
+    expect(
+      window.location.href.endsWith(programRoutes.examiningQuestion(1, 1))
+    ).toBe(true);
   });
   test("if prevQuestion is not -1, the prev question must be a link to the prev question", async () => {
     const { WrappedElement } = wrapper(<ExamQuestionPage />, {
@@ -618,7 +626,7 @@ describe("check prev question button", () => {
       route: programRoutes.examiningQuestion(1, 2),
     });
 
-    const prevButton = await screen.findByRole("button", { name: /prev/i });
+    const prevButton = await screen.findByRole("link", { name: /prev/i });
     expect(prevButton).toBeEnabled();
 
     userEvent.click(prevButton);

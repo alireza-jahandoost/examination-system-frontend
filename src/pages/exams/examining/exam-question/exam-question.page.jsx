@@ -37,6 +37,13 @@ const ExamQuestionPage = () => {
     return <Redirect to={programRoutes.examiningOverview(examId)} />;
   }
 
+  const handleClick = (disabled) => {
+    if (disabled) {
+      return { onClick: (e) => e.preventDefault() };
+    }
+    return {};
+  };
+
   return (
     <div style={{ minHeight: "100vh" }}>
       <div className="d-flex justify-content-around border-bottom py-3">
@@ -61,12 +68,16 @@ const ExamQuestionPage = () => {
         </div>
         <div className="d-flex justify-content-end">
           <Link
+            {...handleClick(prevQuestion === -1)}
             className="me-3"
             to={programRoutes.examiningQuestion(examId, prevQuestion)}
           >
             <Button disabled={prevQuestion === -1}>Previous</Button>
           </Link>
-          <Link to={programRoutes.examiningQuestion(examId, nextQuestion)}>
+          <Link
+            {...handleClick(nextQuestion === -1)}
+            to={programRoutes.examiningQuestion(examId, nextQuestion)}
+          >
             <Button disabled={nextQuestion === -1}>Next</Button>
           </Link>
         </div>
