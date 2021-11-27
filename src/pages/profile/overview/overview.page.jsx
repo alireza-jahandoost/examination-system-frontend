@@ -1,16 +1,11 @@
 import { Container } from "react-bootstrap";
-import Sidebar from "../../../components/sidebar/sidebar.component";
 
+import ProfileContainer from "../../../components/profile-container/profile-container.component";
 const OverviewPage = () => {
   return (
-    <div className="d-flex flex-row">
-      <Sidebar />
-      <Container className="text-center">
-        <div className="flex-grow-1">
-          <h1>Profile Overview</h1>
-        </div>
-      </Container>
-    </div>
+    <ProfileContainer>
+      <h1>Profile Overview</h1>
+    </ProfileContainer>
   );
 };
 

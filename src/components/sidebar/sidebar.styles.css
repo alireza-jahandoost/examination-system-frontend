@@ -3,13 +3,10 @@ button.sidebar-item {
   border: 0;
 }
 
-.sidebar-item:hover {
-  color: rgb(1, 70, 0) !important;
-}
-
 a.sidebar-item {
   border-bottom: 2px solid transparent;
+  white-space: nowrap;
 }
 a.sidebar-item:hover {
-  border-bottom: 2px solid rgb(1, 70, 0);
+  border-bottom: 2px solid rgb(0, 0, 0);
 }

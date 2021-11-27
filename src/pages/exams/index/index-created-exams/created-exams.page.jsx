@@ -2,7 +2,7 @@ import { useState, useMemo, useContext, useEffect } from "react";
 import { Link, useLocation, Redirect } from "react-router-dom";
 import { Table, Container } from "react-bootstrap";
 import { useMountedState } from "react-use";
-import Sidebar from "../../../../components/sidebar/sidebar.component";
+import ProfileContainer from "../../../../components/profile-container/profile-container.component";
 import Pagination from "../../../../components/pagination/pagination.component";
 
 import programRoutes from "../../../../constants/program-routes.constant";
@@ -55,84 +55,71 @@ const CreatedExamsPage = () => {
   }
 
   return (
-    <div className="d-flex flex-row">
-      <Sidebar />
-      <Container className="text-center">
-        <div className="flex-grow-1">
-          <h1>Created Exams</h1>
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : exams.length > 0 ? (
-            <>
-              <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Exam Name</th>
-                    <th>Exam Description</th>
-                    <th>Start Time</th>
-                    <th>End Time</th>
-                    <th>Total Score</th>
-                    <th>Creation Time</th>
-                    <th>Last Update</th>
-                    <th>Published</th>
-                    <th>Register Needs Confirmation</th>
-                    <th>Operations</th>
+    <ProfileContainer>
+      <h1>Created Exams</h1>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : exams.length > 0 ? (
+        <>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Exam Name</th>
+                <th>Exam Description</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Total Score</th>
+                <th>Creation Time</th>
+                <th>Last Update</th>
+                <th>Published</th>
+                <th>Register Needs Confirmation</th>
+                <th>Operations</th>
+              </tr>
+            </thead>
+            <tbody>
+              {exams.map((exam, idx) => {
+                return (
+                  <tr key={exam.exam_id}>
+                    <td>{idx + 1}</td>
+                    <td>{exam.exam_name}</td>
+                    <td>{exam.exam_description}</td>
+                    <td>{convertFromUTCToHumanReadable(exam.start_of_exam)}</td>
+                    <td>{convertFromUTCToHumanReadable(exam.end_of_exam)}</td>
+                    <td>{exam.total_score}</td>
+                    <td>{convertFromUTCToHumanReadable(exam.creation_time)}</td>
+                    <td>{convertFromUTCToHumanReadable(exam.last_update)}</td>
+                    <td>{exam.published ? "YES" : "NO"}</td>
+                    <td>{exam.needs_confirmation ? "YES" : "NO"}</td>
+                    <td>
+                      <div>
+                        <Link to={programRoutes.updateExam(exam.exam_id)}>
+                          edit exam
+                        </Link>
+                      </div>
+                      <div>
+                        <Link
+                          to={programRoutes.indexParticipants(exam.exam_id)}
+                        >
+                          participants
+                        </Link>
+                      </div>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {exams.map((exam, idx) => {
-                    return (
-                      <tr key={exam.exam_id}>
-                        <td>{idx + 1}</td>
-                        <td>{exam.exam_name}</td>
-                        <td>{exam.exam_description}</td>
-                        <td>
-                          {convertFromUTCToHumanReadable(exam.start_of_exam)}
-                        </td>
-                        <td>
-                          {convertFromUTCToHumanReadable(exam.end_of_exam)}
-                        </td>
-                        <td>{exam.total_score}</td>
-                        <td>
-                          {convertFromUTCToHumanReadable(exam.creation_time)}
-                        </td>
-                        <td>
-                          {convertFromUTCToHumanReadable(exam.last_update)}
-                        </td>
-                        <td>{exam.published ? "YES" : "NO"}</td>
-                        <td>{exam.needs_confirmation ? "YES" : "NO"}</td>
-                        <td>
-                          <div>
-                            <Link to={programRoutes.updateExam(exam.exam_id)}>
-                              edit exam
-                            </Link>
-                          </div>
-                          <div>
-                            <Link
-                              to={programRoutes.indexParticipants(exam.exam_id)}
-                            >
-                              participants
-                            </Link>
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </Table>
-              <Pagination
-                currentPage={currentPage}
-                numberOfPages={numberOfPages}
-                prefix={programRoutes.indexCreatedExams()}
-              />
-            </>
-          ) : (
-            <p className="lead"> You have not created any exam yet </p>
-          )}
-        </div>
-      </Container>
-    </div>
+                );
+              })}
+            </tbody>
+          </Table>
+          <Pagination
+            currentPage={currentPage}
+            numberOfPages={numberOfPages}
+            prefix={programRoutes.indexCreatedExams()}
+          />
+        </>
+      ) : (
+        <p className="lead"> You have not created any exam yet </p>
+      )}
+    </ProfileContainer>
   );
 };
 

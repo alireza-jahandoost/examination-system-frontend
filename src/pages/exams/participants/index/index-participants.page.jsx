@@ -2,7 +2,7 @@ import { useState, useMemo, useContext, useEffect } from "react";
 import { Link, useLocation, Redirect, useParams } from "react-router-dom";
 import { Table, Container } from "react-bootstrap";
 import { useMountedState } from "react-use";
-import Sidebar from "../../../../components/sidebar/sidebar.component";
+import ProfileContainer from "../../../../components/profile-container/profile-container.component";
 import Pagination from "../../../../components/pagination/pagination.component";
 
 import programRoutes from "../../../../constants/program-routes.constant";
@@ -55,60 +55,55 @@ const IndexParticipantsPage = () => {
   }
 
   return (
-    <div className="d-flex flex-row">
-      <Sidebar />
-      <Container className="text-center">
-        <div className="flex-grow-1">
-          <h1>Participants</h1>
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : participants.length > 0 ? (
-            <>
-              <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Status</th>
-                    <th>Is Confirmed</th>
-                    <th>Grade</th>
-                    <th>Operations</th>
+    <ProfileContainer>
+      <h1>Participants</h1>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : participants.length > 0 ? (
+        <>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Status</th>
+                <th>Is Confirmed</th>
+                <th>Grade</th>
+                <th>Operations</th>
+              </tr>
+            </thead>
+            <tbody>
+              {participants.map((participant, idx) => {
+                return (
+                  <tr key={participant.participant_id}>
+                    <td>{idx + 1}</td>
+                    <td>{participant.status}</td>
+                    <td>{participant.confirmed ? "YES" : "NO"}</td>
+                    <td>{participant.grade}</td>
+                    <td>
+                      <Link
+                        to={programRoutes.showParticipant(
+                          examId,
+                          participant.participant_id
+                        )}
+                      >
+                        see answers of this participant
+                      </Link>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {participants.map((participant, idx) => {
-                    return (
-                      <tr key={participant.participant_id}>
-                        <td>{idx + 1}</td>
-                        <td>{participant.status}</td>
-                        <td>{participant.confirmed ? "YES" : "NO"}</td>
-                        <td>{participant.grade}</td>
-                        <td>
-                          <Link
-                            to={programRoutes.showParticipant(
-                              examId,
-                              participant.participant_id
-                            )}
-                          >
-                            see answers of this participant
-                          </Link>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </Table>
-              <Pagination
-                currentPage={currentPage}
-                numberOfPages={numberOfPages}
-                prefix={programRoutes.indexParticipants()}
-              />
-            </>
-          ) : (
-            <p className="lead"> no one have participated in this exam yet </p>
-          )}
-        </div>
-      </Container>
-    </div>
+                );
+              })}
+            </tbody>
+          </Table>
+          <Pagination
+            currentPage={currentPage}
+            numberOfPages={numberOfPages}
+            prefix={programRoutes.indexParticipants()}
+          />
+        </>
+      ) : (
+        <p className="lead"> no one have participated in this exam yet </p>
+      )}
+    </ProfileContainer>
   );
 };
 

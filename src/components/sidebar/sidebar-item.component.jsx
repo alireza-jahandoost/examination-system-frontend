@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
-const SidebarItem = ({ href, iconName, label, open, ...props }) => {
+const SidebarItem = ({ href, iconName, label, ...props }) => {
   const [icon, setIcon] = useState(faSpinner);
   useEffect(() => {
     switch (iconName) {
@@ -37,19 +37,13 @@ const SidebarItem = ({ href, iconName, label, open, ...props }) => {
     <div {...props}>
       <div className="d-flex flex-fill">
         <Link
-          className={`text-dark sidebar-item w-100 text-decoration-none ${
-            open ? "mx-2" : ""
-          }`}
+          className={`text-dark sidebar-item w-100 text-decoration-none `}
           to={href}
           title={label}
         >
-          <div
-            className={`d-flex align-items-center ${
-              open ? "" : "justify-content-center"
-            }`}
-          >
+          <div className={`d-flex align-items-center word-nowrap`}>
             <FontAwesomeIcon size="lg" icon={icon} />
-            {open && <p className="ps-2 m-0">{label}</p>}
+            <p className="ps-2 m-0">{label}</p>
           </div>
         </Link>
       </div>

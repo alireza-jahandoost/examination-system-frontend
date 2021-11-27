@@ -15,22 +15,19 @@ const MainRouter = () => {
     return <p> Loading... </p>;
   }
   return (
-    <Switch>
-      <Route path={programRoutes.examsRoot()} component={ExamsRouter} />
-      <Route
-        path={programRoutes.profile()}
-        render={({ location }) =>
-          redirectIfNotAuthenticated(
-            <div style={{ minHeight: "100vh" }} className="d-flex">
-              <ProfileRouter />
-            </div>,
-            location
-          )
-        }
-      ></Route>
-      <Route path={programRoutes.contactUs()} component={ContactUsPage} />
-      <Route path={programRoutes.aboutUs()} component={AboutUsPage} />
-    </Switch>
+    <div style={{ minHeight: "100vh" }} className="d-flex">
+      <Switch>
+        <Route path={programRoutes.examsRoot()} component={ExamsRouter} />
+        <Route
+          path={programRoutes.profile()}
+          render={({ location }) =>
+            redirectIfNotAuthenticated(<ProfileRouter />, location)
+          }
+        ></Route>
+        <Route path={programRoutes.contactUs()} component={ContactUsPage} />
+        <Route path={programRoutes.aboutUs()} component={AboutUsPage} />
+      </Switch>
+    </div>
   );
 };
 
