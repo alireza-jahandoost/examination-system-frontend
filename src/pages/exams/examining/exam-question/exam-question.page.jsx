@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { Link, useParams, Redirect } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 
 import { ExaminingContext } from "../../../../contexts/examining-context/examining.context";
 import { AnswerQuestionProvider } from "../../../../contexts/answer-question-context/answer-question.context";
@@ -38,8 +38,8 @@ const ExamQuestionPage = () => {
   }
 
   return (
-    <div>
-      <div>
+    <div style={{ minHeight: "100vh" }}>
+      <div className="d-flex justify-content-around border-bottom py-3">
         <ExamTime color="dark" examTime={examTime} />
         <Button
           onClick={() => {
@@ -49,31 +49,36 @@ const ExamQuestionPage = () => {
           Finish Exam
         </Button>
       </div>
-      <div>
-        <AnswerQuestionProvider
-          questionId={questionId}
-          examId={examId}
-          participantId={participant.participant_id}
-        >
-          <AnswerQuestion />
-        </AnswerQuestionProvider>
-      </div>
-      <div>
-        <Link to={programRoutes.examiningQuestion(examId, nextQuestion)}>
-          <Button disabled={nextQuestion === -1}>Next</Button>
-        </Link>
-        <Link to={programRoutes.examiningQuestion(examId, prevQuestion)}>
-          <Button disabled={prevQuestion === -1}>Previous</Button>
-        </Link>
-      </div>
-      <Modal
-        buttonLabels={["Yes, Finish Exam", "Cancel"]}
-        onConfirm={finishExam}
-        isShown={showModal}
-        closeModal={() => setShowModal(false)}
-        title="Finish Exam"
-        body="Are you sure you want to finish the exam? you can not answer the questions anymore."
-      />
+      <Container className="bg-light flex-grow-1 rounded p-4 my-5">
+        <div style={{ minHeight: "400px" }} className="d-flex ">
+          <AnswerQuestionProvider
+            questionId={questionId}
+            examId={examId}
+            participantId={participant.participant_id}
+          >
+            <AnswerQuestion />
+          </AnswerQuestionProvider>
+        </div>
+        <div className="d-flex justify-content-end">
+          <Link
+            className="me-3"
+            to={programRoutes.examiningQuestion(examId, prevQuestion)}
+          >
+            <Button disabled={prevQuestion === -1}>Previous</Button>
+          </Link>
+          <Link to={programRoutes.examiningQuestion(examId, nextQuestion)}>
+            <Button disabled={nextQuestion === -1}>Next</Button>
+          </Link>
+        </div>
+        <Modal
+          buttonLabels={["Yes, Finish Exam", "Cancel"]}
+          onConfirm={finishExam}
+          isShown={showModal}
+          closeModal={() => setShowModal(false)}
+          title="Finish Exam"
+          body="Are you sure you want to finish the exam? you can not answer the questions anymore."
+        />
+      </Container>
     </div>
   );
 };

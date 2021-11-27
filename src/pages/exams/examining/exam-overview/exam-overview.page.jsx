@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Container, Button, Form } from "react-bootstrap";
+import { Container, Button, Form, Row, Col } from "react-bootstrap";
 import { useParams, Link } from "react-router-dom";
 
 import { AuthenticationContext } from "../../../../contexts/authentication-context/authentication.context";
@@ -47,35 +47,39 @@ const ExamOverviewPage = () => {
   }
 
   return (
-    <div>
-      <Container>
-        <p className="display-3"> {exam.exam_name} </p>
-        <p className="small text-muted"> by {exam.owner_name} </p>
+    <div style={{ minHeight: "100vh" }} className="d-flex text-center">
+      <Container className="flex-grow-1 d-flex flex-column ">
+        <div>
+          <p className="display-3"> {exam.exam_name} </p>
+          <p className="small text-muted"> by {exam.owner_name} </p>
+        </div>
         <p className="lead"> {exam.exam_description} </p>
         {participant && participant.status !== "NOT_FINISHED" && (
           <p className="display-5 text-success">
             your grade: {participant.grade || "not calculated yet"}
           </p>
         )}
-        <ExamTime color="dark" examTime={examTime} />
-        {canUserRegisterToExam && (
-          <Form onSubmit={handleRegistration}>
-            {exam.has_password && (
-              <ExamPassword
-                examPassword={examPassword}
-                changeExamPassword={changeExamPassword}
-                passwordErrorMessage={passwordErrorMessage}
-                examId={examId}
-              />
-            )}
-            <Button type="submit"> Register for Exam </Button>
-          </Form>
-        )}
-        {canUserGoToExam && (
-          <Link to={programRoutes.examiningQuestion(examId, firstQuestion)}>
-            <Button>go to exam</Button>
-          </Link>
-        )}
+        <div className="mt-5">
+          <ExamTime color="dark" examTime={examTime} />
+          {canUserRegisterToExam && (
+            <Form onSubmit={handleRegistration}>
+              {exam.has_password && (
+                <ExamPassword
+                  examPassword={examPassword}
+                  changeExamPassword={changeExamPassword}
+                  passwordErrorMessage={passwordErrorMessage}
+                  examId={examId}
+                />
+              )}
+              <Button type="submit"> Register for Exam </Button>
+            </Form>
+          )}
+          {canUserGoToExam && (
+            <Link to={programRoutes.examiningQuestion(examId, firstQuestion)}>
+              <Button>go to exam</Button>
+            </Link>
+          )}
+        </div>
       </Container>
     </div>
   );

@@ -54,10 +54,10 @@ const AnswerQuestion = ({ readOnly = false }) => {
   };
 
   return (
-    <div>
-      <Container>
+    <div className="flex-grow-1">
+      <Container className="h-100">
         {errors.message && <p className="text-danger">{errors.message}</p>}
-        <Form>
+        <Form className="h-100 d-flex flex-column justify-content-around">
           <QuestionInfo
             questionText={question.question_text}
             questionScore={question.question_score}

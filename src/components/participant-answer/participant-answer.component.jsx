@@ -13,7 +13,7 @@ const ParticipantAnswer = ({
 }) => {
   return (
     <div className="border rounded p-2 my-4 text-start">
-      <Container className=" border-bottom">
+      <Container className=" border-bottom my-2 pb-3">
         <h4> Question Text: </h4>
         <AnswerQuestionProvider
           questionId={questionId}
@@ -23,7 +23,7 @@ const ParticipantAnswer = ({
           <AnswerQuestion readOnly={true} />
         </AnswerQuestionProvider>
       </Container>
-      <Container>
+      <Container className="my-2">
         <h4> Grade Info: </h4>
         <QuestionGradeProvider
           participantId={participantId}
