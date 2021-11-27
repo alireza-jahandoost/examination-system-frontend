@@ -5,7 +5,7 @@ import CreateExamForm from "./create-exam-form.component";
 const CreateExamPage = () => {
   return (
     <ProfileContainer>
-      <CreateExamForm />
+      <CreateExamForm className="text-start" />
     </ProfileContainer>
   );
 };

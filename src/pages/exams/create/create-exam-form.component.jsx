@@ -17,7 +17,7 @@ import { AuthenticationContext } from "../../../contexts/authentication-context/
 import { NotificationContext } from "../../../contexts/notification-context/notification.context";
 import { convertToUTC } from "../../../utilities/dateAndTime.utility";
 
-const CreateExamForm = () => {
+const CreateExamForm = ({ ...props }) => {
   const [needsPassword, setNeedsPassword] = useState(false);
   const [examName, setExamName] = useState("");
   const [examDescription, setExamDescription] = useState("");
@@ -69,109 +69,110 @@ const CreateExamForm = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      {errors.message && <Alert variant="danger">{errors.message}</Alert>}
-      <Row className="mt-3">
-        <Col md={6} xl={3}>
-          <TextInput
-            error={errors.exam_name}
-            label="Exam Name"
-            id="exam-name"
-            value={examName}
-            onChange={(e) => setExamName(e.target.value)}
-            placeholder="Exam Name"
-          />
-        </Col>
-      </Row>
-      <Row className="mt-3">
-        <Col>
-          <TextareaInput
-            error={errors.exam_description}
-            label="Exam Description"
-            id="exam-description"
-            value={examDescription}
-            onChange={(e) => setExamDescription(e.target.value)}
-            placeholder="Exam Description"
-          />
-        </Col>
-      </Row>
-      <Row className="mt-3">
-        <Col>
-          <TextInput
-            error={errors.start_of_exam}
-            label="Exam's Start"
-            id="exams-start"
-            placeholder="Exam's Start"
-            value={examStart}
-            onChange={(e) => setExamStart(e.target.value)}
-          />
-        </Col>
-        <Col>
-          <TextInput
-            error={errors.end_of_exam}
-            label="Exam's End"
-            id="exams-end"
-            placeholder="Exam's End"
-            value={examEnd}
-            onChange={(e) => setExamEnd(e.target.value)}
-          />
-        </Col>
-      </Row>
-      <Row className="mt-3">
-        <Col md={6} xl={3}>
-          <NumberInput
-            error={errors.total_score}
-            label="Total Score"
-            id="total-score"
-            placeholder="Total Score"
-            value={totalScore}
-            onChange={(e) => setTotalScore(e.target.value)}
-          />
-        </Col>
-      </Row>
-      <Row className="mt-3">
-        <Col>
-          <CheckboxInput
-            error={errors.needs_confirmation}
-            label="Confirmation Required?"
-            id="confirmation-required"
-            checked={needsConfirmation}
-            onChange={(e) => setNeedsConfirmation(e.target.checked)}
-          />
-        </Col>
-      </Row>
-      <Row className="mt-3">
-        <Col xs={12} md={6} xl={3}>
-          <CheckboxInput
-            error={errors.needs_password}
-            checked={!!needsPassword}
-            onChange={(e) => setNeedsPassword(e.target.checked)}
-            label="Needs Password?"
-            id="needs-password"
-          />
-        </Col>
-        {needsPassword && (
-          <Col xs={12} md={6} xl={4}>
-            <PasswordInput
-              error={errors.password}
-              label="Password"
-              id="exam-password"
-              placeholder="Exam's Password"
-              value={examPassword}
-              onChange={(e) => setExamPassword(e.target.value)}
+    <div {...props}>
+      <Form onSubmit={handleSubmit}>
+        {errors.message && <Alert variant="danger">{errors.message}</Alert>}
+        <Row className="mt-3">
+          <Col md={6} xl={3}>
+            <TextInput
+              error={errors.exam_name}
+              label="Exam Name"
+              id="exam-name"
+              value={examName}
+              onChange={(e) => setExamName(e.target.value)}
+              placeholder="Exam Name"
             />
           </Col>
-        )}
-      </Row>
-      <Row className="mt-3">
-        <Col>
-          <Button disabled={isLoading} type="submit">
-            {" "}
-            {isLoading ? "Loading..." : "Create"}{" "}
-          </Button>
-        </Col>
-      </Row>
-    </Form>
+        </Row>
+        <Row className="mt-3">
+          <Col>
+            <TextareaInput
+              error={errors.exam_description}
+              label="Exam Description"
+              id="exam-description"
+              value={examDescription}
+              onChange={(e) => setExamDescription(e.target.value)}
+              placeholder="Exam Description"
+            />
+          </Col>
+        </Row>
+        <Row className="mt-3">
+          <Col>
+            <TextInput
+              error={errors.start_of_exam}
+              label="Exam's Start"
+              id="exams-start"
+              placeholder="Exam's Start"
+              value={examStart}
+              onChange={(e) => setExamStart(e.target.value)}
+            />
+          </Col>
+          <Col>
+            <TextInput
+              error={errors.end_of_exam}
+              label="Exam's End"
+              id="exams-end"
+              placeholder="Exam's End"
+              value={examEnd}
+              onChange={(e) => setExamEnd(e.target.value)}
+            />
+          </Col>
+        </Row>
+        <Row className="mt-3">
+          <Col md={6} xl={3}>
+            <NumberInput
+              error={errors.total_score}
+              label="Total Score"
+              id="total-score"
+              placeholder="Total Score"
+              value={totalScore}
+              onChange={(e) => setTotalScore(e.target.value)}
+            />
+          </Col>
+        </Row>
+        <Row className="mt-3">
+          <Col>
+            <CheckboxInput
+              error={errors.needs_confirmation}
+              label="Confirmation Required?"
+              id="confirmation-required"
+              checked={needsConfirmation}
+              onChange={(e) => setNeedsConfirmation(e.target.checked)}
+            />
+          </Col>
+        </Row>
+        <Row className="mt-3">
+          <Col xs={12} md={6} xl={3}>
+            <CheckboxInput
+              error={errors.needs_password}
+              checked={!!needsPassword}
+              onChange={(e) => setNeedsPassword(e.target.checked)}
+              label="Needs Password?"
+              id="needs-password"
+            />
+          </Col>
+          {needsPassword && (
+            <Col xs={12} md={6} xl={4}>
+              <PasswordInput
+                error={errors.password}
+                label="Password"
+                id="exam-password"
+                placeholder="Exam's Password"
+                value={examPassword}
+                onChange={(e) => setExamPassword(e.target.value)}
+              />
+            </Col>
+          )}
+        </Row>
+        <Row className="mt-3">
+          <Col>
+            <Button disabled={isLoading} type="submit">
+              {isLoading ? "Loading..." : "Create"}
+            </Button>
+          </Col>
+        </Row>
+      </Form>
+    </div>
   );
 };
 

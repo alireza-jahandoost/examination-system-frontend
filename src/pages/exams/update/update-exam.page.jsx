@@ -27,56 +27,58 @@ const UpdateExamPage = () => {
   }
   return (
     <ProfileContainer>
-      <ElementContainer>
-        <Button
-          onClick={() => {
-            if (!isPublished) {
-              publishExam();
-            } else {
-              unpublishExam();
-            }
-          }}
-        >
-          {isPublished ? "unpublish" : "publish"} exam
-        </Button>
-      </ElementContainer>
-      <ElementContainer>
-        <UpdateExamForm examId={examId} />
-      </ElementContainer>
-      <QuestionTypesProvider>
-        {questions.map((question) => {
-          return (
-            <ElementContainer key={question.question_id}>
-              <EditQuestion
+      <div className="text-start mb-5">
+        <ElementContainer>
+          <Button
+            onClick={() => {
+              if (!isPublished) {
+                publishExam();
+              } else {
+                unpublishExam();
+              }
+            }}
+          >
+            {isPublished ? "unpublish" : "publish"} exam
+          </Button>
+        </ElementContainer>
+        <ElementContainer>
+          <UpdateExamForm examId={examId} />
+        </ElementContainer>
+        <QuestionTypesProvider>
+          {questions.map((question) => {
+            return (
+              <ElementContainer key={question.question_id}>
+                <EditQuestion
+                  readOnly={isPublished}
+                  examId={examId}
+                  questionId={question.question_id}
+                  deleteQuestion={() => deleteQuestion(question.question_id)}
+                />
+              </ElementContainer>
+            );
+          })}
+          {addQuestionFormVisible ? (
+            <ElementContainer>
+              <CreateQuestion
                 readOnly={isPublished}
                 examId={examId}
-                questionId={question.question_id}
-                deleteQuestion={() => deleteQuestion(question.question_id)}
+                addQuestion={(questionObject) => {
+                  addQuestion(questionObject);
+                  setAddQuestionFormVisible(false);
+                }}
               />
             </ElementContainer>
-          );
-        })}
-        {addQuestionFormVisible ? (
-          <ElementContainer>
-            <CreateQuestion
-              readOnly={isPublished}
-              examId={examId}
-              addQuestion={(questionObject) => {
-                addQuestion(questionObject);
-                setAddQuestionFormVisible(false);
-              }}
-            />
-          </ElementContainer>
-        ) : (
-          <Button
-            className="w-100"
-            onClick={() => setAddQuestionFormVisible(true)}
-            disabled={isPublished}
-          >
-            Add Question
-          </Button>
-        )}
-      </QuestionTypesProvider>
+          ) : (
+            <Button
+              className="w-100"
+              onClick={() => setAddQuestionFormVisible(true)}
+              disabled={isPublished}
+            >
+              Add Question
+            </Button>
+          )}
+        </QuestionTypesProvider>
+      </div>
     </ProfileContainer>
   );
 };
