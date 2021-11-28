@@ -65,7 +65,7 @@ test("user can not publish his exam if there is any error and he will see the er
   await wait(100);
 
   // check publishing error
-  expect(await screen.findByText(invalidSum.data.message)).toBeInTheDocument();
+  expect(await screen.findByText(invalidSum.message)).toBeInTheDocument();
   // end
 });
 

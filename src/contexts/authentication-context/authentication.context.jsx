@@ -96,6 +96,7 @@ export const AuthenticationProvider = ({ children }) => {
     ) {
       throw Error("popover is invalid");
     }
+    setErrors({});
     setPopover(newPopover);
   };
 
@@ -111,12 +112,13 @@ export const AuthenticationProvider = ({ children }) => {
         return true;
       })
       .catch((err) => {
-        const correntErrors = errors;
-        if (err.response?.data?.data?.message) {
-          correntErrors.message = err.response.data.data.message;
-        }
         if (isMounted()) {
-          setErrors(correntErrors);
+          const { errors: receivedErrors, message } = err.response.data;
+          setErrors((correntErrors) => ({
+            ...correntErrors,
+            ...receivedErrors,
+            message,
+          }));
           setIsLoading(false);
         }
         return false;

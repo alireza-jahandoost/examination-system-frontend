@@ -131,7 +131,10 @@ export const UpdateExamProvider = ({ children }) => {
         setErrors({});
       })
       .catch((err) => {
-        setErrors({ message: err?.response?.data?.data?.message });
+        setErrors({
+          message: err.response.data.message,
+          ...err.response.data.errors,
+        });
       });
   };
 

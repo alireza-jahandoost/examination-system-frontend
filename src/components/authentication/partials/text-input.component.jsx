@@ -12,7 +12,7 @@ const TextInput = ({ type, label, placeholder, id, error, ...props }) => {
         {...props}
         placeholder={placeholder}
       />
-      {error && <p>{error[0]}</p>}
+      {error && <p className="text-danger">{error[0]}</p>}
     </Form.Group>
   );
 };

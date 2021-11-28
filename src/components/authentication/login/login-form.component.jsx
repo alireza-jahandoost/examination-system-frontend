@@ -35,6 +35,7 @@ const LoginForm = ({ ...props }) => {
             label="email address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            error={errors.email}
           />
           <TextInput
             id="login-password"
@@ -43,6 +44,7 @@ const LoginForm = ({ ...props }) => {
             label="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            error={errors.password}
           />
           <AuthButton variant="dark" text="LOGIN" />
         </Form>

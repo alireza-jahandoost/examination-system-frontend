@@ -1,5 +1,6 @@
 export const invalidCriteriaError = {
-  data: {
-    message: "Invalid email or password",
+  message: "The given data was invalid.",
+  errors: {
+    email: ["invalid email or password"],
   },
 };
