@@ -27,9 +27,10 @@ export const AnswerQuestionProvider = ({
   const [question, setQuestion] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isContextLoaded, setIsContextLoaded] = useState(false);
-  const { token } = useContext(AuthenticationContext);
+  const { token, removeUserInfo } = useContext(AuthenticationContext);
   const [errors, setErrors] = useState({});
   const [states, setStates] = useState([]);
+  const [isFailed, setIsFailed] = useState(false);
   const isMounted = useMountedState();
 
   useEffect(() => {
@@ -40,6 +41,7 @@ export const AnswerQuestionProvider = ({
 
   useEffect(() => {
     if (
+      isFailed ||
       !token ||
       !examId ||
       !questionId ||
@@ -90,11 +92,18 @@ export const AnswerQuestionProvider = ({
           setIsContextLoaded(true);
         }
       })
-      .catch((errors) => {
+      .catch((e) => {
         if (isMounted()) {
-          setErrors({
-            message: "something went wrong, please try again later",
-          });
+          switch (Number(e.response.status)) {
+            case 401:
+              setIsFailed(true);
+              removeUserInfo();
+              break;
+            default:
+              setErrors({
+                message: "something went wrong, please try again later",
+              });
+          }
           setIsLoading(false);
         }
       });
@@ -109,6 +118,8 @@ export const AnswerQuestionProvider = ({
     states,
     isContextLoaded,
     isLoading,
+    isFailed,
+    removeUserInfo,
   ]);
 
   const changeAnswers = (newAnswers) => {
@@ -145,9 +156,15 @@ export const AnswerQuestionProvider = ({
       })
       .catch((err) => {
         if (isMounted()) {
-          setErrors({
-            message: "something went wrong, please try again later",
-          });
+          switch (Number(err.response.status)) {
+            case 401:
+              removeUserInfo();
+              break;
+            default:
+              setErrors({
+                message: "something went wrong, please try again later",
+              });
+          }
           setIsLoading(false);
         }
       });

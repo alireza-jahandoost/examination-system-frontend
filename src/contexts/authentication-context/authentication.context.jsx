@@ -157,12 +157,16 @@ export const AuthenticationProvider = ({ children }) => {
       });
   };
 
+  const removeUserInfo = useCallback(() => {
+    if (localStorage.getItem("token")) {
+      localStorage.removeItem("token");
+      setUser(null);
+    }
+  }, []);
+
   const logout = () => {
     logoutRequest(token).then(() => {
-      if (localStorage.getItem("token")) {
-        localStorage.removeItem("token");
-        setUser(null);
-      }
+      removeUserInfo();
     });
   };
 
@@ -225,6 +229,7 @@ export const AuthenticationProvider = ({ children }) => {
         redirectIfNotAuthenticated,
         logout,
         changePassword,
+        removeUserInfo,
       }}
     >
       {children}
