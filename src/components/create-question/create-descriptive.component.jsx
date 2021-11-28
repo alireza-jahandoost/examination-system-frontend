@@ -1,52 +1,42 @@
 import { useState, useContext } from "react";
-import { useMountedState } from "react-use";
 
 import { Button, Form, Row, Col } from "react-bootstrap";
 
-import { AuthenticationContext } from "../../contexts/authentication-context/authentication.context";
+import { CreateQuestionContext } from "../../contexts/create-question-context/create-question.context";
 
 import QuestionText from "../question-form-partials/question-text.component";
 import QuestionScore from "../question-form-partials/question-score.component";
 
 import apiRoutes from "../../constants/api-routes.constant";
 
-import { questionsStoreRequest } from "../../services/questions/questions.service";
-
 const CreateDescriptive = ({ examId, addQuestion, readOnly = false }) => {
-  const [errors, setErrors] = useState({});
   const [questionText, setQuestionText] = useState("");
   const [questionScore, setQuestionScore] = useState(0);
-  const { token } = useContext(AuthenticationContext);
-  const isMounted = useMountedState();
+  const { createQuestion, errors } = useContext(CreateQuestionContext);
 
-  const handleCreate = (e) => {
+  const handleCreate = async (e) => {
     e.preventDefault();
 
-    const bodyOfrequest = {
+    const bodyOfRequest = {
       question_text: questionText,
       question_score: questionScore,
       question_type_id: 1,
     };
 
-    questionsStoreRequest(examId, bodyOfrequest, token)
-      .then((response) => response.data.data)
-      .then(({ question }) => {
-        if (isMounted()) {
-          addQuestion({
-            question_id: question.question_id,
-            question_link: apiRoutes.questions.showQuestion(
-              examId,
-              question.question_id
-            ),
-          });
-        }
-      })
-      .catch((err) => {
-        setErrors({
-          ...err.response.data.errors,
-          message: err.response.data.message,
-        });
-      });
+    const question = await createQuestion({
+      examId,
+      questionBody: bodyOfRequest,
+    });
+    if (!question) {
+      return;
+    }
+    addQuestion({
+      question_id: question.question_id,
+      question_link: apiRoutes.questions.showQuestion(
+        examId,
+        question.question_id
+      ),
+    });
   };
 
   return (

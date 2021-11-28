@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
-import { Row, Col } from "react-bootstrap";
 
 import { QuestionTypesContext } from "../../contexts/question-types-context/question-types.context";
+import { CreateQuestionProvider } from "../../contexts/create-question-context/create-question.context";
 
 import QuestionType from "../question-form-partials/question-type.component";
 
@@ -78,26 +78,28 @@ const CreateQuestion = ({ examId, addQuestion, readOnly = false }) => {
   }
 
   return (
-    <div>
-      {questionTypes && questionTypes.length > 0 && (
-        <div className="px-2 mx-1">
-          <QuestionType
-            options={questionTypes.map((current) => {
-              return {
-                value: current.type_id,
-                label: current.type_name,
-              };
-            })}
-            selectedValue={questionTypeId}
-            onChange={(e) => {
-              setQuestionTypeId(e.target.value);
-            }}
-            suffix={`not-created-question`}
-          />
-        </div>
-      )}
-      {questionForm}
-    </div>
+    <CreateQuestionProvider>
+      <div>
+        {questionTypes && questionTypes.length > 0 && (
+          <div className="px-2 mx-1">
+            <QuestionType
+              options={questionTypes.map((current) => {
+                return {
+                  value: current.type_id,
+                  label: current.type_name,
+                };
+              })}
+              selectedValue={questionTypeId}
+              onChange={(e) => {
+                setQuestionTypeId(e.target.value);
+              }}
+              suffix={`not-created-question`}
+            />
+          </div>
+        )}
+        {questionForm}
+      </div>
+    </CreateQuestionProvider>
   );
 };
 

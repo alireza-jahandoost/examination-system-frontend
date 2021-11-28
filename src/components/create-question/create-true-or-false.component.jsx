@@ -1,10 +1,8 @@
 import { useState, useContext } from "react";
-import { useMountedState } from "react-use";
-import axios from "axios";
 
 import { Button, Form, Row, Col } from "react-bootstrap";
 
-import { AuthenticationContext } from "../../contexts/authentication-context/authentication.context";
+import { CreateQuestionContext } from "../../contexts/create-question-context/create-question.context";
 
 import QuestionText from "../question-form-partials/question-text.component";
 import QuestionScore from "../question-form-partials/question-score.component";
@@ -12,70 +10,40 @@ import AnswerIndicator from "../answer-indicator/answer-indicator.component";
 
 import apiRoutes from "../../constants/api-routes.constant";
 
-import { questionsStoreRequest } from "../../services/questions/questions.service";
-import { statesStoreRequest } from "../../services/states/states.service";
-
 const CreateTrueOrFalse = ({ examId, addQuestion, readOnly = false }) => {
-  const [errors, setErrors] = useState({});
   const [answer, setAnswer] = useState(false);
   const [questionText, setQuestionText] = useState("");
   const [questionScore, setQuestionScore] = useState(0);
-  const { token } = useContext(AuthenticationContext);
-  const isMounted = useMountedState();
+  const { createQuestion, errors } = useContext(CreateQuestionContext);
 
   const changeState = ({ integer_part }) => {
     setAnswer(!!integer_part);
   };
 
-  const handleCreate = (e) => {
+  const handleCreate = async (e) => {
     e.preventDefault();
 
-    const bodyOfrequest = {
+    const bodyOfRequest = {
       question_text: questionText,
       question_score: questionScore,
       question_type_id: 5,
     };
-    // TODO: customize for different types
 
-    questionsStoreRequest(examId, bodyOfrequest, token)
-      .then((response) => response.data.data)
-      .then(({ question }) => {
-        if (isMounted()) {
-          const stateRequests = [
-            statesStoreRequest(
-              examId,
-              question.question_id,
-              { integer_part: answer ? 1 : 0 },
-              token
-            ),
-          ];
-
-          axios
-            .all(stateRequests)
-            .then(
-              axios.spread((...responses) => {
-                if (isMounted()) {
-                  addQuestion({
-                    question_id: question.question_id,
-                    question_link: apiRoutes.questions.showQuestion(
-                      examId,
-                      question.question_id
-                    ),
-                  });
-                }
-              })
-            )
-            .catch((errors) => {
-              console.error(errors);
-            });
-        }
-      })
-      .catch((err) => {
-        setErrors({
-          ...err.response.data.errors,
-          message: err.response.data.message,
-        });
-      });
+    const question = await createQuestion({
+      examId,
+      questionBody: bodyOfRequest,
+      stateBodies: [{ integer_part: answer ? 1 : 0 }],
+    });
+    if (!question) {
+      return;
+    }
+    addQuestion({
+      question_id: question.question_id,
+      question_link: apiRoutes.questions.showQuestion(
+        examId,
+        question.question_id
+      ),
+    });
   };
 
   return (

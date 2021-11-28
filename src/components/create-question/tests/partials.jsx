@@ -1,4 +1,5 @@
 import { QuestionTypesProvider } from "../../../contexts/question-types-context/question-types.context";
+import { CreateQuestionProvider } from "../../../contexts/create-question-context/create-question.context";
 
 export const selectValues = {
   descriptive: "1",
@@ -10,5 +11,7 @@ export const selectValues = {
 };
 
 export const wrapper = (ui) => (
-  <QuestionTypesProvider>{ui}</QuestionTypesProvider>
+  <QuestionTypesProvider>
+    <CreateQuestionProvider>{ui}</CreateQuestionProvider>
+  </QuestionTypesProvider>
 );
