@@ -1,6 +1,5 @@
 import { useContext, useState, createContext } from "react";
 import axios from "axios";
-import { useMountedState } from "react-use";
 
 import { AuthenticationContext } from "../authentication-context/authentication.context";
 
@@ -12,9 +11,8 @@ import { isStatesValid } from "../../utilities/question-form-parts.utility";
 export const CreateQuestionContext = createContext();
 
 export const CreateQuestionProvider = ({ children }) => {
-  const { token } = useContext(AuthenticationContext);
+  const { token, removeUserInfo } = useContext(AuthenticationContext);
   const [errors, setErrors] = useState({});
-  const isMounted = useMountedState();
 
   const areStatesValid = ({ states, questionTypeId }) => {
     switch (Number(questionTypeId)) {
@@ -72,14 +70,20 @@ export const CreateQuestionProvider = ({ children }) => {
       }
       return question;
     } catch (e) {
-      const { errors: receivedErrors, message } = e.response.data;
-      const newErrors = { ...receivedErrors, message };
-      for (const error in newErrors) {
-        if (Array.isArray(newErrors[error])) {
-          newErrors[error] = newErrors[error][0];
-        }
+      switch (Number(e.response.status)) {
+        case 401:
+          removeUserInfo();
+          break;
+        default:
+          const { errors: receivedErrors, message } = e.response.data;
+          const newErrors = { ...receivedErrors, message };
+          for (const error in newErrors) {
+            if (Array.isArray(newErrors[error])) {
+              newErrors[error] = newErrors[error][0];
+            }
+          }
+          setErrors(newErrors);
       }
-      setErrors(newErrors);
       return null;
     }
   };
