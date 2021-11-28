@@ -76,12 +76,14 @@ export const ExamInfoProvider = ({ children, examId }) => {
     if (isUserAuthenticated) {
       registerToExamRequest(examId, token, examPassword)
         .then(({ data, status }) => {
-          if (status === 201) {
+          if (status === 201 && isMounted()) {
             setIsUserRegisteredToExam(true);
           }
         })
         .catch((err) => {
-          setPasswordErrorMessage("the password of exam is not correct");
+          if (isMounted()) {
+            setPasswordErrorMessage("the password of exam is not correct");
+          }
         });
     } else {
       showUserLoginPopover();

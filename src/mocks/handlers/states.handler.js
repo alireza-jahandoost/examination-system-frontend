@@ -84,7 +84,7 @@ const statesHandler = [
             text_part === undefined ||
             text_part === ""
           ) {
-            return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
+            return res(ctx.status(422), ctx.json(integerPartForFillTheBlank));
           }
           return res(
             ctx.json({
@@ -100,7 +100,7 @@ const statesHandler = [
           );
         case 3:
           if (integer_part === undefined || text_part === undefined) {
-            return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
+            return res(ctx.status(422), ctx.json(integerPartForFillTheBlank));
           }
           return res(
             ctx.json({
@@ -116,7 +116,7 @@ const statesHandler = [
           );
         case 4:
           if (integer_part === undefined || text_part === undefined) {
-            return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
+            return res(ctx.status(422), ctx.json(integerPartForFillTheBlank));
           }
           return res(
             ctx.json({
@@ -132,7 +132,7 @@ const statesHandler = [
           );
         case 5:
           if (integer_part === undefined || text_part !== undefined) {
-            return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
+            return res(ctx.status(422), ctx.json(integerPartForFillTheBlank));
           }
           return res(
             ctx.json({
@@ -147,7 +147,7 @@ const statesHandler = [
           );
         case 6:
           if (integer_part === undefined || text_part === undefined) {
-            return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
+            return res(ctx.status(422), ctx.json(integerPartForFillTheBlank));
           }
           return res(
             ctx.json({
@@ -176,7 +176,7 @@ const statesHandler = [
       switch (Number(questionId)) {
         case 2:
           if (integer_part !== undefined) {
-            return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
+            return res(ctx.status(422), ctx.json(integerPartForFillTheBlank));
           }
           return res(
             ctx.json({
@@ -197,7 +197,7 @@ const statesHandler = [
               Number(integer_part) !== 1) ||
             (text_part !== undefined && text_part === "")
           ) {
-            return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
+            return res(ctx.status(422), ctx.json(integerPartForFillTheBlank));
           }
           return res(
             ctx.json({
@@ -218,7 +218,7 @@ const statesHandler = [
               Number(integer_part) !== 1) ||
             (text_part !== undefined && text_part === "")
           ) {
-            return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
+            return res(ctx.status(422), ctx.json(integerPartForFillTheBlank));
           }
           return res(
             ctx.json({
@@ -234,7 +234,7 @@ const statesHandler = [
           );
         case 5:
           if (integer_part === undefined || text_part !== undefined) {
-            return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
+            return res(ctx.status(422), ctx.json(integerPartForFillTheBlank));
           }
           return res(
             ctx.json({
@@ -252,7 +252,7 @@ const statesHandler = [
             (integer_part !== undefined && Number(integer_part) === 0) ||
             (text_part !== undefined && text_part === "")
           ) {
-            return res(ctx.status(401), ctx.json(integerPartForFillTheBlank));
+            return res(ctx.status(422), ctx.json(integerPartForFillTheBlank));
           }
           return res(
             ctx.json({

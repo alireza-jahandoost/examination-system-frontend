@@ -219,7 +219,7 @@ const examsHandler = [
         return res(ctx.status(202));
       // for unsuccessful states
       case 3:
-        return res(ctx.json(invalidSum), ctx.status(401));
+        return res(ctx.json(invalidSum), ctx.status(422));
       default:
         return res(ctx.status(404));
     }

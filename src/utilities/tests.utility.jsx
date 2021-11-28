@@ -5,6 +5,7 @@ import { rest } from "msw";
 import { server, handlers } from "../mocks/server";
 import apiRoutes from "../constants/api-routes.constant";
 import "../mocks/server";
+import { error_401, error_422 } from "../mocks/errors/pure-error-bodies.error";
 
 export const wrapWithWidth = (component, size) => {
   return (
@@ -152,4 +153,26 @@ export const randomString = (length = 8) => {
   }
 
   return str;
+};
+
+export const changeRequestResponseTo401 = ({ route, method }) => {
+  const { errorBody } = error_401();
+  server.resetHandlers(
+    rest[method](route, (req, res, ctx) => {
+      return res(ctx.json(errorBody), ctx.status(401));
+    }),
+    ...handlers
+  );
+};
+
+export const changeRequestResponseTo422 = ({ route, method, fields }) => {
+  const message = randomString(30);
+  const { errorBody, errors } = error_422({ message, fields });
+  server.resetHandlers(
+    rest[method](route, (req, res, ctx) => {
+      return res(ctx.json(errorBody), ctx.status(422));
+    }),
+    ...handlers
+  );
+  return { message, errors };
 };
