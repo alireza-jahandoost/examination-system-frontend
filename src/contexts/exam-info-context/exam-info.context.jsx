@@ -1,6 +1,5 @@
 import { useEffect, useState, createContext, useContext, useMemo } from "react";
 import useRemainingTime from "../../hooks/useRemainingTime";
-import { examsShowRequest } from "../../services/exams/exams.service";
 import { AuthenticationContext } from "../authentication-context/authentication.context";
 import { NotificationContext } from "../notification-context/notification.context";
 import { useMountedState } from "react-use";
@@ -10,14 +9,18 @@ import {
   convertSecondsToObject,
 } from "../../utilities/dateAndTime.utility";
 
+import { examsShowRequest } from "../../services/exams/exams.service";
 import { registerToExamRequest } from "../../services/participants/participants.service";
 
 export const ExamInfoContext = createContext();
 
 export const ExamInfoProvider = ({ children, examId }) => {
-  const { isUserAuthenticated, showUserLoginPopover, token } = useContext(
-    AuthenticationContext
-  );
+  const {
+    isUserAuthenticated,
+    showUserLoginPopover,
+    token,
+    removeUserInfo,
+  } = useContext(AuthenticationContext);
   const { createNotification } = useContext(NotificationContext);
   const [exam, setExam] = useState(null);
   const [examPassword, setExamPassword] = useState("");
@@ -31,6 +34,14 @@ export const ExamInfoProvider = ({ children, examId }) => {
         if (isMounted()) {
           setExam(data.exam);
           setIsUserRegisteredToExam(data.exam.is_registered);
+        }
+      })
+      .catch((e) => {
+        switch (Number(e.response.status)) {
+          case 401:
+            removeUserInfo();
+            break;
+          default:
         }
       });
   }, [examId, isMounted, token]);
@@ -82,7 +93,13 @@ export const ExamInfoProvider = ({ children, examId }) => {
         })
         .catch((err) => {
           if (isMounted()) {
-            setPasswordErrorMessage("the password of exam is not correct");
+            switch (Number(err.response.status)) {
+              case 401:
+                removeUserInfo();
+                break;
+              default:
+                setPasswordErrorMessage("the password of exam is not correct");
+            }
           }
         });
     } else {

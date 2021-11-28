@@ -64,8 +64,9 @@ export const asignExamShowStartAndEnd = (
     ":" +
     end.getSeconds();
 
-  server.resetHandlers(
-    rest.get(apiRoutes.exams.showExam(examId), (req, res, ctx) => {
+  const handler = rest.get(
+    apiRoutes.exams.showExam(examId),
+    (req, res, ctx) => {
       return res(
         ctx.json({
           data: {
@@ -87,9 +88,11 @@ export const asignExamShowStartAndEnd = (
           },
         })
       );
-    }),
-    ...handlers
+    }
   );
+  server.resetHandlers(handler, ...handlers);
+
+  return handler;
 };
 
 const emptyPaginatedObject = ({ route, objectName }) => {
@@ -155,12 +158,17 @@ export const randomString = (length = 8) => {
   return str;
 };
 
-export const changeRequestResponseTo401 = ({ route, method }) => {
+export const changeRequestResponseTo401 = ({
+  route,
+  method,
+  otherHandlers = [],
+}) => {
   const { errorBody } = error_401();
   server.resetHandlers(
     rest[method](route, (req, res, ctx) => {
       return res(ctx.json(errorBody), ctx.status(401));
     }),
+    ...otherHandlers,
     ...handlers
   );
 };
