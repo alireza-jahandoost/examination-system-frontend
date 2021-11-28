@@ -24,7 +24,7 @@ export const EditQuestionProvider = ({ children, examId, questionId }) => {
   const [states, setStates] = useState(null);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const { token } = useContext(AuthenticationContext);
+  const { token, removeUserInfo } = useContext(AuthenticationContext);
   const isMounted = useMountedState();
 
   const addError = (newErrors) => {
@@ -62,9 +62,14 @@ export const EditQuestionProvider = ({ children, examId, questionId }) => {
         })
       )
       .catch((errors) => {
-        console.error(errors);
+        switch (Number(errors.response.status)) {
+          case 401:
+            removeUserInfo();
+            break;
+          default:
+        }
       });
-  }, [questionId, examId, token, isMounted]);
+  }, [questionId, examId, token, isMounted, removeUserInfo]);
 
   const updateQuestion = ({
     question_text,
@@ -194,16 +199,28 @@ export const EditQuestionProvider = ({ children, examId, questionId }) => {
         })
       )
       .catch((errors) => {
-        console.error(errors);
-      }); // .then((response) => response.data.data)
-    // .then(({ question }) => setQuestion(question))
-    // .catch((err) => console.error(err));
+        switch (Number(errors.response.status)) {
+          case 401:
+            removeUserInfo();
+            break;
+          default:
+        }
+      });
   };
 
-  const deleteQuestion = () => {
-    questionsDeleteRequest(examId, questionId, token)
-      .then(() => {})
-      .catch((err) => console.error(err));
+  const deleteQuestion = async () => {
+    try {
+      await questionsDeleteRequest(examId, questionId, token);
+      return true;
+    } catch (e) {
+      switch (Number(e.response.status)) {
+        case 401:
+          removeUserInfo();
+          break;
+        default:
+      }
+      return false;
+    }
   };
 
   const value = {

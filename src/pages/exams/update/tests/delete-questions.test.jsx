@@ -32,5 +32,5 @@ test("if exam is not published, user can click on the delete button of questions
   const confirmButton = await screen.findByRole("button", { name: /confirm/i });
   userEvent.click(confirmButton);
 
-  expect(firstTextbox).not.toBeInTheDocument();
+  await waitFor(() => expect(firstTextbox).not.toBeInTheDocument());
 });

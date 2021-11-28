@@ -151,10 +151,12 @@ export const UpdateExamProvider = ({ children }) => {
   };
 
   const deleteQuestion = (questionId) => {
-    const newQuestions = questions.filter(
-      (question) => Number(question.question_id) !== Number(questionId)
-    );
-    setQuestions(newQuestions);
+    if (isMounted()) {
+      const newQuestions = questions.filter(
+        (question) => Number(question.question_id) !== Number(questionId)
+      );
+      setQuestions(newQuestions);
+    }
   };
 
   const value = {

@@ -102,9 +102,10 @@ const ChooseQuestionType = ({ onDeleteQuestion, readOnly = false }) => {
       break;
   }
 
-  const handleDelete = () => {
-    deleteQuestion();
-    onDeleteQuestion();
+  const handleDelete = async () => {
+    if (await deleteQuestion()) {
+      onDeleteQuestion();
+    }
   };
 
   return (
