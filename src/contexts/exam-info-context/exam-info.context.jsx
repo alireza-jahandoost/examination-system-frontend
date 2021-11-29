@@ -24,16 +24,26 @@ export const ExamInfoProvider = ({ children, examId }) => {
   const { createNotification } = useContext(NotificationContext);
   const [exam, setExam] = useState(null);
   const [examPassword, setExamPassword] = useState("");
-  const [isUserRegisteredToExam, setIsUserRegisteredToExam] = useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
+  const [isContextLoaded, setIsContextLoaded] = useState(false);
   const isMounted = useMountedState();
+  const isUserRegisteredToExam = exam ? exam.is_registered : false;
+
+  useEffect(() => {
+    if (isContextLoaded) {
+      return;
+    }
+    if (exam) {
+      setIsContextLoaded(true);
+    }
+  }, [exam, isContextLoaded]);
+
   useEffect(() => {
     examsShowRequest(examId, token)
       .then((response) => response.data.data)
       .then((data) => {
         if (isMounted()) {
           setExam(data.exam);
-          setIsUserRegisteredToExam(data.exam.is_registered);
         }
       })
       .catch((e) => {
@@ -44,7 +54,7 @@ export const ExamInfoProvider = ({ children, examId }) => {
           default:
         }
       });
-  }, [examId, isMounted, token]);
+  }, [examId, isMounted, token, removeUserInfo]);
 
   useEffect(() => {
     if (isUserRegisteredToExam) {
@@ -88,7 +98,7 @@ export const ExamInfoProvider = ({ children, examId }) => {
       registerToExamRequest(examId, token, examPassword)
         .then(({ data, status }) => {
           if (status === 201 && isMounted()) {
-            setIsUserRegisteredToExam(true);
+            setExam((prevExam) => ({ ...prevExam, is_registered: true }));
           }
         })
         .catch((err) => {
@@ -155,6 +165,7 @@ export const ExamInfoProvider = ({ children, examId }) => {
         examPassword,
         changeExamPassword,
         passwordErrorMessage,
+        isContextLoaded,
       }}
     >
       {children}

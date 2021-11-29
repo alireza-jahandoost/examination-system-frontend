@@ -56,6 +56,8 @@ describe("check 401 errors(the removeUserInfo() func from authentication context
       }
     );
 
+    await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
+
     const registerButton = await screen.findByRole("button", {
       name: /register/i,
     });

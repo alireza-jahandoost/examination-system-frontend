@@ -14,14 +14,15 @@ export const ExaminingContext = createContext();
 
 export const ExaminingProvider = ({ children }) => {
   const examInfo = useContext(ExamInfoContext);
-  const { token } = useContext(AuthenticationContext);
+  const { token, removeUserInfo } = useContext(AuthenticationContext);
 
   const [isContextLoaded, setIsContextLoaded] = useState(false);
-  const [participant, setParticipant] = useState(null);
+  const [participant, setParticipant] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [questions, setQuestions] = useState([]);
   const [isUserFinishedExam, setIsUserFinishedExam] = useState(false);
+  const [isFailed, setIsFailed] = useState(false);
 
   const isMounted = useMountedState();
   const { examId } = useParams();
@@ -58,16 +59,25 @@ export const ExaminingProvider = ({ children }) => {
     if (isContextLoaded) {
       return;
     }
-    if (examInfo.exam) {
+    if (examInfo.exam && participant !== undefined) {
       setIsContextLoaded(true);
     }
-  }, [examInfo.exam, isContextLoaded]);
+  }, [examInfo.exam, isContextLoaded, participant]);
 
   useEffect(() => {
-    if (!token) {
+    if (!token || isFailed || !examInfo.isContextLoaded) {
       return;
     }
-    if (!participant && examInfo.isUserRegisteredToExam && !isLoading) {
+    if (
+      (participant === undefined ||
+        (participant === null && examInfo.isUserRegisteredToExam)) &&
+      !isLoading
+    ) {
+      if (!examInfo.isUserRegisteredToExam) {
+        setParticipant(null);
+        return;
+      }
+      setIsLoading(true);
       const requests = [
         getCurrentParticipantRequest(examId, token),
         questionsIndexRequest(examId, token),
@@ -95,7 +105,14 @@ export const ExaminingProvider = ({ children }) => {
           })
         )
         .catch((errors) => {
-          // react on errors.
+          switch (Number(errors.response.status)) {
+            case 401:
+              removeUserInfo();
+              setIsFailed(true);
+              break;
+            default:
+          }
+          setIsLoading(false);
         });
     }
   }, [
@@ -105,6 +122,9 @@ export const ExaminingProvider = ({ children }) => {
     examId,
     token,
     isLoading,
+    removeUserInfo,
+    examInfo,
+    isFailed,
   ]);
 
   const finishExam = () => {
@@ -115,6 +135,12 @@ export const ExaminingProvider = ({ children }) => {
         setIsLoading(false);
       })
       .catch((err) => {
+        switch (Number(err.response.status)) {
+          case 401:
+            removeUserInfo();
+            break;
+          default:
+        }
         setErrors({ message: "something went wrong, please try again later" });
         setIsLoading(false);
       });

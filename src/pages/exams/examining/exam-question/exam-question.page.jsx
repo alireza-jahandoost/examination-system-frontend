@@ -31,7 +31,7 @@ const ExamQuestionPage = () => {
   if (
     !examTime.isExamStarted ||
     examTime.isExamFinished ||
-    !participant ||
+    participant === null ||
     isUserFinishedExam
   ) {
     return <Redirect to={programRoutes.examiningOverview(examId)} />;

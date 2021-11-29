@@ -6,6 +6,13 @@ import { server, handlers } from "../mocks/server";
 import apiRoutes from "../constants/api-routes.constant";
 import "../mocks/server";
 import { error_401, error_422 } from "../mocks/errors/pure-error-bodies.error";
+import {
+  examShowId_1,
+  examShowId_2,
+  examShowId_3,
+  examShowId_4,
+  examShowId_5_withPassword,
+} from "../mocks/mocks/exams.mock";
 
 export const wrapWithWidth = (component, size) => {
   return (
@@ -67,23 +74,36 @@ export const asignExamShowStartAndEnd = (
   const handler = rest.get(
     apiRoutes.exams.showExam(examId),
     (req, res, ctx) => {
+      let exam;
+      switch (Number(examId)) {
+        case 1:
+          exam = examShowId_1.data.exam;
+          break;
+        case 2:
+          exam = examShowId_2.data.exam;
+          break;
+        case 3:
+          exam = examShowId_3.data.exam;
+          break;
+        case 4:
+          exam = examShowId_4.data.exam;
+          break;
+        case 5:
+          exam = examShowId_5_withPassword.data.exam;
+          break;
+        default:
+          throw new Error("Unexpected examId in asignExamShowStartAndEnd");
+      }
+      const add = {};
+      if (hasPassword !== undefined) add.has_password = hasPassword;
       return res(
         ctx.json({
           data: {
             exam: {
-              exam_id: 1,
-              exam_name: "Dolorum repellendus fuga nihil illo.",
-              needs_confirmation: false,
-              has_password: hasPassword,
+              ...exam,
               start_of_exam: formatted_start_date,
               end_of_exam: formatted_end_date,
-              total_score: 100,
-              creation_time: "2021-09-24T15:40:39.000000Z",
-              last_update: "2021-09-24T15:40:39.000000Z",
-              owner_id: 33,
-              owner_name: "Mrs. Alanna Bogan Jr.",
-              owner_link: "http://localhost:8000/api/users/33",
-              is_registered: false,
+              ...add,
             },
           },
         })
