@@ -14,7 +14,7 @@ export const ShowParticipantProvider = ({ children }) => {
   const [questions, setQuestions] = useState([]);
   const [participant, setParticipant] = useState(null);
   const [isContextLoaded, setIsContextLoaded] = useState(false);
-  const { token } = useContext(AuthenticationContext);
+  const { token, removeUserInfo } = useContext(AuthenticationContext);
   const isMounted = useMountedState();
 
   useEffect(() => {
@@ -54,9 +54,21 @@ export const ShowParticipantProvider = ({ children }) => {
         })
       )
       .catch((err) => {
-        console.error(err);
+        switch (Number(err.response.status)) {
+          case 401:
+            removeUserInfo();
+            break;
+          default:
+        }
       });
-  }, [examId, token, isMounted, participantId, isContextLoaded]);
+  }, [
+    examId,
+    token,
+    isMounted,
+    participantId,
+    isContextLoaded,
+    removeUserInfo,
+  ]);
 
   const value = {
     questions,
