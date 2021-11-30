@@ -23,8 +23,8 @@ export const ExamInfoProvider = ({ children, examId }) => {
   } = useContext(AuthenticationContext);
   const { createNotification } = useContext(NotificationContext);
   const [exam, setExam] = useState(null);
+  const [errors, setErrors] = useState({});
   const [examPassword, setExamPassword] = useState("");
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [isContextLoaded, setIsContextLoaded] = useState(false);
   const isMounted = useMountedState();
   const isUserRegisteredToExam = exam ? exam.is_registered : false;
@@ -107,8 +107,12 @@ export const ExamInfoProvider = ({ children, examId }) => {
               case 401:
                 removeUserInfo();
                 break;
+              case 422:
+                const { message, errors: receivedErrors } = err.response.data;
+                setErrors({ message, ...receivedErrors });
+                break;
               default:
-                setPasswordErrorMessage("the password of exam is not correct");
+                setErrors({ password: "the password of exam is not correct" });
             }
           }
         });
@@ -164,8 +168,8 @@ export const ExamInfoProvider = ({ children, examId }) => {
         registerToExam,
         examPassword,
         changeExamPassword,
-        passwordErrorMessage,
         isContextLoaded,
+        errors,
       }}
     >
       {children}

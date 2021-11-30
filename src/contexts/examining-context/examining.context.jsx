@@ -150,7 +150,7 @@ export const ExaminingProvider = ({ children }) => {
     ...examInfo,
     isContextLoaded,
     participant,
-    errors,
+    errors: { ...examInfo.errors, ...errors },
     isLoading,
     nextQuestion: nextQuestionId,
     prevQuestion: prevQuestionId,

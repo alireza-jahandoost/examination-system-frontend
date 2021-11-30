@@ -197,7 +197,7 @@ describe("check when user is authenticated", () => {
         firstQuestion: null,
         registerToExam,
         changeExamPassword,
-        passwordErrorMessage: errorMessage,
+        errors: { message: errorMessage },
       });
       renderWithAuthentication(WrappedElement, {
         route: programRoutes.examiningOverview(5),

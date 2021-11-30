@@ -21,7 +21,7 @@ const ExamOverviewPage = () => {
     registerToExam,
     examPassword,
     changeExamPassword,
-    passwordErrorMessage,
+    errors,
   } = useContext(ExaminingContext);
   const { isUserAuthenticated, showUserLoginPopover } = useContext(
     AuthenticationContext
@@ -63,11 +63,14 @@ const ExamOverviewPage = () => {
           <ExamTime color="dark" examTime={examTime} />
           {canUserRegisterToExam && (
             <Form onSubmit={handleRegistration}>
+              {errors.message && (
+                <p className="text-danger">{errors.message}</p>
+              )}
               {exam.has_password && (
                 <ExamPassword
                   examPassword={examPassword}
                   changeExamPassword={changeExamPassword}
-                  passwordErrorMessage={passwordErrorMessage}
+                  passwordErrorMessage={errors.password}
                   examId={examId}
                 />
               )}

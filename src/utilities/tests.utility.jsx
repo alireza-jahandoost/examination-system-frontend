@@ -95,7 +95,7 @@ export const asignExamShowStartAndEnd = (
           throw new Error("Unexpected examId in asignExamShowStartAndEnd");
       }
       const add = {};
-      if (hasPassword !== undefined) add.has_password = hasPassword;
+      if (hasPassword === true) add.has_password = hasPassword;
       return res(
         ctx.json({
           data: {
@@ -193,13 +193,19 @@ export const changeRequestResponseTo401 = ({
   );
 };
 
-export const changeRequestResponseTo422 = ({ route, method, fields }) => {
+export const changeRequestResponseTo422 = ({
+  route,
+  method,
+  fields,
+  otherHandlers = [],
+}) => {
   const message = randomString(30);
   const { errorBody, errors } = error_422({ message, fields });
   server.resetHandlers(
     rest[method](route, (req, res, ctx) => {
       return res(ctx.json(errorBody), ctx.status(422));
     }),
+    ...otherHandlers,
     ...handlers
   );
   return { message, errors };

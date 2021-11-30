@@ -3,9 +3,10 @@ import { useContext } from "react";
 import { ExamInfoContext } from "../../contexts/exam-info-context/exam-info.context";
 
 const PasswordInput = ({ examId }) => {
-  const { examPassword, changeExamPassword, passwordErrorMessage } = useContext(
+  const { examPassword, changeExamPassword, errors } = useContext(
     ExamInfoContext
   );
+  console.log(errors);
   return (
     <Form.Group controlId={`exam-${examId}-register`}>
       <Form.Control
@@ -16,7 +17,9 @@ const PasswordInput = ({ examId }) => {
         type="password"
         placeholder="Exam Password"
       />
-      <small className="text-danger">{passwordErrorMessage}</small>
+      {errors.password && (
+        <small className="text-danger">{errors.password}</small>
+      )}
       <small>
         This is a private exam and requires password. if you don't know the
         password, contact the auther

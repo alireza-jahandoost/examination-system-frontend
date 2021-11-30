@@ -5,7 +5,10 @@ import {
   renderWithAuthentication,
 } from "../../../test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
-import { changeRequestResponseTo401 } from "../../../utilities/tests.utility";
+import {
+  changeRequestResponseTo401,
+  changeRequestResponseTo422,
+} from "../../../utilities/tests.utility";
 
 import { ExamInfoProvider } from "../exam-info.context";
 import { ExaminingProvider } from "../../examining-context/examining.context";
@@ -67,6 +70,54 @@ describe("check 401 errors(the removeUserInfo() func from authentication context
   });
 });
 
-describe.skip("check 422 errors", () => {});
+describe("check 422 errors", () => {
+  const fields = ["password"];
+  test("check exams.registerInExam route", async () => {
+    const { message, errors } = changeRequestResponseTo422({
+      route: apiRoutes.exams.registerInExam(":examId"),
+      method: "post",
+      fields,
+      otherHandlers: [
+        asignExamShowStartAndEnd(
+          5,
+          new Date(Date.now() - 5000),
+          new Date(Date.now() + 3600 * 1000)
+        ),
+      ],
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <ExamInfoProvider examId={5}>
+        <ExaminingProvider>
+          <ExamOverview />
+        </ExaminingProvider>
+      </ExamInfoProvider>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+        route: programRoutes.examiningOverview(5),
+      }
+    );
+
+    await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
+
+    const registerButton = await screen.findByRole("button", {
+      name: /register/i,
+    });
+    userEvent.click(registerButton);
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() =>
+      expect(screen.getByText(message, { exact: false })).toBeInTheDocument()
+    );
+    for (const error in errors) {
+      await waitFor(() =>
+        expect(
+          screen.getByText(errors[error], { exact: false })
+        ).toBeInTheDocument()
+      );
+    }
+  });
+});
 
 describe.skip("check other errors", () => {});

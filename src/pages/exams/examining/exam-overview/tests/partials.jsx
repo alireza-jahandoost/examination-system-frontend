@@ -70,8 +70,12 @@ export const wrapper = (
     changeExamPassword = jest.fn(),
     examPassword = "",
     passwordErrorMessage = "",
+    errors = {},
   }
 ) => {
+  if (passwordErrorMessage) {
+    throw new Error("here");
+  }
   const value = {
     isContextLoaded,
     participant: getParticipant(participantId),
@@ -86,6 +90,7 @@ export const wrapper = (
     changeExamPassword,
     examPassword,
     passwordErrorMessage,
+    errors,
   };
   const WrappedElement = (
     <Route path={programRoutes.examiningOverview(":examId")}>
