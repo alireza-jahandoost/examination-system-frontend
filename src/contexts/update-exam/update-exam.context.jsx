@@ -28,7 +28,7 @@ export const UpdateExamProvider = ({ children }) => {
   const [errors, setErrors] = useState({});
   const [isPublished, setIsPublished] = useState(false);
   const [isAnyChangeExist, setIsAnyChangeExist] = useState(false);
-  const { token } = useContext(AuthenticationContext);
+  const { token, removeUserInfo } = useContext(AuthenticationContext);
   const isMounted = useMountedState();
   const { examId } = useParams();
   const [questions, setQuestions] = useState([]);
@@ -96,9 +96,17 @@ export const UpdateExamProvider = ({ children }) => {
         })
       )
       .catch((errors) => {
-        setErrors({ message: "something went wrong, please try again later" });
+        switch (Number(errors.response.status)) {
+          case 401:
+            removeUserInfo();
+            break;
+          default:
+            setErrors({
+              message: "something went wrong, please try again later",
+            });
+        }
       });
-  }, [examId, isMounted, token]);
+  }, [examId, isMounted, token, removeUserInfo]);
 
   const handleUpdate = (bodyOfRequest) => {
     setIsLoading(true);
@@ -116,9 +124,15 @@ export const UpdateExamProvider = ({ children }) => {
       })
       .catch((err) => {
         if (isMounted()) {
-          const { message, errors } = err.response.data;
-          setErrors({ message, ...errors });
-          setIsLoading(false);
+          switch (Number(err.response.status)) {
+            case 401:
+              removeUserInfo();
+              break;
+            default:
+              const { message, errors } = err.response.data;
+              setErrors({ message, ...errors });
+              setIsLoading(false);
+          }
         }
       });
   };
@@ -131,10 +145,16 @@ export const UpdateExamProvider = ({ children }) => {
         setErrors({});
       })
       .catch((err) => {
-        setErrors({
-          message: err.response.data.message,
-          ...err.response.data.errors,
-        });
+        switch (Number(err.response.status)) {
+          case 401:
+            removeUserInfo();
+            break;
+          default:
+            setErrors({
+              message: err.response.data.message,
+              ...err.response.data.errors,
+            });
+        }
       });
   };
 
@@ -145,9 +165,17 @@ export const UpdateExamProvider = ({ children }) => {
         createNotification("you unpublished this exam successfully", 3000);
         setErrors({});
       })
-      .catch((err) =>
-        setErrors({ message: "something went wrong, please try again later" })
-      );
+      .catch((err) => {
+        switch (Number(err.response.status)) {
+          case 401:
+            removeUserInfo();
+            break;
+          default:
+            setErrors({
+              message: "something went wrong, please try again later",
+            });
+        }
+      });
   };
 
   const deleteQuestion = (questionId) => {
