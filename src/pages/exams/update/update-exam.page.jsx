@@ -6,7 +6,7 @@ import EditQuestion from "../../../components/edit-question/edit-question.compon
 import CreateQuestion from "../../../components/create-question/create-question.component";
 import ElementContainer from "./element-container.component";
 import { QuestionTypesProvider } from "../../../contexts/question-types-context/question-types.context";
-import { UpdateExamContext } from "../../../contexts/update-exam/update-exam.context";
+import { UpdateExamContext } from "../../../contexts/update-exam-context/update-exam.context";
 
 const UpdateExamPage = () => {
   const [addQuestionFormVisible, setAddQuestionFormVisible] = useState(false);

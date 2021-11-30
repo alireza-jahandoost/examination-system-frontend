@@ -11,7 +11,7 @@ import CreateExamPage from "./create/create-exam.page";
 
 import UpdateExamPage from "./update/update-exam.page";
 import { AuthenticationContext } from "../../contexts/authentication-context/authentication.context";
-import { UpdateExamProvider } from "../../contexts/update-exam/update-exam.context";
+import { UpdateExamProvider } from "../../contexts/update-exam-context/update-exam.context";
 
 import ExaminingRouter from "./examining/examining.router";
 

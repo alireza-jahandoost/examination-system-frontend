@@ -9,7 +9,7 @@ import PasswordInput from "../../../components/inputs/password-input.component";
 
 import { convertToUTC } from "../../../utilities/dateAndTime.utility";
 
-import { UpdateExamContext } from "../../../contexts/update-exam/update-exam.context";
+import { UpdateExamContext } from "../../../contexts/update-exam-context/update-exam.context";
 
 const UpdateExamForm = ({ examId }) => {
   const {

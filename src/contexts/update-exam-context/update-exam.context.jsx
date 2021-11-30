@@ -96,14 +96,16 @@ export const UpdateExamProvider = ({ children }) => {
         })
       )
       .catch((errors) => {
-        switch (Number(errors.response.status)) {
-          case 401:
-            removeUserInfo();
-            break;
-          default:
-            setErrors({
-              message: "something went wrong, please try again later",
-            });
+        if (isMounted()) {
+          switch (Number(errors.response.status)) {
+            case 401:
+              removeUserInfo();
+              break;
+            default:
+              setErrors({
+                message: "something went wrong, please try again later",
+              });
+          }
         }
       });
   }, [examId, isMounted, token, removeUserInfo]);
@@ -140,20 +142,24 @@ export const UpdateExamProvider = ({ children }) => {
   const publishExam = () => {
     examsPublishRequest(token, examId)
       .then(() => {
-        setIsPublished(true);
-        createNotification("you published this exam successfully", 3000);
-        setErrors({});
+        if (isMounted()) {
+          setIsPublished(true);
+          createNotification("you published this exam successfully", 3000);
+          setErrors({});
+        }
       })
       .catch((err) => {
-        switch (Number(err.response.status)) {
-          case 401:
-            removeUserInfo();
-            break;
-          default:
-            setErrors({
-              message: err.response.data.message,
-              ...err.response.data.errors,
-            });
+        if (isMounted()) {
+          switch (Number(err.response.status)) {
+            case 401:
+              removeUserInfo();
+              break;
+            default:
+              setErrors({
+                message: err.response.data.message,
+                ...err.response.data.errors,
+              });
+          }
         }
       });
   };
@@ -161,19 +167,23 @@ export const UpdateExamProvider = ({ children }) => {
   const unpublishExam = () => {
     examsUnpublishRequest(token, examId)
       .then(() => {
-        setIsPublished(false);
-        createNotification("you unpublished this exam successfully", 3000);
-        setErrors({});
+        if (isMounted()) {
+          setIsPublished(false);
+          createNotification("you unpublished this exam successfully", 3000);
+          setErrors({});
+        }
       })
       .catch((err) => {
-        switch (Number(err.response.status)) {
-          case 401:
-            removeUserInfo();
-            break;
-          default:
-            setErrors({
-              message: "something went wrong, please try again later",
-            });
+        if (isMounted()) {
+          switch (Number(err.response.status)) {
+            case 401:
+              removeUserInfo();
+              break;
+            default:
+              setErrors({
+                message: "something went wrong, please try again later",
+              });
+          }
         }
       });
   };
