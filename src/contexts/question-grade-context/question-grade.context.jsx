@@ -20,7 +20,7 @@ export const QuestionGradeProvider = ({
   const [newGrade, setNewGrade] = useState("");
   const [grade, setGrade] = useState(null);
   const [errors, setErrors] = useState({});
-  const { token } = useContext(AuthenticationContext);
+  const { token, removeUserInfo } = useContext(AuthenticationContext);
   const isMounted = useMountedState();
 
   const showGradeEnabled = participantStatus === "FINISHED";
@@ -66,7 +66,14 @@ export const QuestionGradeProvider = ({
           setIsContextLoaded(true);
         }
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        switch (Number(err.response.status)) {
+          case 401:
+            removeUserInfo();
+            break;
+          default:
+        }
+      });
   }, [
     token,
     isContextLoaded,
@@ -87,14 +94,20 @@ export const QuestionGradeProvider = ({
         }
       })
       .catch((err) => {
-        const newErrors = { ...err.response.data.errors };
-        newErrors.message = err.response.data.message;
-        for (const current in newErrors) {
-          if (Array.isArray(newErrors[current])) {
-            newErrors[current] = newErrors[current][0];
-          }
+        switch (Number(err.response.status)) {
+          case 401:
+            removeUserInfo();
+            break;
+          default:
+            const newErrors = { ...err.response.data.errors };
+            newErrors.message = err.response.data.message;
+            for (const current in newErrors) {
+              if (Array.isArray(newErrors[current])) {
+                newErrors[current] = newErrors[current][0];
+              }
+            }
+            setErrors(newErrors);
         }
-        setErrors(newErrors);
       });
   };
 
