@@ -5,6 +5,7 @@ const QuestionType = ({
   selectedValue, // the value of selected object
   onChange,
   disabled = false,
+  error,
   suffix = "",
 }) => {
   return (
@@ -22,6 +23,7 @@ const QuestionType = ({
             </option>
           ))}
       </Form.Select>
+      {error && <p className="text-danger">{error}</p>}
     </Form.Group>
   );
 };

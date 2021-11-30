@@ -74,7 +74,7 @@ export const CreateQuestionProvider = ({ children }) => {
         case 401:
           removeUserInfo();
           break;
-        default:
+        case 422:
           const { errors: receivedErrors, message } = e.response.data;
           const newErrors = { ...receivedErrors, message };
           for (const error in newErrors) {
@@ -83,6 +83,9 @@ export const CreateQuestionProvider = ({ children }) => {
             }
           }
           setErrors(newErrors);
+          break;
+        default:
+          console.error(e);
       }
       return null;
     }
