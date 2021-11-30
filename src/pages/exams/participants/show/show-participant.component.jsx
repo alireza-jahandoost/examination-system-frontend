@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { Container } from "react-bootstrap";
 
 import ProfileContainer from "../../../../components/profile-container/profile-container.component";
 import ParticipantAnswer from "../../../../components/participant-answer/participant-answer.component";

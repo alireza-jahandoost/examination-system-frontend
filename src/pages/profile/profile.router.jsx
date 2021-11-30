@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import programRoutes from "../../constants/program-routes.constant";
 import OverviewPage from "./overview/overview.page";
 import SettingsPage from "./settings/settings.page";

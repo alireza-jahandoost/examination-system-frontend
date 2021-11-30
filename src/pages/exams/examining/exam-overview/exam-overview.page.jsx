@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Container, Button, Form, Row, Col } from "react-bootstrap";
+import { Container, Button, Form } from "react-bootstrap";
 import { useParams, Link } from "react-router-dom";
 
 import { AuthenticationContext } from "../../../../contexts/authentication-context/authentication.context";
