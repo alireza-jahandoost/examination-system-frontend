@@ -203,7 +203,12 @@ export const EditQuestionProvider = ({ children, examId, questionId }) => {
           case 401:
             removeUserInfo();
             break;
+          case 422:
+            const { message, errors: receivedErrors } = errors.response.data;
+            setErrors({ message, ...receivedErrors });
+            break;
           default:
+            console.error(errors);
         }
       });
   };
@@ -216,6 +221,10 @@ export const EditQuestionProvider = ({ children, examId, questionId }) => {
       switch (Number(e.response.status)) {
         case 401:
           removeUserInfo();
+          break;
+        case 422:
+          const { message } = e.response.data;
+          setErrors({ message });
           break;
         default:
       }

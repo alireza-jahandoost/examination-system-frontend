@@ -123,6 +123,10 @@ const ChooseQuestionType = ({ onDeleteQuestion, readOnly = false }) => {
           />
         </div>
       )}
+      {errors.text_part && <p className="text-danger">{errors.text_part}</p>}
+      {errors.integer_part && (
+        <p className="text-danger">{errors.integer_part}</p>
+      )}
       {isLoading ? <p> Loading... </p> : questionForm}
       <Modal
         onConfirm={handleDelete}
