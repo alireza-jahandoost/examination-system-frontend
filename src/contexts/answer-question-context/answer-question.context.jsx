@@ -160,6 +160,10 @@ export const AnswerQuestionProvider = ({
             case 401:
               removeUserInfo();
               break;
+            case 422:
+              const { message, errors: receivedErrors } = err.response.data;
+              setErrors({ message, ...receivedErrors });
+              break;
             default:
               setErrors({
                 message: "something went wrong, please try again later",

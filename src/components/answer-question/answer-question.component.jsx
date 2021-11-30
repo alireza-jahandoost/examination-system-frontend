@@ -57,6 +57,15 @@ const AnswerQuestion = ({ readOnly = false }) => {
     <div className="flex-grow-1">
       <Container className="h-100">
         {errors.message && <p className="text-danger">{errors.message}</p>}
+        {errors &&
+          Object.keys(errors).map((errorKey) => {
+            if (errorKey === "message") return null;
+            return (
+              <p key={errorKey} className="text-danger">
+                {errors[errorKey]}
+              </p>
+            );
+          })}
         <Form className="h-100 d-flex flex-column justify-content-around">
           <QuestionInfo
             questionText={question.question_text}
