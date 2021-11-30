@@ -17,7 +17,7 @@ const ParticipatedExamsPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [numberOfPages, setNumberOfPages] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const { token } = useContext(AuthenticationContext);
+  const { token, removeUserInfo } = useContext(AuthenticationContext);
   const location = useLocation();
   const page = useMemo(() => {
     return Number(new URLSearchParams(location.search).get("page")) || 1;
@@ -44,8 +44,15 @@ const ParticipatedExamsPage = () => {
           setIsLoading(false);
         }
       })
-      .catch((err) => console.error(err));
-  }, [page, token, isMounted, currentPage, isLoading]);
+      .catch((err) => {
+        switch (Number(err.response.status)) {
+          case 401:
+            removeUserInfo();
+            break;
+          default:
+        }
+      });
+  }, [page, token, isMounted, currentPage, isLoading, removeUserInfo]);
 
   if (
     !isLoading &&

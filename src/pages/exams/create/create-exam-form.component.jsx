@@ -28,7 +28,7 @@ const CreateExamForm = ({ ...props }) => {
   const [needsConfirmation, setNeedsConfirmation] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  const { token } = useContext(AuthenticationContext);
+  const { token, removeUserInfo } = useContext(AuthenticationContext);
   const { createNotification } = useContext(NotificationContext);
   const isMounted = useMountedState();
   const history = useHistory();
@@ -61,9 +61,15 @@ const CreateExamForm = ({ ...props }) => {
       })
       .catch((err) => {
         if (isMounted()) {
-          const { message, errors } = err.response.data;
-          setErrors({ message, ...errors });
-          setIsLoading(false);
+          switch (Number(err.response.status)) {
+            case 401:
+              removeUserInfo();
+              break;
+            default:
+              const { message, errors } = err.response.data;
+              setErrors({ message, ...errors });
+              setIsLoading(false);
+          }
         }
       });
   };

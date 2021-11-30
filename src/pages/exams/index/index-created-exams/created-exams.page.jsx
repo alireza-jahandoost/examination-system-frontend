@@ -16,7 +16,7 @@ const CreatedExamsPage = () => {
   const [exams, setExams] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [numberOfPages, setNumberOfPages] = useState(0);
-  const { token } = useContext(AuthenticationContext);
+  const { token, removeUserInfo } = useContext(AuthenticationContext);
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
   const page = useMemo(() => {
@@ -44,8 +44,15 @@ const CreatedExamsPage = () => {
           setIsLoading(false);
         }
       })
-      .catch((err) => console.error(err));
-  }, [page, token, isMounted, currentPage, isLoading]);
+      .catch((err) => {
+        switch (Number(err.response.status)) {
+          case 401:
+            removeUserInfo();
+            break;
+          default:
+        }
+      });
+  }, [page, token, isMounted, currentPage, isLoading, removeUserInfo]);
 
   if (
     !isLoading &&

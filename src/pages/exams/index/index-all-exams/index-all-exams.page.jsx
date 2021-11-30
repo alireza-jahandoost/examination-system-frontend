@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AuthenticationContext } from "../../../../contexts/authentication-context/authentication.context";
 import { Container, Row, Col } from "react-bootstrap";
 import IndexExamHeader from "./index-exams-header.component";
 import Search from "./search.component";
@@ -15,19 +16,29 @@ const IndexAllExams = () => {
   const [isFinished, setIsFinished] = useState(false);
   const [shownExamId, setShownExamId] = useState(-1);
   const isMounted = useMountedState();
+  const { removeUserInfo } = useContext(AuthenticationContext);
 
   const onExamDescriptionClose = () => {
     setShownExamId(-1);
   };
 
   const fetchExams = async () => {
-    const response = await examsIndexRequest(page);
-    const { data, meta } = await response.data;
-    if (isMounted()) {
-      setIsFinished(meta.current_page === meta.last_page);
-      setPage((prevPage) => prevPage + 1);
-      setExams((prevExams) => [...prevExams, ...data.exams]);
-      setIsFetching(false);
+    try {
+      const response = await examsIndexRequest(page);
+      const { data, meta } = await response.data;
+      if (isMounted()) {
+        setIsFinished(meta.current_page === meta.last_page);
+        setPage((prevPage) => prevPage + 1);
+        setExams((prevExams) => [...prevExams, ...data.exams]);
+        setIsFetching(false);
+      }
+    } catch (e) {
+      switch (Number(e.response.status)) {
+        case 401:
+          removeUserInfo();
+          break;
+        default:
+      }
     }
   };
 
