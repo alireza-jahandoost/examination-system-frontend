@@ -2,6 +2,8 @@ import { useEffect, createContext, useState, useContext } from "react";
 import axios from "axios";
 import { useMountedState } from "react-use";
 
+import useAsyncError from "../../hooks/useAsyncError";
+
 import { AuthenticationContext } from "../authentication-context/authentication.context";
 
 import { questionsShowRequest } from "../../services/questions/questions.service";
@@ -32,6 +34,7 @@ export const AnswerQuestionProvider = ({
   const [states, setStates] = useState([]);
   const [isFailed, setIsFailed] = useState(false);
   const isMounted = useMountedState();
+  const throwError = useAsyncError();
 
   useEffect(() => {
     if (!question || question.question_id !== questionId) {
@@ -100,9 +103,7 @@ export const AnswerQuestionProvider = ({
               removeUserInfo();
               break;
             default:
-              setErrors({
-                message: "something went wrong, please try again later",
-              });
+              throwError(e);
           }
           setIsLoading(false);
         }
@@ -120,6 +121,7 @@ export const AnswerQuestionProvider = ({
     isLoading,
     isFailed,
     removeUserInfo,
+    throwError,
   ]);
 
   const changeAnswers = (newAnswers) => {

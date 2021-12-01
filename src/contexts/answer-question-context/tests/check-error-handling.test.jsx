@@ -7,9 +7,11 @@ import userEvent from "@testing-library/user-event";
 import {
   changeRequestResponseTo401,
   changeRequestResponseTo422,
+  changeRequestResponseToSpecificStatus,
 } from "../../../utilities/tests.utility";
 
 import { AnswerQuestionProvider } from "../answer-question.context";
+import ErrorBoundary from "../../../components/error-boundary/error-boundary.component";
 
 import AnswerQuestion from "../../../components/answer-question/answer-question.component";
 
@@ -232,4 +234,153 @@ describe("check 422 errors", () => {
   });
 });
 
-describe.skip("check other errors", () => {});
+describe("check other errors", () => {
+  test("check questions.showQuestion route", async () => {
+    jest.spyOn(console, "error").mockImplementation(() => {});
+    changeRequestResponseToSpecificStatus({
+      route: apiRoutes.questions.showQuestion(":examId", ":questionId"),
+      method: "get",
+      status: 403,
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <ErrorBoundary>
+        <AnswerQuestionProvider examId={1} questionId={1} participantId={1} />
+      </ErrorBoundary>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+      }
+    );
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() => expect(screen.getByText(403)).toBeInTheDocument());
+  });
+
+  test("check answers.createAnswer route", async () => {
+    changeRequestResponseToSpecificStatus({
+      route: apiRoutes.answers.createAnswer(":questionId"),
+      method: "post",
+      status: 403,
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <AnswerQuestionProvider examId={1} questionId={1} participantId={1}>
+        <AnswerQuestion />
+      </AnswerQuestionProvider>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+      }
+    );
+
+    await waitFor(() =>
+      expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+    );
+
+    const textbox = screen.getByRole("textbox");
+
+    userEvent.clear(textbox);
+    userEvent.type(textbox, "something something");
+
+    const saveChangesButton = screen.getByRole("button", {
+      name: /save changes/i,
+    });
+    userEvent.click(saveChangesButton);
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() =>
+      expect(screen.getByText(/something went wrong/i)).toBeInTheDocument()
+    );
+  });
+
+  test("check answers.deleteAnswers route", async () => {
+    changeRequestResponseToSpecificStatus({
+      route: apiRoutes.answers.deleteAnswers(":questionId"),
+      method: "delete",
+      status: 403,
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <AnswerQuestionProvider examId={1} questionId={1} participantId={1}>
+        <AnswerQuestion />
+      </AnswerQuestionProvider>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+      }
+    );
+
+    await waitFor(() =>
+      expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+    );
+
+    const textbox = screen.getByRole("textbox");
+
+    userEvent.clear(textbox);
+    userEvent.type(textbox, "something something");
+
+    const saveChangesButton = screen.getByRole("button", {
+      name: /save changes/i,
+    });
+    userEvent.click(saveChangesButton);
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() =>
+      expect(screen.getByText(/something went wrong/i)).toBeInTheDocument()
+    );
+  });
+
+  test("check answers.indexAnswers route", async () => {
+    jest.spyOn(console, "error").mockImplementation(() => {});
+    changeRequestResponseToSpecificStatus({
+      route: apiRoutes.answers.indexAnswers(":questionId", ":participantId"),
+      method: "get",
+      status: 403,
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <ErrorBoundary>
+        {" "}
+        <AnswerQuestionProvider
+          examId={1}
+          questionId={1}
+          participantId={1}
+        ></AnswerQuestionProvider>
+      </ErrorBoundary>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+      }
+    );
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() => expect(screen.getByText(403)).toBeInTheDocument());
+  });
+
+  test("check states.indexStates route", async () => {
+    jest.spyOn(console, "error").mockImplementation(() => {});
+    changeRequestResponseToSpecificStatus({
+      route: apiRoutes.states.indexStates(":examId", ":questionId"),
+      method: "get",
+      status: 403,
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <ErrorBoundary>
+        <AnswerQuestionProvider
+          examId={1}
+          questionId={3}
+          participantId={1}
+        ></AnswerQuestionProvider>
+      </ErrorBoundary>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+      }
+    );
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() => expect(screen.getByText(403)).toBeInTheDocument());
+  });
+});

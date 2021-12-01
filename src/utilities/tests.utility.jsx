@@ -210,3 +210,18 @@ export const changeRequestResponseTo422 = ({
   );
   return { message, errors };
 };
+
+export const changeRequestResponseToSpecificStatus = ({
+  route,
+  method,
+  otherHandlers = [],
+  status,
+}) => {
+  server.resetHandlers(
+    rest[method](route, (req, res, ctx) => {
+      return res(ctx.status(status));
+    }),
+    ...otherHandlers,
+    ...handlers
+  );
+};
