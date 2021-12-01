@@ -81,6 +81,7 @@ export const QuestionGradeProvider = ({
     questionId,
     isMounted,
     showGradeEnabled,
+    removeUserInfo,
   ]);
 
   const submitGrade = () => {
@@ -98,7 +99,7 @@ export const QuestionGradeProvider = ({
           case 401:
             removeUserInfo();
             break;
-          default:
+          case 422:
             const newErrors = { ...err.response.data.errors };
             newErrors.message = err.response.data.message;
             for (const current in newErrors) {
@@ -107,6 +108,9 @@ export const QuestionGradeProvider = ({
               }
             }
             setErrors(newErrors);
+            break;
+          default:
+            console.error(err);
         }
       });
   };

@@ -4,7 +4,10 @@ import {
   renderWithAuthentication,
 } from "../../../test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
-import { changeRequestResponseTo401 } from "../../../utilities/tests.utility";
+import {
+  changeRequestResponseTo401,
+  changeRequestResponseTo422,
+} from "../../../utilities/tests.utility";
 import { questionsShowId_1 } from "../../../mocks/mocks/questions.mock";
 
 import { QuestionGradeProvider } from "../question-grade.context";
@@ -76,6 +79,55 @@ describe("check 401 errors(the removeUserInfo() func from authentication context
   });
 });
 
-describe.skip("check 422 errors", () => {});
+describe("check 422 errors", () => {
+  test("check participants.saveScoreOfQuestion route", async () => {
+    const { message, errors } = changeRequestResponseTo422({
+      route: apiRoutes.participants.saveScoreOfQuestion(
+        ":questionId",
+        ":participantId"
+      ),
+      fields: ["grade"],
+      method: "post",
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <QuestionGradeProvider
+        participantId={1}
+        questionId={1}
+        participantStatus="FINISHED"
+      >
+        <QuestionGrade canUserChangeGrade={true} questionId={1} />
+      </QuestionGradeProvider>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+      }
+    );
+
+    const changeGradeInput = await screen.findByRole("spinbutton", {
+      name: /grade/i,
+    });
+    userEvent.clear(changeGradeInput);
+    userEvent.type(
+      changeGradeInput,
+      questionsShowId_1.data.question.question_score.toString()
+    );
+
+    const updateButton = screen.getByRole("button", { name: /update/i });
+    userEvent.click(updateButton);
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() =>
+      expect(screen.getByText(message, { exact: false })).toBeInTheDocument()
+    );
+    for (const error in errors) {
+      await waitFor(() =>
+        expect(
+          screen.getByText(errors[error], { exact: false })
+        ).toBeInTheDocument()
+      );
+    }
+  });
+});
 
 describe.skip("check other errors", () => {});

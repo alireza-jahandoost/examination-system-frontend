@@ -38,6 +38,7 @@ const QuestionGrade = ({ canUserChangeGrade = false, questionId }) => {
       )}
       {canUserChangeGrade && changeGradeEnabled && (
         <Form onSubmit={handleSubmit}>
+          {errors.message && <p className="text-danger">{errors.message}</p>}
           <Row>
             <Col md={6}>
               <NumberInput
