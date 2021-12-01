@@ -1,11 +1,17 @@
 import {
   waitFor,
+  screen,
   renderWithAuthentication,
 } from "../../../test-utils/testing-library-utils";
 import { Route } from "react-router-dom";
-import { changeRequestResponseTo401 } from "../../../utilities/tests.utility";
+import {
+  changeRequestResponseTo401,
+  changeRequestResponseToSpecificStatus,
+} from "../../../utilities/tests.utility";
 
 import { ShowParticipantProvider } from "../show-participant.context";
+
+import ErrorBoundary from "../../../components/error-boundary/error-boundary.component";
 
 import apiRoutes from "../../../constants/api-routes.constant";
 import programRoutes from "../../../constants/program-routes.constant";
@@ -54,4 +60,58 @@ describe("check 401 errors(the removeUserInfo() func from authentication context
   });
 });
 
-describe.skip("check other errors", () => {});
+describe("check other errors", () => {
+  test("check participants.showParticipant route", async () => {
+    jest.spyOn(console, "error").mockImplementation(() => {});
+    changeRequestResponseToSpecificStatus({
+      route: apiRoutes.participants.showParticipant(
+        ":examId",
+        ":participantId"
+      ),
+      status: 403,
+      method: "get",
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <Route path={programRoutes.showParticipant(":examId", ":participantId")}>
+        <ErrorBoundary>
+          {" "}
+          <ShowParticipantProvider />
+        </ErrorBoundary>
+      </Route>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+        route: programRoutes.showParticipant(2, 1),
+      }
+    );
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() => expect(screen.getByText(403)).toBeInTheDocument());
+  });
+  test("check questions.indexQuestions route", async () => {
+    jest.spyOn(console, "error").mockImplementation(() => {});
+    changeRequestResponseToSpecificStatus({
+      route: apiRoutes.questions.indexQuestions(":examId"),
+      method: "get",
+      status: 403,
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <Route path={programRoutes.showParticipant(":examId", ":participantId")}>
+        <ErrorBoundary>
+          {" "}
+          <ShowParticipantProvider />
+        </ErrorBoundary>
+      </Route>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+        route: programRoutes.showParticipant(2, 1),
+      }
+    );
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() => expect(screen.getByText(403)).toBeInTheDocument());
+  });
+});

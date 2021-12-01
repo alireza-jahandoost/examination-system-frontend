@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import { useMountedState } from "react-use";
 import { AuthenticationContext } from "../authentication-context/authentication.context";
 
+import useAsyncError from "../../hooks/useAsyncError";
+
 import { showParticipantRequest } from "../../services/participants/participants.service";
 import { questionsIndexRequest } from "../../services/questions/questions.service";
 
@@ -16,6 +18,7 @@ export const ShowParticipantProvider = ({ children }) => {
   const [isContextLoaded, setIsContextLoaded] = useState(false);
   const { token, removeUserInfo } = useContext(AuthenticationContext);
   const isMounted = useMountedState();
+  const throwError = useAsyncError();
 
   useEffect(() => {
     if (
@@ -59,6 +62,7 @@ export const ShowParticipantProvider = ({ children }) => {
             removeUserInfo();
             break;
           default:
+            throwError(err);
         }
       });
   }, [
@@ -68,6 +72,7 @@ export const ShowParticipantProvider = ({ children }) => {
     participantId,
     isContextLoaded,
     removeUserInfo,
+    throwError,
   ]);
 
   const value = {
