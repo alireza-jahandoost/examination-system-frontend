@@ -7,6 +7,7 @@ import userEvent from "@testing-library/user-event";
 import {
   changeRequestResponseTo401,
   changeRequestResponseTo422,
+  changeRequestResponseToSpecificStatus,
 } from "../../../utilities/tests.utility";
 
 import { CreateQuestionProvider } from "../create-question.context";
@@ -310,4 +311,145 @@ describe("check 422 errors", () => {
   });
 });
 
-describe.skip("check other errors", () => {});
+describe("check other errors", () => {
+  test("check questions.createQuestion route", async () => {
+    changeRequestResponseToSpecificStatus({
+      route: apiRoutes.questions.createQuestion(":examId"),
+      method: "post",
+      status: 403,
+    });
+
+    const removeUserInfo = jest.fn();
+    const addQuestion = jest.fn();
+    renderWithAuthentication(
+      <QuestionTypesProvider>
+        <CreateQuestionProvider>
+          <CreateQuestion examId={1} addQuestion={addQuestion} />
+        </CreateQuestionProvider>
+      </QuestionTypesProvider>,
+      { authenticationProviderProps: { removeUserInfo } }
+    );
+
+    const questionText = screen.getByRole("textbox", {
+      name: /question text/i,
+    });
+    const value = "new new new value";
+    userEvent.clear(questionText);
+    userEvent.type(questionText, value);
+
+    const questionScore = screen.getByRole("spinbutton", {
+      name: /question score/i,
+    });
+    const score = "20";
+    userEvent.clear(questionScore);
+    userEvent.type(questionScore, score);
+
+    const createButton = screen.getByRole("button", { name: /create/i });
+    expect(createButton).toBeEnabled();
+    userEvent.click(createButton);
+
+    await waitFor(() => expect(addQuestion).toHaveBeenCalledTimes(0));
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() =>
+      expect(screen.getByText(/something went wrong/i)).toBeInTheDocument()
+    );
+  });
+
+  test("check states.createState route", async () => {
+    changeRequestResponseToSpecificStatus({
+      route: apiRoutes.states.createState(":examId", ":questionId"),
+      method: "post",
+      status: 403,
+    });
+
+    const removeUserInfo = jest.fn();
+    const addQuestion = jest.fn();
+    renderWithAuthentication(
+      <QuestionTypesProvider>
+        <CreateQuestionProvider>
+          <CreateQuestion examId={1} addQuestion={addQuestion} />
+        </CreateQuestionProvider>
+      </QuestionTypesProvider>,
+      { authenticationProviderProps: { removeUserInfo } }
+    );
+
+    // change question type
+    const questionTypeSelector = await screen.findByRole("combobox", {
+      name: /question type/i,
+    });
+
+    userEvent.selectOptions(questionTypeSelector, [
+      selectValues.multipleAnswer,
+    ]);
+    // end
+
+    // change question text
+    const questionText = "new new new test";
+    const questionTextInput = screen.getByRole("textbox", {
+      name: /question text/i,
+    });
+    userEvent.clear(questionTextInput);
+    userEvent.type(questionTextInput, questionText);
+    // end
+
+    // change question score
+    const questionScore = "20";
+    const questionScoreInput = screen.getByRole("spinbutton", {
+      name: /question score/i,
+    });
+    userEvent.clear(questionScoreInput);
+    userEvent.type(questionScoreInput, questionScore);
+    // end
+
+    // add options
+    const addOptionsButton = screen.getByRole("button", {
+      name: /new option/i,
+    });
+
+    userEvent.click(addOptionsButton);
+    userEvent.click(addOptionsButton);
+    userEvent.click(addOptionsButton);
+    // end
+
+    // fill options
+    const optionTextFields = screen.getAllByRole("textbox", {
+      name: /question option/i,
+    });
+    userEvent.clear(optionTextFields[0]);
+    userEvent.clear(optionTextFields[1]);
+    userEvent.clear(optionTextFields[2]);
+
+    const option1 = "option 1 option 1";
+    const option2 = "option 2 option 2";
+    const option3 = "option 3 option 3";
+
+    userEvent.type(optionTextFields[0], option1);
+    userEvent.type(optionTextFields[1], option2);
+    userEvent.type(optionTextFields[2], option3);
+
+    const correctRadios = screen.getAllByRole("radio", {
+      name: /correct answer/i,
+    });
+    userEvent.click(correctRadios[0]);
+    userEvent.click(correctRadios[2]);
+    // end
+
+    // check selected answers
+    expect(correctRadios[0]).toBeChecked();
+    expect(correctRadios[1]).not.toBeChecked();
+    expect(correctRadios[2]).toBeChecked();
+    // end
+
+    // click create button
+    const createButton = screen.getAllByRole("button", { name: /create/i })[1];
+    expect(createButton).toBeEnabled();
+    userEvent.click(createButton);
+    // end
+
+    await waitFor(() => expect(addQuestion).toHaveBeenCalledTimes(0));
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() =>
+      expect(screen.getByText(/something went wrong/i)).toBeInTheDocument()
+    );
+  });
+});

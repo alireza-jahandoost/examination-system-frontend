@@ -85,7 +85,9 @@ export const CreateQuestionProvider = ({ children }) => {
           setErrors(newErrors);
           break;
         default:
-          console.error(e);
+          setErrors({
+            message: "something went wrong, please try again later",
+          });
       }
       return null;
     }
