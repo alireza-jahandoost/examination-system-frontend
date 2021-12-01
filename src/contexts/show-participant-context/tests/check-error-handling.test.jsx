@@ -54,6 +54,4 @@ describe("check 401 errors(the removeUserInfo() func from authentication context
   });
 });
 
-describe.skip("check 422 errors", () => {});
-
 describe.skip("check other errors", () => {});
