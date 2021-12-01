@@ -11,6 +11,10 @@ import {
   showParticipantId3,
   showParticipantId4,
 } from "../mocks/participants.mock";
+import {
+  wrongPassword,
+  withoutPassword,
+} from "../errors/failed-exam-registration.error";
 
 const participantsHandler = [
   rest.post(apiRoutes.exams.registerInExam(":examId"), (req, res, ctx) => {
@@ -27,8 +31,10 @@ const participantsHandler = [
       case 4: // for have password exams that are not started
         if (password === examsPassword) {
           return res(ctx.status(201));
+        } else if (password === "") {
+          return res(ctx.status(422), ctx.json(withoutPassword));
         } else {
-          return res(ctx.status(403));
+          return res(ctx.status(422), ctx.json(wrongPassword));
         }
       case 5: // for have password exams that are started
         if (password === examsPassword) {

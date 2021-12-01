@@ -1,5 +1,6 @@
 import { useEffect, useState, createContext, useContext, useMemo } from "react";
 import useRemainingTime from "../../hooks/useRemainingTime";
+import useAsyncError from "../../hooks/useAsyncError";
 import { AuthenticationContext } from "../authentication-context/authentication.context";
 import { NotificationContext } from "../notification-context/notification.context";
 import { useMountedState } from "react-use";
@@ -28,6 +29,7 @@ export const ExamInfoProvider = ({ children, examId }) => {
   const [isContextLoaded, setIsContextLoaded] = useState(false);
   const isMounted = useMountedState();
   const isUserRegisteredToExam = exam ? exam.is_registered : false;
+  const throwError = useAsyncError();
 
   useEffect(() => {
     if (isContextLoaded) {
@@ -52,9 +54,10 @@ export const ExamInfoProvider = ({ children, examId }) => {
             removeUserInfo();
             break;
           default:
+            throwError(e);
         }
       });
-  }, [examId, isMounted, token, removeUserInfo]);
+  }, [examId, isMounted, token, removeUserInfo, throwError]);
 
   useEffect(() => {
     if (isUserRegisteredToExam) {
@@ -112,7 +115,9 @@ export const ExamInfoProvider = ({ children, examId }) => {
                 setErrors({ message, ...receivedErrors });
                 break;
               default:
-                setErrors({ password: "the password of exam is not correct" });
+                setErrors({
+                  message: "something went wrong, please try again later",
+                });
             }
           }
         });

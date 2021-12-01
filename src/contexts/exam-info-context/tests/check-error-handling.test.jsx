@@ -5,9 +5,11 @@ import {
   renderWithAuthentication,
 } from "../../../test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
+import ErrorBoundary from "../../../components/error-boundary/error-boundary.component";
 import {
   changeRequestResponseTo401,
   changeRequestResponseTo422,
+  changeRequestResponseToSpecificStatus,
 } from "../../../utilities/tests.utility";
 
 import { ExamInfoProvider } from "../exam-info.context";
@@ -120,4 +122,65 @@ describe("check 422 errors", () => {
   });
 });
 
-describe.skip("check other errors", () => {});
+describe("check other errors", () => {
+  test("check exams.showExam route", async () => {
+    jest.spyOn(console, "error").mockImplementation(() => {});
+    changeRequestResponseToSpecificStatus({
+      route: apiRoutes.exams.showExam(":examId"),
+      method: "get",
+      status: 403,
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <ErrorBoundary>
+        <ExamInfoProvider examId={1} />
+      </ErrorBoundary>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+      }
+    );
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() => expect(screen.getByText(403)).toBeInTheDocument());
+  });
+  test("check exams.registerInExam route", async () => {
+    changeRequestResponseToSpecificStatus({
+      route: apiRoutes.exams.registerInExam(":examId"),
+      method: "post",
+      status: 403,
+      otherHandlers: [
+        asignExamShowStartAndEnd(
+          1,
+          new Date(Date.now() - 5000),
+          new Date(Date.now() + 3600 * 1000)
+        ),
+      ],
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <ExamInfoProvider examId={1}>
+        <ExaminingProvider>
+          <ExamOverview />
+        </ExaminingProvider>
+      </ExamInfoProvider>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+        route: programRoutes.examiningOverview(1),
+      }
+    );
+
+    await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
+
+    const registerButton = await screen.findByRole("button", {
+      name: /register/i,
+    });
+    userEvent.click(registerButton);
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() =>
+      expect(screen.getByText(/something went wrong/i)).toBeInTheDocument()
+    );
+  });
+});

@@ -15,6 +15,13 @@ import {
 } from "../../../../../mocks/mocks/authentication.mock";
 import { examsPassword } from "../../../../../mocks/mocks/participants.mock";
 import programRoutes from "../../../../../constants/program-routes.constant";
+import {
+  wrongPassword,
+  withoutPassword,
+} from "../../../../../mocks/errors/failed-exam-registration.error";
+
+const wrongPasswordError = wrongPassword.errors.password;
+const withoutPasswordError = withoutPassword.errors.password;
 
 describe("authenticated user can register to exam", () => {
   test("user can authenticate and then register to not started exam in desktop", async () => {
@@ -324,9 +331,7 @@ describe("authenticated user can register to exam", () => {
     // end
 
     // check error
-    const errorMessage = await screen.findByText(
-      /the password of exam is not correct/i
-    );
+    const errorMessage = await screen.findByText(wrongPasswordError);
     expect(errorMessage).toBeInTheDocument();
 
     const nullRegisteredText = screen.queryByText(/registered/i);
@@ -390,9 +395,7 @@ describe("authenticated user can register to exam", () => {
     // end
 
     // check error
-    const errorMessage = await screen.findByText(
-      /the password of exam is not correct/i
-    );
+    const errorMessage = await screen.findByText(wrongPasswordError);
     expect(errorMessage).toBeInTheDocument();
 
     const nullRegisteredText = screen.queryByText(/registered/i);
@@ -456,9 +459,7 @@ describe("authenticated user can register to exam", () => {
     // end
 
     // check error
-    const errorMessage = await screen.findByText(
-      /the password of exam is not correct/i
-    );
+    const errorMessage = await screen.findByText(wrongPasswordError);
     expect(errorMessage).toBeInTheDocument();
 
     const nullRegisteredText = screen.queryByText(/registered/i);
@@ -540,9 +541,7 @@ describe("authenticated user can register to exam", () => {
     // end
 
     // check error
-    const errorMessage = await screen.findByText(
-      /the password of exam is not correct/i
-    );
+    const errorMessage = await screen.findByText(wrongPasswordError);
     expect(errorMessage).toBeInTheDocument();
 
     const nullRegisteredText = screen.queryByText(/registered/i);
@@ -624,9 +623,7 @@ describe("authenticated user can register to exam", () => {
     // end
 
     // check error
-    const errorMessage = await screen.findByText(
-      /the password of exam is not correct/i
-    );
+    const errorMessage = await screen.findByText(wrongPasswordError);
     expect(errorMessage).toBeInTheDocument();
 
     const nullRegisteredText = screen.queryByText(/registered/i);
@@ -644,9 +641,7 @@ describe("authenticated user can register to exam", () => {
     // end
 
     // check removed error
-    const nullErrorMessage = screen.queryByText(
-      /the password of exam is not correct/i
-    );
+    const nullErrorMessage = screen.queryByText(wrongPasswordError);
     expect(nullErrorMessage).not.toBeInTheDocument();
     // end
   });
@@ -707,9 +702,7 @@ describe("authenticated user can register to exam", () => {
     // end
 
     // check error
-    const errorMessage = await screen.findByText(
-      /the password of exam is not correct/i
-    );
+    const errorMessage = await screen.findByText(wrongPasswordError);
     expect(errorMessage).toBeInTheDocument();
 
     const nullRegisteredText = screen.queryByText(/registered/i);
@@ -727,9 +720,7 @@ describe("authenticated user can register to exam", () => {
     // end
 
     // check removed error
-    const nullErrorMessage = screen.queryByText(
-      /the password of exam is not correct/i
-    );
+    const nullErrorMessage = screen.queryByText(wrongPasswordError);
     expect(nullErrorMessage).not.toBeInTheDocument();
     // end
   });
