@@ -17,6 +17,8 @@ import {
   statesStoreRequest,
 } from "../../services/states/states.service";
 
+import useAsyncError from "../../hooks/useAsyncError";
+
 export const EditQuestionContext = createContext();
 
 export const EditQuestionProvider = ({ children, examId, questionId }) => {
@@ -26,6 +28,7 @@ export const EditQuestionProvider = ({ children, examId, questionId }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { token, removeUserInfo } = useContext(AuthenticationContext);
   const isMounted = useMountedState();
+  const throwError = useAsyncError();
 
   const addError = (newErrors) => {
     setErrors(newErrors);
@@ -67,9 +70,10 @@ export const EditQuestionProvider = ({ children, examId, questionId }) => {
             removeUserInfo();
             break;
           default:
+            throwError(errors);
         }
       });
-  }, [questionId, examId, token, isMounted, removeUserInfo]);
+  }, [questionId, examId, token, isMounted, removeUserInfo, throwError]);
 
   const updateQuestion = ({
     question_text,
@@ -208,7 +212,9 @@ export const EditQuestionProvider = ({ children, examId, questionId }) => {
             setErrors({ message, ...receivedErrors });
             break;
           default:
-            console.error(errors);
+            setErrors({
+              message: "something went wrong, please try again later",
+            });
         }
       });
   };
@@ -227,6 +233,9 @@ export const EditQuestionProvider = ({ children, examId, questionId }) => {
           setErrors({ message });
           break;
         default:
+          setErrors({
+            message: "something went wrong, please try again later",
+          });
       }
       return false;
     }
