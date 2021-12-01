@@ -3,6 +3,8 @@ import { useParams, useLocation } from "react-router-dom";
 import { useMountedState } from "react-use";
 import axios from "axios";
 
+import useAsyncError from "../../hooks/useAsyncError";
+
 import { ExamInfoContext } from "../exam-info-context/exam-info.context";
 import { AuthenticationContext } from "../authentication-context/authentication.context";
 
@@ -27,6 +29,7 @@ export const ExaminingProvider = ({ children }) => {
   const isMounted = useMountedState();
   const { examId } = useParams();
   const { pathname } = useLocation();
+  const throwError = useAsyncError();
 
   const questionId = isNaN(pathname.split("/").reverse()[0])
     ? undefined
@@ -111,6 +114,7 @@ export const ExaminingProvider = ({ children }) => {
               setIsFailed(true);
               break;
             default:
+              throwError(errors);
           }
           setIsLoading(false);
         });
@@ -125,6 +129,7 @@ export const ExaminingProvider = ({ children }) => {
     removeUserInfo,
     examInfo,
     isFailed,
+    throwError,
   ]);
 
   const finishExam = () => {

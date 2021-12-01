@@ -8,10 +8,13 @@ import userEvent from "@testing-library/user-event";
 import {
   changeRequestResponseTo401,
   changeRequestResponseTo422,
+  changeRequestResponseToSpecificStatus,
 } from "../../../utilities/tests.utility";
 
 import { ExamInfoProvider } from "../../exam-info-context/exam-info.context";
 import { ExaminingProvider } from "../examining.context";
+
+import ErrorBoundary from "../../../components/error-boundary/error-boundary.component";
 
 import ExamQuestionPage from "../../../pages/exams/examining/exam-question/exam-question.page";
 
@@ -149,4 +152,97 @@ describe("check 422 errors", () => {
   });
 });
 
-describe.skip("check other errors", () => {});
+describe("check other errors", () => {
+  test("check participants.finishExam route", async () => {
+    changeRequestResponseToSpecificStatus({
+      route: apiRoutes.participants.finishExam(":examId"),
+      method: "put",
+      status: 403,
+      otherHandlers: [
+        asignExamShowStartAndEnd(
+          2,
+          new Date(Date.now() - 5000),
+          new Date(Date.now() + 3600 * 1000)
+        ),
+      ],
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <ExamInfoProvider examId={2}>
+        <Route path={programRoutes.examiningQuestion(":examId", ":questionId")}>
+          <ExaminingProvider>
+            <ExamQuestionPage />
+          </ExaminingProvider>
+        </Route>
+      </ExamInfoProvider>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+        route: programRoutes.examiningQuestion(2, 1),
+      }
+    );
+
+    await waitFor(() =>
+      expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+    );
+
+    const finishExamButton = await screen.findByRole("button", {
+      name: /finish/i,
+    });
+    userEvent.click(finishExamButton);
+
+    const confirmButton = await screen.findByRole("button", { name: /yes/i });
+    userEvent.click(confirmButton);
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() =>
+      expect(screen.getByText(/something went wrong/i)).toBeInTheDocument()
+    );
+  });
+  test("check questions.indexQuestions route", async () => {
+    jest.spyOn(console, "error").mockImplementation(() => {});
+    changeRequestResponseToSpecificStatus({
+      route: apiRoutes.questions.indexQuestions(":examId"),
+      method: "get",
+      status: 403,
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <ExamInfoProvider examId={2}>
+        <ErrorBoundary>
+          <ExaminingProvider />
+        </ErrorBoundary>
+      </ExamInfoProvider>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+      }
+    );
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() => expect(screen.getByText(403)).toBeInTheDocument());
+  });
+  test("check participants.currentParticipant route", async () => {
+    jest.spyOn(console, "error").mockImplementation(() => {});
+    changeRequestResponseToSpecificStatus({
+      route: apiRoutes.participants.currentParticipant(":examId"),
+      method: "get",
+      status: 403,
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <ExamInfoProvider examId={2}>
+        <ErrorBoundary>
+          <ExaminingProvider />
+        </ErrorBoundary>
+      </ExamInfoProvider>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+      }
+    );
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() => expect(screen.getByText(403)).toBeInTheDocument());
+  });
+});
