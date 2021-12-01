@@ -71,7 +71,9 @@ const CreateExamForm = ({ ...props }) => {
               setIsLoading(false);
               break;
             default:
-              console.error(err);
+              setErrors({
+                message: "something went wrong, please try again later",
+              });
           }
         }
       });

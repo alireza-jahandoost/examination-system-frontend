@@ -1,10 +1,16 @@
 import {
   waitFor,
+  screen,
   renderWithAuthentication,
 } from "../../../../../test-utils/testing-library-utils";
-import { changeRequestResponseTo401 } from "../../../../../utilities/tests.utility";
+import {
+  changeRequestResponseTo401,
+  changeRequestResponseToSpecificStatus,
+} from "../../../../../utilities/tests.utility";
 
 import IndexAllExamsPage from "../index-all-exams.page";
+
+import ErrorBoundary from "../../../../../components/error-boundary/error-boundary.component";
 
 import apiRoutes from "../../../../../constants/api-routes.constant";
 
@@ -24,4 +30,26 @@ describe("check 401 errors(the removeUserInfo() func from authentication context
   });
 });
 
-describe.skip("check other errors", () => {});
+describe("check other errors", () => {
+  test("check exams.indexAllExams route", async () => {
+    jest.spyOn(console, "error").mockImplementation(() => {});
+    changeRequestResponseToSpecificStatus({
+      route: apiRoutes.exams.indexAllExams(),
+      status: 403,
+      method: "get",
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <ErrorBoundary>
+        <IndexAllExamsPage />
+      </ErrorBoundary>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+      }
+    );
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() => expect(screen.getByText(403)).toBeInTheDocument());
+  });
+});

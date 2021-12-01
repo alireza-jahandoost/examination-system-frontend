@@ -7,6 +7,7 @@ import userEvent from "@testing-library/user-event";
 import {
   changeRequestResponseTo401,
   changeRequestResponseTo422,
+  changeRequestResponseToSpecificStatus,
 } from "../../../../utilities/tests.utility";
 
 import CreateExamForm from "../create-exam-form.component";
@@ -93,4 +94,34 @@ describe("check 422 errors", () => {
   });
 });
 
-describe.skip("check other errors", () => {});
+describe("check other errors", () => {
+  test("check exams.createExam route", async () => {
+    changeRequestResponseToSpecificStatus({
+      route: apiRoutes.exams.createExam(),
+      method: "post",
+      status: 403,
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(<CreateExamForm />, {
+      authenticationProviderProps: { removeUserInfo },
+    });
+
+    const examNameField = await screen.findByRole("textbox", {
+      name: /exam name/i,
+    });
+    userEvent.clear(examNameField);
+    userEvent.type(examNameField, "aaa");
+
+    const createExamButton = screen.getByRole("button", {
+      name: /create/i,
+    });
+
+    userEvent.click(createExamButton);
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() =>
+      expect(screen.getByText(/something went wrong/i)).toBeInTheDocument()
+    );
+  });
+});

@@ -2,6 +2,7 @@ import { useState, useMemo, useContext, useEffect } from "react";
 import { Link, useLocation, Redirect } from "react-router-dom";
 import { Table } from "react-bootstrap";
 import { useMountedState } from "react-use";
+import useAsyncError from "../../../../hooks/useAsyncError";
 import ProfileContainer from "../../../../components/profile-container/profile-container.component";
 import Pagination from "../../../../components/pagination/pagination.component";
 
@@ -23,6 +24,7 @@ const ParticipatedExamsPage = () => {
     return Number(new URLSearchParams(location.search).get("page")) || 1;
   }, [location]);
   const isMounted = useMountedState();
+  const throwError = useAsyncError();
 
   useEffect(() => {
     if (Number(page) === Number(currentPage) || isLoading) {
@@ -50,9 +52,18 @@ const ParticipatedExamsPage = () => {
             removeUserInfo();
             break;
           default:
+            throwError(err);
         }
       });
-  }, [page, token, isMounted, currentPage, isLoading, removeUserInfo]);
+  }, [
+    page,
+    token,
+    isMounted,
+    currentPage,
+    isLoading,
+    removeUserInfo,
+    throwError,
+  ]);
 
   if (
     !isLoading &&

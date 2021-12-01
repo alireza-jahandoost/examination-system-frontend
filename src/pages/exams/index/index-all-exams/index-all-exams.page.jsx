@@ -4,6 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import IndexExamHeader from "./index-exams-header.component";
 import Search from "./search.component";
 import useInfiniteScroll from "../../../../hooks/useInfiniteScroll";
+import useAsyncError from "../../../../hooks/useAsyncError";
 import { examsIndexRequest } from "../../../../services/exams/exams.service";
 import ExamCard from "../../../../components/exam-card/exam-card.component";
 import ExamDescription from "../../../../components/exam-description/exam-description.component";
@@ -17,6 +18,7 @@ const IndexAllExams = () => {
   const [shownExamId, setShownExamId] = useState(-1);
   const isMounted = useMountedState();
   const { removeUserInfo } = useContext(AuthenticationContext);
+  const throwError = useAsyncError();
 
   const onExamDescriptionClose = () => {
     setShownExamId(-1);
@@ -38,6 +40,7 @@ const IndexAllExams = () => {
           removeUserInfo();
           break;
         default:
+          throwError(e);
       }
     }
   };
