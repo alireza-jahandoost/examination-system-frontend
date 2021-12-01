@@ -20,6 +20,7 @@ const ExamQuestionPage = () => {
     participant,
     finishExam,
     isUserFinishedExam,
+    errors,
   } = useContext(ExaminingContext);
   const { examId, questionId } = useParams();
   const [showModal, setShowModal] = useState(false);
@@ -58,6 +59,7 @@ const ExamQuestionPage = () => {
       </div>
       <Container className="bg-light flex-grow-1 rounded p-4 my-5">
         <div style={{ minHeight: "400px" }} className="d-flex ">
+          {errors.message && <p className="text-danger">{errors.message}</p>}
           <AnswerQuestionProvider
             questionId={questionId}
             examId={examId}

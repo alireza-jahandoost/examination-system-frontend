@@ -139,9 +139,15 @@ export const ExaminingProvider = ({ children }) => {
           case 401:
             removeUserInfo();
             break;
+          case 422:
+            const { message } = err.response.data;
+            setErrors({ message });
+            break;
           default:
+            setErrors({
+              message: "something went wrong, please try again later",
+            });
         }
-        setErrors({ message: "something went wrong, please try again later" });
         setIsLoading(false);
       });
   };

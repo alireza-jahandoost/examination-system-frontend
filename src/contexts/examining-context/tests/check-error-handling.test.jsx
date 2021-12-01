@@ -5,7 +5,10 @@ import {
 } from "../../../test-utils/testing-library-utils";
 import { Route } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
-import { changeRequestResponseTo401 } from "../../../utilities/tests.utility";
+import {
+  changeRequestResponseTo401,
+  changeRequestResponseTo422,
+} from "../../../utilities/tests.utility";
 
 import { ExamInfoProvider } from "../../exam-info-context/exam-info.context";
 import { ExaminingProvider } from "../examining.context";
@@ -97,6 +100,53 @@ describe("check 401 errors(the removeUserInfo() func from authentication context
   });
 });
 
-describe.skip("check 422 errors", () => {});
+describe("check 422 errors", () => {
+  test("check participants.finishExam route", async () => {
+    const { message } = changeRequestResponseTo422({
+      route: apiRoutes.participants.finishExam(":examId"),
+      method: "put",
+      fields: [],
+      otherHandlers: [
+        asignExamShowStartAndEnd(
+          2,
+          new Date(Date.now() - 5000),
+          new Date(Date.now() + 3600 * 1000)
+        ),
+      ],
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <ExamInfoProvider examId={2}>
+        <Route path={programRoutes.examiningQuestion(":examId", ":questionId")}>
+          <ExaminingProvider>
+            <ExamQuestionPage />
+          </ExaminingProvider>
+        </Route>
+      </ExamInfoProvider>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+        route: programRoutes.examiningQuestion(2, 1),
+      }
+    );
+
+    await waitFor(() =>
+      expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+    );
+
+    const finishExamButton = await screen.findByRole("button", {
+      name: /finish/i,
+    });
+    userEvent.click(finishExamButton);
+
+    const confirmButton = await screen.findByRole("button", { name: /yes/i });
+    userEvent.click(confirmButton);
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() =>
+      expect(screen.getByText(message, { exact: false })).toBeInTheDocument()
+    );
+  });
+});
 
 describe.skip("check other errors", () => {});

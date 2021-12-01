@@ -41,6 +41,7 @@ export const wrapper = (
       days: 0,
     },
     isUserFinishedExam = false,
+    errors = {},
   }
 ) => {
   const value = {
@@ -51,6 +52,7 @@ export const wrapper = (
     examTime,
     finishExam,
     isUserFinishedExam,
+    errors,
   };
   const WrappedElement = (
     <Route path={programRoutes.examiningQuestion(":examId", ":questionId")}>

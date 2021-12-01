@@ -6,7 +6,6 @@ const PasswordInput = ({ examId }) => {
   const { examPassword, changeExamPassword, errors } = useContext(
     ExamInfoContext
   );
-  console.log(errors);
   return (
     <Form.Group controlId={`exam-${examId}-register`}>
       <Form.Control
