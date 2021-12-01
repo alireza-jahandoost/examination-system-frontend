@@ -65,10 +65,13 @@ const CreateExamForm = ({ ...props }) => {
             case 401:
               removeUserInfo();
               break;
-            default:
+            case 422:
               const { message, errors } = err.response.data;
               setErrors({ message, ...errors });
               setIsLoading(false);
+              break;
+            default:
+              console.error(err);
           }
         }
       });
