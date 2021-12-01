@@ -1,5 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { useMountedState } from "react-use";
+import useAsyncError from "../../hooks/useAsyncError";
 
 import { AuthenticationContext } from "../authentication-context/authentication.context";
 
@@ -22,6 +23,7 @@ export const QuestionGradeProvider = ({
   const [errors, setErrors] = useState({});
   const { token, removeUserInfo } = useContext(AuthenticationContext);
   const isMounted = useMountedState();
+  const throwError = useAsyncError();
 
   const showGradeEnabled = participantStatus === "FINISHED";
   const changeGradeEnabled =
@@ -72,6 +74,7 @@ export const QuestionGradeProvider = ({
             removeUserInfo();
             break;
           default:
+            throwError(err);
         }
       });
   }, [
@@ -82,6 +85,7 @@ export const QuestionGradeProvider = ({
     isMounted,
     showGradeEnabled,
     removeUserInfo,
+    throwError,
   ]);
 
   const submitGrade = () => {
@@ -110,7 +114,9 @@ export const QuestionGradeProvider = ({
             setErrors(newErrors);
             break;
           default:
-            console.error(err);
+            setErrors({
+              message: "something went wrong, please try again later",
+            });
         }
       });
   };
