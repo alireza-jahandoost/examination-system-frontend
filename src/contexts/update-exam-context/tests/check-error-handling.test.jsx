@@ -8,12 +8,15 @@ import userEvent from "@testing-library/user-event";
 import {
   changeRequestResponseTo401,
   changeRequestResponseTo422,
+  changeRequestResponseToSpecificStatus,
 } from "../../../utilities/tests.utility";
 import { examShowId_1 } from "../../../mocks/mocks/exams.mock";
 
 import { UpdateExamProvider } from "../update-exam.context";
 
 import UpdateExamPage from "../../../pages/exams/update/update-exam.page";
+
+import ErrorBoundary from "../../../components/error-boundary/error-boundary.component";
 
 import apiRoutes from "../../../constants/api-routes.constant";
 import programRoutes from "../../../constants/program-routes.constant";
@@ -267,4 +270,154 @@ describe("check 422 errors", () => {
   });
 });
 
-describe.skip("check other errors", () => {});
+describe("check other errors", () => {
+  test("check exams.showExam route", async () => {
+    jest.spyOn(console, "error").mockImplementation(() => {});
+    changeRequestResponseToSpecificStatus({
+      route: apiRoutes.exams.showExam(":examId"),
+      method: "get",
+      status: 403,
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <Route path={programRoutes.updateExam(":examId")}>
+        <ErrorBoundary>
+          <UpdateExamProvider />
+        </ErrorBoundary>
+      </Route>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+        route: programRoutes.updateExam(1),
+      }
+    );
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() => expect(screen.getByText(403)).toBeInTheDocument());
+  });
+  test("check questions.indexQuestions route", async () => {
+    jest.spyOn(console, "error").mockImplementation(() => {});
+    changeRequestResponseToSpecificStatus({
+      route: apiRoutes.questions.indexQuestions(":examId"),
+      method: "get",
+      status: 403,
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <Route path={programRoutes.updateExam(":examId")}>
+        <ErrorBoundary>
+          <UpdateExamProvider />
+        </ErrorBoundary>
+      </Route>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+        route: programRoutes.updateExam(1),
+      }
+    );
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() => expect(screen.getByText(403)).toBeInTheDocument());
+  });
+  test("check exams.updateExam route", async () => {
+    changeRequestResponseToSpecificStatus({
+      route: apiRoutes.exams.updateExam(":examId"),
+      method: "put",
+      status: 403,
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <Route path={programRoutes.updateExam(":examId")}>
+        <UpdateExamProvider>
+          <UpdateExamPage />
+        </UpdateExamProvider>
+      </Route>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+        route: programRoutes.updateExam(1),
+      }
+    );
+
+    const examNameField = await screen.findByRole("textbox", {
+      name: /exam name/i,
+    });
+    userEvent.clear(examNameField);
+    userEvent.type(examNameField, examShowId_1.data.exam.exam_name + "a");
+
+    const saveChangesButton = screen.getByRole("button", {
+      name: /save changes/i,
+    });
+    userEvent.click(saveChangesButton);
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() =>
+      expect(screen.getByText(/something went wrong/i)).toBeInTheDocument()
+    );
+  });
+  test("check exams.publishExam route", async () => {
+    changeRequestResponseToSpecificStatus({
+      route: apiRoutes.exams.publishExam(":examId"),
+      method: "put",
+      status: 403,
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <Route path={programRoutes.updateExam(":examId")}>
+        <UpdateExamProvider>
+          <UpdateExamPage />
+        </UpdateExamProvider>
+      </Route>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+        route: programRoutes.updateExam(1),
+      }
+    );
+
+    const publishButton = await screen.findByRole("button", {
+      name: /publish/i,
+    });
+    userEvent.click(publishButton);
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() =>
+      expect(screen.getByText(/something went wrong/i)).toBeInTheDocument()
+    );
+  });
+  test("check exams.unpublishExam route", async () => {
+    changeRequestResponseToSpecificStatus({
+      route: apiRoutes.exams.unpublishExam(":examId"),
+      method: "put",
+      status: 403,
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <Route path={programRoutes.updateExam(":examId")}>
+        <UpdateExamProvider>
+          <UpdateExamPage />
+        </UpdateExamProvider>
+      </Route>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+        route: programRoutes.updateExam(1),
+      }
+    );
+
+    const publishButton = await screen.findByRole("button", {
+      name: /publish/i,
+    });
+    userEvent.click(publishButton);
+
+    const unpublishButton = await screen.findByRole("button", {
+      name: /unpublish/i,
+    });
+    userEvent.click(unpublishButton);
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() =>
+      expect(screen.getByText(/something went wrong/i)).toBeInTheDocument()
+    );
+  });
+});

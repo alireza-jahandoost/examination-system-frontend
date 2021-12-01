@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useMountedState } from "react-use";
 import { useParams } from "react-router-dom";
+import useAsyncError from "../../hooks/useAsyncError";
 import { AuthenticationContext } from "../authentication-context/authentication.context";
 import { convertFromUTC } from "../../utilities/dateAndTime.utility";
 import {
@@ -33,6 +34,7 @@ export const UpdateExamProvider = ({ children }) => {
   const { examId } = useParams();
   const [questions, setQuestions] = useState([]);
   const { createNotification } = useContext(NotificationContext);
+  const throwError = useAsyncError();
 
   useEffect(() => {
     if (!exam) {
@@ -102,13 +104,11 @@ export const UpdateExamProvider = ({ children }) => {
               removeUserInfo();
               break;
             default:
-              setErrors({
-                message: "something went wrong, please try again later",
-              });
+              throwError(errors);
           }
         }
       });
-  }, [examId, isMounted, token, removeUserInfo]);
+  }, [examId, isMounted, token, removeUserInfo, throwError]);
 
   const handleUpdate = (bodyOfRequest) => {
     setIsLoading(true);
@@ -135,6 +135,9 @@ export const UpdateExamProvider = ({ children }) => {
               setErrors({ message, ...errors });
               break;
             default:
+              setErrors({
+                message: "something went wrong, please try again later",
+              });
           }
           setIsLoading(false);
         }
@@ -163,7 +166,9 @@ export const UpdateExamProvider = ({ children }) => {
               });
               break;
             default:
-              console.error(err);
+              setErrors({
+                message: "something went wrong, please try again later",
+              });
           }
         }
       });
@@ -192,7 +197,9 @@ export const UpdateExamProvider = ({ children }) => {
               });
               break;
             default:
-              console.error(err);
+              setErrors({
+                message: "something went wrong, please try again later",
+              });
           }
         }
       });
