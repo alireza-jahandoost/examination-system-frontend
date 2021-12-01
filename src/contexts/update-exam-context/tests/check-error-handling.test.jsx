@@ -5,7 +5,10 @@ import {
 } from "../../../test-utils/testing-library-utils";
 import { Route } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
-import { changeRequestResponseTo401 } from "../../../utilities/tests.utility";
+import {
+  changeRequestResponseTo401,
+  changeRequestResponseTo422,
+} from "../../../utilities/tests.utility";
 import { examShowId_1 } from "../../../mocks/mocks/exams.mock";
 
 import { UpdateExamProvider } from "../update-exam.context";
@@ -145,6 +148,123 @@ describe("check 401 errors(the removeUserInfo() func from authentication context
   });
 });
 
-describe.skip("check 422 errors", () => {});
+describe("check 422 errors", () => {
+  const fields = [
+    "exam_name",
+    "needs_confirmation",
+    "password",
+    "start_of_exam",
+    "end_of_exam",
+    "total_score",
+  ];
+  test("check exams.updateExam route", async () => {
+    const { message, errors } = changeRequestResponseTo422({
+      route: apiRoutes.exams.updateExam(":examId"),
+      method: "put",
+      fields,
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <Route path={programRoutes.updateExam(":examId")}>
+        <UpdateExamProvider>
+          <UpdateExamPage />
+        </UpdateExamProvider>
+      </Route>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+        route: programRoutes.updateExam(1),
+      }
+    );
+
+    const examNameField = await screen.findByRole("textbox", {
+      name: /exam name/i,
+    });
+    userEvent.clear(examNameField);
+    userEvent.type(examNameField, examShowId_1.data.exam.exam_name + "a");
+
+    const saveChangesButton = screen.getByRole("button", {
+      name: /save changes/i,
+    });
+    userEvent.click(saveChangesButton);
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() =>
+      expect(screen.getByText(message, { exact: false })).toBeInTheDocument()
+    );
+    for (const error in errors) {
+      await waitFor(() =>
+        expect(
+          screen.getByText(errors[error], { exact: false })
+        ).toBeInTheDocument()
+      );
+    }
+  });
+  test("check exams.publishExam route", async () => {
+    const { message } = changeRequestResponseTo422({
+      route: apiRoutes.exams.publishExam(":examId"),
+      method: "put",
+      fields: [],
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <Route path={programRoutes.updateExam(":examId")}>
+        <UpdateExamProvider>
+          <UpdateExamPage />
+        </UpdateExamProvider>
+      </Route>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+        route: programRoutes.updateExam(1),
+      }
+    );
+
+    const publishButton = await screen.findByRole("button", {
+      name: /publish/i,
+    });
+    userEvent.click(publishButton);
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() =>
+      expect(screen.getByText(message, { exact: false })).toBeInTheDocument()
+    );
+  });
+  test("check exams.unpublishExam route", async () => {
+    const { message } = changeRequestResponseTo422({
+      route: apiRoutes.exams.unpublishExam(":examId"),
+      method: "put",
+      fields: [],
+    });
+
+    const removeUserInfo = jest.fn();
+    renderWithAuthentication(
+      <Route path={programRoutes.updateExam(":examId")}>
+        <UpdateExamProvider>
+          <UpdateExamPage />
+        </UpdateExamProvider>
+      </Route>,
+      {
+        authenticationProviderProps: { removeUserInfo },
+        route: programRoutes.updateExam(1),
+      }
+    );
+
+    const publishButton = await screen.findByRole("button", {
+      name: /publish/i,
+    });
+    userEvent.click(publishButton);
+
+    const unpublishButton = await screen.findByRole("button", {
+      name: /unpublish/i,
+    });
+    userEvent.click(unpublishButton);
+
+    await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
+    await waitFor(() =>
+      expect(screen.getByText(message, { exact: false })).toBeInTheDocument()
+    );
+  });
+});
 
 describe.skip("check other errors", () => {});

@@ -130,11 +130,13 @@ export const UpdateExamProvider = ({ children }) => {
             case 401:
               removeUserInfo();
               break;
-            default:
+            case 422:
               const { message, errors } = err.response.data;
               setErrors({ message, ...errors });
-              setIsLoading(false);
+              break;
+            default:
           }
+          setIsLoading(false);
         }
       });
   };
@@ -154,11 +156,14 @@ export const UpdateExamProvider = ({ children }) => {
             case 401:
               removeUserInfo();
               break;
-            default:
+            case 422:
               setErrors({
                 message: err.response.data.message,
                 ...err.response.data.errors,
               });
+              break;
+            default:
+              console.error(err);
           }
         }
       });
@@ -179,10 +184,15 @@ export const UpdateExamProvider = ({ children }) => {
             case 401:
               removeUserInfo();
               break;
-            default:
+            case 422:
+              const { message, errors: receivedErrors } = err.response.data;
               setErrors({
-                message: "something went wrong, please try again later",
+                message,
+                ...receivedErrors,
               });
+              break;
+            default:
+              console.error(err);
           }
         }
       });
