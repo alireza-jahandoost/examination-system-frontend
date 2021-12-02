@@ -65,7 +65,7 @@ export const EditQuestionProvider = ({ children, examId, questionId }) => {
         })
       )
       .catch((errors) => {
-        switch (Number(errors.response.status)) {
+        switch (Number(errors?.response?.status)) {
           case 401:
             removeUserInfo();
             break;
@@ -203,7 +203,7 @@ export const EditQuestionProvider = ({ children, examId, questionId }) => {
         })
       )
       .catch((errors) => {
-        switch (Number(errors.response.status)) {
+        switch (Number(errors?.response?.status)) {
           case 401:
             removeUserInfo();
             break;
@@ -224,7 +224,7 @@ export const EditQuestionProvider = ({ children, examId, questionId }) => {
       await questionsDeleteRequest(examId, questionId, token);
       return true;
     } catch (e) {
-      switch (Number(e.response.status)) {
+      switch (Number(e?.response?.status)) {
         case 401:
           removeUserInfo();
           break;

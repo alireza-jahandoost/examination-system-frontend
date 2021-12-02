@@ -108,7 +108,7 @@ export const ExaminingProvider = ({ children }) => {
           })
         )
         .catch((errors) => {
-          switch (Number(errors.response.status)) {
+          switch (Number(errors?.response?.status)) {
             case 401:
               removeUserInfo();
               setIsFailed(true);
@@ -140,7 +140,7 @@ export const ExaminingProvider = ({ children }) => {
         setIsLoading(false);
       })
       .catch((err) => {
-        switch (Number(err.response.status)) {
+        switch (Number(err?.response?.status)) {
           case 401:
             removeUserInfo();
             break;

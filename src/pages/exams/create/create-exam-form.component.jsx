@@ -61,7 +61,7 @@ const CreateExamForm = ({ ...props }) => {
       })
       .catch((err) => {
         if (isMounted()) {
-          switch (Number(err.response.status)) {
+          switch (Number(err?.response?.status)) {
             case 401:
               removeUserInfo();
               break;

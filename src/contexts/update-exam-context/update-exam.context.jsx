@@ -99,7 +99,7 @@ export const UpdateExamProvider = ({ children }) => {
       )
       .catch((errors) => {
         if (isMounted()) {
-          switch (Number(errors.response.status)) {
+          switch (Number(errors?.response?.status)) {
             case 401:
               removeUserInfo();
               break;
@@ -126,7 +126,7 @@ export const UpdateExamProvider = ({ children }) => {
       })
       .catch((err) => {
         if (isMounted()) {
-          switch (Number(err.response.status)) {
+          switch (Number(err?.response?.status)) {
             case 401:
               removeUserInfo();
               break;
@@ -155,7 +155,7 @@ export const UpdateExamProvider = ({ children }) => {
       })
       .catch((err) => {
         if (isMounted()) {
-          switch (Number(err.response.status)) {
+          switch (Number(err?.response?.status)) {
             case 401:
               removeUserInfo();
               break;
@@ -185,7 +185,7 @@ export const UpdateExamProvider = ({ children }) => {
       })
       .catch((err) => {
         if (isMounted()) {
-          switch (Number(err.response.status)) {
+          switch (Number(err?.response?.status)) {
             case 401:
               removeUserInfo();
               break;

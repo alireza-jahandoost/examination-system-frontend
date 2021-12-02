@@ -47,7 +47,7 @@ const ParticipatedExamsPage = () => {
         }
       })
       .catch((err) => {
-        switch (Number(err.response.status)) {
+        switch (Number(err?.response?.status)) {
           case 401:
             removeUserInfo();
             break;

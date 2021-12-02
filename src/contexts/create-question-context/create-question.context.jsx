@@ -70,7 +70,7 @@ export const CreateQuestionProvider = ({ children }) => {
       }
       return question;
     } catch (e) {
-      switch (Number(e.response.status)) {
+      switch (Number(e?.response?.status)) {
         case 401:
           removeUserInfo();
           break;

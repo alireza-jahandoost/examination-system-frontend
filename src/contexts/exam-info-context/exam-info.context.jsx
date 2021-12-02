@@ -49,7 +49,7 @@ export const ExamInfoProvider = ({ children, examId }) => {
         }
       })
       .catch((e) => {
-        switch (Number(e.response.status)) {
+        switch (Number(e?.response?.status)) {
           case 401:
             removeUserInfo();
             break;
@@ -106,7 +106,7 @@ export const ExamInfoProvider = ({ children, examId }) => {
         })
         .catch((err) => {
           if (isMounted()) {
-            switch (Number(err.response.status)) {
+            switch (Number(err?.response?.status)) {
               case 401:
                 removeUserInfo();
                 break;

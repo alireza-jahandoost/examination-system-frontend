@@ -35,7 +35,7 @@ const IndexAllExams = () => {
         setIsFetching(false);
       }
     } catch (e) {
-      switch (Number(e.response.status)) {
+      switch (Number(e?.response?.status)) {
         case 401:
           removeUserInfo();
           break;
