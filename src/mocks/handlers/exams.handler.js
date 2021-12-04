@@ -10,6 +10,7 @@ import {
   examShowId_3,
   examShowId_4,
   examShowId_5_withPassword,
+  notFoundExamSearch,
 } from "../mocks/exams.mock";
 import { invalidSum } from "../errors/failed-publish.error";
 
@@ -19,6 +20,10 @@ import { wrongStartExamFormat } from "../errors/failed-exam-update.error";
 const examsHandler = [
   rest.get(apiRoutes.exams.indexAllExams(), (req, res, ctx) => {
     const valueOfPage = req.url.searchParams.get("page");
+    const searchQuery = req.url.searchParams.get("search");
+    if (searchQuery !== undefined && searchQuery !== null) {
+      return res(ctx.json(notFoundExamSearch));
+    }
     const page = Number(valueOfPage);
     switch (page) {
       case 1:

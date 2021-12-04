@@ -1,11 +1,15 @@
 import apiRoutes from "../../constants/api-routes.constant";
 import axios from "axios";
 
-export const examsIndexRequest = async (page) => {
-  return axios(apiRoutes.exams.indexAllExams(), {
-    params: {
-      page: page,
-    },
+export const examsIndexRequest = async (page, search) => {
+  const params = {
+    page: page,
+  };
+  if (search !== undefined && search !== "") {
+    params.search = search;
+  }
+  return axios.get(apiRoutes.exams.indexAllExams(), {
+    params,
     headers: {
       accept: "application/json",
     },
@@ -13,7 +17,7 @@ export const examsIndexRequest = async (page) => {
 };
 
 export const ownedExamsIndexRequest = async (token, page = 1) => {
-  return axios(apiRoutes.exams.indexCreatedExams(), {
+  return axios.get(apiRoutes.exams.indexCreatedExams(), {
     params: {
       page: page,
     },
@@ -25,7 +29,7 @@ export const ownedExamsIndexRequest = async (token, page = 1) => {
 };
 
 export const participatedExamsIndexRequest = async (token, page = 1) => {
-  return axios(apiRoutes.participants.participatedExams(), {
+  return axios.get(apiRoutes.participants.participatedExams(), {
     params: {
       page: page,
     },
