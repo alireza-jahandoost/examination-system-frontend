@@ -31,7 +31,9 @@ test("user can change the password, the button must be labeled by loading and th
   const profileLink = await screen.findByRole("link", { name: /profile/i });
   userEvent.click(profileLink);
 
-  const settingsLink = await screen.findByRole("link", { name: /settings/i });
+  const settingsLink = (
+    await screen.findAllByRole("link", { name: /settings/i })
+  )[0];
   userEvent.click(settingsLink);
 
   // mock axios
@@ -91,7 +93,9 @@ test("if user's action has error, the error must be shown to user", async () => 
   const profileLink = await screen.findByRole("link", { name: /profile/i });
   userEvent.click(profileLink);
 
-  const settingsLink = await screen.findByRole("link", { name: /settings/i });
+  const settingsLink = (
+    await screen.findAllByRole("link", { name: /settings/i })
+  )[0];
   userEvent.click(settingsLink);
 
   // mock axios

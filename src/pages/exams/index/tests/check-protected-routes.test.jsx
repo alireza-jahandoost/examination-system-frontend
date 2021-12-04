@@ -37,7 +37,9 @@ test("created-exams route is not accessible without authentication", async () =>
   const profileLink = await screen.findByRole("link", { name: /profile/i });
   userEvent.click(profileLink);
 
-  const createdExams = screen.getByRole("link", { name: /created exams/i });
+  const createdExams = screen.getAllByRole("link", {
+    name: /created exams/i,
+  })[0];
   expect(createdExams).toBeEnabled();
   userEvent.click(createdExams);
 
@@ -70,9 +72,9 @@ test("participated-exams route is not accessible without authentication", async 
   const profileLink = await screen.findByRole("link", { name: /profile/i });
   userEvent.click(profileLink);
 
-  const participatedExams = screen.getByRole("link", {
+  const participatedExams = screen.getAllByRole("link", {
     name: /participated exams/i,
-  });
+  })[0];
   expect(participatedExams).toBeEnabled();
   userEvent.click(participatedExams);
 

@@ -37,9 +37,9 @@ test("create-exam route is not accessible without authentication", async () => {
   const profileLink = await screen.findByRole("link", { name: /profile/i });
   userEvent.click(profileLink);
 
-  const createExam = screen.getByRole("link", {
+  const createExam = screen.getAllByRole("link", {
     name: /create new exam/i,
-  });
+  })[0];
   expect(createExam).toBeEnabled();
   userEvent.click(createExam);
 
