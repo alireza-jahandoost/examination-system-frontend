@@ -5,10 +5,7 @@ import "./sidebar.styles.css";
 
 const Sidebar = (props) => {
   return (
-    <div
-      className="bg-success p-3 d-none d-lg-block"
-      style={{ height: "100%" }}
-    >
+    <div className="bg-success p-3 d-none d-lg-block">
       <div className="bg-success">
         <SidebarItem
           className="lead mb-3"

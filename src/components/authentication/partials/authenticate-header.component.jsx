@@ -1,14 +1,14 @@
 import { Container, Image, Row, Col } from "react-bootstrap";
 const AuthenticateHeader = () => {
   return (
-    <Container fluid className="h-100" style={{ backgroundColor: "#c2ebdb" }}>
-      <div className="p-3 p-md-0 h-100">
-        <Row className="d-flex flex-column justify-content-center align-items-center">
+    <Container fluid className="h-100" style={{ backgroundColor: "#bcf1dd" }}>
+      <div className="p-3 p-md-0 h-100 d-flex flex-column">
+        <Row className="flex-grow-1 d-flex flex-column justify-content-center align-items-center">
           <Col xs={2} md={0} />
           <Col
             xs={8}
             md={12}
-            className="d-flex justify-content-center align-items-center flex-column"
+            className="flex-grow-1 d-flex justify-content-center align-items-center flex-column"
           >
             <Image
               style={{ maxHeight: "75%" }}

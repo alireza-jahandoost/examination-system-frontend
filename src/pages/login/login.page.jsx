@@ -22,13 +22,18 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="h-100">
-      <Row className="h-100 flex-column flex-md-row">
+    <div className=" flex-grow-1 d-flex">
+      <Row className="flex-column flex-grow-1 flex-md-row d-flex">
         <Col xs={12} md={6} lg={8}>
           <AuthenticateHeader />
         </Col>
-        <Col className="order-md-first flex-fill" xs={12} md={6} lg={4}>
-          <Container className="h-100 d-flex justify-content-around flex-column align-items-around">
+        <Col
+          className="d-flex order-md-first flex-grow-1 flex-fill"
+          xs={12}
+          md={6}
+          lg={4}
+        >
+          <Container className=" d-flex justify-content-around flex-column align-items-around">
             <Brand
               style={{ flexGrow: 1 }}
               className="d-flex justify-content-center align-items-center"

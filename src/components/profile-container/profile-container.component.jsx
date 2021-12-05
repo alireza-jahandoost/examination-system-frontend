@@ -3,7 +3,7 @@ import Sidebar from "../sidebar/sidebar.component";
 
 const ProfileContainer = ({ children }) => {
   return (
-    <div className="d-flex flex-row w-100">
+    <div className="d-flex flex-row w-100 flex-grow-1">
       <Sidebar />
       <Container className="text-center">
         <div className="flex-grow-1">{children}</div>

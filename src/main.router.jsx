@@ -19,7 +19,7 @@ const MainRouter = () => {
   }
   return (
     <ErrorBoundary>
-      <div style={{ minHeight: "100vh" }} className="d-flex">
+      <div style={{ minHeight: "100vh" }} className="d-flex flex-column">
         <Switch>
           <Route path={programRoutes.examsRoot()} component={ExamsRouter} />
           <Route
