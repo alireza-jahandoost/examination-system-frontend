@@ -17,10 +17,15 @@ test("create-exam route is not accessible without authentication", async () => {
     withContexts: true,
   });
 
-  await waitFor(() => expect(window.location.pathname).toBe("/"));
-
-  const loginLink = screen.getByRole("link", { name: /login/i });
-  userEvent.click(loginLink);
+  await waitFor(() =>
+    expect(
+      window.location.href.endsWith(
+        `${programRoutes.redirectUnAuthenticated()}?redirect=${encodeURIComponent(
+          programRoutes.createExam()
+        )}`
+      )
+    ).toBe(true)
+  );
 
   const emailField = screen.getByRole("textbox", { name: /email/i });
   const passwordField = screen.getByPlaceholderText(/password/i);
@@ -34,14 +39,7 @@ test("create-exam route is not accessible without authentication", async () => {
   const submitButton = screen.getByRole("button", { name: "LOGIN" });
   userEvent.click(submitButton);
 
-  const profileLink = await screen.findByRole("link", { name: /profile/i });
-  userEvent.click(profileLink);
-
-  const createExam = screen.getAllByRole("link", {
-    name: /create new exam/i,
-  })[0];
-  expect(createExam).toBeEnabled();
-  userEvent.click(createExam);
-
-  expect(window.location.pathname).toBe(programRoutes.createExam());
+  await waitFor(() =>
+    expect(window.location.pathname).toBe(programRoutes.createExam())
+  );
 });

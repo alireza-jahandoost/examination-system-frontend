@@ -18,10 +18,15 @@ test("update-exam route is not accessible without authentication", async () => {
     withContexts: true,
   });
 
-  await waitFor(() => expect(window.location.pathname).toBe("/"));
-
-  const loginButton = screen.getByRole("link", { name: /login/i });
-  userEvent.click(loginButton);
+  await waitFor(() =>
+    expect(
+      window.location.href.endsWith(
+        `${programRoutes.redirectUnAuthenticated()}?redirect=${encodeURIComponent(
+          programRoutes.updateExam(1)
+        )}`
+      )
+    ).toBe(true)
+  );
 
   const emailField = screen.getByRole("textbox", { name: /email/i });
   const passwordField = screen.getByPlaceholderText(/password/i);
@@ -35,18 +40,7 @@ test("update-exam route is not accessible without authentication", async () => {
   const submitButton = screen.getByRole("button", { name: "LOGIN" });
   userEvent.click(submitButton);
 
-  const profileLink = await screen.findByRole("link", { name: /profile/i });
-  userEvent.click(profileLink);
-
-  const createdExams = screen.getAllByRole("link", {
-    name: /created exams/i,
-  })[0];
-  expect(createdExams).toBeEnabled();
-  userEvent.click(createdExams);
-  await wait(300);
-
-  const editFirstExamLink = (await screen.findAllByText(/edit exam/i))[0];
-  userEvent.click(editFirstExamLink);
-
-  expect(window.location.pathname).toBe(programRoutes.updateExam(1));
+  await waitFor(() =>
+    expect(window.location.pathname).toBe(programRoutes.updateExam(1))
+  );
 });

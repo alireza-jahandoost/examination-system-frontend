@@ -14,10 +14,15 @@ test("profile routes are not accessible without authentication", async () => {
     withContexts: true,
   });
 
-  await waitFor(() => expect(window.location.pathname).toBe("/"));
-
-  const loginLink = screen.getByRole("link", { name: /login/i });
-  userEvent.click(loginLink);
+  await waitFor(() =>
+    expect(
+      window.location.href.endsWith(
+        `${programRoutes.redirectUnAuthenticated()}?redirect=${encodeURIComponent(
+          programRoutes.profile()
+        )}`
+      )
+    ).toBe(true)
+  );
 
   const emailField = screen.getByRole("textbox", { name: /email/i });
   const passwordField = screen.getByPlaceholderText(/password/i);
@@ -31,8 +36,40 @@ test("profile routes are not accessible without authentication", async () => {
   const submitButton = screen.getByRole("button", { name: "LOGIN" });
   userEvent.click(submitButton);
 
-  const profileLink = await screen.findByRole("link", { name: /profile/i });
-  userEvent.click(profileLink);
+  await waitFor(() =>
+    expect(window.location.pathname).toBe(programRoutes.profile())
+  );
+});
 
-  expect(window.location.pathname).toBe(programRoutes.profile());
+test("exam routes are not accessible without authentication", async () => {
+  renderWithRouter(<App />, {
+    route: programRoutes.indexAllExams(),
+    withContexts: true,
+  });
+
+  await waitFor(() =>
+    expect(
+      window.location.href.endsWith(
+        `${programRoutes.redirectUnAuthenticated()}?redirect=${encodeURIComponent(
+          programRoutes.indexAllExams()
+        )}`
+      )
+    ).toBe(true)
+  );
+
+  const emailField = screen.getByRole("textbox", { name: /email/i });
+  const passwordField = screen.getByPlaceholderText(/password/i);
+
+  userEvent.clear(emailField);
+  userEvent.clear(passwordField);
+
+  userEvent.type(emailField, userEmail);
+  userEvent.type(passwordField, correctPassword);
+
+  const submitButton = screen.getByRole("button", { name: "LOGIN" });
+  userEvent.click(submitButton);
+
+  await waitFor(() =>
+    expect(window.location.pathname).toBe(programRoutes.indexAllExams())
+  );
 });

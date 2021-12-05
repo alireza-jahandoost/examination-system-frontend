@@ -17,10 +17,15 @@ test("created-exams route is not accessible without authentication", async () =>
     withContexts: true,
   });
 
-  await waitFor(() => expect(window.location.pathname).toBe("/"));
-
-  const loginLink = screen.getByRole("link", { name: /login/i });
-  userEvent.click(loginLink);
+  await waitFor(() =>
+    expect(
+      window.location.href.endsWith(
+        `${programRoutes.redirectUnAuthenticated()}?redirect=${encodeURIComponent(
+          programRoutes.indexCreatedExams()
+        )}`
+      )
+    ).toBe(true)
+  );
 
   const emailField = screen.getByRole("textbox", { name: /email/i });
   const passwordField = screen.getByPlaceholderText(/password/i);
@@ -34,16 +39,9 @@ test("created-exams route is not accessible without authentication", async () =>
   const submitButton = screen.getByRole("button", { name: "LOGIN" });
   userEvent.click(submitButton);
 
-  const profileLink = await screen.findByRole("link", { name: /profile/i });
-  userEvent.click(profileLink);
-
-  const createdExams = screen.getAllByRole("link", {
-    name: /created exams/i,
-  })[0];
-  expect(createdExams).toBeEnabled();
-  userEvent.click(createdExams);
-
-  expect(window.location.pathname).toBe(programRoutes.indexCreatedExams());
+  await waitFor(() =>
+    expect(window.location.pathname).toBe(programRoutes.indexCreatedExams())
+  );
 });
 
 test("participated-exams route is not accessible without authentication", async () => {
@@ -52,10 +50,15 @@ test("participated-exams route is not accessible without authentication", async 
     withContexts: true,
   });
 
-  await waitFor(() => expect(window.location.pathname).toBe("/"));
-
-  const loginLink = screen.getByRole("link", { name: /login/i });
-  userEvent.click(loginLink);
+  await waitFor(() =>
+    expect(
+      window.location.href.endsWith(
+        `${programRoutes.redirectUnAuthenticated()}?redirect=${encodeURIComponent(
+          programRoutes.indexParticipatedExams()
+        )}`
+      )
+    ).toBe(true)
+  );
 
   const emailField = screen.getByRole("textbox", { name: /email/i });
   const passwordField = screen.getByPlaceholderText(/password/i);
@@ -69,14 +72,9 @@ test("participated-exams route is not accessible without authentication", async 
   const submitButton = screen.getByRole("button", { name: "LOGIN" });
   userEvent.click(submitButton);
 
-  const profileLink = await screen.findByRole("link", { name: /profile/i });
-  userEvent.click(profileLink);
-
-  const participatedExams = screen.getAllByRole("link", {
-    name: /participated exams/i,
-  })[0];
-  expect(participatedExams).toBeEnabled();
-  userEvent.click(participatedExams);
-
-  expect(window.location.pathname).toBe(programRoutes.indexParticipatedExams());
+  await waitFor(() =>
+    expect(window.location.pathname).toBe(
+      programRoutes.indexParticipatedExams()
+    )
+  );
 });

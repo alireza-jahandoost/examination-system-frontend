@@ -9,7 +9,6 @@ import ShowParticipantPage from "./show/show-participant.page";
 
 const ParticipantsRouter = () => {
   const { isAuthLoaded } = useContext(AuthenticationContext);
-  console.log("in");
 
   if (!isAuthLoaded) {
     return <p> Loading... </p>;

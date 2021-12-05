@@ -28,6 +28,7 @@ const programRoutes = {
   // Authentication
   login: () => `/login`,
   register: () => `/register`,
+  redirectUnAuthenticated: () => `/login`,
 };
 
 export default programRoutes;
