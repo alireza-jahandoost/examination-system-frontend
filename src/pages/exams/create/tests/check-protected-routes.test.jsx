@@ -19,8 +19,8 @@ test("create-exam route is not accessible without authentication", async () => {
 
   await waitFor(() => expect(window.location.pathname).toBe("/"));
 
-  const loginButton = screen.getByRole("button", { name: /login/i });
-  userEvent.click(loginButton);
+  const loginLink = screen.getByRole("link", { name: /login/i });
+  userEvent.click(loginLink);
 
   const emailField = screen.getByRole("textbox", { name: /email/i });
   const passwordField = screen.getByPlaceholderText(/password/i);

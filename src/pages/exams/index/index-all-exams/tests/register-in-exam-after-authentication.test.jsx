@@ -35,7 +35,7 @@ describe("authenticated user can register for exam", () => {
     await wait(200);
 
     // click login button
-    const loginButton = screen.getByRole("button", { name: /login/i });
+    const loginButton = screen.getByRole("link", { name: /login/i });
     userEvent.click(loginButton);
     // end
 
@@ -56,6 +56,7 @@ describe("authenticated user can register for exam", () => {
     // end
 
     // open exam description
+    userEvent.click(screen.getAllByRole("link", { name: /exams/i })[0]);
     const moreDetailsButtons = await screen.findAllByText(/more details/i);
     const ElementmoreDetailsButton = moreDetailsButtons[0];
 
@@ -95,7 +96,7 @@ describe("authenticated user can register for exam", () => {
     await wait(200);
 
     // click login button
-    const loginButton = screen.getByRole("button", { name: /login/i });
+    const loginButton = screen.getByRole("link", { name: /login/i });
     userEvent.click(loginButton);
     // end
 
@@ -116,6 +117,7 @@ describe("authenticated user can register for exam", () => {
     // end
 
     // open exam description
+    userEvent.click(screen.getAllByRole("link", { name: /exams/i })[0]);
     const moreDetailsButtons = await screen.findAllByText(/more details/i);
     const ElementmoreDetailsButton = moreDetailsButtons[3];
 
@@ -161,7 +163,7 @@ describe("authenticated user can register for exam", () => {
     await wait(200);
 
     // click login button
-    const loginButton = screen.getByRole("button", { name: /login/i });
+    const loginButton = screen.getByRole("link", { name: /login/i });
     userEvent.click(loginButton);
     // end
 
@@ -182,6 +184,7 @@ describe("authenticated user can register for exam", () => {
     // end
 
     // open exam description
+    userEvent.click(screen.getAllByRole("link", { name: /exams/i })[0]);
     const moreDetailsButtons = await screen.findAllByText(/more details/i);
     const ElementmoreDetailsButton = moreDetailsButtons[3];
 
@@ -225,7 +228,7 @@ describe("authenticated user can register for exam", () => {
     await wait(200);
 
     // click login button
-    const loginButton = screen.getByRole("button", { name: /login/i });
+    const loginButton = screen.getByRole("link", { name: /login/i });
     userEvent.click(loginButton);
     // end
 
@@ -246,6 +249,7 @@ describe("authenticated user can register for exam", () => {
     // end
 
     // open exam description
+    userEvent.click(screen.getAllByRole("link", { name: /exams/i })[0]);
     const moreDetailsButtons = await screen.findAllByText(/more details/i);
     const ElementmoreDetailsButton = moreDetailsButtons[3];
 

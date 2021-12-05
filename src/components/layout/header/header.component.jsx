@@ -51,18 +51,10 @@ const Header = () => {
                 </>
               ) : (
                 <>
-                  <Nav.Link
-                    onClick={() => changePopover("login")}
-                    role="button"
-                    title="see login popover"
-                  >
+                  <Nav.Link as={Link} to={programRoutes.login()}>
                     Login
                   </Nav.Link>
-                  <Nav.Link
-                    onClick={() => changePopover("register")}
-                    role="button"
-                    title="see register popover"
-                  >
+                  <Nav.Link as={Link} to={programRoutes.register()}>
                     Register
                   </Nav.Link>
                 </>

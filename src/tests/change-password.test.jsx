@@ -13,8 +13,8 @@ test("user can change the password, the button must be labeled by loading and th
   render(<App />);
 
   // authenticate
-  const loginButton = await screen.findByRole("button", { name: /login/i });
-  userEvent.click(loginButton);
+  const loginLink = await screen.findByRole("link", { name: /login/i });
+  userEvent.click(loginLink);
 
   const emailField = await screen.findByRole("textbox", { name: /email/i });
   userEvent.clear(emailField);
@@ -67,7 +67,7 @@ test("user can change the password, the button must be labeled by loading and th
   expect(axiosPutMock).toHaveBeenCalledTimes(1);
 
   await waitFor(() =>
-    expect(screen.getByRole("button", { name: /login/i })).toBeInTheDocument()
+    expect(screen.getByRole("link", { name: /login/i })).toBeInTheDocument()
   );
 });
 
@@ -75,8 +75,8 @@ test("if user's action has error, the error must be shown to user", async () => 
   render(<App />);
 
   // authenticate
-  const loginButton = await screen.findByRole("button", { name: /login/i });
-  userEvent.click(loginButton);
+  const loginLink = await screen.findByRole("link", { name: /login/i });
+  userEvent.click(loginLink);
 
   const emailField = await screen.findByRole("textbox", { name: /email/i });
   userEvent.clear(emailField);

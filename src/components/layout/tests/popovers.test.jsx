@@ -9,7 +9,7 @@ import {
   shortPassword,
 } from "../../../mocks/mocks/authentication.mock";
 
-describe("check errors of login and register don't have conflict", () => {
+describe.skip("check errors of login and register don't have conflict", () => {
   test("if user get error from login, he can close the popover and register to site", async () => {
     render(<Layout />);
 
@@ -134,7 +134,7 @@ describe("check errors of login and register don't have conflict", () => {
   });
 });
 
-describe("check user can move from login to register popover", () => {
+describe.skip("check user can move from login to register popover", () => {
   test("user can go to register popover from login popover after he faced to an error and register", async () => {
     render(<Layout />);
 
@@ -195,7 +195,7 @@ describe("check user can move from login to register popover", () => {
   });
 });
 
-describe("check user can move from register to login popover", () => {
+describe.skip("check user can move from register to login popover", () => {
   test("user can go to login popover from register popover after he faced to an error and login", async () => {
     render(<Layout />);
 
@@ -256,7 +256,7 @@ describe("check user can move from register to login popover", () => {
   });
 });
 
-describe("check that errors are removed when the component is unmounted and mounted again", () => {
+describe.skip("check that errors are removed when the component is unmounted and mounted again", () => {
   test("if user have error on logging in and he moved to register by bottom button and then returned by bottom button to login, he must not see errors anymore", async () => {
     render(<Layout />);
 

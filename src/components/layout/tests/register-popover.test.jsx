@@ -14,7 +14,7 @@ import {
   shortPassword,
 } from ".../../../mocks/mocks/authentication.mock";
 
-describe("check register functionality", () => {
+describe.skip("check register functionality", () => {
   test("user can click register button and then register to the site", async () => {
     render(<Layout />);
 
@@ -98,7 +98,7 @@ describe("check register functionality", () => {
   });
 });
 
-describe("check popover functionality", () => {
+describe.skip("check popover functionality", () => {
   test("user can close the popover", async () => {
     render(<Layout />);
 
@@ -217,7 +217,7 @@ describe("check popover functionality", () => {
   });
 });
 
-describe("check header after registration", () => {
+describe.skip("check header after registration", () => {
   test("user won't be able to see the login and register button after registration", async () => {
     render(<Layout />);
 

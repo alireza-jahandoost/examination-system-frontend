@@ -29,7 +29,7 @@ describe("an authenticated user can register in an started exam that did not fin
     await wait(300);
 
     // click login button
-    const loginButton = screen.getByRole("button", { name: /login/i });
+    const loginButton = screen.getByRole("link", { name: /login/i });
     userEvent.click(loginButton);
     // end
 
@@ -50,6 +50,7 @@ describe("an authenticated user can register in an started exam that did not fin
     // end
 
     // open exam description
+    userEvent.click(screen.getAllByRole("link", { name: /^exams$/i })[0]);
     const moreDetailsButtons = await screen.findAllByText(/more details/i);
     const ElementmoreDetailsButton = moreDetailsButtons[0];
 
@@ -90,7 +91,7 @@ describe("an authenticated user can register in an started exam that did not fin
     await wait(300);
 
     // click login button
-    const loginButton = screen.getByRole("button", { name: /login/i });
+    const loginButton = screen.getByRole("link", { name: /login/i });
     userEvent.click(loginButton);
     // end
 
@@ -111,6 +112,7 @@ describe("an authenticated user can register in an started exam that did not fin
     // end
 
     // open exam description
+    userEvent.click(screen.getAllByRole("link", { name: /^exams$/i })[0]);
     const moreDetailsButtons = await screen.findAllByText(/more details/i);
     const ElementmoreDetailsButton = moreDetailsButtons[3];
 

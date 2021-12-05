@@ -157,7 +157,6 @@ export const ExaminingProvider = ({ children }) => {
       });
   };
 
-  console.log(examInfo);
   const value = {
     ...examInfo,
     isContextLoaded,

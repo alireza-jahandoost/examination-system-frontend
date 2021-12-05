@@ -11,8 +11,8 @@ import { userEmail, correctPassword } from "../mocks/mocks/authentication.mock";
 test("authenticated user can click logout and logout from his account", async () => {
   render(<App />);
   // login
-  const loginButton = screen.getByRole("button", { name: /login/i });
-  userEvent.click(loginButton);
+  const loginLink = screen.getByRole("link", { name: /login/i });
+  userEvent.click(loginLink);
 
   const emailField = screen.getByRole("textbox", { name: /email/i });
   userEvent.clear(emailField);
@@ -38,7 +38,7 @@ test("authenticated user can click logout and logout from his account", async ()
 
   // check login and register appeared
   await waitFor(() =>
-    expect(screen.getByRole("button", { name: /login/i })).toBeInTheDocument()
+    expect(screen.getByRole("link", { name: /login/i })).toBeInTheDocument()
   );
-  expect(screen.getByRole("button", { name: /register/i })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /register/i })).toBeInTheDocument();
 });
