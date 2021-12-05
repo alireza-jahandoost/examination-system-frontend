@@ -68,7 +68,7 @@ export const ExaminingProvider = ({ children }) => {
   }, [examInfo.exam, isContextLoaded, participant]);
 
   useEffect(() => {
-    if (!token || isFailed || !examInfo.isContextLoaded) {
+    if (isFailed || !examInfo.isContextLoaded) {
       return;
     }
     if (
@@ -76,7 +76,7 @@ export const ExaminingProvider = ({ children }) => {
         (participant === null && examInfo.isUserRegisteredToExam)) &&
       !isLoading
     ) {
-      if (!examInfo.isUserRegisteredToExam) {
+      if (!examInfo.isUserRegisteredToExam || !token) {
         setParticipant(null);
         return;
       }
@@ -157,6 +157,7 @@ export const ExaminingProvider = ({ children }) => {
       });
   };
 
+  console.log(examInfo);
   const value = {
     ...examInfo,
     isContextLoaded,

@@ -22,6 +22,7 @@ const ExamOverviewPage = () => {
     examPassword,
     changeExamPassword,
     errors,
+    isUserRegisteredToExam,
   } = useContext(ExaminingContext);
   const { isUserAuthenticated, showUserLoginPopover } = useContext(
     AuthenticationContext
@@ -61,26 +62,31 @@ const ExamOverviewPage = () => {
         )}
         <div className="mt-5">
           <ExamTime color="dark" examTime={examTime} />
-          {canUserRegisterToExam && (
-            <Form onSubmit={handleRegistration}>
-              {errors.message && (
-                <p className="text-danger">{errors.message}</p>
-              )}
-              {exam.has_password && (
-                <ExamPassword
-                  examPassword={examPassword}
-                  changeExamPassword={changeExamPassword}
-                  passwordErrorMessage={errors.password}
-                  examId={examId}
-                />
-              )}
-              <Button type="submit"> Register for Exam </Button>
-            </Form>
-          )}
-          {canUserGoToExam && (
-            <Link to={programRoutes.examiningQuestion(examId, firstQuestion)}>
-              <Button>go to exam</Button>
-            </Link>
+          {isUserRegisteredToExam ? (
+            canUserGoToExam ? (
+              <Link to={programRoutes.examiningQuestion(examId, firstQuestion)}>
+                <Button>go to exam</Button>
+              </Link>
+            ) : (
+              <p>Registered</p>
+            )
+          ) : (
+            canUserRegisterToExam && (
+              <Form onSubmit={handleRegistration}>
+                {errors.message && (
+                  <p className="text-danger">{errors.message}</p>
+                )}
+                {exam.has_password && (
+                  <ExamPassword
+                    examPassword={examPassword}
+                    changeExamPassword={changeExamPassword}
+                    passwordErrorMessage={errors.password}
+                    examId={examId}
+                  />
+                )}
+                <Button type="submit"> Register for Exam </Button>
+              </Form>
+            )
           )}
         </div>
       </Container>

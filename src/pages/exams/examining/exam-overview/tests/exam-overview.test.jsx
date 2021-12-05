@@ -1,6 +1,5 @@
 import {
   renderWithAuthentication,
-  renderWithRouter,
   screen,
   waitFor,
 } from "../../../../../test-utils/testing-library-utils";
@@ -112,7 +111,7 @@ describe("check when user is authenticated", () => {
     });
     test("if user registered and user is not finished the exam, user can click go to exam", async () => {
       const { WrappedElement } = wrapper(<ExamOverview />, {
-        participantId: 1,
+        participantId: 4,
         firstQuestion: 6,
       });
       renderWithAuthentication(WrappedElement, {

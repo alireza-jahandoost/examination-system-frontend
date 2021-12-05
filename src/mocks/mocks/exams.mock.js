@@ -1,3 +1,5 @@
+export const foundSearch = "search found";
+
 export const pageOneExamsIndex = {
   data: {
     exams: [

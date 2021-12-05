@@ -11,6 +11,7 @@ import {
   examShowId_4,
   examShowId_5_withPassword,
   notFoundExamSearch,
+  foundSearch,
 } from "../mocks/exams.mock";
 import { invalidSum } from "../errors/failed-publish.error";
 
@@ -21,7 +22,11 @@ const examsHandler = [
   rest.get(apiRoutes.exams.indexAllExams(), (req, res, ctx) => {
     const valueOfPage = req.url.searchParams.get("page");
     const searchQuery = req.url.searchParams.get("search");
-    if (searchQuery !== undefined && searchQuery !== null) {
+    if (
+      searchQuery !== undefined &&
+      searchQuery !== null &&
+      searchQuery !== foundSearch
+    ) {
       return res(ctx.json(notFoundExamSearch));
     }
     const page = Number(valueOfPage);

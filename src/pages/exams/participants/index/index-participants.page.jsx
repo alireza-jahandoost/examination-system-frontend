@@ -1,7 +1,7 @@
 import { useState, useMemo, useContext, useEffect } from "react";
 import { Link, useLocation, Redirect, useParams } from "react-router-dom";
-import { Table } from "react-bootstrap";
 import { useMountedState } from "react-use";
+import RecordsTable from "../../../../components/records-table/records-table.component";
 import useAsyncError from "../../../../hooks/useAsyncError";
 import ProfileContainer from "../../../../components/profile-container/profile-container.component";
 import Pagination from "../../../../components/pagination/pagination.component";
@@ -80,7 +80,7 @@ const IndexParticipantsPage = () => {
         <p>Loading...</p>
       ) : participants.length > 0 ? (
         <>
-          <Table striped bordered hover>
+          <RecordsTable>
             <thead>
               <tr>
                 <th>#</th>
@@ -112,7 +112,7 @@ const IndexParticipantsPage = () => {
                 );
               })}
             </tbody>
-          </Table>
+          </RecordsTable>
           <Pagination
             currentPage={currentPage}
             numberOfPages={numberOfPages}

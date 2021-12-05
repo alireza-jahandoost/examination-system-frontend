@@ -1,6 +1,6 @@
 import { useState, useMemo, useContext, useEffect } from "react";
 import { Link, useLocation, Redirect } from "react-router-dom";
-import { Table } from "react-bootstrap";
+import RecordsTable from "../../../../components/records-table/records-table.component";
 import { useMountedState } from "react-use";
 import useAsyncError from "../../../../hooks/useAsyncError";
 import ProfileContainer from "../../../../components/profile-container/profile-container.component";
@@ -79,7 +79,7 @@ const CreatedExamsPage = () => {
         <p>Loading...</p>
       ) : exams.length > 0 ? (
         <>
-          <Table striped bordered hover>
+          <RecordsTable>
             <thead>
               <tr>
                 <th>#</th>
@@ -127,7 +127,7 @@ const CreatedExamsPage = () => {
                 );
               })}
             </tbody>
-          </Table>
+          </RecordsTable>
           <Pagination
             currentPage={currentPage}
             numberOfPages={numberOfPages}

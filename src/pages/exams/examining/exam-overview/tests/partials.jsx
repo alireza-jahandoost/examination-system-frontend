@@ -5,6 +5,7 @@ import {
   showParticipantId1,
   showParticipantId2,
   showParticipantId3,
+  showParticipantId4,
 } from "../../../../../mocks/mocks/participants.mock";
 import {
   examShowId_1,
@@ -40,6 +41,9 @@ const getParticipant = (participantId) => {
     case 3:
       participant = showParticipantId3;
       break;
+    case 4:
+      participant = showParticipantId4;
+      break;
     default:
       throw new Error("participant id is not valid in exam question partials");
   }
@@ -71,6 +75,7 @@ export const wrapper = (
     examPassword = "",
     passwordErrorMessage = "",
     errors = {},
+    isUserRegisteredToExam = false,
   }
 ) => {
   if (passwordErrorMessage) {
@@ -91,6 +96,7 @@ export const wrapper = (
     examPassword,
     passwordErrorMessage,
     errors,
+    isUserRegisteredToExam: participantId ? true : isUserRegisteredToExam,
   };
   const WrappedElement = (
     <Route path={programRoutes.examiningOverview(":examId")}>

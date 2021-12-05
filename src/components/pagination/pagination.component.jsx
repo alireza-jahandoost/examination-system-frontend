@@ -8,9 +8,21 @@ const PaginationComponent = ({
   rangeSize = 3,
 }) => {
   const prevPagesButtons = [];
+  const createUrl = (page) => {
+    const parts = prefix.split("?");
+    if (parts.length > 2) {
+      throw new Error("something went wrong");
+    }
+    if (parts.length === 1) {
+      return `${parts[0]}?page=${page}`;
+    } else if (parts.length === 2) {
+      return `${parts[0]}?${parts[1]}&page=${page}`;
+    }
+  };
+
   for (let i = Math.max(currentPage - rangeSize, 1); i < currentPage; i++) {
     prevPagesButtons.push(
-      <PaginationItem to={`${prefix}?page=${i}`} key={i}>
+      <PaginationItem to={createUrl(i)} key={i}>
         {i}
       </PaginationItem>
     );
@@ -22,7 +34,7 @@ const PaginationComponent = ({
     i++
   ) {
     nextPagesButtons.push(
-      <PaginationItem to={`${prefix}?page=${i}`} key={i}>
+      <PaginationItem to={createUrl(i)} key={i}>
         {i}
       </PaginationItem>
     );
@@ -30,13 +42,13 @@ const PaginationComponent = ({
   return (
     <>
       <Pagination>
-        <PaginationItem to={`${prefix}?page=${1}`} disabled={currentPage === 1}>
+        <PaginationItem to={createUrl(1)} disabled={currentPage === 1}>
           <span aria-hidden="true">«</span>
           <span className="visually-hidden">First</span>
         </PaginationItem>
         <PaginationItem
           disabled={currentPage === 1}
-          to={`${prefix}?page=${currentPage - 1}`}
+          to={createUrl(currentPage - 1)}
         >
           <span aria-hidden="true">‹</span>
           <span className="visually-hidden">Previous</span>
@@ -45,14 +57,14 @@ const PaginationComponent = ({
         <PaginationItem active={true}>{currentPage}</PaginationItem>
         {nextPagesButtons}
         <PaginationItem
-          to={`${prefix}?page=${currentPage + 1}`}
+          to={createUrl(currentPage + 1)}
           disabled={currentPage === numberOfPages}
         >
           <span aria-hidden="true">›</span>
           <span className="visually-hidden">Next</span>
         </PaginationItem>
         <PaginationItem
-          to={`${prefix}?page=${numberOfPages}`}
+          to={createUrl(numberOfPages)}
           disabled={currentPage === numberOfPages}
         >
           <span aria-hidden="true">»</span>

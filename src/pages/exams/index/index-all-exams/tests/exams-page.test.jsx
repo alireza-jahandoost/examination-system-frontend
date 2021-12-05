@@ -1,22 +1,28 @@
 import {
-  render,
+  renderWithAuthentication,
+  waitForElementToBeRemoved,
   screen,
-  fireEvent,
   waitFor,
 } from "../../../../../test-utils/testing-library-utils";
-import userEvent from "@testing-library/user-event";
+import axios from "axios";
 
-import { wait, wrapWithWidth } from "../../../../../utilities/tests.utility";
 import IndexAllExams from "../index-all-exams.page";
+import { emptyRequest } from "../../../../../utilities/tests.utility";
+import apiRoutes from "../../../../../constants/api-routes.constant";
+import programRoutes from "../../../../../constants/program-routes.constant";
+import {
+  pageOneExamsIndex,
+  foundSearch,
+} from "../../../../../mocks/mocks/exams.mock";
 
 const PAGE_SIZE = 18;
-const TOTAL_NUMBER_OF_EXAMS = 50;
+const searchPrefix = "search";
 
 describe("initial conditions", () => {
-  test("there is a search section to search exams", () => {
-    render(<IndexAllExams />);
+  test("there is a search section to search exams", async () => {
+    renderWithAuthentication(<IndexAllExams />);
 
-    const searchSection = screen.getByRole("search");
+    const searchSection = await screen.findByRole("search");
     expect(searchSection).toBeInTheDocument();
     const searchInput = screen.getByPlaceholderText("Search Exam");
     expect(searchInput).toBeInTheDocument();
@@ -26,7 +32,7 @@ describe("initial conditions", () => {
       PAGE_SIZE +
       " exams must be loaded",
     async () => {
-      render(<IndexAllExams />);
+      renderWithAuthentication(<IndexAllExams />);
 
       const loading = screen.getByText(/loading.../i);
       expect(loading).toBeInTheDocument();
@@ -40,109 +46,126 @@ describe("initial conditions", () => {
   );
 });
 
-describe("check exams loadings", () => {
-  test(
-    "with scrolling, every time " + PAGE_SIZE + " exams must be added",
-    async () => {
-      render(<IndexAllExams />);
+describe("check pagination and exams", () => {
+  test("after loading, pagination must have link to other pages", async () => {
+    renderWithAuthentication(<IndexAllExams />, {
+      route: programRoutes.indexAllExams(),
+    });
 
-      const loading = screen.getByText(/loading.../i);
-      expect(loading).toBeInTheDocument();
+    const numberOfPages = pageOneExamsIndex.meta.last_page;
 
-      const exams = await screen.findAllByRole("button", {
-        name: /more details/i,
-      });
-      expect(exams).toHaveLength(PAGE_SIZE);
-
-      fireEvent.scroll(window, { target: { scrollTop: -500 } });
-      fireEvent.scroll(window, { target: { scrollTop: 0 } });
-
-      await wait(100);
-
-      await waitFor(async () =>
-        expect(
-          await screen.findAllByRole("button", { name: /more details/i })
-        ).toHaveLength(2 * PAGE_SIZE)
+    for (let i = 2; i <= numberOfPages; i++) {
+      expect(await screen.findByRole("link", { name: i })).toHaveAttribute(
+        "href",
+        `${programRoutes.indexAllExams()}?page=${i}`
       );
     }
-  );
+  });
 
-  test("when all of the exams loaded, user mustn't see any Loading", async () => {
-    render(<IndexAllExams />);
-
-    const loading = screen.getByText(/loading.../i);
-    expect(loading).toBeInTheDocument();
-
-    const exams = await screen.findAllByRole("button", {
-      name: /more details/i,
+  test("if there is not any created exam, loading must be gone", async () => {
+    emptyRequest({
+      method: "get",
+      route: apiRoutes.exams.indexAllExams(),
+      objectName: "exams",
     });
-    expect(exams).toHaveLength(PAGE_SIZE);
 
-    fireEvent.scroll(window, { target: { scrollTop: -500 } });
-    fireEvent.scroll(window, { target: { scrollTop: 0 } });
+    renderWithAuthentication(<IndexAllExams />, {
+      route: programRoutes.indexAllExams(),
+    });
 
-    await wait(100);
+    await waitForElementToBeRemoved(() => screen.queryByText(/loading/i));
+  });
 
-    await waitFor(async () =>
-      expect(
-        await screen.findAllByRole("button", { name: /more details/i })
-      ).toHaveLength(2 * PAGE_SIZE)
-    );
+  test("if user came to a page that do not exist, he must be redirected to the page 1", async () => {
+    const axiosGet = jest.spyOn(axios, "get");
+    renderWithAuthentication(<IndexAllExams />, {
+      route: `${programRoutes.indexAllExams()}?page=100`,
+    });
 
-    fireEvent.scroll(window, { target: { scrollTop: -500 } });
-    fireEvent.scroll(window, { target: { scrollTop: 0 } });
+    await waitFor(() => {
+      return expect(
+        window.location.href.endsWith(programRoutes.indexAllExams())
+      ).toBe(true);
+    });
+    expect(axiosGet).toHaveBeenCalledTimes(2);
+    expect(axiosGet.mock.calls[0][1].params).toEqual({ page: 100 });
+    expect(axiosGet.mock.calls[1][1].params).toEqual({ page: 1 });
+  });
 
-    await wait(100);
+  test("if the page is in the url, that page must be loaded", async () => {
+    const axiosGet = jest.spyOn(axios, "get");
+    renderWithAuthentication(<IndexAllExams />, {
+      route: `${programRoutes.indexAllExams()}?page=2`,
+    });
 
-    await waitFor(async () =>
-      expect(
-        await screen.findAllByRole("button", { name: /more details/i })
-      ).toHaveLength(TOTAL_NUMBER_OF_EXAMS)
-    );
-
-    fireEvent.scroll(window, { target: { scrollTop: -500 } });
-    fireEvent.scroll(window, { target: { scrollTop: 0 } });
-
-    const nullLoading = screen.queryByText(/loading/i);
-    expect(nullLoading).not.toBeInTheDocument();
+    for (let i = 19; i < 19 + 18; i++) {
+      expect(await screen.findByText(i, { exact: false })).toBeInTheDocument();
+    }
+    expect(axiosGet).toHaveBeenCalledTimes(1);
+    expect(axiosGet.mock.calls[0][1].params).toEqual({ page: 2 });
   });
 });
 
-describe("check opening and closing the exam descriptions", () => {
-  test("user can close exam description by button, on Desktop", async () => {
-    render(wrapWithWidth(<IndexAllExams />, 1300));
-    const moreDetailsButtons = await screen.findAllByRole("button", {
-      name: /more details/i,
+describe("check when we have search query in url", () => {
+  test("after loading, pagination must have link to other pages", async () => {
+    const url = `${programRoutes.indexAllExams()}?${searchPrefix}=${encodeURIComponent(
+      foundSearch
+    )}`;
+    renderWithAuthentication(<IndexAllExams />, {
+      route: url,
     });
-    userEvent.click(moreDetailsButtons[0]);
 
-    const closeButton = await screen.findByRole("button", { name: /close/i });
+    const numberOfPages = pageOneExamsIndex.meta.last_page;
 
-    userEvent.click(closeButton);
-    const nullCloseButton = screen.queryByRole("button", { name: /close/i });
-    expect(nullCloseButton).not.toBeInTheDocument();
-
-    const nullRegisterButton = screen.queryByRole("button", {
-      name: /register/i,
-    });
-    expect(nullRegisterButton).not.toBeInTheDocument();
+    for (let i = 2; i <= numberOfPages; i++) {
+      expect(await screen.findByRole("link", { name: i })).toHaveAttribute(
+        "href",
+        `${url}&page=${i}`
+      );
+    }
   });
-  test("user can close exam description by button, on Mobile", async () => {
-    render(wrapWithWidth(<IndexAllExams />, 800));
-    const moreDetailsButtons = await screen.findAllByRole("button", {
-      name: /more details/i,
+
+  test("if there is not any matched exam, loading must be gone", async () => {
+    const url = `${programRoutes.indexAllExams()}?${searchPrefix}=testtest`;
+    emptyRequest({
+      method: "get",
+      route: apiRoutes.exams.indexAllExams(),
+      objectName: "exams",
     });
-    userEvent.click(moreDetailsButtons[0]);
 
-    const closeButton = await screen.findByRole("button", { name: /close/i });
-
-    userEvent.click(closeButton);
-    const nullCloseButton = screen.queryByRole("button", { name: /close/i });
-    expect(nullCloseButton).not.toBeInTheDocument();
-
-    const nullRegisterButton = screen.queryByRole("button", {
-      name: /register/i,
+    renderWithAuthentication(<IndexAllExams />, {
+      route: url,
     });
-    expect(nullRegisterButton).not.toBeInTheDocument();
+
+    await waitForElementToBeRemoved(() => screen.queryByText(/loading/i));
+  });
+
+  test("if user came to a page that do not exist, he must be redirected to the page 1", async () => {
+    const axiosGet = jest.spyOn(axios, "get");
+    const url = `${programRoutes.indexAllExams()}?${searchPrefix}=${encodeURIComponent(
+      foundSearch
+    )}`;
+    renderWithAuthentication(<IndexAllExams />, {
+      route: `${url}&page=100`,
+    });
+
+    await waitFor(() => expect(window.location.href.endsWith(url)).toBe(true));
+    expect(axiosGet).toHaveBeenCalledTimes(2);
+  });
+
+  test("if the page is in the url, that page must be loaded", async () => {
+    const axiosGet = jest.spyOn(axios, "get");
+    const url = `${programRoutes.indexAllExams()}?${searchPrefix}=${foundSearch}`;
+    renderWithAuthentication(<IndexAllExams />, {
+      route: `${url}&page=2`,
+    });
+
+    for (let i = 19; i < 19 + 18; i++) {
+      expect(await screen.findByText(i, { exact: false })).toBeInTheDocument();
+    }
+    expect(axiosGet).toHaveBeenCalledTimes(1);
+    const paramsObject = { page: 2 };
+    paramsObject[searchPrefix] = foundSearch;
+    expect(axiosGet.mock.calls[0][1].params).toEqual(paramsObject);
   });
 });
