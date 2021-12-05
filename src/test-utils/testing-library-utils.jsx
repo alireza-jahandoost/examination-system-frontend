@@ -23,11 +23,17 @@ const renderWithContext = (ui, options) =>
 
 export const renderWithRouter = (
   ui,
-  { route = "/", withContexts = false } = {}
+  { route = "/", withContexts = false, singleWrapper = "memory" } = {}
 ) => {
   window.history.pushState({}, "Test page", route);
 
-  return render(ui, { wrapper: withContexts ? wrapper : MemoryRouter });
+  return render(ui, {
+    wrapper: withContexts
+      ? wrapper
+      : singleWrapper === "memory"
+      ? MemoryRouter
+      : Router,
+  });
 };
 
 export const renderWithAuthentication = (
