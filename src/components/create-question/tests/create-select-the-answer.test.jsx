@@ -47,7 +47,21 @@ describe("create select the answer questions", () => {
     userEvent.click(createButton);
     // end
 
+    // check button label changed to loading
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /loading/i })).toBeDisabled()
+    );
+    // end
+
     await waitFor(() => expect(addQuestion).toHaveBeenCalledTimes(1));
+
+    // check button returned to normal
+    await waitFor(() =>
+      expect(
+        screen.getAllByRole("button", { name: /create/i })[1]
+      ).toBeEnabled()
+    );
+    // end
   });
 
   test("user can create a select the answer question with options", async () => {

@@ -51,7 +51,19 @@ describe("create true or false questions", () => {
     userEvent.click(createButton);
     // end
 
+    // check button label changed to loading
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /loading/i })).toBeDisabled()
+    );
+    // end
+
     await waitFor(() => expect(addQuestion).toHaveBeenCalledTimes(1));
+
+    // check button returned to normal
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /create/i })).toBeEnabled()
+    );
+    // end
   });
   test("create question with answer false", async () => {
     const addQuestion = jest.fn();

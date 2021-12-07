@@ -191,6 +191,12 @@ describe("check 422 errors", () => {
     expect(createButton).toBeEnabled();
     userEvent.click(createButton);
 
+    // check label of button changed to loading
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /loading/i })).toBeDisabled()
+    );
+    // end
+
     await waitFor(() => expect(addQuestion).toHaveBeenCalledTimes(0));
     await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
     await waitFor(() =>
@@ -203,6 +209,12 @@ describe("check 422 errors", () => {
         ).toBeInTheDocument()
       );
     }
+
+    // check button backed to normal
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /create/i })).toBeEnabled()
+    );
+    // end
   });
 
   test("check states.createState route", async () => {
@@ -296,6 +308,12 @@ describe("check 422 errors", () => {
     userEvent.click(createButton);
     // end
 
+    // check label of button changed to loading
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /loading/i })).toBeDisabled()
+    );
+    // end
+
     await waitFor(() => expect(addQuestion).toHaveBeenCalledTimes(0));
     await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
     await waitFor(() =>
@@ -308,6 +326,14 @@ describe("check 422 errors", () => {
         ).toBeInTheDocument()
       );
     }
+
+    // check button backed to normal
+    await waitFor(() =>
+      expect(
+        screen.getAllByRole("button", { name: /create/i })[1]
+      ).toBeEnabled()
+    );
+    // end
   });
 });
 
@@ -348,11 +374,23 @@ describe("check other errors", () => {
     expect(createButton).toBeEnabled();
     userEvent.click(createButton);
 
+    // check label of button changed to loading
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /loading/i })).toBeDisabled()
+    );
+    // end
+
     await waitFor(() => expect(addQuestion).toHaveBeenCalledTimes(0));
     await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
     await waitFor(() =>
       expect(screen.getByText(/something went wrong/i)).toBeInTheDocument()
     );
+
+    // check button backed to normal
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /create/i })).toBeEnabled()
+    );
+    // end
   });
 
   test("check states.createState route", async () => {
@@ -446,10 +484,24 @@ describe("check other errors", () => {
     userEvent.click(createButton);
     // end
 
+    // check label of button changed to loading
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /loading/i })).toBeDisabled()
+    );
+    // end
+
     await waitFor(() => expect(addQuestion).toHaveBeenCalledTimes(0));
     await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
     await waitFor(() =>
       expect(screen.getByText(/something went wrong/i)).toBeInTheDocument()
     );
+
+    // check button backed to normal
+    await waitFor(() =>
+      expect(
+        screen.getAllByRole("button", { name: /create/i })[1]
+      ).toBeEnabled()
+    );
+    // end
   });
 });

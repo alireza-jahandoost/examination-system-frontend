@@ -13,6 +13,7 @@ export const CreateQuestionContext = createContext();
 export const CreateQuestionProvider = ({ children }) => {
   const { token, removeUserInfo } = useContext(AuthenticationContext);
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const areStatesValid = ({ states, questionTypeId }) => {
     switch (Number(questionTypeId)) {
@@ -50,6 +51,7 @@ export const CreateQuestionProvider = ({ children }) => {
 
   const createQuestion = async ({ examId, questionBody, stateBodies }) => {
     try {
+      setIsLoading(true);
       const questionStoreResponse = await questionsStoreRequest(
         examId,
         questionBody,
@@ -68,6 +70,7 @@ export const CreateQuestionProvider = ({ children }) => {
 
         await axios.all(stateRequests);
       }
+      setIsLoading(false);
       return question;
     } catch (e) {
       switch (Number(e?.response?.status)) {
@@ -89,11 +92,12 @@ export const CreateQuestionProvider = ({ children }) => {
             message: "something went wrong, please try again later",
           });
       }
+      setIsLoading(false);
       return null;
     }
   };
 
-  const value = { createQuestion, areStatesValid, errors };
+  const value = { createQuestion, areStatesValid, isLoading, errors };
   return (
     <CreateQuestionContext.Provider value={value}>
       {children}

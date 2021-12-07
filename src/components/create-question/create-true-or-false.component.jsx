@@ -14,7 +14,9 @@ const CreateTrueOrFalse = ({ examId, addQuestion, readOnly = false }) => {
   const [answer, setAnswer] = useState(false);
   const [questionText, setQuestionText] = useState("");
   const [questionScore, setQuestionScore] = useState(0);
-  const { createQuestion, errors } = useContext(CreateQuestionContext);
+  const { createQuestion, isLoading, errors } = useContext(
+    CreateQuestionContext
+  );
 
   const changeState = ({ integer_part }) => {
     setAnswer(!!integer_part);
@@ -84,8 +86,12 @@ const CreateTrueOrFalse = ({ examId, addQuestion, readOnly = false }) => {
       </Row>
       <Row className="mt-3">
         <Col>
-          <Button disabled={readOnly} variant="primary" type="submit">
-            Create
+          <Button
+            disabled={readOnly || isLoading}
+            variant="primary"
+            type="submit"
+          >
+            {isLoading ? "Loading..." : "Create"}
           </Button>
         </Col>
       </Row>

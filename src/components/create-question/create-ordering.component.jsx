@@ -15,7 +15,7 @@ const CreateOrdering = ({ examId, addQuestion, readOnly = false }) => {
   const [questionText, setQuestionText] = useState("");
   const [questionScore, setQuestionScore] = useState(0);
   const nextStateId = useRef(1);
-  const { createQuestion, areStatesValid, errors } = useContext(
+  const { createQuestion, isLoading, areStatesValid, errors } = useContext(
     CreateQuestionContext
   );
 
@@ -134,8 +134,12 @@ const CreateOrdering = ({ examId, addQuestion, readOnly = false }) => {
       </Row>
       <Row className="mt-3">
         <Col>
-          <Button disabled={readOnly} variant="primary" type="submit">
-            Create
+          <Button
+            disabled={readOnly || isLoading}
+            variant="primary"
+            type="submit"
+          >
+            {isLoading ? "Loading..." : "Create"}
           </Button>
         </Col>
       </Row>

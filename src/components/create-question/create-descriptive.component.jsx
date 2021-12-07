@@ -12,7 +12,9 @@ import apiRoutes from "../../constants/api-routes.constant";
 const CreateDescriptive = ({ examId, addQuestion, readOnly = false }) => {
   const [questionText, setQuestionText] = useState("");
   const [questionScore, setQuestionScore] = useState(0);
-  const { createQuestion, errors } = useContext(CreateQuestionContext);
+  const { createQuestion, errors, isLoading } = useContext(
+    CreateQuestionContext
+  );
 
   const handleCreate = async (e) => {
     e.preventDefault();
@@ -66,8 +68,12 @@ const CreateDescriptive = ({ examId, addQuestion, readOnly = false }) => {
       </Row>
       <Row className="mt-3">
         <Col>
-          <Button disabled={readOnly} variant="primary" type="submit">
-            Create
+          <Button
+            disabled={readOnly || isLoading}
+            variant="primary"
+            type="submit"
+          >
+            {isLoading ? "Loading..." : "Create"}
           </Button>
         </Col>
       </Row>
