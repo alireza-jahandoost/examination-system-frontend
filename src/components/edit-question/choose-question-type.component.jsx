@@ -20,6 +20,8 @@ const ChooseQuestionType = ({ onDeleteQuestion, readOnly = false }) => {
     addError,
     states,
     isLoading,
+    isDeleting,
+    isContextLoaded,
     deleteQuestion,
   } = useContext(EditQuestionContext);
 
@@ -34,6 +36,7 @@ const ChooseQuestionType = ({ onDeleteQuestion, readOnly = false }) => {
           errors={errors}
           updateQuestion={updateQuestion}
           addError={addError}
+          isLoading={isLoading}
         />
       );
       break;
@@ -46,6 +49,7 @@ const ChooseQuestionType = ({ onDeleteQuestion, readOnly = false }) => {
           updateQuestion={updateQuestion}
           addError={addError}
           states={states}
+          isLoading={isLoading}
         />
       );
       break;
@@ -58,6 +62,7 @@ const ChooseQuestionType = ({ onDeleteQuestion, readOnly = false }) => {
           updateQuestion={updateQuestion}
           addError={addError}
           states={states}
+          isLoading={isLoading}
         />
       );
       break;
@@ -70,6 +75,7 @@ const ChooseQuestionType = ({ onDeleteQuestion, readOnly = false }) => {
           updateQuestion={updateQuestion}
           addError={addError}
           states={states}
+          isLoading={isLoading}
         />
       );
       break;
@@ -82,6 +88,7 @@ const ChooseQuestionType = ({ onDeleteQuestion, readOnly = false }) => {
           updateQuestion={updateQuestion}
           addError={addError}
           states={states}
+          isLoading={isLoading}
         />
       );
       break;
@@ -94,6 +101,7 @@ const ChooseQuestionType = ({ onDeleteQuestion, readOnly = false }) => {
           updateQuestion={updateQuestion}
           addError={addError}
           states={states}
+          isLoading={isLoading}
         />
       );
       break;
@@ -117,9 +125,9 @@ const ChooseQuestionType = ({ onDeleteQuestion, readOnly = false }) => {
             <span> {question.question_type.question_type_name} </span>
           </h3>
           <DeleteButton
-            title="Delete Question"
+            title={isDeleting ? "Loading..." : "Delete Question"}
             onClick={() => setIsModalShown(true)}
-            disabled={readOnly}
+            disabled={readOnly || isDeleting}
           />
         </div>
       )}
@@ -127,13 +135,17 @@ const ChooseQuestionType = ({ onDeleteQuestion, readOnly = false }) => {
       {errors.integer_part && (
         <p className="text-danger">{errors.integer_part}</p>
       )}
-      {isLoading ? <p> Loading... </p> : questionForm}
+      {!isContextLoaded ? <p> Loading... </p> : questionForm}
       <Modal
         onConfirm={handleDelete}
         isShown={isModalShown}
         closeModal={() => setIsModalShown(false)}
         title="Delete Question"
         body="Are you sure you want to delete this question?"
+        buttonLabels={
+          isDeleting ? ["Loading...", "Loading..."] : ["Confirm", "Cancel"]
+        }
+        disabled={isDeleting}
       />
     </div>
   );

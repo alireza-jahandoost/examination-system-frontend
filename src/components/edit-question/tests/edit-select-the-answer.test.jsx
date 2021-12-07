@@ -1,6 +1,7 @@
 import {
   renderWithAuthentication,
   screen,
+  waitFor,
 } from "../../../test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
 import EditQuestion from "../edit-question.component";
@@ -27,7 +28,7 @@ describe("check update feature", () => {
     ).not.toBeInTheDocument();
   });
 
-  test("user can change text description and update", async () => {
+  test("user can change text description and update; loading message must be labeled on the button when component is loading", async () => {
     renderWithAuthentication(
       wrapper(<EditQuestion examId={1} questionId={4} />)
     );
@@ -50,6 +51,14 @@ describe("check update feature", () => {
       name: buttonMessage,
     });
     userEvent.click(updateButton);
+    // end
+
+    // check loading on button
+    await waitFor(() =>
+      expect(
+        screen.getByRole("button", { name: /loading/i })
+      ).toBeInTheDocument()
+    );
     // end
 
     await wait(100);

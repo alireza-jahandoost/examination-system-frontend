@@ -1,7 +1,7 @@
 import {
   screen,
   renderWithAuthentication,
-  waitForElementToBeRemoved,
+  waitFor,
 } from "../../../../test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
 import UpdateExam from "../update-exam.page";
@@ -38,8 +38,10 @@ test("user can change and update the question if it is not published", async () 
     name: /save changes/i,
   });
   userEvent.click(saveChangesButton);
-  await waitForElementToBeRemoved(() =>
-    screen.queryByRole("button", { name: /save changes/i })
+  await waitFor(() =>
+    expect(
+      screen.queryByRole("button", { name: /save changes/i })
+    ).not.toBeInTheDocument()
   );
 });
 

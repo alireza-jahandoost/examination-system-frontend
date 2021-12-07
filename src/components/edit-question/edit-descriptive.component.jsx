@@ -11,6 +11,7 @@ const EditDescriptive = ({
   errors,
   updateQuestion,
   addError,
+  isLoading,
   readOnly = false,
 }) => {
   const [questionText, setQuestionText] = useState(question.question_text);
@@ -85,8 +86,12 @@ const EditDescriptive = ({
       <Row className="mt-3">
         <Col>
           {hasChange ? (
-            <Button disabled={readOnly} variant="primary" type="submit">
-              save changes
+            <Button
+              disabled={readOnly || isLoading}
+              variant="primary"
+              type="submit"
+            >
+              {isLoading ? "Loading..." : "Save Changes"}
             </Button>
           ) : (
             <p> all changes saved </p>

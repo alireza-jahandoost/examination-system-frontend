@@ -1,6 +1,7 @@
 import {
   renderWithAuthentication,
   screen,
+  waitFor,
 } from "../../../test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
 import EditQuestion from "../edit-question.component";
@@ -26,7 +27,7 @@ describe("check update feature", () => {
     ).not.toBeInTheDocument();
   });
 
-  test("user can change the question text and update", async () => {
+  test("user can change the question text and update; user must see loading when he clicks on update button", async () => {
     renderWithAuthentication(
       wrapper(<EditQuestion examId={1} questionId={1} />)
     );
@@ -46,6 +47,12 @@ describe("check update feature", () => {
     // click update button
     const updateButton = screen.getByRole("button", { name: buttonMessage });
     userEvent.click(updateButton);
+    // end
+
+    // check loading on button
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /loading/i })).toBeDisabled()
+    );
     // end
 
     // check for update

@@ -6,7 +6,7 @@ export const wrapper = (ui) => (
 );
 
 export const savedMessage = "all changes saved";
-export const buttonMessage = "save changes";
+export const buttonMessage = "Save Changes";
 
 export const errors = {
   emptyQuestionText: errorMessages.questions.question_text.empty,

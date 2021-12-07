@@ -26,6 +26,9 @@ export const EditQuestionProvider = ({ children, examId, questionId }) => {
   const [states, setStates] = useState(null);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isContextLoaded, setIsContextLoaded] = useState(false);
+  const [isFailed, setIsFailed] = useState(false);
   const { token, removeUserInfo } = useContext(AuthenticationContext);
   const isMounted = useMountedState();
   const throwError = useAsyncError();
@@ -35,7 +38,7 @@ export const EditQuestionProvider = ({ children, examId, questionId }) => {
   };
 
   useEffect(() => {
-    if (!token) {
+    if (!token || isLoading || isContextLoaded || isFailed) {
       return;
     }
     setIsLoading(true);
@@ -60,20 +63,35 @@ export const EditQuestionProvider = ({ children, examId, questionId }) => {
               integer_part: state.integer_part,
             }));
             setStates(changedStates);
+            setIsContextLoaded(true);
             setIsLoading(false);
           }
         })
       )
       .catch((errors) => {
-        switch (Number(errors?.response?.status)) {
-          case 401:
-            removeUserInfo();
-            break;
-          default:
-            throwError(errors);
+        if (isMounted()) {
+          switch (Number(errors?.response?.status)) {
+            case 401:
+              removeUserInfo();
+              break;
+            default:
+              throwError(errors);
+          }
+          setIsFailed(true);
+          setIsLoading(false);
         }
       });
-  }, [questionId, examId, token, isMounted, removeUserInfo, throwError]);
+  }, [
+    questionId,
+    isFailed,
+    examId,
+    token,
+    isMounted,
+    isLoading,
+    isContextLoaded,
+    removeUserInfo,
+    throwError,
+  ]);
 
   const updateQuestion = ({
     question_text,
@@ -82,6 +100,7 @@ export const EditQuestionProvider = ({ children, examId, questionId }) => {
     changedStates,
     createdStates,
   }) => {
+    setIsLoading(true);
     const bodyOfRequest = {};
     if (question_text) {
       bodyOfRequest.question_text = question_text;
@@ -199,29 +218,35 @@ export const EditQuestionProvider = ({ children, examId, questionId }) => {
             }
 
             setStates(statesWithoutRemovedStates);
+            setIsLoading(false);
           }
         })
       )
       .catch((errors) => {
-        switch (Number(errors?.response?.status)) {
-          case 401:
-            removeUserInfo();
-            break;
-          case 422:
-            const { message, errors: receivedErrors } = errors.response.data;
-            setErrors({ message, ...receivedErrors });
-            break;
-          default:
-            setErrors({
-              message: "something went wrong, please try again later",
-            });
+        if (isMounted()) {
+          switch (Number(errors?.response?.status)) {
+            case 401:
+              removeUserInfo();
+              break;
+            case 422:
+              const { message, errors: receivedErrors } = errors.response.data;
+              setErrors({ message, ...receivedErrors });
+              break;
+            default:
+              setErrors({
+                message: "something went wrong, please try again later",
+              });
+          }
+          setIsLoading(false);
         }
       });
   };
 
   const deleteQuestion = async () => {
+    setIsDeleting(true);
     try {
       await questionsDeleteRequest(examId, questionId, token);
+      setIsDeleting(false);
       return true;
     } catch (e) {
       switch (Number(e?.response?.status)) {
@@ -237,6 +262,7 @@ export const EditQuestionProvider = ({ children, examId, questionId }) => {
             message: "something went wrong, please try again later",
           });
       }
+      setIsDeleting(false);
       return false;
     }
   };
@@ -248,6 +274,8 @@ export const EditQuestionProvider = ({ children, examId, questionId }) => {
     addError,
     states,
     isLoading,
+    isDeleting,
+    isContextLoaded,
     deleteQuestion,
   };
   return (
