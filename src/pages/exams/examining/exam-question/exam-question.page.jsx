@@ -57,7 +57,7 @@ const ExamQuestionPage = () => {
           Finish Exam
         </Button>
       </div>
-      <Container className="bg-light flex-grow-1 rounded p-4 my-5">
+      <Container className="bg-light shadow border flex-grow-1 rounded p-4 my-5">
         <div style={{ minHeight: "400px" }} className="d-flex ">
           {errors.message && <p className="text-danger">{errors.message}</p>}
           <AnswerQuestionProvider

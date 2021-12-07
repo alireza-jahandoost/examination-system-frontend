@@ -26,7 +26,7 @@ const SettingsPage = () => {
       <div>
         <Row>
           <Col md={8} lg={6}>
-            <div className="text-start">
+            <div className="text-start bg-light shadow border rounded p-3">
               <h2> Change Password </h2>
               <Form onSubmit={handleSubmit}>
                 <PasswordInput

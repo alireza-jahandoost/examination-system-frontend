@@ -7,7 +7,7 @@ const OverviewPage = () => {
     <ProfileContainer>
       <h1>Profile Overview</h1>
       <Container>
-        <div className="bg-light m-3 p-3 border rounded">
+        <div className="bg-light m-3 p-3 shadow border rounded">
           <div className="d-flex justify-content-between">
             <Link to={programRoutes.indexCreatedExams()}>
               <Button variant="success" className="p-3 fw-bold">
