@@ -13,6 +13,12 @@ import {
   examShowId_4,
   examShowId_5_withPassword,
 } from "../mocks/mocks/exams.mock";
+import {
+  showParticipantId1,
+  showParticipantId2,
+  showParticipantId3,
+  showParticipantId4,
+} from "../mocks/mocks/participants.mock";
 
 export const wrapWithWidth = (component, size) => {
   return (
@@ -224,4 +230,36 @@ export const changeRequestResponseToSpecificStatus = ({
     ...otherHandlers,
     ...handlers
   );
+};
+
+const getParticipant = (participantId) => {
+  switch (Number(participantId)) {
+    case 1:
+      return showParticipantId1;
+    case 2:
+      return showParticipantId2;
+    case 3:
+      return showParticipantId3;
+    case 4:
+      return showParticipantId4;
+    default:
+      throw new Error(
+        "invalid participant id in test utility - getParticipant"
+      );
+  }
+};
+
+export const changeCurrentParticipant = ({
+  participantId,
+  otherHandlers = [],
+}) => {
+  const currentHandler = rest.get(
+    apiRoutes.participants.currentParticipant(":examId"),
+    (req, res, ctx) => {
+      return res(ctx.json(getParticipant(participantId)));
+    }
+  );
+
+  server.resetHandlers(currentHandler, ...otherHandlers, ...handlers);
+  return currentHandler;
 };

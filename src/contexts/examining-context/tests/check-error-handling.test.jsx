@@ -20,7 +20,10 @@ import ExamQuestionPage from "../../../pages/exams/examining/exam-question/exam-
 
 import apiRoutes from "../../../constants/api-routes.constant";
 import programRoutes from "../../../constants/program-routes.constant";
-import { asignExamShowStartAndEnd } from "../../../utilities/tests.utility";
+import {
+  asignExamShowStartAndEnd,
+  changeCurrentParticipant,
+} from "../../../utilities/tests.utility";
 
 describe("check 401 errors(the removeUserInfo() func from authentication context must be called)", () => {
   test("check participants.finishExam route", async () => {
@@ -33,6 +36,7 @@ describe("check 401 errors(the removeUserInfo() func from authentication context
           new Date(Date.now() - 5000),
           new Date(Date.now() + 3600 * 1000)
         ),
+        changeCurrentParticipant({ participantId: 4 }),
       ],
     });
 
@@ -69,6 +73,14 @@ describe("check 401 errors(the removeUserInfo() func from authentication context
     changeRequestResponseTo401({
       route: apiRoutes.questions.indexQuestions(":examId"),
       method: "get",
+      otherHandlers: [
+        asignExamShowStartAndEnd(
+          2,
+          new Date(Date.now() - 5000),
+          new Date(Date.now() + 3600 * 1000)
+        ),
+        changeCurrentParticipant({ participantId: 4 }),
+      ],
     });
 
     const removeUserInfo = jest.fn();
@@ -115,6 +127,7 @@ describe("check 422 errors", () => {
           new Date(Date.now() - 5000),
           new Date(Date.now() + 3600 * 1000)
         ),
+        changeCurrentParticipant({ participantId: 4 }),
       ],
     });
 
@@ -164,6 +177,7 @@ describe("check other errors", () => {
           new Date(Date.now() - 5000),
           new Date(Date.now() + 3600 * 1000)
         ),
+        changeCurrentParticipant({ participantId: 4 }),
       ],
     });
 
@@ -205,6 +219,14 @@ describe("check other errors", () => {
       route: apiRoutes.questions.indexQuestions(":examId"),
       method: "get",
       status: 403,
+      otherHandlers: [
+        asignExamShowStartAndEnd(
+          2,
+          new Date(Date.now() - 5000),
+          new Date(Date.now() + 3600 * 1000)
+        ),
+        changeCurrentParticipant({ participantId: 4 }),
+      ],
     });
 
     const removeUserInfo = jest.fn();

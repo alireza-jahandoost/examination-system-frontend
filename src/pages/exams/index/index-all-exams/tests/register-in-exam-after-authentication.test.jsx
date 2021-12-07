@@ -78,7 +78,7 @@ describe("authenticated user can register for exam", () => {
     );
     expect(registerToExamMessage).toBeInTheDocument();
 
-    const registeredText = screen.getByText(/^registered$/i);
+    const registeredText = await screen.findByText(/^registered$/i);
     expect(registeredText).toBeInTheDocument();
     // end
   });
@@ -145,7 +145,7 @@ describe("authenticated user can register for exam", () => {
     );
     expect(registerToExamMessage).toBeInTheDocument();
 
-    const registeredText = screen.getByText(/^registered$/i);
+    const registeredText = await screen.findByText(/^registered$/i);
     expect(registeredText).toBeInTheDocument();
     // end
   });
@@ -210,7 +210,7 @@ describe("authenticated user can register for exam", () => {
     const errorMessage = await screen.findByText(wrongPasswordError);
     expect(errorMessage).toBeInTheDocument();
 
-    const nullRegisteredText = screen.queryByText(/registered/i);
+    const nullRegisteredText = screen.queryByText(/^registered/i);
     expect(nullRegisteredText).not.toBeInTheDocument();
     // end
   });
@@ -275,7 +275,7 @@ describe("authenticated user can register for exam", () => {
     const errorMessage = await screen.findByText(wrongPasswordError);
     expect(errorMessage).toBeInTheDocument();
 
-    const nullRegisteredText = screen.queryByText(/registered/i);
+    const nullRegisteredText = screen.queryByText(/^registered/i);
     expect(nullRegisteredText).not.toBeInTheDocument();
     // end
 
@@ -293,7 +293,7 @@ describe("authenticated user can register for exam", () => {
     );
     expect(registerToExamMessage).toBeInTheDocument();
 
-    const registeredText = screen.getByText(/^registered$/i);
+    const registeredText = await screen.findByText(/^registered$/i);
     expect(registeredText).toBeInTheDocument();
     // end
 

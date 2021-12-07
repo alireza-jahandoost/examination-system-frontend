@@ -237,8 +237,11 @@ export const UpdateExamProvider = ({ children }) => {
     changeTotalScore: (newTotalScore) => setTotalScore(newTotalScore),
     changeExamPassword: (newExamPassword) => setExamPassword(newExamPassword),
     changeNeedsConfirmation: (newState) => setNeedsConfirmation(newState),
-    addQuestion: (newQuestion) =>
-      setQuestions((prev) => [...prev, newQuestion]),
+    addQuestion: (newQuestion) => {
+      if (isMounted()) {
+        setQuestions((prev) => [...prev, newQuestion]);
+      }
+    },
     handleUpdate,
     publishExam,
     unpublishExam,

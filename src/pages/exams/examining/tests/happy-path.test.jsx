@@ -3,9 +3,11 @@ import {
   renderWithAuthentication,
   screen,
 } from "../../../../test-utils/testing-library-utils";
+import axios from "axios";
 import userEvent from "@testing-library/user-event";
 import {
   asignExamShowStartAndEnd,
+  changeCurrentParticipant,
   randomString,
   wait,
 } from "../../../../utilities/tests.utility";
@@ -14,11 +16,12 @@ import programRoutes from "../../../../constants/program-routes.constant";
 
 test("authenticated user can register in started exam, solve the questions and then finish the exam", async () => {
   // render examining router
-  asignExamShowStartAndEnd(
+  const handler = asignExamShowStartAndEnd(
     1,
     new Date(Date.now() - 5000),
     new Date(Date.now() + 3600 * 1000)
   );
+  changeCurrentParticipant({ participantId: 4, otherHandlers: [handler] });
   const redirectIfNotAuthenticated = (ui) => ui;
   renderWithAuthentication(<ExamRouter />, {
     route: programRoutes.examiningOverview(1),
@@ -174,6 +177,8 @@ test("authenticated user can register in started exam, solve the questions and t
   userEvent.click(saveButtonFromOrdering);
 
   // finish the exam
+  changeCurrentParticipant({ participantId: 1, otherHandlers: [handler] });
+  const axiosGet = jest.spyOn(axios, "get");
   const finishExamButton = await screen.findByRole("button", {
     name: /finish exam/i,
   });
@@ -187,6 +192,7 @@ test("authenticated user can register in started exam, solve the questions and t
       window.location.href.endsWith(programRoutes.examiningOverview(1))
     ).toBe(true)
   );
+  await waitFor(() => expect(axiosGet).toHaveBeenCalledTimes(1));
 
   expect(
     screen.queryByRole("button", { name: /go to exam/i })

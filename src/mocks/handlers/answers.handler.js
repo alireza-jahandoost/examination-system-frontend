@@ -27,7 +27,7 @@ const answersHandler = [
     apiRoutes.answers.indexAnswers(":questionId", ":participantId"),
     (req, res, ctx) => {
       const { questionId, participantId } = req.params;
-      if (Number(participantId) === 1) {
+      if (Number(participantId) === 1 || Number(participantId) === 4) {
         return res(ctx.json(indexWithoutAnswer));
       }
       switch (Number(questionId)) {

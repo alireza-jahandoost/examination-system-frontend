@@ -59,68 +59,80 @@ export const ExaminingProvider = ({ children }) => {
   }, [currentQuestionIndex, questions]);
 
   useEffect(() => {
-    if (isContextLoaded) {
+    if (!examInfo.isContextLoaded) {
       return;
     }
-    if (examInfo.exam && participant !== undefined) {
-      setIsContextLoaded(true);
-    }
-  }, [examInfo.exam, isContextLoaded, participant]);
-
-  useEffect(() => {
-    if (isFailed || !examInfo.isContextLoaded) {
-      return;
-    }
+    const haveNewChanges =
+      (examInfo.isUserRegisteredToExam && !participant) ||
+      (isUserFinishedExam && participant.status === "NOT_FINISHED");
     if (
-      (participant === undefined ||
-        (participant === null && examInfo.isUserRegisteredToExam)) &&
-      !isLoading
+      examInfo.isContextLoaded &&
+      participant !== undefined &&
+      !isContextLoaded &&
+      !haveNewChanges
     ) {
-      if (!examInfo.isUserRegisteredToExam || !token) {
-        setParticipant(null);
-        return;
-      }
-      setIsLoading(true);
-      const requests = [
-        getCurrentParticipantRequest(examId, token),
-        questionsIndexRequest(examId, token),
-      ];
-      axios
-        .all(requests)
-        .then(
-          axios.spread((...responses) => {
-            if (isMounted()) {
-              const currentParticipantResponse = responses[0];
-              const questionsResponse = responses[1];
-
-              const {
-                participant: receivedParticipant,
-              } = currentParticipantResponse.data.data;
-              setParticipant(receivedParticipant);
-
-              const {
-                questions: receivedQuestions,
-              } = questionsResponse.data.data;
-              setQuestions(receivedQuestions);
-
-              setIsLoading(false);
-            }
-          })
-        )
-        .catch((errors) => {
-          switch (Number(errors?.response?.status)) {
-            case 401:
-              removeUserInfo();
-              setIsFailed(true);
-              break;
-            default:
-              throwError(errors);
-          }
-          setIsLoading(false);
-        });
+      setIsContextLoaded(true);
+    } else if (isContextLoaded && haveNewChanges) {
+      setIsContextLoaded(false);
     }
   }, [
+    examInfo.isContextLoaded,
     examInfo.isUserRegisteredToExam,
+    isUserFinishedExam,
+    isContextLoaded,
+    participant,
+  ]);
+
+  useEffect(() => {
+    if (isFailed || isContextLoaded || isLoading || !examInfo.isContextLoaded) {
+      return;
+    }
+    if (!examInfo.isUserRegisteredToExam) {
+      setParticipant(null);
+      return;
+    }
+    setIsLoading(true);
+    // TODO: get index questions after getting participant and if participant.status is equal to 'not_finished'
+    getCurrentParticipantRequest(examId, token)
+      .then((response) => {
+        if (isMounted()) {
+          const currentParticipantResponse = response;
+
+          const {
+            participant: receivedParticipant,
+          } = currentParticipantResponse.data.data;
+          setParticipant(receivedParticipant);
+
+          if (
+            receivedParticipant.status === "NOT_FINISHED" &&
+            examInfo.examTime.isExamStarted &&
+            !examInfo.examTime.isExamFinished
+          ) {
+            return questionsIndexRequest(examId, token);
+          }
+        }
+      })
+      .then((response) => {
+        if (response && isMounted()) {
+          const { questions: receivedQuestions } = response.data.data;
+          setQuestions(receivedQuestions);
+        }
+      })
+      .catch((errors) => {
+        switch (Number(errors?.response?.status)) {
+          case 401:
+            removeUserInfo();
+            setIsFailed(true);
+            break;
+          default:
+            throwError(errors);
+        }
+        setIsLoading(false);
+      });
+  }, [
+    examInfo.isUserRegisteredToExam,
+    isUserFinishedExam,
+    isContextLoaded,
     isMounted,
     participant,
     examId,

@@ -4,6 +4,7 @@ import {
 } from "../../../../../test-utils/testing-library-utils";
 import {
   asignExamShowStartAndEnd,
+  changeCurrentParticipant,
   wait,
 } from "../../../../../utilities/tests.utility";
 import App from "../../../../../App";
@@ -17,21 +18,21 @@ import { examsPassword } from "../../../../../mocks/mocks/participants.mock";
 
 describe("an authenticated user can register in an started exam that did not finished", () => {
   test("user can authenticate and then register to started exam", async () => {
-    asignExamShowStartAndEnd(
-      1,
-      new Date(Date.now() - 5000 * 60),
-      new Date(Date.now() + 3600 * 1000)
-    );
+    changeCurrentParticipant({
+      participantId: 4,
+      otherHandlers: [
+        asignExamShowStartAndEnd(
+          1,
+          new Date(Date.now() - 5000 * 60),
+          new Date(Date.now() + 3600 * 1000)
+        ),
+      ],
+    });
     renderWithRouter(<App />, {
       route: programRoutes.indexAllExams(),
       withContexts: true,
     });
     await wait(300);
-
-    // click login button
-    const loginButton = screen.getByRole("link", { name: /login/i });
-    userEvent.click(loginButton);
-    // end
 
     // login to site
     const loginEmailField = screen.getByRole("textbox", { name: /email/i });
@@ -50,7 +51,6 @@ describe("an authenticated user can register in an started exam that did not fin
     // end
 
     // open exam description
-    userEvent.click(screen.getAllByRole("link", { name: /^exams$/i })[0]);
     const moreDetailsButtons = await screen.findAllByText(/more details/i);
     const ElementmoreDetailsButton = moreDetailsButtons[0];
 
@@ -73,7 +73,7 @@ describe("an authenticated user can register in an started exam that did not fin
     );
     expect(registerToExamMessage).toBeInTheDocument();
 
-    const registeredText = screen.getByText(/^registered$/i);
+    const registeredText = await screen.findByText(/^registered$/i);
     expect(registeredText).toBeInTheDocument();
     // end
   });
@@ -140,7 +140,7 @@ describe("an authenticated user can register in an started exam that did not fin
     );
     expect(registerToExamMessage).toBeInTheDocument();
 
-    const registeredText = screen.getByText(/^registered$/i);
+    const registeredText = await screen.findByText(/^registered$/i);
     expect(registeredText).toBeInTheDocument();
     // end
   });

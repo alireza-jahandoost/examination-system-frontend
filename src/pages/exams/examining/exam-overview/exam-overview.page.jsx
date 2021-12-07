@@ -31,8 +31,17 @@ const ExamOverviewPage = () => {
 
   const canUserRegisterToExam =
     examTime.isExamFinished === false && !participant;
-  const canUserGoToExam = !!participant && !isUserFinishedExam;
+  const canUserGoToExam =
+    !!participant &&
+    !isUserFinishedExam &&
+    examTime.isExamStarted &&
+    !examTime.isExamFinished &&
+    firstQuestion !== null;
 
+  const canUserSeeGrade =
+    !!participant &&
+    participant.status === "FINISHED" &&
+    examTime.isExamFinished;
   const handleRegistration = (e) => {
     e.preventDefault();
 
@@ -48,47 +57,97 @@ const ExamOverviewPage = () => {
   }
 
   return (
-    <div style={{ minHeight: "100vh" }} className="d-flex text-center">
-      <Container className="flex-grow-1 d-flex flex-column ">
-        <div>
-          <p className="display-3"> {exam.exam_name} </p>
-          <p className="small text-muted"> by {exam.owner_name} </p>
-        </div>
-        <p className="lead"> {exam.exam_description} </p>
-        {participant && participant.status !== "NOT_FINISHED" && (
-          <p className="display-5 text-success">
-            your grade: {participant.grade || "not calculated yet"}
+    <div style={{ minHeight: "100vh" }} className="text-start d-flex">
+      <Container className="flex-grow-1 d-flex flex-column">
+        <Container className="bg-light p-3 m-5 border shadow rounded">
+          <p className="display-5"> Exam Name: {exam.exam_name} </p>
+          <p className="small text-muted"> By: {exam.owner_name} </p>
+          <p className="lead">
+            Exam Status:
+            {examTime.isExamStarted
+              ? examTime.isExamFinished
+                ? " Finished"
+                : " Running"
+              : " Not Started"}
           </p>
-        )}
-        <div className="mt-5">
-          <ExamTime color="dark" examTime={examTime} />
-          {isUserRegisteredToExam ? (
-            canUserGoToExam ? (
-              <Link to={programRoutes.examiningQuestion(examId, firstQuestion)}>
-                <Button>go to exam</Button>
-              </Link>
+          <p className="lead">
+            User Status:
+            {!!participant ? (
+              <>
+                <span> Registered</span>
+                <span> {participant.status}</span>
+              </>
             ) : (
-              <p>Registered</p>
-            )
-          ) : (
-            canUserRegisterToExam && (
-              <Form onSubmit={handleRegistration}>
-                {errors.message && (
-                  <p className="text-danger">{errors.message}</p>
-                )}
-                {exam.has_password && (
-                  <ExamPassword
-                    examPassword={examPassword}
-                    changeExamPassword={changeExamPassword}
-                    passwordErrorMessage={errors.password}
-                    examId={examId}
-                  />
-                )}
-                <Button type="submit"> Register for Exam </Button>
-              </Form>
-            )
+              <span> Not Registered</span>
+            )}
+          </p>
+          {canUserSeeGrade && (
+            <p className="lead"> Your Grade: {participant.grade}</p>
           )}
-        </div>
+          {canUserGoToExam && (
+            <Link to={programRoutes.examiningQuestion(examId, firstQuestion)}>
+              <Button>go to exam</Button>
+            </Link>
+          )}
+
+          {canUserRegisterToExam && (
+            <Form onSubmit={handleRegistration}>
+              {errors.message && (
+                <p className="text-danger">{errors.message}</p>
+              )}
+              {exam.has_password && (
+                <ExamPassword
+                  examPassword={examPassword}
+                  changeExamPassword={changeExamPassword}
+                  passwordErrorMessage={errors.password}
+                  examId={examId}
+                />
+              )}
+              <Button type="submit"> Register for Exam </Button>
+            </Form>
+          )}
+        </Container>
+        {
+          // <div>
+          //   <p className="display-3"> {exam.exam_name} </p>
+          //   <p className="small text-muted"> by {exam.owner_name} </p>
+          // </div>
+          // <p className="lead"> {exam.exam_description} </p>
+          // {participant && participant.status !== "NOT_FINISHED" && (
+          //   <p className="display-5 text-success">
+          //     your grade: {participant.grade || "not calculated yet"}
+          //   </p>
+          // )}
+          // <div className="mt-5">
+          //   <ExamTime color="dark" examTime={examTime} />
+          //   {isUserRegisteredToExam ? (
+          //     canUserGoToExam ? (
+          //       <Link to={programRoutes.examiningQuestion(examId, firstQuestion)}>
+          //         <Button>go to exam</Button>
+          //       </Link>
+          //     ) : (
+          //       <p>Registered</p>
+          //     )
+          //   ) : (
+          //     canUserRegisterToExam && (
+          //       <Form onSubmit={handleRegistration}>
+          //         {errors.message && (
+          //           <p className="text-danger">{errors.message}</p>
+          //         )}
+          //         {exam.has_password && (
+          //           <ExamPassword
+          //             examPassword={examPassword}
+          //             changeExamPassword={changeExamPassword}
+          //             passwordErrorMessage={errors.password}
+          //             examId={examId}
+          //           />
+          //         )}
+          //         <Button type="submit"> Register for Exam </Button>
+          //       </Form>
+          //     )
+          //   )}
+          // </div>
+        }
       </Container>
     </div>
   );
