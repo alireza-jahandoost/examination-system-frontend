@@ -15,6 +15,7 @@ const ExamOverviewPage = () => {
     exam,
     examTime,
     isContextLoaded,
+    isRegisteringLoading,
     participant,
     firstQuestion,
     isUserFinishedExam,
@@ -103,7 +104,9 @@ const ExamOverviewPage = () => {
                   examId={examId}
                 />
               )}
-              <Button type="submit"> Register for Exam </Button>
+              <Button disabled={isRegisteringLoading} type="submit">
+                {isRegisteringLoading ? "Loading..." : "Register for Exam"}
+              </Button>
             </Form>
           )}
         </Container>

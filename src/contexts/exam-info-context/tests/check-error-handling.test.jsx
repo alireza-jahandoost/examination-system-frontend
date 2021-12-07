@@ -108,6 +108,12 @@ describe("check 422 errors", () => {
     });
     userEvent.click(registerButton);
 
+    // check loading is shown in button
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /loading/i })).toBeDisabled()
+    );
+    // end
+
     await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
     await waitFor(() =>
       expect(screen.getByText(message, { exact: false })).toBeInTheDocument()
@@ -119,6 +125,13 @@ describe("check 422 errors", () => {
         ).toBeInTheDocument()
       );
     }
+    // check loading is gone
+    await waitFor(() =>
+      expect(
+        screen.getByRole("button", { name: /register/i })
+      ).toBeInTheDocument()
+    );
+    // end
   });
 });
 
@@ -178,9 +191,22 @@ describe("check other errors", () => {
     });
     userEvent.click(registerButton);
 
+    // check loading is shown in button
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /loading/i })).toBeDisabled()
+    );
+    // end
+
     await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
     await waitFor(() =>
       expect(screen.getByText(/something went wrong/i)).toBeInTheDocument()
     );
+    // check loading is gone
+    await waitFor(() =>
+      expect(
+        screen.getByRole("button", { name: /register/i })
+      ).toBeInTheDocument()
+    );
+    // end
   });
 });

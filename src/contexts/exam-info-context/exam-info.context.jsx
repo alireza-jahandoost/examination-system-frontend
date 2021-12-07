@@ -27,6 +27,7 @@ export const ExamInfoProvider = ({ children, examId }) => {
   const [errors, setErrors] = useState({});
   const [examPassword, setExamPassword] = useState("");
   const [isContextLoaded, setIsContextLoaded] = useState(false);
+  const [isRegisteringLoading, setIsRegisteringLoading] = useState(false);
   const isMounted = useMountedState();
   const isUserRegisteredToExam = exam ? exam.is_registered : false;
   const throwError = useAsyncError();
@@ -97,11 +98,13 @@ export const ExamInfoProvider = ({ children, examId }) => {
   }, [isExamFinished, isUserRegisteredToExam]);
 
   const registerToExam = () => {
+    setIsRegisteringLoading(true);
     if (isUserAuthenticated) {
       registerToExamRequest(examId, token, examPassword)
         .then(({ data, status }) => {
           if (status === 201 && isMounted()) {
             setExam((prevExam) => ({ ...prevExam, is_registered: true }));
+            setIsRegisteringLoading(false);
           }
         })
         .catch((err) => {
@@ -119,6 +122,7 @@ export const ExamInfoProvider = ({ children, examId }) => {
                   message: "something went wrong, please try again later",
                 });
             }
+            setIsRegisteringLoading(false);
           }
         });
     } else {
@@ -174,6 +178,7 @@ export const ExamInfoProvider = ({ children, examId }) => {
         examPassword,
         changeExamPassword,
         isContextLoaded,
+        isRegisteringLoading,
         errors,
       }}
     >
