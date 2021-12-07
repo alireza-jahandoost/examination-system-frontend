@@ -68,13 +68,13 @@ const CreateExamForm = ({ ...props }) => {
             case 422:
               const { message, errors } = err.response.data;
               setErrors({ message, ...errors });
-              setIsLoading(false);
               break;
             default:
               setErrors({
                 message: "something went wrong, please try again later",
               });
           }
+          setIsLoading(false);
         }
       });
   };
