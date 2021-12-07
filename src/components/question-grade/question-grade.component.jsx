@@ -8,6 +8,7 @@ import NumberInput from "../inputs/number-input.component";
 const QuestionGrade = ({ canUserChangeGrade = false, questionId }) => {
   const {
     isContextLoaded,
+    isLoading,
     grade,
     hasChange,
     submitGrade,
@@ -51,8 +52,12 @@ const QuestionGrade = ({ canUserChangeGrade = false, questionId }) => {
             </Col>
             <Col className="d-flex align-items-end">
               {hasChange && (
-                <Button type="submit" className="my-2 my-md-0">
-                  update grade
+                <Button
+                  disabled={isLoading}
+                  type="submit"
+                  className="my-2 my-md-0"
+                >
+                  {isLoading ? "Loading..." : "Update Grade"}
                 </Button>
               )}
             </Col>

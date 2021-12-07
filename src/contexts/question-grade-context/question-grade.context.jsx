@@ -21,6 +21,7 @@ export const QuestionGradeProvider = ({
   const [newGrade, setNewGrade] = useState("");
   const [grade, setGrade] = useState(null);
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const { token, removeUserInfo } = useContext(AuthenticationContext);
   const isMounted = useMountedState();
   const throwError = useAsyncError();
@@ -89,6 +90,7 @@ export const QuestionGradeProvider = ({
   ]);
 
   const submitGrade = () => {
+    setIsLoading(true);
     storeGradeRequest(participantId, questionId, token, { grade: newGrade })
       .then(() => {
         if (isMounted()) {
@@ -96,6 +98,7 @@ export const QuestionGradeProvider = ({
           setNewGrade("");
 
           setErrors({});
+          setIsLoading(false);
         }
       })
       .catch((err) => {
@@ -118,11 +121,13 @@ export const QuestionGradeProvider = ({
               message: "something went wrong, please try again later",
             });
         }
+        setIsLoading(false);
       });
   };
 
   const value = {
     isContextLoaded,
+    isLoading,
     grade: showGradeEnabled && (grade ? Number(grade.grade) : null),
     newGrade,
     changeGrade: (new_grade) => setNewGrade(new_grade),
