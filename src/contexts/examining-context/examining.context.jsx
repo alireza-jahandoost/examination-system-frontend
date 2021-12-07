@@ -1,7 +1,6 @@
 import { createContext, useMemo, useContext, useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { useMountedState } from "react-use";
-import axios from "axios";
 
 import useAsyncError from "../../hooks/useAsyncError";
 
@@ -113,9 +112,12 @@ export const ExaminingProvider = ({ children }) => {
         }
       })
       .then((response) => {
-        if (response && isMounted()) {
-          const { questions: receivedQuestions } = response.data.data;
-          setQuestions(receivedQuestions);
+        if (isMounted()) {
+          if (response) {
+            const { questions: receivedQuestions } = response.data.data;
+            setQuestions(receivedQuestions);
+          }
+          setIsLoading(false);
         }
       })
       .catch((errors) => {

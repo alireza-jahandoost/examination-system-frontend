@@ -14,6 +14,7 @@ import programRoutes from "../../../../constants/program-routes.constant";
 const ExamQuestionPage = () => {
   const {
     isContextLoaded,
+    isLoading,
     nextQuestion,
     prevQuestion,
     examTime,
@@ -84,10 +85,15 @@ const ExamQuestionPage = () => {
           </Link>
         </div>
         <Modal
-          buttonLabels={["Yes, Finish Exam", "Cancel"]}
+          buttonLabels={
+            isLoading
+              ? ["Loading...", "Loading..."]
+              : ["Yes, Finish Exam", "Cancel"]
+          }
           onConfirm={finishExam}
           isShown={showModal}
           closeModal={() => setShowModal(false)}
+          disabled={isLoading}
           title="Finish Exam"
           body="Are you sure you want to finish the exam? you can not answer the questions anymore."
         />

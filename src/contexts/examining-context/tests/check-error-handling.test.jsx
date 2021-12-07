@@ -158,6 +158,14 @@ describe("check 422 errors", () => {
     const confirmButton = await screen.findByRole("button", { name: /yes/i });
     userEvent.click(confirmButton);
 
+    // check button is changed to loading
+    const loadingButtons = screen.getAllByRole("button", { name: /loading/i });
+    expect(loadingButtons).toHaveLength(2);
+    loadingButtons.forEach((loadingButton) =>
+      expect(loadingButton).toBeDisabled()
+    );
+    // end
+
     await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
     await waitFor(() =>
       expect(screen.getByText(message, { exact: false })).toBeInTheDocument()
@@ -207,6 +215,14 @@ describe("check other errors", () => {
 
     const confirmButton = await screen.findByRole("button", { name: /yes/i });
     userEvent.click(confirmButton);
+
+    // check button is changed to loading
+    const loadingButtons = screen.getAllByRole("button", { name: /loading/i });
+    expect(loadingButtons).toHaveLength(2);
+    loadingButtons.forEach((loadingButton) =>
+      expect(loadingButton).toBeDisabled()
+    );
+    // end
 
     await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
     await waitFor(() =>

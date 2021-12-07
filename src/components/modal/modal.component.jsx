@@ -8,6 +8,7 @@ const ModalComponent = ({
   closeModal,
   title,
   body,
+  disabled = false,
 }) => {
   const handleClose = () => {
     closeModal();
@@ -29,10 +30,14 @@ const ModalComponent = ({
         </Modal.Header>
         <Modal.Body>{body}</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCancel}>
+          <Button
+            disabled={disabled}
+            variant="secondary"
+            onClick={handleCancel}
+          >
             {buttonLabels[1]}
           </Button>
-          <Button variant="primary" onClick={handleConfirm}>
+          <Button disabled={disabled} variant="primary" onClick={handleConfirm}>
             {buttonLabels[0]}
           </Button>
         </Modal.Footer>
