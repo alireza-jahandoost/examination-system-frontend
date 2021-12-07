@@ -176,6 +176,12 @@ describe("check 422 errors", () => {
     });
     userEvent.click(saveChangesButton);
 
+    // check button changed to loading
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /loading/i })).toBeDisabled()
+    );
+    // end
+
     await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
     await waitFor(() =>
       expect(screen.getByText(message, { exact: false })).toBeInTheDocument()
@@ -187,6 +193,14 @@ describe("check 422 errors", () => {
         ).toBeInTheDocument()
       );
     }
+
+    // check button changed to normal
+    await waitFor(() =>
+      expect(
+        screen.getByRole("button", { name: /save changes/i })
+      ).toBeEnabled()
+    );
+    // end
   });
 
   test("check answers.deleteAnswers route", async () => {
@@ -220,6 +234,12 @@ describe("check 422 errors", () => {
     });
     userEvent.click(saveChangesButton);
 
+    // check button changed to loading
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /loading/i })).toBeDisabled()
+    );
+    // end
+
     await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
     await waitFor(() =>
       expect(screen.getByText(message, { exact: false })).toBeInTheDocument()
@@ -231,6 +251,14 @@ describe("check 422 errors", () => {
         ).toBeInTheDocument()
       );
     }
+
+    // check button changed to normal
+    await waitFor(() =>
+      expect(
+        screen.getByRole("button", { name: /save changes/i })
+      ).toBeEnabled()
+    );
+    // end
   });
 });
 
@@ -288,10 +316,24 @@ describe("check other errors", () => {
     });
     userEvent.click(saveChangesButton);
 
+    // check button changed to loading
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /loading/i })).toBeDisabled()
+    );
+    // end
+
     await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
     await waitFor(() =>
       expect(screen.getByText(/something went wrong/i)).toBeInTheDocument()
     );
+
+    // check button changed to normal
+    await waitFor(() =>
+      expect(
+        screen.getByRole("button", { name: /save changes/i })
+      ).toBeEnabled()
+    );
+    // end
   });
 
   test("check answers.deleteAnswers route", async () => {
@@ -325,10 +367,24 @@ describe("check other errors", () => {
     });
     userEvent.click(saveChangesButton);
 
+    // check button changed to loading
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /loading/i })).toBeDisabled()
+    );
+    // end
+
     await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
     await waitFor(() =>
       expect(screen.getByText(/something went wrong/i)).toBeInTheDocument()
     );
+
+    // check button changed to normal
+    await waitFor(() =>
+      expect(
+        screen.getByRole("button", { name: /save changes/i })
+      ).toBeEnabled()
+    );
+    // end
   });
 
   test("check answers.indexAnswers route", async () => {
