@@ -191,6 +191,12 @@ describe("check 422 errors", () => {
     });
     userEvent.click(saveChangesButton);
 
+    // check button is changed to loading
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /loading/i })).toBeDisabled()
+    );
+    // end
+
     await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
     await waitFor(() =>
       expect(screen.getByText(message, { exact: false })).toBeInTheDocument()
@@ -202,6 +208,14 @@ describe("check 422 errors", () => {
         ).toBeInTheDocument()
       );
     }
+
+    // check button changed to the orginal one
+    await waitFor(() =>
+      expect(
+        screen.getByRole("button", { name: /save changes/i })
+      ).toBeEnabled()
+    );
+    // end
   });
   test("check exams.publishExam route", async () => {
     const { message } = changeRequestResponseTo422({
@@ -228,10 +242,22 @@ describe("check 422 errors", () => {
     });
     userEvent.click(publishButton);
 
+    // check button is changed to loading
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /loading/i })).toBeDisabled()
+    );
+    // end
+
     await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
     await waitFor(() =>
       expect(screen.getByText(message, { exact: false })).toBeInTheDocument()
     );
+
+    // check button changed to the orginal one
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /publish/i })).toBeEnabled()
+    );
+    // end
   });
   test("check exams.unpublishExam route", async () => {
     const { message } = changeRequestResponseTo422({
@@ -263,10 +289,22 @@ describe("check 422 errors", () => {
     });
     userEvent.click(unpublishButton);
 
+    // check button is changed to loading
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /loading/i })).toBeDisabled()
+    );
+    // end
+
     await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
     await waitFor(() =>
       expect(screen.getByText(message, { exact: false })).toBeInTheDocument()
     );
+
+    // check button changed to the orginal one
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /unpublish/i })).toBeEnabled()
+    );
+    // end
   });
 });
 
@@ -350,10 +388,24 @@ describe("check other errors", () => {
     });
     userEvent.click(saveChangesButton);
 
+    // check button is changed to loading
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /loading/i })).toBeDisabled()
+    );
+    // end
+
     await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
     await waitFor(() =>
       expect(screen.getByText(/something went wrong/i)).toBeInTheDocument()
     );
+
+    // check button changed to the orginal one
+    await waitFor(() =>
+      expect(
+        screen.getByRole("button", { name: /save changes/i })
+      ).toBeEnabled()
+    );
+    // end
   });
   test("check exams.publishExam route", async () => {
     changeRequestResponseToSpecificStatus({
@@ -380,10 +432,22 @@ describe("check other errors", () => {
     });
     userEvent.click(publishButton);
 
+    // check button is changed to loading
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /loading/i })).toBeDisabled()
+    );
+    // end
+
     await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(0));
     await waitFor(() =>
       expect(screen.getByText(/something went wrong/i)).toBeInTheDocument()
     );
+
+    // check button changed to the orginal one
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /publish/i })).toBeEnabled()
+    );
+    // end
   });
   test("check exams.unpublishExam route", async () => {
     changeRequestResponseToSpecificStatus({
@@ -410,6 +474,12 @@ describe("check other errors", () => {
     });
     userEvent.click(publishButton);
 
+    // check button is changed to loading
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /loading/i })).toBeDisabled()
+    );
+    // end
+
     const unpublishButton = await screen.findByRole("button", {
       name: /unpublish/i,
     });
@@ -419,5 +489,11 @@ describe("check other errors", () => {
     await waitFor(() =>
       expect(screen.getByText(/something went wrong/i)).toBeInTheDocument()
     );
+
+    // check button changed to the orginal one
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /unpublish/i })).toBeEnabled()
+    );
+    // end
   });
 });

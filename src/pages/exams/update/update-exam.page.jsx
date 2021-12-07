@@ -16,13 +16,13 @@ const UpdateExamPage = () => {
     questions,
     addQuestion,
     deleteQuestion,
-    isLoading,
     isPublished,
     publishExam,
     unpublishExam,
+    isPublishStateChanging,
   } = useContext(UpdateExamContext);
 
-  if (isLoading || !exam) {
+  if (!exam) {
     return <p> Loading... </p>;
   }
   return (
@@ -37,8 +37,13 @@ const UpdateExamPage = () => {
                 unpublishExam();
               }
             }}
+            disabled={isPublishStateChanging}
           >
-            {isPublished ? "unpublish" : "publish"} exam
+            {isPublishStateChanging
+              ? "Loading..."
+              : isPublished
+              ? "Unpublish Exam"
+              : "Publish Exam"}
           </Button>
         </ElementContainer>
         <ElementContainer>

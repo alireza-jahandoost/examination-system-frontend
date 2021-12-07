@@ -33,6 +33,7 @@ export const UpdateExamProvider = ({ children }) => {
   const isMounted = useMountedState();
   const { examId } = useParams();
   const [questions, setQuestions] = useState([]);
+  const [isPublishStateChanging, setIsPublishStateChanging] = useState(false);
   const { createNotification } = useContext(NotificationContext);
   const throwError = useAsyncError();
 
@@ -145,12 +146,14 @@ export const UpdateExamProvider = ({ children }) => {
   };
 
   const publishExam = () => {
+    setIsPublishStateChanging(true);
     examsPublishRequest(token, examId)
       .then(() => {
         if (isMounted()) {
           setIsPublished(true);
           createNotification("you published this exam successfully", 3000);
           setErrors({});
+          setIsPublishStateChanging(false);
         }
       })
       .catch((err) => {
@@ -170,17 +173,20 @@ export const UpdateExamProvider = ({ children }) => {
                 message: "something went wrong, please try again later",
               });
           }
+          setIsPublishStateChanging(false);
         }
       });
   };
 
   const unpublishExam = () => {
+    setIsPublishStateChanging(true);
     examsUnpublishRequest(token, examId)
       .then(() => {
         if (isMounted()) {
           setIsPublished(false);
           createNotification("you unpublished this exam successfully", 3000);
           setErrors({});
+          setIsPublishStateChanging(false);
         }
       })
       .catch((err) => {
@@ -201,6 +207,7 @@ export const UpdateExamProvider = ({ children }) => {
                 message: "something went wrong, please try again later",
               });
           }
+          setIsPublishStateChanging(false);
         }
       });
   };
@@ -246,12 +253,12 @@ export const UpdateExamProvider = ({ children }) => {
     publishExam,
     unpublishExam,
     deleteQuestion,
+    isPublishStateChanging,
   };
 
   return (
     <UpdateExamContext.Provider value={value}>
-      {" "}
-      {children}{" "}
+      {children}
     </UpdateExamContext.Provider>
   );
 };
