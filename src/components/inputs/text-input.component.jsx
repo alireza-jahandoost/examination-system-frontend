@@ -10,6 +10,7 @@ const TextInput = ({
   hiddenLabel = false,
   readOnly = false,
   required = false,
+  autoFocus = false,
   ...props
 }) => {
   const additionalAttributes = {};
@@ -18,6 +19,9 @@ const TextInput = ({
   }
   if (required) {
     additionalAttributes["required"] = "required";
+  }
+  if (autoFocus) {
+    additionalAttributes["autoFocus"] = "autoFocus";
   }
   return (
     <Form.Group {...props} controlId={id}>

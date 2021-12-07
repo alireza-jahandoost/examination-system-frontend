@@ -93,6 +93,7 @@ const CreateExamForm = ({ ...props }) => {
                 value={examName}
                 onChange={(e) => setExamName(e.target.value)}
                 placeholder="Exam Name"
+                autoFocus
               />
             </Col>
           </Row>

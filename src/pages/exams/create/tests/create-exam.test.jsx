@@ -10,6 +10,15 @@ import CreateExamPage from "../create-exam.page";
 import moment from "moment";
 import programRoutes from "../../../../constants/program-routes.constant";
 
+test("first of all, exam name field must be focused", async () => {
+  renderWithAuthentication(<CreateExamPage />);
+
+  // check name field focused or not
+  const examNameField = screen.getByRole("textbox", { name: /exam name/i });
+  expect(examNameField).toHaveFocus();
+  // end
+});
+
 test("user can create an exam without password and he will see loading... in create button and button will be disabled while waiting and alert will be displayed 3s", async () => {
   renderWithAuthentication(<CreateExamPage />);
 

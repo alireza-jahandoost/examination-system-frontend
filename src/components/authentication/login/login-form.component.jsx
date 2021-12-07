@@ -36,6 +36,7 @@ const LoginForm = ({ ...props }) => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             error={errors.email}
+            autoFocus
           />
           <TextInput
             id="login-password"

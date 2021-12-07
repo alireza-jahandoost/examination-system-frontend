@@ -15,6 +15,23 @@ import {
   correctPassword,
 } from "../../../mocks/mocks/authentication.mock";
 
+test("first of all, the email field must be focused", async () => {
+  renderWithRouter(
+    <NotificationProvider>
+      <AuthenticationProvider>
+        <LoginPage />
+      </AuthenticationProvider>
+    </NotificationProvider>,
+    {
+      route: programRoutes.login(),
+    }
+  );
+
+  const emailField = screen.getByRole("textbox", { name: /email address/i });
+
+  expect(emailField).toHaveFocus();
+});
+
 test("user can login", async () => {
   renderWithRouter(
     <NotificationProvider>

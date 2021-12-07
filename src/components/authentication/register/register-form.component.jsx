@@ -42,6 +42,7 @@ const RegisterForm = ({ ...props }) => {
             label="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            autoFocus
           />
           <TextInput
             error={errors.email}

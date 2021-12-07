@@ -18,6 +18,22 @@ import programRoutes from "../../../constants/program-routes.constant";
 import { AuthenticationProvider } from "../../../contexts/authentication-context/authentication.context";
 import { NotificationProvider } from "../../../contexts/notification-context/notification.context";
 
+test("first of all, the name field must be focused", async () => {
+  renderWithRouter(
+    <NotificationProvider>
+      <AuthenticationProvider>
+        <RegisterPage />
+      </AuthenticationProvider>
+    </NotificationProvider>,
+    {
+      route: programRoutes.register(),
+      singleWrapper: "router",
+    }
+  );
+
+  const nameField = screen.getByRole("textbox", { name: /name/i });
+  expect(nameField).toHaveFocus();
+});
 test("user can register to the site", async () => {
   renderWithRouter(
     <NotificationProvider>
