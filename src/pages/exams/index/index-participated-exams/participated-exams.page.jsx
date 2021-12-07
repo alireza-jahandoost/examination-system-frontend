@@ -1,5 +1,6 @@
 import { useState, useMemo, useContext, useEffect } from "react";
 import { Link, useLocation, Redirect } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import RecordsTable from "../../../../components/records-table/records-table.component";
 import { useMountedState } from "react-use";
 import useAsyncError from "../../../../hooks/useAsyncError";
@@ -107,7 +108,7 @@ const ParticipatedExamsPage = () => {
                     <td>{exam.grade}</td>
                     <td>
                       <Link to={programRoutes.examiningOverview(exam.exam_id)}>
-                        exam overview
+                        <Button variant="success"> exam overview</Button>
                       </Link>
                     </td>
                   </tr>

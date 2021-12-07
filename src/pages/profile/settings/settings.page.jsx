@@ -53,7 +53,12 @@ const SettingsPage = () => {
                   placeholder="Enter your new password again"
                   onChange={(e) => setConfirmNewPassword(e.target.value)}
                 />
-                <Button disabled={isLoading} className="my-3" type="submit">
+                <Button
+                  variant="success"
+                  disabled={isLoading}
+                  className="my-3"
+                  type="submit"
+                >
                   {isLoading ? "Loading..." : "Change Password"}
                 </Button>
               </Form>

@@ -175,7 +175,7 @@ const UpdateExamForm = ({ examId }) => {
       <Row className="mt-3">
         <Col>
           {isAnyChangeExist ? (
-            <Button disabled={isLoading} type="submit">
+            <Button variant="success" disabled={isLoading} type="submit">
               {isLoading ? "Loading..." : "Save Changes"}
             </Button>
           ) : (

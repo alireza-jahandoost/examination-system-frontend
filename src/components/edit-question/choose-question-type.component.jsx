@@ -128,6 +128,7 @@ const ChooseQuestionType = ({ onDeleteQuestion, readOnly = false }) => {
             title={isDeleting ? "Loading..." : "Delete Question"}
             onClick={() => setIsModalShown(true)}
             disabled={readOnly || isDeleting}
+            variant="danger"
           />
         </div>
       )}

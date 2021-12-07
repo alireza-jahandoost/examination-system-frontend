@@ -181,7 +181,7 @@ const IndexAllExams = () => {
                         <Link
                           to={programRoutes.examiningOverview(exam.exam_id)}
                         >
-                          <Button> more details</Button>
+                          <Button variant="success"> more details</Button>
                         </Link>
                       </div>
                     </td>

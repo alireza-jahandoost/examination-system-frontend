@@ -14,6 +14,7 @@ const OrderingOption = ({
     <ListGroup.Item as="li">
       <span> {state.text_part} </span>
       <Button
+        variant="success"
         title="move this item down"
         disabled={readOnly || downDisabled}
         onClick={onDown}
@@ -21,6 +22,7 @@ const OrderingOption = ({
         <FontAwesomeIcon icon={faArrowDown} />
       </Button>
       <Button
+        variant="success"
         title="move this item up"
         disabled={readOnly || upDisabled}
         onClick={onUp}

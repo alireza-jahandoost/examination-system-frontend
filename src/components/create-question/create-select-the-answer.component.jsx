@@ -135,7 +135,7 @@ const CreateSelectTheAnswer = ({ examId, addQuestion, readOnly = false }) => {
         <Col>
           <Button
             disabled={readOnly || isLoading}
-            variant="primary"
+            variant="success"
             type="submit"
           >
             {isLoading ? "Loading..." : "Create"}

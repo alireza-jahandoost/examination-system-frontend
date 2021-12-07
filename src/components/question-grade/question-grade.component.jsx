@@ -53,6 +53,7 @@ const QuestionGrade = ({ canUserChangeGrade = false, questionId }) => {
             <Col className="d-flex align-items-end">
               {hasChange && (
                 <Button
+                  variant="success"
                   disabled={isLoading}
                   type="submit"
                   className="my-2 my-md-0"

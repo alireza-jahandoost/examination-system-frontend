@@ -51,6 +51,7 @@ const ExamQuestionPage = () => {
       <div className="d-flex justify-content-around border-bottom py-3">
         <ExamTime color="dark" examTime={examTime} />
         <Button
+          variant="success"
           onClick={() => {
             setShowModal(true);
           }}
@@ -75,13 +76,17 @@ const ExamQuestionPage = () => {
             className="me-3"
             to={programRoutes.examiningQuestion(examId, prevQuestion)}
           >
-            <Button disabled={prevQuestion === -1}>Previous</Button>
+            <Button variant="success" disabled={prevQuestion === -1}>
+              Previous
+            </Button>
           </Link>
           <Link
             {...handleClick(nextQuestion === -1)}
             to={programRoutes.examiningQuestion(examId, nextQuestion)}
           >
-            <Button disabled={nextQuestion === -1}>Next</Button>
+            <Button variant="success" disabled={nextQuestion === -1}>
+              Next
+            </Button>
           </Link>
         </div>
         <Modal

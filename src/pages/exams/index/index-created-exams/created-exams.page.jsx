@@ -1,5 +1,6 @@
 import { useState, useMemo, useContext, useEffect } from "react";
 import { Link, useLocation, Redirect } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import RecordsTable from "../../../../components/records-table/records-table.component";
 import { useMountedState } from "react-use";
 import useAsyncError from "../../../../hooks/useAsyncError";
@@ -112,14 +113,14 @@ const CreatedExamsPage = () => {
                     <td>
                       <div>
                         <Link to={programRoutes.updateExam(exam.exam_id)}>
-                          edit exam
+                          <Button variant="success"> edit exam</Button>
                         </Link>
                       </div>
-                      <div>
+                      <div className="mt-2">
                         <Link
                           to={programRoutes.indexParticipants(exam.exam_id)}
                         >
-                          participants
+                          <Button variant="success"> participants</Button>
                         </Link>
                       </div>
                     </td>

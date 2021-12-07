@@ -1,5 +1,6 @@
 import { useState, useMemo, useContext, useEffect } from "react";
 import { Link, useLocation, Redirect, useParams } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import { useMountedState } from "react-use";
 import RecordsTable from "../../../../components/records-table/records-table.component";
 import useAsyncError from "../../../../hooks/useAsyncError";
@@ -105,7 +106,9 @@ const IndexParticipantsPage = () => {
                           participant.participant_id
                         )}
                       >
-                        see answers of this participant
+                        <Button variant="success">
+                          see answers of this participant
+                        </Button>
                       </Link>
                     </td>
                   </tr>

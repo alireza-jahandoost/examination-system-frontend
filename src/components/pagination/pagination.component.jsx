@@ -1,5 +1,6 @@
 import { Pagination } from "react-bootstrap";
 import PaginationItem from "./pagination-item.component";
+import "./pagination.styles.css";
 
 const PaginationComponent = ({
   prefix,
@@ -41,7 +42,7 @@ const PaginationComponent = ({
   }
   return (
     <>
-      <Pagination>
+      <Pagination className="pagination-success">
         <PaginationItem to={createUrl(1)} disabled={currentPage === 1}>
           <span aria-hidden="true">«</span>
           <span className="visually-hidden">First</span>

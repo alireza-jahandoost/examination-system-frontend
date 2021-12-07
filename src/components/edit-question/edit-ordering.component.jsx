@@ -210,7 +210,7 @@ const EditOrdering = ({
           {hasChange ? (
             <Button
               disabled={readOnly || isLoading}
-              variant="primary"
+              variant="success"
               type="submit"
             >
               {isLoading ? "Loading..." : "Save Changes"}

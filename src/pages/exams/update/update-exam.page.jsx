@@ -30,6 +30,7 @@ const UpdateExamPage = () => {
       <div className="text-start mb-5">
         <ElementContainer>
           <Button
+            variant="success"
             onClick={() => {
               if (!isPublished) {
                 publishExam();
@@ -75,6 +76,7 @@ const UpdateExamPage = () => {
             </ElementContainer>
           ) : (
             <Button
+              variant="success"
               className="w-100"
               onClick={() => setAddQuestionFormVisible(true)}
               disabled={isPublished}

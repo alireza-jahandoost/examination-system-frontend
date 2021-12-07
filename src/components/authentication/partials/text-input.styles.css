@@ -42,7 +42,8 @@
   background-color: inherit !important;
 }
 
-input:focus {
+input:focus,
+textarea:focus {
   border-color: #198754 !important;
   /* border-color: inherit !important; */
   box-shadow: none !important;
