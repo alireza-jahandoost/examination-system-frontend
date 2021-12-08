@@ -16,7 +16,7 @@ import { UpdateExamProvider } from "../update-exam.context";
 
 import UpdateExamPage from "../../../pages/exams/update/update-exam.page";
 
-import ErrorBoundary from "../../../components/error-boundary/error-boundary.component";
+import { ErrorBoundaryProvider } from "../../../contexts/error-boundary-context/error-boundary.context";
 
 import apiRoutes from "../../../constants/api-routes.constant";
 import programRoutes from "../../../constants/program-routes.constant";
@@ -320,9 +320,9 @@ describe("check other errors", () => {
     const removeUserInfo = jest.fn();
     renderWithAuthentication(
       <Route path={programRoutes.updateExam(":examId")}>
-        <ErrorBoundary>
+        <ErrorBoundaryProvider>
           <UpdateExamProvider />
-        </ErrorBoundary>
+        </ErrorBoundaryProvider>
       </Route>,
       {
         authenticationProviderProps: { removeUserInfo },
@@ -344,9 +344,9 @@ describe("check other errors", () => {
     const removeUserInfo = jest.fn();
     renderWithAuthentication(
       <Route path={programRoutes.updateExam(":examId")}>
-        <ErrorBoundary>
+        <ErrorBoundaryProvider>
           <UpdateExamProvider />
-        </ErrorBoundary>
+        </ErrorBoundaryProvider>
       </Route>,
       {
         authenticationProviderProps: { removeUserInfo },

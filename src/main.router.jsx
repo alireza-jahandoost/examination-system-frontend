@@ -4,7 +4,7 @@ import ExamsRouter from "./pages/exams/exams.router";
 import ProfileRouter from "./pages/profile/profile.router";
 import AboutUsPage from "./pages/about-us/about-us.page";
 import ContactUsPage from "./pages/contact-us/contact-us.page";
-import ErrorBoundary from "./components/error-boundary/error-boundary.component";
+import { ErrorBoundaryProvider } from "./contexts/error-boundary-context/error-boundary.context";
 import { AuthenticationContext } from "./contexts/authentication-context/authentication.context";
 import programRoutes from "./constants/program-routes.constant";
 import LoginPage from "./pages/login/login.page";
@@ -40,7 +40,7 @@ const MainRouter = () => {
     );
   }
   return (
-    <ErrorBoundary>
+    <ErrorBoundaryProvider>
       <div style={{ minHeight: "100vh" }} className="d-flex flex-column">
         <Switch>
           <Route path={programRoutes.examsRoot()} component={ExamsRouter} />
@@ -56,7 +56,7 @@ const MainRouter = () => {
           <Route path={programRoutes.register()} component={RegisterPage} />
         </Switch>
       </div>
-    </ErrorBoundary>
+    </ErrorBoundaryProvider>
   );
 };
 

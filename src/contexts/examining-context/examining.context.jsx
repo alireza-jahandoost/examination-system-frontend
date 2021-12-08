@@ -121,15 +121,17 @@ export const ExaminingProvider = ({ children }) => {
         }
       })
       .catch((errors) => {
-        switch (Number(errors?.response?.status)) {
-          case 401:
-            removeUserInfo();
-            setIsFailed(true);
-            break;
-          default:
-            throwError(errors);
+        if (isMounted()) {
+          switch (Number(errors?.response?.status)) {
+            case 401:
+              removeUserInfo();
+              setIsFailed(true);
+              break;
+            default:
+              throwError(errors);
+          }
+          setIsLoading(false);
         }
-        setIsLoading(false);
       });
   }, [
     examInfo.isUserRegisteredToExam,

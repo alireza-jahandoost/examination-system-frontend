@@ -11,7 +11,7 @@ import {
 
 import IndexParticipantsPage from "../index-participants.page";
 
-import ErrorBoundary from "../../../../../components/error-boundary/error-boundary.component";
+import { ErrorBoundaryProvider } from "../../../../../contexts/error-boundary-context/error-boundary.context";
 
 import apiRoutes from "../../../../../constants/api-routes.constant";
 import programRoutes from "../../../../../constants/program-routes.constant";
@@ -50,10 +50,9 @@ describe("check other errors", () => {
     const removeUserInfo = jest.fn();
     renderWithAuthentication(
       <Route to={programRoutes.indexParticipants(":examId")}>
-        <ErrorBoundary>
-          {" "}
+        <ErrorBoundaryProvider>
           <IndexParticipantsPage />
-        </ErrorBoundary>
+        </ErrorBoundaryProvider>
       </Route>,
       {
         authenticationProviderProps: { removeUserInfo },

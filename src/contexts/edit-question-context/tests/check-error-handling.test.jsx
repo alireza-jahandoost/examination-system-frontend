@@ -4,7 +4,7 @@ import {
   screen,
   renderWithAuthentication,
 } from "../../../test-utils/testing-library-utils";
-import ErrorBoundary from "../../../components/error-boundary/error-boundary.component";
+import { ErrorBoundaryProvider } from "../../../contexts/error-boundary-context/error-boundary.context";
 import userEvent from "@testing-library/user-event";
 import {
   changeRequestResponseTo401,
@@ -525,9 +525,9 @@ describe("check other errors", () => {
 
     const removeUserInfo = jest.fn();
     renderWithAuthentication(
-      <ErrorBoundary>
+      <ErrorBoundaryProvider>
         <EditQuestionProvider examId={1} questionId={3} />
-      </ErrorBoundary>,
+      </ErrorBoundaryProvider>,
       {
         authenticationProviderProps: { removeUserInfo },
       }
@@ -546,9 +546,9 @@ describe("check other errors", () => {
 
     const removeUserInfo = jest.fn();
     renderWithAuthentication(
-      <ErrorBoundary>
+      <ErrorBoundaryProvider>
         <EditQuestionProvider examId={1} questionId={1} />
-      </ErrorBoundary>,
+      </ErrorBoundaryProvider>,
       {
         authenticationProviderProps: { removeUserInfo },
       }

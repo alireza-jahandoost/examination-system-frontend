@@ -10,7 +10,7 @@ import {
 
 import IndexAllExamsPage from "../index-all-exams.page";
 
-import ErrorBoundary from "../../../../../components/error-boundary/error-boundary.component";
+import { ErrorBoundaryProvider } from "../../../../../contexts/error-boundary-context/error-boundary.context";
 
 import apiRoutes from "../../../../../constants/api-routes.constant";
 
@@ -41,9 +41,9 @@ describe("check other errors", () => {
 
     const removeUserInfo = jest.fn();
     renderWithAuthentication(
-      <ErrorBoundary>
+      <ErrorBoundaryProvider>
         <IndexAllExamsPage />
-      </ErrorBoundary>,
+      </ErrorBoundaryProvider>,
       {
         authenticationProviderProps: { removeUserInfo },
       }

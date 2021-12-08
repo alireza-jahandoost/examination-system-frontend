@@ -14,7 +14,7 @@ import {
 import { ExamInfoProvider } from "../../exam-info-context/exam-info.context";
 import { ExaminingProvider } from "../examining.context";
 
-import ErrorBoundary from "../../../components/error-boundary/error-boundary.component";
+import { ErrorBoundaryProvider } from "../../../contexts/error-boundary-context/error-boundary.context";
 
 import ExamQuestionPage from "../../../pages/exams/examining/exam-question/exam-question.page";
 
@@ -248,9 +248,9 @@ describe("check other errors", () => {
     const removeUserInfo = jest.fn();
     renderWithAuthentication(
       <ExamInfoProvider examId={2}>
-        <ErrorBoundary>
+        <ErrorBoundaryProvider>
           <ExaminingProvider />
-        </ErrorBoundary>
+        </ErrorBoundaryProvider>
       </ExamInfoProvider>,
       {
         authenticationProviderProps: { removeUserInfo },
@@ -271,9 +271,9 @@ describe("check other errors", () => {
     const removeUserInfo = jest.fn();
     renderWithAuthentication(
       <ExamInfoProvider examId={2}>
-        <ErrorBoundary>
+        <ErrorBoundaryProvider>
           <ExaminingProvider />
-        </ErrorBoundary>
+        </ErrorBoundaryProvider>
       </ExamInfoProvider>,
       {
         authenticationProviderProps: { removeUserInfo },

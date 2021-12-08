@@ -11,7 +11,7 @@ import {
 } from "../../../utilities/tests.utility";
 
 import { AnswerQuestionProvider } from "../answer-question.context";
-import ErrorBoundary from "../../../components/error-boundary/error-boundary.component";
+import { ErrorBoundaryProvider } from "../../../contexts/error-boundary-context/error-boundary.context";
 
 import AnswerQuestion from "../../../components/answer-question/answer-question.component";
 
@@ -273,9 +273,9 @@ describe("check other errors", () => {
 
     const removeUserInfo = jest.fn();
     renderWithAuthentication(
-      <ErrorBoundary>
+      <ErrorBoundaryProvider>
         <AnswerQuestionProvider examId={1} questionId={1} participantId={1} />
-      </ErrorBoundary>,
+      </ErrorBoundaryProvider>,
       {
         authenticationProviderProps: { removeUserInfo },
       }
@@ -397,14 +397,14 @@ describe("check other errors", () => {
 
     const removeUserInfo = jest.fn();
     renderWithAuthentication(
-      <ErrorBoundary>
+      <ErrorBoundaryProvider>
         {" "}
         <AnswerQuestionProvider
           examId={1}
           questionId={1}
           participantId={1}
         ></AnswerQuestionProvider>
-      </ErrorBoundary>,
+      </ErrorBoundaryProvider>,
       {
         authenticationProviderProps: { removeUserInfo },
       }
@@ -424,13 +424,13 @@ describe("check other errors", () => {
 
     const removeUserInfo = jest.fn();
     renderWithAuthentication(
-      <ErrorBoundary>
+      <ErrorBoundaryProvider>
         <AnswerQuestionProvider
           examId={1}
           questionId={3}
           participantId={1}
         ></AnswerQuestionProvider>
-      </ErrorBoundary>,
+      </ErrorBoundaryProvider>,
       {
         authenticationProviderProps: { removeUserInfo },
       }

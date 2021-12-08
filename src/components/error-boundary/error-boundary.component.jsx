@@ -1,22 +1,22 @@
 import React from "react";
+import ErrorTemplate from "./error-template.component";
 
 export default class ErrorBoundary extends React.Component {
-  state = { error: false, message: "" };
-
-  static getDerivedStateFromError(error) {
-    const status = error?.response?.status;
-    if (status) {
-      return { error, message: status };
-    } else {
-      return { error, message: "something went wrong" };
-    }
-  }
+  static getDerivedStateFromError(error) {}
 
   componentDidCatch(error) {
+    const errorStatus = error?.response?.status;
+    const errorMessage = error?.response?.statusText;
+    this.props.changeError({ status: errorStatus, message: errorMessage });
     // Log or store the error
   }
 
   render() {
-    return this.state.error ? <p>{this.state.message}</p> : this.props.children;
+    const { status, message, phrase } = this.props.error || {};
+    return this.props.error ? (
+      <ErrorTemplate status={status} message={message} phrase={phrase} />
+    ) : (
+      this.props.children
+    );
   }
 }

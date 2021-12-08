@@ -14,7 +14,7 @@ import { questionsShowId_1 } from "../../../mocks/mocks/questions.mock";
 import { QuestionGradeProvider } from "../question-grade.context";
 
 import QuestionGrade from "../../../components/question-grade/question-grade.component";
-import ErrorBoundary from "../../../components/error-boundary/error-boundary.component";
+import { ErrorBoundaryProvider } from "../../../contexts/error-boundary-context/error-boundary.context";
 
 import apiRoutes from "../../../constants/api-routes.constant";
 
@@ -158,14 +158,13 @@ describe("check other errors", () => {
 
     const removeUserInfo = jest.fn();
     renderWithAuthentication(
-      <ErrorBoundary>
-        {" "}
+      <ErrorBoundaryProvider>
         <QuestionGradeProvider
           participantId={1}
           questionId={1}
           participantStatus="FINISHED"
         />
-      </ErrorBoundary>,
+      </ErrorBoundaryProvider>,
       {
         authenticationProviderProps: { removeUserInfo },
       }

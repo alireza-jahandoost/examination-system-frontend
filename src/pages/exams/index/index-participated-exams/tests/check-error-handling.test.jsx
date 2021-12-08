@@ -10,7 +10,7 @@ import {
 
 import ParticipatedExamsPage from "../participated-exams.page";
 
-import ErrorBoundary from "../../../../../components/error-boundary/error-boundary.component";
+import { ErrorBoundaryProvider } from "../../../../../contexts/error-boundary-context/error-boundary.context";
 
 import apiRoutes from "../../../../../constants/api-routes.constant";
 import programRoutes from "../../../../../constants/program-routes.constant";
@@ -43,9 +43,9 @@ describe("check other errors", () => {
 
     const removeUserInfo = jest.fn();
     renderWithAuthentication(
-      <ErrorBoundary>
+      <ErrorBoundaryProvider>
         <ParticipatedExamsPage />
-      </ErrorBoundary>,
+      </ErrorBoundaryProvider>,
       {
         authenticationProviderProps: { removeUserInfo },
         route: programRoutes.indexParticipatedExams(),

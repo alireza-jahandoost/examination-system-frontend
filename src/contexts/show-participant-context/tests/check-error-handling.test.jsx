@@ -11,7 +11,7 @@ import {
 
 import { ShowParticipantProvider } from "../show-participant.context";
 
-import ErrorBoundary from "../../../components/error-boundary/error-boundary.component";
+import { ErrorBoundaryProvider } from "../../../contexts/error-boundary-context/error-boundary.context";
 
 import apiRoutes from "../../../constants/api-routes.constant";
 import programRoutes from "../../../constants/program-routes.constant";
@@ -75,10 +75,9 @@ describe("check other errors", () => {
     const removeUserInfo = jest.fn();
     renderWithAuthentication(
       <Route path={programRoutes.showParticipant(":examId", ":participantId")}>
-        <ErrorBoundary>
-          {" "}
+        <ErrorBoundaryProvider>
           <ShowParticipantProvider />
-        </ErrorBoundary>
+        </ErrorBoundaryProvider>
       </Route>,
       {
         authenticationProviderProps: { removeUserInfo },
@@ -100,10 +99,9 @@ describe("check other errors", () => {
     const removeUserInfo = jest.fn();
     renderWithAuthentication(
       <Route path={programRoutes.showParticipant(":examId", ":participantId")}>
-        <ErrorBoundary>
-          {" "}
+        <ErrorBoundaryProvider>
           <ShowParticipantProvider />
-        </ErrorBoundary>
+        </ErrorBoundaryProvider>
       </Route>,
       {
         authenticationProviderProps: { removeUserInfo },
