@@ -7,7 +7,11 @@ export default class ErrorBoundary extends React.Component {
   componentDidCatch(error) {
     const errorStatus = error?.response?.status;
     const errorMessage = error?.response?.statusText;
-    this.props.changeError({ status: errorStatus, message: errorMessage });
+    this.props.changeError({
+      status: errorStatus,
+      message: errorMessage,
+      route: this.props.route,
+    });
     // Log or store the error
   }
 
