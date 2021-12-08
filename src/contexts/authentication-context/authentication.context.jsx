@@ -170,21 +170,6 @@ export const AuthenticationProvider = ({ children }) => {
     });
   };
 
-  const redirectIfNotAuthenticated = (component, location) => {
-    if (isUserAuthenticated) {
-      return component;
-    } else {
-      return (
-        <Redirect
-          to={{
-            pathname: "/",
-            state: { from: location },
-          }}
-        />
-      );
-    }
-  };
-
   const changePassword = (
     currentPassword,
     newPassword,
@@ -226,7 +211,6 @@ export const AuthenticationProvider = ({ children }) => {
         token,
         isUserAuthenticated,
         showUserLoginPopover,
-        redirectIfNotAuthenticated,
         logout,
         changePassword,
         removeUserInfo,

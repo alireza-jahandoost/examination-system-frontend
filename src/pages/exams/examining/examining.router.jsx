@@ -10,9 +10,7 @@ import ExamOverview from "./exam-overview/exam-overview.page";
 import ExamQuestion from "./exam-question/exam-question.page";
 
 const ExaminingRouter = () => {
-  const { redirectIfNotAuthenticated, isAuthLoaded } = useContext(
-    AuthenticationContext
-  );
+  const { isAuthLoaded } = useContext(AuthenticationContext);
 
   const { examId } = useParams();
 
@@ -33,9 +31,7 @@ const ExaminingRouter = () => {
           <Route
             exact
             path={programRoutes.examiningQuestion(":examId", ":questionId")}
-            render={({ location }) =>
-              redirectIfNotAuthenticated(<ExamQuestion />, location)
-            }
+            component={ExamQuestion}
           />
         </Switch>
       </ExaminingProvider>

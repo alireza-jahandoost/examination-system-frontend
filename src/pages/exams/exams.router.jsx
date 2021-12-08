@@ -16,9 +16,7 @@ import { UpdateExamProvider } from "../../contexts/update-exam-context/update-ex
 import ExaminingRouter from "./examining/examining.router";
 
 const ExamsRouter = () => {
-  const { redirectIfNotAuthenticated, isAuthLoaded } = useContext(
-    AuthenticationContext
-  );
+  const { isAuthLoaded } = useContext(AuthenticationContext);
 
   if (!isAuthLoaded) {
     return <p> Loading... </p>;
@@ -35,42 +33,31 @@ const ExamsRouter = () => {
       <Route
         exact
         path={programRoutes.indexParticipatedExams()}
-        render={({ location }) =>
-          redirectIfNotAuthenticated(<IndexParticipatedExamsPage />, location)
-        }
+        component={IndexParticipatedExamsPage}
       />
       <Route
         exact
         path={programRoutes.indexCreatedExams()}
-        render={({ location }) =>
-          redirectIfNotAuthenticated(<IndexCreatedExamsPage />, location)
-        }
+        component={IndexCreatedExamsPage}
       />
       <Route
         exact
         path={programRoutes.createExam()}
-        render={({ location }) =>
-          redirectIfNotAuthenticated(<CreateExamPage />, location)
-        }
+        component={CreateExamPage}
       />
       <Route
         exact
         path={programRoutes.updateExam(":examId")}
-        render={({ location }) =>
-          redirectIfNotAuthenticated(
-            <UpdateExamProvider>
-              <UpdateExamPage />
-            </UpdateExamProvider>,
-            location
-          )
-        }
+        render={() => (
+          <UpdateExamProvider>
+            <UpdateExamPage />
+          </UpdateExamProvider>
+        )}
       />
 
       <Route
         path={programRoutes.participantsRoot(":examId")}
-        render={({ location }) =>
-          redirectIfNotAuthenticated(<ParticipantsRouter />, location)
-        }
+        component={ParticipantsRouter}
       />
 
       <Route

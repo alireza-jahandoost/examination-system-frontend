@@ -9,11 +9,9 @@ import RegisterPage from "./pages/register/register.page";
 import { getParams, createPath } from "./utilities/url.utility";
 
 const AppRouter = () => {
-  const {
-    redirectIfNotAuthenticated,
-    isAuthLoaded,
-    isUserAuthenticated,
-  } = useContext(AuthenticationContext);
+  const { isAuthLoaded, isUserAuthenticated } = useContext(
+    AuthenticationContext
+  );
   const location = useLocation();
 
   if (!isAuthLoaded) {
