@@ -15,6 +15,12 @@ const Sidebar = (props) => {
         />
         <SidebarItem
           className="lead my-3"
+          label="all exams"
+          href={programRoutes.indexAllExams()}
+          iconName="copy"
+        />
+        <SidebarItem
+          className="lead my-3"
           label="created exams"
           href={programRoutes.indexCreatedExams()}
           iconName="window-restore"

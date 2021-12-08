@@ -7,6 +7,7 @@ import {
   faCogs,
   faSpinner,
   faPlusSquare,
+  faCopy,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
@@ -28,6 +29,9 @@ const SidebarItem = ({ href, iconName, label, ...props }) => {
         break;
       case "plus-square":
         setIcon(faPlusSquare);
+        break;
+      case "copy":
+        setIcon(faCopy);
         break;
       default:
         throw Error("the icon does not found");

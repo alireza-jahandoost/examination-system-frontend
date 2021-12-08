@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { AuthenticationContext } from "../../../contexts/authentication-context/authentication.context";
@@ -10,6 +10,7 @@ const Header = () => {
   const { user, logout, popover, changePopover } = useContext(
     AuthenticationContext
   );
+  const toggleButtonRef = useRef();
 
   useEffect(() => {
     if (user && popover !== "") {
@@ -17,35 +18,101 @@ const Header = () => {
     }
   }, [user, popover, changePopover]);
 
+  const closeMenu = () => {
+    if (
+      toggleButtonRef.current?.classList &&
+      !Array.from(toggleButtonRef.current?.classList).includes("collapsed")
+    ) {
+      toggleButtonRef.current.click();
+    }
+  };
+
   return (
     <div style={{ paddingBottom: "56px" }}>
       <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
           <div role="banner">
-            <Navbar.Brand as={Link} title="Visit the main page" to="/">
+            <Navbar.Brand
+              as={Link}
+              onClick={closeMenu}
+              title="Visit the main page"
+              to="/"
+            >
               React-Bootstrap
             </Navbar.Brand>
           </div>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Toggle
+            ref={toggleButtonRef}
+            aria-controls="responsive-navbar-nav"
+          />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link as={Link} to={programRoutes.indexAllExams()}>
-                Exams
+              <Nav.Link
+                as={Link}
+                onClick={closeMenu}
+                className="d-lg-none"
+                to={programRoutes.profile()}
+              >
+                overview
               </Nav.Link>
-              <Nav.Link as={Link} to={programRoutes.aboutUs()}>
-                About us
+              <Nav.Link
+                as={Link}
+                onClick={closeMenu}
+                className="d-lg-none"
+                to={programRoutes.indexAllExams()}
+              >
+                all exams
               </Nav.Link>
-              <Nav.Link as={Link} to={programRoutes.contactUs()}>
-                Contact us
+              <Nav.Link
+                as={Link}
+                onClick={closeMenu}
+                className="d-lg-none"
+                to={programRoutes.indexCreatedExams()}
+              >
+                created exams
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                onClick={closeMenu}
+                className="d-lg-none"
+                to={programRoutes.createExam()}
+              >
+                create new exam
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                onClick={closeMenu}
+                className="d-lg-none"
+                to={programRoutes.indexParticipatedExams()}
+              >
+                participatedExams
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                onClick={closeMenu}
+                className="d-lg-none"
+                to={programRoutes.settings()}
+              >
+                settings
               </Nav.Link>
             </Nav>
             <Nav>
               {user ? (
                 <>
-                  <Nav.Link as={Link} to={programRoutes.profile()}>
+                  <Nav.Link
+                    as={Link}
+                    onClick={closeMenu}
+                    to={programRoutes.profile()}
+                  >
                     Profile
                   </Nav.Link>
-                  <Nav.Link onClick={() => logout()} role="button">
+                  <Nav.Link
+                    onClick={() => {
+                      logout();
+                      closeMenu();
+                    }}
+                    role="button"
+                  >
                     Logout
                   </Nav.Link>
                 </>

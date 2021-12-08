@@ -112,7 +112,7 @@ describe("an authenticated user can register in an started exam that did not fin
     // end
 
     // open exam description
-    userEvent.click(screen.getAllByRole("link", { name: /^exams$/i })[0]);
+    userEvent.click(screen.getAllByRole("link", { name: /^all exams$/i })[0]);
     const moreDetailsButtons = await screen.findAllByText(/more details/i);
     const ElementmoreDetailsButton = moreDetailsButtons[3];
 
