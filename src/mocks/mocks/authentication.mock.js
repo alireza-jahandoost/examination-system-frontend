@@ -2,16 +2,16 @@ export const userMock = {
   data: {
     user: {
       user_id: 1,
-      name: "Ms. Mazie Doyle",
-      email: "fkub@example.org",
+      user_name: "Ms. Mazie Doyle",
+      user_email: "fkub@example.org",
     },
     token: "authorizationToken",
   },
 };
 
-export const userName = userMock.data.user.name;
+export const userName = userMock.data.user.user_name;
 
-export const userEmail = userMock.data.user.email;
+export const userEmail = userMock.data.user.user_email;
 
 export const repeatedEmail = "repeated@test.com";
 

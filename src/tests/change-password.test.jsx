@@ -8,6 +8,7 @@ import {
   userEmail,
 } from "../mocks/mocks/authentication.mock";
 import { wrongCurrentPassword } from "../mocks/errors/failed-change-password.error";
+import { userName } from "../mocks/mocks/authentication.mock";
 
 test("user can change the password, the button must be labeled by loading and then the user must be logged out", async () => {
   render(<App />);

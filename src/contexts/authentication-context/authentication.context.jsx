@@ -113,7 +113,7 @@ export const AuthenticationProvider = ({ children }) => {
       })
       .catch((err) => {
         if (isMounted()) {
-          const { errors: receivedErrors, message } = err.response.data;
+          const { errors: receivedErrors, message } = err?.response?.data || {};
           setErrors((correntErrors) => ({
             ...correntErrors,
             ...receivedErrors,

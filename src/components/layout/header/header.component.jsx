@@ -1,22 +1,30 @@
 import { useEffect, useContext, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Navbar, Container, Nav } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faUser,
+  faCogs,
+  faSignOutAlt,
+} from "@fortawesome/free-solid-svg-icons";
+import {
+  Navbar,
+  OverlayTrigger,
+  Popover,
+  Button,
+  Container,
+  Nav,
+} from "react-bootstrap";
 import { AuthenticationContext } from "../../../contexts/authentication-context/authentication.context";
 import LoginPopover from "./login-popover.component";
 import RegisterPopover from "./register-popover.component";
 import programRoutes from "../../../constants/program-routes.constant";
+import "./header.styles.css";
 
 const Header = () => {
   const { user, logout, popover, changePopover } = useContext(
     AuthenticationContext
   );
   const toggleButtonRef = useRef();
-
-  useEffect(() => {
-    if (user && popover !== "") {
-      changePopover("");
-    }
-  }, [user, popover, changePopover]);
 
   const closeMenu = () => {
     if (
@@ -26,6 +34,62 @@ const Header = () => {
       toggleButtonRef.current.click();
     }
   };
+
+  const userPopover = user ? (
+    <Popover className="d-none d-lg-inline-block" id="popover-basic">
+      <Popover.Header className="px-5" as="h3">
+        {user.user_name.length > 28
+          ? `${user.user_name.substr(0, 25)}...`
+          : user.user_name}
+      </Popover.Header>
+      <Popover.Body>
+        <Nav.Link
+          as={Link}
+          onClick={closeMenu}
+          className="text-dark p-0 user-popover-link"
+          to={programRoutes.profile()}
+        >
+          <span className="pe-2">
+            <FontAwesomeIcon icon={faUser} />
+          </span>
+
+          <span>Profile</span>
+        </Nav.Link>
+        <Nav.Link
+          as={Link}
+          onClick={closeMenu}
+          className="text-dark p-0 user-popover-link"
+          to={programRoutes.settings()}
+        >
+          <span className="pe-2">
+            <FontAwesomeIcon icon={faCogs} />
+          </span>
+
+          <span>Settings</span>
+        </Nav.Link>
+        <Nav.Link
+          className="text-dark p-0 user-popover-link"
+          onClick={() => {
+            logout();
+            closeMenu();
+          }}
+          role="button"
+        >
+          <span className="pe-2">
+            <FontAwesomeIcon icon={faSignOutAlt} />
+          </span>
+
+          <span>Logout</span>
+        </Nav.Link>
+      </Popover.Body>
+    </Popover>
+  ) : null;
+
+  useEffect(() => {
+    if (user && popover !== "") {
+      changePopover("");
+    }
+  }, [user, popover, changePopover]);
 
   return (
     <div style={{ paddingBottom: "56px" }}>
@@ -99,7 +163,22 @@ const Header = () => {
             <Nav>
               {user ? (
                 <>
+                  <OverlayTrigger
+                    trigger="click"
+                    placement="bottom"
+                    overlay={userPopover}
+                    className="d-none d-lg-inline-block"
+                  >
+                    <Button variant="dark" className="d-none d-lg-inline-block">
+                      {user.user_name.length > 18
+                        ? `${user.user_name.substr(0, 15)}...`
+                        : user.user_name}
+                      {" ▾"}
+                    </Button>
+                  </OverlayTrigger>
+                  <hr className="border d-lg-none" />
                   <Nav.Link
+                    className="d-lg-none"
                     as={Link}
                     onClick={closeMenu}
                     to={programRoutes.profile()}
@@ -107,6 +186,7 @@ const Header = () => {
                     Profile
                   </Nav.Link>
                   <Nav.Link
+                    className="d-lg-none"
                     onClick={() => {
                       logout();
                       closeMenu();
