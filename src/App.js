@@ -1,10 +1,10 @@
 import Layout from "./components/layout/layout.component";
-import MainRouter from "./main.router";
+import AppRouter from "./app.router";
 
 function App() {
   return (
     <Layout>
-      <MainRouter />
+      <AppRouter />
     </Layout>
   );
 }

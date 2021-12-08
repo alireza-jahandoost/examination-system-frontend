@@ -1,7 +1,6 @@
 import { useState, useMemo, useEffect, useContext } from "react";
 import { useHistory, Redirect, useLocation, Link } from "react-router-dom";
 import { AuthenticationContext } from "../../../../contexts/authentication-context/authentication.context";
-import ProfileContainer from "../../../../components/profile-container/profile-container.component";
 import { Button } from "react-bootstrap";
 import Search from "./search.component";
 import useAsyncError from "../../../../hooks/useAsyncError";
@@ -139,7 +138,8 @@ const IndexAllExams = () => {
   }
 
   return (
-    <ProfileContainer>
+    <>
+      {" "}
       <h1>All Exams</h1>
       <Search
         value={searchQuery}
@@ -207,7 +207,7 @@ const IndexAllExams = () => {
             : "there is not any exam to show"}{" "}
         </p>
       )}
-    </ProfileContainer>
+    </>
   );
 };
 

@@ -1,7 +1,6 @@
 import { useState, useContext } from "react";
 import { Button, Row, Col, Form } from "react-bootstrap";
 
-import ProfileContainer from "../../../components/profile-container/profile-container.component";
 import PasswordInput from "../../../components/inputs/password-input.component";
 
 import { AuthenticationContext } from "../../../contexts/authentication-context/authentication.context";
@@ -21,7 +20,8 @@ const SettingsPage = () => {
   };
 
   return (
-    <ProfileContainer>
+    <>
+      {" "}
       <h1>Settings</h1>
       <div>
         <Row>
@@ -66,7 +66,7 @@ const SettingsPage = () => {
           </Col>
         </Row>
       </div>
-    </ProfileContainer>
+    </>
   );
 };
 

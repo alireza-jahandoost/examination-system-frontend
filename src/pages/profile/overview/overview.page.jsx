@@ -1,11 +1,9 @@
-import { Button, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import ProfileContainer from "../../../components/profile-container/profile-container.component";
+import { Container } from "react-bootstrap";
 import ItemButton from "./item-button.component";
-import programRoutes from "../../../constants/program-routes.constant";
+
 const OverviewPage = () => {
   return (
-    <ProfileContainer>
+    <>
       <h1>Profile Overview</h1>
       <Container>
         <div className="bg-light m-3 p-3 shadow border rounded">
@@ -17,7 +15,7 @@ const OverviewPage = () => {
           </div>
         </div>
       </Container>
-    </ProfileContainer>
+    </>
   );
 };
 

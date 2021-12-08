@@ -4,7 +4,6 @@ import { Button } from "react-bootstrap";
 import { useMountedState } from "react-use";
 import RecordsTable from "../../../../components/records-table/records-table.component";
 import useAsyncError from "../../../../hooks/useAsyncError";
-import ProfileContainer from "../../../../components/profile-container/profile-container.component";
 import Pagination from "../../../../components/pagination/pagination.component";
 
 import programRoutes from "../../../../constants/program-routes.constant";
@@ -75,7 +74,8 @@ const IndexParticipantsPage = () => {
   }
 
   return (
-    <ProfileContainer>
+    <>
+      {" "}
       <h1>Participants</h1>
       {isLoading ? (
         <p>Loading...</p>
@@ -125,7 +125,7 @@ const IndexParticipantsPage = () => {
       ) : (
         <p className="lead"> no one have participated in this exam yet </p>
       )}
-    </ProfileContainer>
+    </>
   );
 };
 
