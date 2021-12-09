@@ -70,7 +70,7 @@ export const questionsShowId_2 = {
   data: {
     question: {
       question_id: 2,
-      question_text: "Rem error nesciunt quos aut.",
+      question_text: "Rem error {{{}}} nesciunt quos aut.",
       question_score: 10,
       can_be_shuffled: true,
       question_type: {

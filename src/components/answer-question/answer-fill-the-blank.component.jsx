@@ -16,7 +16,7 @@ const AnswerFillTheBlank = ({ readOnly = false }) => {
   };
 
   return (
-    <div>
+    <div className="d-inline-block">
       <TextInput
         label="Answer of Question"
         value={answers.length > 0 ? answers[0].text_part : ""}
@@ -25,6 +25,7 @@ const AnswerFillTheBlank = ({ readOnly = false }) => {
         onChange={handleChange}
         hiddenLabel={true}
         readOnly={readOnly}
+        textCenter={true}
       />
     </div>
   );

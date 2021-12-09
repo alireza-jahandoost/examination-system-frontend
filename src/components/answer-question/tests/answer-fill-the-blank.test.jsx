@@ -4,12 +4,41 @@ import {
 } from "../../../test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
 import { wrapper } from "./partials";
-import AnswerFillTheBlank from "../answer-fill-the-blank.component";
+import AnswerQuestion from "../answer-question.component";
 import { randomString } from "../../../utilities/tests.utility";
+
+test("the input must be placed instead of {{{}}}", () => {
+  const questionAnswer = randomString();
+  const { WrappedElement, value } = wrapper(<AnswerQuestion />, {
+    answers: [{ integer_part: null, text_part: questionAnswer }],
+    questionTypeId: 2,
+  });
+  renderWithAuthentication(WrappedElement);
+
+  const textbox = screen.getByRole("textbox", {
+    name: /answer of question/i,
+  });
+  expect(textbox).toHaveValue(questionAnswer);
+
+  const [firstPart, secondPart] = value.question.question_text.split("{{{}}}");
+  expect(
+    screen.getByText((content, element) => {
+      return content.trim() === firstPart.trim();
+    })
+  ).toBeInTheDocument();
+  expect(
+    screen.getByText((content, element) => {
+      return content.trim() === secondPart.trim();
+    })
+  ).toBeInTheDocument();
+  expect(
+    screen.queryByText("{{{}}}", { exact: false })
+  ).not.toBeInTheDocument();
+});
 
 test("the given answers from context will be shown in inputs", () => {
   const questionAnswer = randomString();
-  const { WrappedElement } = wrapper(<AnswerFillTheBlank />, {
+  const { WrappedElement } = wrapper(<AnswerQuestion />, {
     answers: [{ integer_part: null, text_part: questionAnswer }],
     questionTypeId: 2,
   });
@@ -23,7 +52,7 @@ test("the given answers from context will be shown in inputs", () => {
 
 test("if the input was empty first, the changeAnswers must be called with appropriate input", () => {
   // const questionAnswer = "";
-  const { WrappedElement, value } = wrapper(<AnswerFillTheBlank />, {
+  const { WrappedElement, value } = wrapper(<AnswerQuestion />, {
     answers: [],
     questionTypeId: 2,
   });
@@ -39,7 +68,7 @@ test("if the input was empty first, the changeAnswers must be called with approp
 
 test("if the answers removed, the changeAnswers must be called with appropriate input", () => {
   const questionAnswer = randomString();
-  const { WrappedElement, value } = wrapper(<AnswerFillTheBlank />, {
+  const { WrappedElement, value } = wrapper(<AnswerQuestion />, {
     answers: [{ text_part: questionAnswer }],
     questionTypeId: 2,
   });
@@ -55,7 +84,7 @@ test("if the answers removed, the changeAnswers must be called with appropriate 
 
 test("if the answers changed, the changeAnswers must be called with appropriate input", () => {
   const questionAnswer = randomString();
-  const { WrappedElement, value } = wrapper(<AnswerFillTheBlank />, {
+  const { WrappedElement, value } = wrapper(<AnswerQuestion />, {
     answers: [{ text_part: questionAnswer }],
     questionTypeId: 2,
   });

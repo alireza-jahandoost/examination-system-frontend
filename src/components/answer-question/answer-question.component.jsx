@@ -70,8 +70,15 @@ const AnswerQuestion = ({ readOnly = false }) => {
           <QuestionInfo
             questionText={question.question_text}
             questionScore={question.question_score}
+            questionInput={
+              question.question_type.question_type_name === "fill the blank"
+                ? form
+                : null
+            }
           />
-          {form}
+          {question.question_type.question_type_name === "fill the blank"
+            ? null
+            : form}
           {!readOnly &&
             (hasChange ? (
               <Button

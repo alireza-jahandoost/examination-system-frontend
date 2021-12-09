@@ -11,6 +11,7 @@ const TextInput = ({
   readOnly = false,
   required = false,
   autoFocus = false,
+  textCenter = false,
   ...props
 }) => {
   const additionalAttributes = {};
@@ -22,6 +23,9 @@ const TextInput = ({
   }
   if (autoFocus) {
     additionalAttributes["autoFocus"] = "autoFocus";
+  }
+  if (textCenter) {
+    additionalAttributes["className"] = "text-center";
   }
   return (
     <Form.Group {...props} controlId={id}>
