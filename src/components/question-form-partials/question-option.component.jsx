@@ -29,6 +29,7 @@ const QuestionOption = ({
         </Col>
         <Col>
           <DeleteButton
+            variant="danger"
             onClick={deleteOption}
             title="Delete Option"
             disabled={readOnly}

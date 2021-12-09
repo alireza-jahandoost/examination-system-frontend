@@ -55,7 +55,7 @@ const AnswerOrdering = ({ readOnly = false }) => {
   };
 
   return (
-    <div>
+    <div className="text-start">
       <ListGroup>
         {answers && answers.length > 0
           ? answers.map((answer, idx) => {

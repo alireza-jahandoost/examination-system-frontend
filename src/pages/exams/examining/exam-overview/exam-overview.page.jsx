@@ -104,7 +104,11 @@ const ExamOverviewPage = () => {
                   examId={examId}
                 />
               )}
-              <Button disabled={isRegisteringLoading} type="submit">
+              <Button
+                variant="success"
+                disabled={isRegisteringLoading}
+                type="submit"
+              >
                 {isRegisteringLoading ? "Loading..." : "Register for Exam"}
               </Button>
             </Form>

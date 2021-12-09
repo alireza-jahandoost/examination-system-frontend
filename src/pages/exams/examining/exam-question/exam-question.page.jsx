@@ -48,7 +48,7 @@ const ExamQuestionPage = () => {
 
   return (
     <div style={{ minHeight: "100vh" }}>
-      <div className="d-flex justify-content-around border-bottom py-3">
+      <div className="d-flex justify-content-around border mt-2 bg-light shadow py-3">
         <ExamTime color="dark" examTime={examTime} />
         <Button
           variant="success"

@@ -1,4 +1,5 @@
 import { Form } from "react-bootstrap";
+import "./checkbox-and-radio.styles.css";
 
 const CheckboxAndRadioInput = ({
   label,
@@ -13,15 +14,18 @@ const CheckboxAndRadioInput = ({
 }) => {
   return (
     <Form.Group controlId={id} {...props}>
-      <Form.Check
-        type={type}
-        disabled={disabled}
-        checked={!!checked}
-        {...inputProps}
-        label={label}
-        onChange={onChange}
-      />
-      {error && <p className="text-danger">{error}</p>}
+      <div className="green-checkbox">
+        {" "}
+        <Form.Check
+          type={type}
+          disabled={disabled}
+          checked={!!checked}
+          {...inputProps}
+          label={label}
+          onChange={onChange}
+        />
+        {error && <p className="text-danger">{error}</p>}
+      </div>
     </Form.Group>
   );
 };

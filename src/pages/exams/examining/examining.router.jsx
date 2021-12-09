@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Switch, Route, useParams } from "react-router-dom";
+import { Switch, Redirect, Route, useParams } from "react-router-dom";
 import programRoutes from "../../../constants/program-routes.constant";
 
 import { AuthenticationContext } from "../../../contexts/authentication-context/authentication.context";
@@ -32,6 +32,10 @@ const ExaminingRouter = () => {
             exact
             path={programRoutes.examiningQuestion(":examId", ":questionId")}
             component={ExamQuestion}
+          />
+          <Route
+            path="*"
+            render={() => <Redirect to={programRoutes.profile()} />}
           />
         </Switch>
       </ExaminingProvider>

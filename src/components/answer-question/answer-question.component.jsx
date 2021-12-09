@@ -74,7 +74,11 @@ const AnswerQuestion = ({ readOnly = false }) => {
           {form}
           {!readOnly &&
             (hasChange ? (
-              <Button disabled={isLoading} onClick={handleClick}>
+              <Button
+                variant="success"
+                disabled={isLoading}
+                onClick={handleClick}
+              >
                 {isLoading ? "Loading..." : "save changes"}
               </Button>
             ) : (

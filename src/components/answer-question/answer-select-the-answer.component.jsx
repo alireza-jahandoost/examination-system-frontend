@@ -13,7 +13,7 @@ const AnswerSelectTheAnswer = ({ readOnly = false }) => {
   };
 
   return (
-    <div>
+    <div className="text-start">
       {states.map((state) => {
         return (
           <RadioInput

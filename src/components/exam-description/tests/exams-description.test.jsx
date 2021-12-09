@@ -7,7 +7,7 @@ import {
 } from "../../../utilities/tests.utility";
 import { ExamInfoProvider } from "../../../contexts/exam-info-context/exam-info.context";
 
-describe("test password field", () => {
+describe.skip("test password field", () => {
   test("if exam requires password, password field must be shwon in Desktop", async () => {
     const Element = (
       <ExamInfoProvider examId={4}>
@@ -61,7 +61,7 @@ describe("test password field", () => {
   });
 });
 
-describe("check countdown field on Desktop", () => {
+describe.skip("check countdown field on Desktop", () => {
   test("check countdown for started exams", async () => {
     asignExamShowStartAndEnd(
       1,
@@ -112,7 +112,7 @@ describe("check countdown field on Desktop", () => {
   });
 });
 
-describe("check countdown field on mobile", () => {
+describe.skip("check countdown field on mobile", () => {
   test("check countdown for started exams", async () => {
     asignExamShowStartAndEnd(
       1,
@@ -163,7 +163,7 @@ describe("check countdown field on mobile", () => {
   });
 });
 
-describe("check that the register button", () => {
+describe.skip("check that the register button", () => {
   test("check that the register button is disabled when the exam finished in Desktop", async () => {
     asignExamShowStartAndEnd(
       1,
@@ -202,7 +202,7 @@ describe("check that the register button", () => {
   });
 });
 
-describe("check duration of exam for Desktop", () => {
+describe.skip("check duration of exam for Desktop", () => {
   test("check duration works currectly", async () => {
     asignExamShowStartAndEnd(
       1,
@@ -225,7 +225,7 @@ describe("check duration of exam for Desktop", () => {
   });
 });
 
-describe("check duration of exam for Mobile", () => {
+describe.skip("check duration of exam for Mobile", () => {
   test("check duration works currectly", async () => {
     asignExamShowStartAndEnd(
       1,

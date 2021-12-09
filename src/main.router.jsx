@@ -1,4 +1,4 @@
-import { Switch, Route } from "react-router-dom";
+import { Switch, Redirect, Route } from "react-router-dom";
 import ExamsRouter from "./pages/exams/exams.router";
 import ProfileRouter from "./pages/profile/profile.router";
 import programRoutes from "./constants/program-routes.constant";
@@ -10,6 +10,10 @@ const MainRouter = () => {
       <Switch>
         <Route path={programRoutes.examsRoot()} component={ExamsRouter} />
         <Route path={programRoutes.profile()} component={ProfileRouter} />
+        <Route
+          path="*"
+          render={() => <Redirect to={programRoutes.profile()} />}
+        />
       </Switch>
     </ProfileContainer>
   );

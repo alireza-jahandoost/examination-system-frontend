@@ -28,6 +28,7 @@ const QuestionAnswer = ({
         </Col>
         <Col>
           <DeleteButton
+            variant="danger"
             onClick={deleteAnswer}
             title="Delete Answer"
             disabled={readOnly}

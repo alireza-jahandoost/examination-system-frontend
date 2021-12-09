@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Redirect, Route } from "react-router-dom";
 import programRoutes from "../../constants/program-routes.constant";
 
 import IndexAllExamsPage from "./index/index-all-exams/index-all-exams.page";
@@ -63,6 +63,11 @@ const ExamsRouter = () => {
       <Route
         path={programRoutes.examining(":examId")}
         component={ExaminingRouter}
+      />
+
+      <Route
+        path="*"
+        render={() => <Redirect to={programRoutes.profile()} />}
       />
     </Switch>
   );

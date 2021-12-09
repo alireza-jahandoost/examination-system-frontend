@@ -12,9 +12,9 @@ const OrderingOption = ({
 }) => {
   return (
     <ListGroup.Item as="li">
-      <span> {state.text_part} </span>
       <Button
         variant="success"
+        className="ms-2"
         title="move this item down"
         disabled={readOnly || downDisabled}
         onClick={onDown}
@@ -23,12 +23,14 @@ const OrderingOption = ({
       </Button>
       <Button
         variant="success"
+        className="ms-2"
         title="move this item up"
         disabled={readOnly || upDisabled}
         onClick={onUp}
       >
         <FontAwesomeIcon icon={faArrowUp} />
       </Button>
+      <span className="ps-3"> {state.text_part} </span>
     </ListGroup.Item>
   );
 };

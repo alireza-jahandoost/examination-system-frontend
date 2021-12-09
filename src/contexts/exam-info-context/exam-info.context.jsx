@@ -28,6 +28,11 @@ export const ExamInfoProvider = ({ children, examId }) => {
   const [examPassword, setExamPassword] = useState("");
   const [isContextLoaded, setIsContextLoaded] = useState(false);
   const [isRegisteringLoading, setIsRegisteringLoading] = useState(false);
+  const [
+    isUserJustRegisteredForExam,
+    setIsUserJustRegisteredForExam,
+  ] = useState(false);
+  const [notificationShown, setNotificationShown] = useState(false);
   const isMounted = useMountedState();
   const isUserRegisteredToExam = exam ? exam.is_registered : false;
   const throwError = useAsyncError();
@@ -61,13 +66,14 @@ export const ExamInfoProvider = ({ children, examId }) => {
   }, [examId, isMounted, token, removeUserInfo, throwError]);
 
   useEffect(() => {
-    if (isUserRegisteredToExam) {
+    if (isUserJustRegisteredForExam && !notificationShown) {
+      setNotificationShown(true);
       createNotification(
         `You registered in exam "${exam.exam_name}" successfully`,
         3000
       );
     }
-  }, [isUserRegisteredToExam]);
+  }, [isUserJustRegisteredForExam, notificationShown]);
 
   const startOfExam = useMemo(
     () =>
@@ -103,6 +109,7 @@ export const ExamInfoProvider = ({ children, examId }) => {
       registerToExamRequest(examId, token, examPassword)
         .then(({ data, status }) => {
           if (status === 201 && isMounted()) {
+            setIsUserJustRegisteredForExam(true);
             setExam((prevExam) => ({ ...prevExam, is_registered: true }));
             setIsRegisteringLoading(false);
           }

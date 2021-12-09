@@ -92,7 +92,7 @@ const Header = () => {
   }, [user, popover, changePopover]);
 
   return (
-    <div style={{ paddingBottom: "56px" }}>
+    <div style={{ paddingBottom: "54px" }}>
       <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
           <div role="banner">
@@ -111,54 +111,59 @@ const Header = () => {
           />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link
-                as={Link}
-                onClick={closeMenu}
-                className="d-lg-none"
-                to={programRoutes.profile()}
-              >
-                overview
-              </Nav.Link>
-              <Nav.Link
-                as={Link}
-                onClick={closeMenu}
-                className="d-lg-none"
-                to={programRoutes.indexAllExams()}
-              >
-                all exams
-              </Nav.Link>
-              <Nav.Link
-                as={Link}
-                onClick={closeMenu}
-                className="d-lg-none"
-                to={programRoutes.indexCreatedExams()}
-              >
-                created exams
-              </Nav.Link>
-              <Nav.Link
-                as={Link}
-                onClick={closeMenu}
-                className="d-lg-none"
-                to={programRoutes.createExam()}
-              >
-                create new exam
-              </Nav.Link>
-              <Nav.Link
-                as={Link}
-                onClick={closeMenu}
-                className="d-lg-none"
-                to={programRoutes.indexParticipatedExams()}
-              >
-                participatedExams
-              </Nav.Link>
-              <Nav.Link
-                as={Link}
-                onClick={closeMenu}
-                className="d-lg-none"
-                to={programRoutes.settings()}
-              >
-                settings
-              </Nav.Link>
+              {user && (
+                <>
+                  {" "}
+                  <Nav.Link
+                    as={Link}
+                    onClick={closeMenu}
+                    className="d-lg-none"
+                    to={programRoutes.profile()}
+                  >
+                    overview
+                  </Nav.Link>
+                  <Nav.Link
+                    as={Link}
+                    onClick={closeMenu}
+                    className="d-lg-none"
+                    to={programRoutes.indexAllExams()}
+                  >
+                    all exams
+                  </Nav.Link>
+                  <Nav.Link
+                    as={Link}
+                    onClick={closeMenu}
+                    className="d-lg-none"
+                    to={programRoutes.indexCreatedExams()}
+                  >
+                    created exams
+                  </Nav.Link>
+                  <Nav.Link
+                    as={Link}
+                    onClick={closeMenu}
+                    className="d-lg-none"
+                    to={programRoutes.createExam()}
+                  >
+                    create new exam
+                  </Nav.Link>
+                  <Nav.Link
+                    as={Link}
+                    onClick={closeMenu}
+                    className="d-lg-none"
+                    to={programRoutes.indexParticipatedExams()}
+                  >
+                    participatedExams
+                  </Nav.Link>
+                  <Nav.Link
+                    as={Link}
+                    onClick={closeMenu}
+                    className="d-lg-none"
+                    to={programRoutes.settings()}
+                  >
+                    settings
+                  </Nav.Link>
+                </>
+              )}
             </Nav>
             <Nav>
               {user ? (

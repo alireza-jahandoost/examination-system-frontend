@@ -24,12 +24,27 @@ const ExamTime = ({ color, fontSize, examTime }) => {
         seconds
       )} until start`;
 
+  const [remainingTime, stringRemainingTime] =
+    isExamStarted && !isExamFinished
+      ? [
+          `${days}:${standardTime(hours || 0)}:${standardTime(
+            minutes || 0
+          )}:${standardTime(seconds || 0)}`,
+          `remaining time: ${convertObjectToString({
+            seconds,
+            minutes,
+            hours,
+            days,
+          })}`,
+        ]
+      : ["00:00:00:00", "exam is finished"];
+
   const [duration, stringDuration] = useMemo(() => {
     return [
-      `${examTimeDuration?.days}:${standardTime(
-        examTimeDuration?.hours
-      )}:${standardTime(examTimeDuration?.minutes)}:${standardTime(
-        examTimeDuration?.seconds
+      `${examTimeDuration.days}:${standardTime(
+        examTimeDuration.hours || 0
+      )}:${standardTime(examTimeDuration.minutes || 0)}:${standardTime(
+        examTimeDuration.seconds || 0
       )}`,
       `duration of exam: ${
         examTimeDuration && convertObjectToString(examTimeDuration)
@@ -54,8 +69,8 @@ const ExamTime = ({ color, fontSize, examTime }) => {
         </p>
       </Col>
       <Col className="d-flex justify-content-center" xs={12}>
-        <p style={styles} title={stringDuration} className="fw-light">
-          Duration: {duration}
+        <p style={styles} title={stringRemainingTime} className="fw-light">
+          Remaining: {remainingTime}
         </p>
       </Col>
     </Row>

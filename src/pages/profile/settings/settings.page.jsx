@@ -1,71 +1,65 @@
-import { useState, useContext } from "react";
-import { Button, Row, Col, Form } from "react-bootstrap";
+import { useContext } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import { convertFromUTCToHumanReadable } from "../../../utilities/dateAndTime.utility";
 
-import PasswordInput from "../../../components/inputs/password-input.component";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faEnvelope, faClock } from "@fortawesome/free-solid-svg-icons";
+
+import ChangePasswordForm from "./change-password-form.component";
 
 import { AuthenticationContext } from "../../../contexts/authentication-context/authentication.context";
 
 const SettingsPage = () => {
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  const { changePassword, isLoading, errors } = useContext(
-    AuthenticationContext
-  );
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    changePassword(currentPassword, newPassword, confirmNewPassword);
-  };
+  const { user } = useContext(AuthenticationContext);
 
   return (
     <>
-      {" "}
       <h1>Settings</h1>
-      <div>
-        <Row>
-          <Col md={8} lg={6}>
-            <div className="text-start bg-light shadow border rounded p-3">
-              <h2> Change Password </h2>
-              <Form onSubmit={handleSubmit}>
-                <PasswordInput
-                  label="Current Password"
-                  error={errors.current_password}
-                  value={currentPassword}
-                  id="current-password"
-                  placeholder="Enter your current password"
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                />
-                <PasswordInput
-                  label="New Password"
-                  error={errors.password}
-                  value={newPassword}
-                  id="new-password"
-                  placeholder="Enter your new password"
-                  onChange={(e) => setNewPassword(e.target.value)}
-                />
-                <PasswordInput
-                  label="Confirm New Password"
-                  error={errors.password_confirmation}
-                  value={confirmNewPassword}
-                  id="confirm-new-password"
-                  placeholder="Enter your new password again"
-                  onChange={(e) => setConfirmNewPassword(e.target.value)}
-                />
-                <Button
-                  variant="success"
-                  disabled={isLoading}
-                  className="my-3"
-                  type="submit"
-                >
-                  {isLoading ? "Loading..." : "Change Password"}
-                </Button>
-              </Form>
-            </div>
-          </Col>
-        </Row>
-      </div>
+      <Container>
+        <div>
+          <Row>
+            <Col md={4} lg={6}>
+              <div className="lead text-start bg-light border shadow rounded p-3">
+                <div>
+                  <p>
+                    <span className="pe-2">
+                      <FontAwesomeIcon icon={faUser} />
+                    </span>
+                    <span>User Name: </span>
+                  </p>
+                  <p className="text-break">{user?.user_name}</p>
+                </div>
+                <div>
+                  <p>
+                    <span className="pe-2">
+                      <FontAwesomeIcon icon={faEnvelope} />
+                    </span>
+                    <span>User Email: </span>
+                  </p>
+                  <p className="text-break">{user?.user_email}</p>
+                </div>
+                <div>
+                  <p>
+                    <span className="pe-2">
+                      <FontAwesomeIcon icon={faClock} />
+                    </span>
+                    <span>Registration Time: </span>
+                  </p>
+                  <p className="text-break">
+                    {convertFromUTCToHumanReadable(user?.user_register_time)}
+                  </p>
+                </div>
+              </div>
+            </Col>
+            <Col md={8} lg={6}>
+              <div className="text-start mt-3 mt-md-0 bg-light shadow border rounded p-3">
+                <h2> Change Password </h2>
+                <ChangePasswordForm />
+              </div>
+            </Col>
+          </Row>
+        </div>
+      </Container>
     </>
   );
 };

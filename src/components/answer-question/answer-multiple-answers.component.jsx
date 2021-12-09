@@ -20,7 +20,7 @@ const AnswerMultipleAnswers = ({ readOnly = false }) => {
   };
 
   return (
-    <div>
+    <div className="text-start">
       {states.map((state, idx) => {
         const answer = answers.find(
           (answer) => answer.integer_part === state.state_id
