@@ -16,6 +16,7 @@ a.sidebar-item:hover,
   height: 100vh;
   position: sticky;
   top: 0;
+  z-index: 10;
 }
 
 .w-320px {
