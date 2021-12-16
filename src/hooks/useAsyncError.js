@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import { useMountedState } from "react-use";
 
 const useAsyncError = () => {
-  const [_, setError] = useState();
+  const [, setError] = useState();
   const isMounted = useMountedState();
   return useCallback(
     (e) => {

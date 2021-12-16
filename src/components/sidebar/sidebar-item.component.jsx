@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faColumns,
+  faHome,
   faWindowRestore,
   faVial,
   faCogs,
@@ -11,12 +11,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
-const SidebarItem = ({ href, iconName, label, ...props }) => {
+const SidebarItem = ({ href, iconName, label, active = false, ...props }) => {
   const [icon, setIcon] = useState(faSpinner);
   useEffect(() => {
     switch (iconName) {
-      case "columns":
-        setIcon(faColumns);
+      case "home":
+        setIcon(faHome);
         break;
       case "window-restore":
         setIcon(faWindowRestore);
@@ -41,7 +41,9 @@ const SidebarItem = ({ href, iconName, label, ...props }) => {
     <div {...props}>
       <div className="d-flex flex-fill">
         <Link
-          className={`text-dark sidebar-item w-100 text-decoration-none `}
+          className={`p-2 rounded ${
+            active ? "active fw-normal text-dark" : "text-muted"
+          } sidebar-item w-100 text-decoration-none `}
           to={href}
           title={label}
         >

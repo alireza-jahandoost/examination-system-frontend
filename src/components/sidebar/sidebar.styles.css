@@ -4,9 +4,18 @@ button.sidebar-item {
 }
 
 a.sidebar-item {
-  border-bottom: 2px solid transparent;
   white-space: nowrap;
 }
 a.sidebar-item:hover {
-  border-bottom: 2px solid rgb(0, 0, 0);
+  color: #212529 !important;
+}
+
+.sidebar-container {
+  height: 100vh;
+  position: sticky;
+  top: 0;
+}
+
+.sidebar-item.active {
+  background-color: #efefef;
 }

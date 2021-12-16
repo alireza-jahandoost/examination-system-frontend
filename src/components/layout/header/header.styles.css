@@ -2,3 +2,8 @@
   font-weight: bold;
   transition: 0.2s;
 }
+
+.navbar-container {
+  position: sticky;
+  top: 0;
+}

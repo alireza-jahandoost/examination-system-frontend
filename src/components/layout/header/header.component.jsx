@@ -15,9 +15,8 @@ import {
   Nav,
 } from "react-bootstrap";
 import { AuthenticationContext } from "../../../contexts/authentication-context/authentication.context";
-import LoginPopover from "./login-popover.component";
-import RegisterPopover from "./register-popover.component";
 import programRoutes from "../../../constants/program-routes.constant";
+import useCurrentPath from "../../../hooks/useCurrentPath";
 import "./header.styles.css";
 
 const Header = () => {
@@ -25,6 +24,13 @@ const Header = () => {
     AuthenticationContext
   );
   const toggleButtonRef = useRef();
+  const checkCurrentPath = useCurrentPath();
+
+  const isActive = (expected) => {
+    const output = {};
+    output.active = checkCurrentPath(expected);
+    return output;
+  };
 
   const closeMenu = () => {
     if (
@@ -36,7 +42,7 @@ const Header = () => {
   };
 
   const userPopover = user ? (
-    <Popover className="d-none d-lg-inline-block" id="popover-basic">
+    <Popover id="popover-basic">
       <Popover.Header className="px-5" as="h3">
         {user.user_name.length > 28
           ? `${user.user_name.substr(0, 25)}...`
@@ -44,6 +50,7 @@ const Header = () => {
       </Popover.Header>
       <Popover.Body>
         <Nav.Link
+          {...isActive(programRoutes.profile())}
           as={Link}
           onClick={closeMenu}
           className="text-dark p-0 user-popover-link"
@@ -56,6 +63,7 @@ const Header = () => {
           <span>Profile</span>
         </Nav.Link>
         <Nav.Link
+          {...isActive(programRoutes.settings())}
           as={Link}
           onClick={closeMenu}
           className="text-dark p-0 user-popover-link"
@@ -92,19 +100,29 @@ const Header = () => {
   }, [user, popover, changePopover]);
 
   return (
-    <div style={{ paddingBottom: "54px" }}>
-      <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Container>
-          <div role="banner">
-            <Navbar.Brand
-              as={Link}
-              onClick={closeMenu}
-              title="Visit the main page"
-              to="/"
+    <div className="navbar-container">
+      <Navbar
+        collapseOnSelect
+        expand="lg"
+        bg="white"
+        variant="light"
+        className="shadow"
+      >
+        <Container className="flex-row-reverse">
+          {user && (
+            <OverlayTrigger
+              trigger="click"
+              placement="bottom"
+              overlay={userPopover}
             >
-              React-Bootstrap
-            </Navbar.Brand>
-          </div>
+              <Button variant="white">
+                {user.user_name.length > 18
+                  ? `${user.user_name.substr(0, 15)}...`
+                  : user.user_name}
+                {" ▾"}
+              </Button>
+            </OverlayTrigger>
+          )}
           <Navbar.Toggle
             ref={toggleButtonRef}
             aria-controls="responsive-navbar-nav"
@@ -113,51 +131,56 @@ const Header = () => {
             <Nav className="me-auto">
               {user && (
                 <>
-                  {" "}
                   <Nav.Link
+                    {...isActive(programRoutes.profile())}
                     as={Link}
                     onClick={closeMenu}
-                    className="d-lg-none"
+                    className="d-lg-none m-2 lead"
                     to={programRoutes.profile()}
                   >
                     overview
                   </Nav.Link>
                   <Nav.Link
+                    {...isActive(programRoutes.indexAllExams())}
                     as={Link}
                     onClick={closeMenu}
-                    className="d-lg-none"
+                    className="d-lg-none m-2 lead"
                     to={programRoutes.indexAllExams()}
                   >
                     all exams
                   </Nav.Link>
                   <Nav.Link
+                    {...isActive(programRoutes.indexCreatedExams())}
                     as={Link}
                     onClick={closeMenu}
-                    className="d-lg-none"
+                    className="d-lg-none m-2 lead"
                     to={programRoutes.indexCreatedExams()}
                   >
                     created exams
                   </Nav.Link>
                   <Nav.Link
+                    {...isActive(programRoutes.createExam())}
                     as={Link}
                     onClick={closeMenu}
-                    className="d-lg-none"
+                    className="d-lg-none m-2 lead"
                     to={programRoutes.createExam()}
                   >
                     create new exam
                   </Nav.Link>
                   <Nav.Link
+                    {...isActive(programRoutes.indexParticipatedExams())}
                     as={Link}
                     onClick={closeMenu}
-                    className="d-lg-none"
+                    className="d-lg-none m-2 lead"
                     to={programRoutes.indexParticipatedExams()}
                   >
                     participatedExams
                   </Nav.Link>
                   <Nav.Link
+                    {...isActive(programRoutes.settings())}
                     as={Link}
                     onClick={closeMenu}
-                    className="d-lg-none"
+                    className="d-lg-none m-2 lead"
                     to={programRoutes.settings()}
                   >
                     settings
@@ -166,47 +189,22 @@ const Header = () => {
               )}
             </Nav>
             <Nav>
-              {user ? (
+              {!user && (
                 <>
-                  <OverlayTrigger
-                    trigger="click"
-                    placement="bottom"
-                    overlay={userPopover}
-                    className="d-none d-lg-inline-block"
-                  >
-                    <Button variant="dark" className="d-none d-lg-inline-block">
-                      {user.user_name.length > 18
-                        ? `${user.user_name.substr(0, 15)}...`
-                        : user.user_name}
-                      {" ▾"}
-                    </Button>
-                  </OverlayTrigger>
-                  <hr className="border d-lg-none" />
                   <Nav.Link
-                    className="d-lg-none"
+                    {...isActive(programRoutes.login())}
+                    className="m-2 lead"
                     as={Link}
-                    onClick={closeMenu}
-                    to={programRoutes.profile()}
+                    to={programRoutes.login()}
                   >
-                    Profile
-                  </Nav.Link>
-                  <Nav.Link
-                    className="d-lg-none"
-                    onClick={() => {
-                      logout();
-                      closeMenu();
-                    }}
-                    role="button"
-                  >
-                    Logout
-                  </Nav.Link>
-                </>
-              ) : (
-                <>
-                  <Nav.Link as={Link} to={programRoutes.login()}>
                     Login
                   </Nav.Link>
-                  <Nav.Link as={Link} to={programRoutes.register()}>
+                  <Nav.Link
+                    {...isActive(programRoutes.register())}
+                    className="m-2 lead"
+                    as={Link}
+                    to={programRoutes.register()}
+                  >
                     Register
                   </Nav.Link>
                 </>
@@ -215,8 +213,6 @@ const Header = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      {popover === "login" && <LoginPopover />}
-      {popover === "register" && <RegisterPopover />}
     </div>
   );
 };

@@ -6,7 +6,11 @@ import {
 import userEvent from "@testing-library/user-event";
 import axios from "axios";
 import App from "../App";
-import { userEmail, correctPassword } from "../mocks/mocks/authentication.mock";
+import {
+  userEmail,
+  userName,
+  correctPassword,
+} from "../mocks/mocks/authentication.mock";
 
 test("authenticated user can click logout and logout from his account", async () => {
   render(<App />);
@@ -27,6 +31,8 @@ test("authenticated user can click logout and logout from his account", async ()
 
   const axiosPost = jest.spyOn(axios, "post");
   // click button
+  const validator = new RegExp(userName, "i");
+  userEvent.click(await screen.findByRole("button", { name: validator }));
   const logoutButton = await screen.findByRole("button", { name: /logout/i });
   userEvent.click(logoutButton);
 
