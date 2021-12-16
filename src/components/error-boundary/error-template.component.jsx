@@ -1,12 +1,6 @@
 import "./error-template.styles.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import {
-  faInstagram,
-  faFacebook,
-  faTwitter,
-  faTelegram,
-} from "@fortawesome/free-brands-svg-icons";
+import { BsInstagram, BsTelegram, BsTwitter, BsFacebook } from "react-icons/bs";
 import programRoutes from "../../constants/program-routes.constant";
 
 const ErrorTemplate = ({ status, message, phrase }) => {
@@ -29,16 +23,16 @@ const ErrorTemplate = ({ status, message, phrase }) => {
         <Link to={programRoutes.profile}>Homepage</Link>
         <div className="notfound-social">
           <a href="#">
-            <FontAwesomeIcon icon={faFacebook} />
+            <BsFacebook />
           </a>
           <a href="#">
-            <FontAwesomeIcon icon={faTwitter} />
+            <BsTwitter />
           </a>
           <a href="#">
-            <FontAwesomeIcon icon={faInstagram} />
+            <BsInstagram />
           </a>
           <a href="#">
-            <FontAwesomeIcon icon={faTelegram} />
+            <BsTelegram />
           </a>
         </div>
       </div>

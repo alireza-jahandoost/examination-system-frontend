@@ -1,10 +1,9 @@
 import { Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { BsTrash } from "react-icons/bs";
 const DeleteButton = ({ ...props }) => {
   return (
     <Button {...props}>
-      <FontAwesomeIcon icon={faTrashAlt} />
+      <BsTrash />
     </Button>
   );
 };

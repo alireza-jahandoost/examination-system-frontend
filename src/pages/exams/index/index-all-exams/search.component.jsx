@@ -1,6 +1,5 @@
 import { InputGroup, Button, FormControl, Row, Col } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { BsSearch } from "react-icons/bs";
 
 const Search = ({ value, changeValue, handleClick }) => {
   return (
@@ -21,7 +20,7 @@ const Search = ({ value, changeValue, handleClick }) => {
             title="search exam"
             id="search-exam"
           >
-            <FontAwesomeIcon icon={faSearch} />
+            <BsSearch />
           </Button>
         </InputGroup>
       </Col>

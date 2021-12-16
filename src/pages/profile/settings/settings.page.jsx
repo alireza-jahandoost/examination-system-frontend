@@ -2,8 +2,7 @@ import { useContext } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { convertFromUTCToHumanReadable } from "../../../utilities/dateAndTime.utility";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faEnvelope, faClock } from "@fortawesome/free-solid-svg-icons";
+import { BsPerson, BsEnvelope, BsCalendar4 } from "react-icons/bs";
 
 import ChangePasswordForm from "./change-password-form.component";
 
@@ -23,7 +22,7 @@ const SettingsPage = () => {
                 <div>
                   <p>
                     <span className="pe-2">
-                      <FontAwesomeIcon icon={faUser} />
+                      <BsPerson />
                     </span>
                     <span>User Name: </span>
                   </p>
@@ -32,7 +31,7 @@ const SettingsPage = () => {
                 <div>
                   <p>
                     <span className="pe-2">
-                      <FontAwesomeIcon icon={faEnvelope} />
+                      <BsEnvelope />
                     </span>
                     <span>User Email: </span>
                   </p>
@@ -41,7 +40,7 @@ const SettingsPage = () => {
                 <div>
                   <p>
                     <span className="pe-2">
-                      <FontAwesomeIcon icon={faClock} />
+                      <BsCalendar4 />
                     </span>
                     <span>Registration Time: </span>
                   </p>

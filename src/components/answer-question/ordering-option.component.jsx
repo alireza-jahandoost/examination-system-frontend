@@ -1,6 +1,5 @@
 import { ListGroup, Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { BsArrowUp, BsArrowDown } from "react-icons/bs";
 
 const OrderingOption = ({
   state,
@@ -19,7 +18,7 @@ const OrderingOption = ({
         disabled={readOnly || downDisabled}
         onClick={onDown}
       >
-        <FontAwesomeIcon icon={faArrowDown} />
+        <BsArrowDown />
       </Button>
       <Button
         variant="success"
@@ -28,7 +27,7 @@ const OrderingOption = ({
         disabled={readOnly || upDisabled}
         onClick={onUp}
       >
-        <FontAwesomeIcon icon={faArrowUp} />
+        <BsArrowUp />
       </Button>
       <span className="ps-3"> {state.text_part} </span>
     </ListGroup.Item>

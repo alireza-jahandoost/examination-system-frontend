@@ -1,11 +1,6 @@
-import { useEffect, useContext, useRef } from "react";
+import { useContext, useRef } from "react";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUser,
-  faCogs,
-  faSignOutAlt,
-} from "@fortawesome/free-solid-svg-icons";
+import { BsHouseDoor, BsGear, BsBoxArrowRight } from "react-icons/bs";
 import {
   Navbar,
   OverlayTrigger,
@@ -20,9 +15,7 @@ import useCurrentPath from "../../../hooks/useCurrentPath";
 import "./header.styles.css";
 
 const Header = () => {
-  const { user, logout, popover, changePopover } = useContext(
-    AuthenticationContext
-  );
+  const { user, logout } = useContext(AuthenticationContext);
   const toggleButtonRef = useRef();
   const checkCurrentPath = useCurrentPath();
 
@@ -57,7 +50,7 @@ const Header = () => {
           to={programRoutes.profile()}
         >
           <span className="pe-2">
-            <FontAwesomeIcon icon={faUser} />
+            <BsHouseDoor />
           </span>
 
           <span>Profile</span>
@@ -70,7 +63,7 @@ const Header = () => {
           to={programRoutes.settings()}
         >
           <span className="pe-2">
-            <FontAwesomeIcon icon={faCogs} />
+            <BsGear />
           </span>
 
           <span>Settings</span>
@@ -84,7 +77,7 @@ const Header = () => {
           role="button"
         >
           <span className="pe-2">
-            <FontAwesomeIcon icon={faSignOutAlt} />
+            <BsBoxArrowRight />
           </span>
 
           <span>Logout</span>
@@ -92,12 +85,6 @@ const Header = () => {
       </Popover.Body>
     </Popover>
   ) : null;
-
-  useEffect(() => {
-    if (user && popover !== "") {
-      changePopover("");
-    }
-  }, [user, popover, changePopover]);
 
   return (
     <div className="navbar-container">
