@@ -14,7 +14,6 @@ const SidebarItemContainer = ({ iconName, label, children, ...props }) => {
   const isActive = children.reduce((ans, child) => {
     return child.props.active || ans;
   }, false);
-  console.log(isActive);
   const Icon = (() => {
     switch (iconName) {
       case "home":

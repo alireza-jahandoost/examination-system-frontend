@@ -1,20 +1,18 @@
 import { useState, useMemo, useEffect, useContext } from "react";
-import { useHistory, Redirect, useLocation, Link } from "react-router-dom";
+import { useHistory, Redirect, useLocation } from "react-router-dom";
 import { AuthenticationContext } from "../../../../contexts/authentication-context/authentication.context";
-import { Button } from "react-bootstrap";
 import Search from "./search.component";
 import useAsyncError from "../../../../hooks/useAsyncError";
 import { examsIndexRequest } from "../../../../services/exams/exams.service";
 import { useMountedState } from "react-use";
 import programRoutes from "../../../../constants/program-routes.constant";
 import Pagination from "../../../../components/pagination/pagination.component";
-import RecordsTable from "../../../../components/records-table/records-table.component";
-import { convertFromUTCToHumanReadable } from "../../../../utilities/dateAndTime.utility";
 import {
   getParams,
   createPath,
   createSearch,
 } from "../../../../utilities/url.utility";
+import ExamRecord from "../../../../components/exam-models/exam-record/exam-record.component";
 
 const IndexAllExams = () => {
   const [exams, setExams] = useState([]);
@@ -139,8 +137,6 @@ const IndexAllExams = () => {
 
   return (
     <>
-      {" "}
-      <h1>All Exams</h1>
       <Search
         value={searchQuery}
         changeValue={(newVal) => setSearchQuery(newVal)}
@@ -148,48 +144,21 @@ const IndexAllExams = () => {
       />
       {exams.length > 0 ? (
         <>
-          <RecordsTable>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Exam Name</th>
-                <th>Exam Description</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-                <th>Total Score</th>
-                <th>Creation Time</th>
-                <th>Last Update</th>
-                <th>Register Needs Confirmation</th>
-                <th>Operations</th>
-              </tr>
-            </thead>
-            <tbody>
-              {exams.map((exam, idx) => {
-                return (
-                  <tr key={exam.exam_id}>
-                    <td>{idx + 1 + (currentPage - 1) * 18}</td>
-                    <td>{exam.exam_name}</td>
-                    <td>{exam.exam_description}</td>
-                    <td>{convertFromUTCToHumanReadable(exam.start_of_exam)}</td>
-                    <td>{convertFromUTCToHumanReadable(exam.end_of_exam)}</td>
-                    <td>{exam.total_score}</td>
-                    <td>{convertFromUTCToHumanReadable(exam.creation_time)}</td>
-                    <td>{convertFromUTCToHumanReadable(exam.last_update)}</td>
-                    <td>{exam.needs_confirmation ? "YES" : "NO"}</td>
-                    <td>
-                      <div>
-                        <Link
-                          to={programRoutes.examiningOverview(exam.exam_id)}
-                        >
-                          <Button variant="success"> more details</Button>
-                        </Link>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </RecordsTable>
+          {exams.map((exam, idx) => {
+            return (
+              <ExamRecord
+                links={[
+                  {
+                    linkName: "More Details",
+                    linkHref: programRoutes.examiningOverview(exam.exam_id),
+                  },
+                ]}
+                key={idx}
+                exam={exam}
+                className="mb-3"
+              />
+            );
+          })}
           <Pagination
             currentPage={currentPage}
             numberOfPages={numberOfPages}
@@ -201,7 +170,6 @@ const IndexAllExams = () => {
         </>
       ) : (
         <p className="lead">
-          {" "}
           {searchQuery !== "" && searchQuery !== undefined
             ? `no exam found that match "${searchQuery}"`
             : "there is not any exam to show"}{" "}

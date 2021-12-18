@@ -74,8 +74,6 @@ const ParticipatedExamsPage = () => {
 
   return (
     <>
-      {" "}
-      <h1>Participated Exams</h1>
       {isLoading ? (
         <p>Loading...</p>
       ) : exams.length > 0 ? (

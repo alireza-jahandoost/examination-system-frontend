@@ -4,7 +4,6 @@ import ItemButton from "./item-button.component";
 const OverviewPage = () => {
   return (
     <>
-      <h1>Profile Overview</h1>
       <Container>
         <div className="bg-light m-3 p-3 shadow border rounded">
           <div className="d-flex flex-wrap">

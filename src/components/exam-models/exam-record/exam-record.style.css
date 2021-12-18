@@ -1,0 +1,15 @@
+.border.border-start-success {
+  border-left-color: #198754 !important;
+}
+
+.border.border-start-danger {
+  border-left-color: #dc3545 !important;
+}
+
+.border.border-start-warning {
+  border-left-color: #ffc107 !important;
+}
+
+.border.border-start-lg {
+  border-left-width: thick !important;
+}

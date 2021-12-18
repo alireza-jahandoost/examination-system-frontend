@@ -13,7 +13,6 @@ const SettingsPage = () => {
 
   return (
     <>
-      <h1>Settings</h1>
       <Container>
         <div>
           <Row>

@@ -74,8 +74,6 @@ const CreatedExamsPage = () => {
 
   return (
     <>
-      {" "}
-      <h1>Created Exams</h1>
       {isLoading ? (
         <p>Loading...</p>
       ) : exams.length > 0 ? (
