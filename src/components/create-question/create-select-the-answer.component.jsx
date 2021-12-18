@@ -15,9 +15,13 @@ const CreateSelectTheAnswer = ({ examId, addQuestion, readOnly = false }) => {
   const [questionText, setQuestionText] = useState("");
   const [questionScore, setQuestionScore] = useState(0);
   const nextStateId = useRef(1);
-  const { createQuestion, isLoading, areStatesValid, errors } = useContext(
-    CreateQuestionContext
-  );
+  const {
+    createQuestion,
+    dismissForm,
+    isLoading,
+    areStatesValid,
+    errors,
+  } = useContext(CreateQuestionContext);
 
   useEffect(() => {
     if (
@@ -139,6 +143,13 @@ const CreateSelectTheAnswer = ({ examId, addQuestion, readOnly = false }) => {
             type="submit"
           >
             {isLoading ? "Loading..." : "Create"}
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() => dismissForm()}
+            className="ms-2"
+          >
+            Cancel
           </Button>
         </Col>
       </Row>

@@ -31,7 +31,11 @@ describe("check 401 errors(the removeUserInfo() func from authentication context
     renderWithAuthentication(
       <QuestionTypesProvider>
         <CreateQuestionProvider>
-          <CreateQuestion examId={1} addQuestion={addQuestion} />
+          <CreateQuestion
+            isVisible={true}
+            examId={1}
+            addQuestion={addQuestion}
+          />
         </CreateQuestionProvider>
       </QuestionTypesProvider>,
       { authenticationProviderProps: { removeUserInfo } }
@@ -70,7 +74,11 @@ describe("check 401 errors(the removeUserInfo() func from authentication context
     renderWithAuthentication(
       <QuestionTypesProvider>
         <CreateQuestionProvider>
-          <CreateQuestion examId={1} addQuestion={addQuestion} />
+          <CreateQuestion
+            isVisible={true}
+            examId={1}
+            addQuestion={addQuestion}
+          />
         </CreateQuestionProvider>
       </QuestionTypesProvider>,
       { authenticationProviderProps: { removeUserInfo } }
@@ -167,7 +175,11 @@ describe("check 422 errors", () => {
     renderWithAuthentication(
       <QuestionTypesProvider>
         <CreateQuestionProvider>
-          <CreateQuestion examId={1} addQuestion={addQuestion} />
+          <CreateQuestion
+            isVisible={true}
+            examId={1}
+            addQuestion={addQuestion}
+          />
         </CreateQuestionProvider>
       </QuestionTypesProvider>,
       { authenticationProviderProps: { removeUserInfo } }
@@ -229,7 +241,11 @@ describe("check 422 errors", () => {
     renderWithAuthentication(
       <QuestionTypesProvider>
         <CreateQuestionProvider>
-          <CreateQuestion examId={1} addQuestion={addQuestion} />
+          <CreateQuestion
+            isVisible={true}
+            examId={1}
+            addQuestion={addQuestion}
+          />
         </CreateQuestionProvider>
       </QuestionTypesProvider>,
       { authenticationProviderProps: { removeUserInfo } }
@@ -350,7 +366,11 @@ describe("check other errors", () => {
     renderWithAuthentication(
       <QuestionTypesProvider>
         <CreateQuestionProvider>
-          <CreateQuestion examId={1} addQuestion={addQuestion} />
+          <CreateQuestion
+            isVisible={true}
+            examId={1}
+            addQuestion={addQuestion}
+          />
         </CreateQuestionProvider>
       </QuestionTypesProvider>,
       { authenticationProviderProps: { removeUserInfo } }
@@ -405,7 +425,11 @@ describe("check other errors", () => {
     renderWithAuthentication(
       <QuestionTypesProvider>
         <CreateQuestionProvider>
-          <CreateQuestion examId={1} addQuestion={addQuestion} />
+          <CreateQuestion
+            isVisible={true}
+            examId={1}
+            addQuestion={addQuestion}
+          />
         </CreateQuestionProvider>
       </QuestionTypesProvider>,
       { authenticationProviderProps: { removeUserInfo } }

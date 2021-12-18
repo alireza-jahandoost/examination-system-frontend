@@ -10,7 +10,11 @@ import { wrapper, selectValues } from "./partials";
 describe("check errors", () => {
   test("check question text error", async () => {
     const addQuestion = jest.fn();
-    render(wrapper(<CreateQuestion examId={1} addQuestion={addQuestion} />));
+    render(
+      wrapper(
+        <CreateQuestion isVisible={true} examId={1} addQuestion={addQuestion} />
+      )
+    );
 
     const selectInput = await screen.findByRole("combobox", {
       name: /question type/i,
@@ -47,7 +51,11 @@ describe("check errors", () => {
 
   test("check question score error", async () => {
     const addQuestion = jest.fn();
-    render(wrapper(<CreateQuestion examId={1} addQuestion={addQuestion} />));
+    render(
+      wrapper(
+        <CreateQuestion isVisible={true} examId={1} addQuestion={addQuestion} />
+      )
+    );
 
     const selectInput = await screen.findByRole("combobox", {
       name: /question type/i,
@@ -84,7 +92,11 @@ describe("check errors", () => {
 
   test("check error of question answers part", async () => {
     const addQuestion = jest.fn();
-    render(wrapper(<CreateQuestion addQuestion={addQuestion} examId={1} />));
+    render(
+      wrapper(
+        <CreateQuestion isVisible={true} addQuestion={addQuestion} examId={1} />
+      )
+    );
 
     // change question type
     const questionTypeSelector = await screen.findByRole("combobox", {
@@ -150,7 +162,11 @@ describe("check errors", () => {
 
   test("check error of question options part", async () => {
     const addQuestion = jest.fn();
-    render(wrapper(<CreateQuestion addQuestion={addQuestion} examId={1} />));
+    render(
+      wrapper(
+        <CreateQuestion isVisible={true} addQuestion={addQuestion} examId={1} />
+      )
+    );
 
     // change question type
     const questionTypeSelector = await screen.findByRole("combobox", {

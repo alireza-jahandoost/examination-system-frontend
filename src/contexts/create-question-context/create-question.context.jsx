@@ -10,7 +10,7 @@ import { isStatesValid } from "../../utilities/question-form-parts.utility";
 
 export const CreateQuestionContext = createContext();
 
-export const CreateQuestionProvider = ({ children }) => {
+export const CreateQuestionProvider = ({ onDismiss, children }) => {
   const { token, removeUserInfo } = useContext(AuthenticationContext);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -97,7 +97,13 @@ export const CreateQuestionProvider = ({ children }) => {
     }
   };
 
-  const value = { createQuestion, areStatesValid, isLoading, errors };
+  const value = {
+    createQuestion,
+    areStatesValid,
+    isLoading,
+    errors,
+    dismissForm: onDismiss,
+  };
   return (
     <CreateQuestionContext.Provider value={value}>
       {children}

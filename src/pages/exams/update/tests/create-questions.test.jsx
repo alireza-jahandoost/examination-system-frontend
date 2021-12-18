@@ -73,6 +73,44 @@ test("if the exam is not published, user can add question", async () => {
   // end
 });
 
+test("user can close the create question form by 'cancel button'", async () => {
+  renderWithAuthentication(wrapper(<UpdateExam />), {
+    route: programRoutes.updateExam(1),
+  });
+  await wait(300);
+
+  // click new question button
+  const addQuestionButton = screen.getByRole("button", {
+    name: /add question/i,
+  });
+  userEvent.click(addQuestionButton);
+  // end
+
+  // check button removed
+  expect(
+    screen.queryByRole("button", { name: /add question/i })
+  ).not.toBeInTheDocument();
+  // end
+  await wait(100);
+
+  // click cancel button
+  const cancelButton = screen.getByRole("button", { name: /cancel/i });
+  userEvent.click(cancelButton);
+  // end
+
+  // check add question button
+  expect(
+    await screen.findByRole("button", { name: /add question/i })
+  ).toBeInTheDocument();
+  // end
+
+  // check form removed
+  expect(
+    screen.queryByRole("button", { name: /^create$/i })
+  ).not.toBeInTheDocument();
+  // end
+});
+
 test("if the exam is published, user can not add question", async () => {
   renderWithAuthentication(wrapper(<UpdateExam />), {
     route: programRoutes.updateExam(2),

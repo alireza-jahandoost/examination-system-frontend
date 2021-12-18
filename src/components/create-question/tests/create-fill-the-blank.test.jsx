@@ -11,7 +11,11 @@ import { wait } from "../../../utilities/tests.utility";
 describe("create fill the blank questions", () => {
   test("user can create fill the blank questions", async () => {
     const addQuestion = jest.fn();
-    render(wrapper(<CreateQuestion addQuestion={addQuestion} examId={1} />));
+    render(
+      wrapper(
+        <CreateQuestion isVisible={true} addQuestion={addQuestion} examId={1} />
+      )
+    );
 
     // change question type
     const questionTypeSelector = await screen.findByRole("combobox", {
@@ -87,7 +91,11 @@ describe("create fill the blank questions", () => {
   });
   test("user can create fill the blank questions without any answer", async () => {
     const addQuestion = jest.fn();
-    render(wrapper(<CreateQuestion addQuestion={addQuestion} examId={1} />));
+    render(
+      wrapper(
+        <CreateQuestion isVisible={true} addQuestion={addQuestion} examId={1} />
+      )
+    );
 
     // change question type
     const questionTypeSelector = await screen.findByRole("combobox", {
@@ -124,7 +132,11 @@ describe("create fill the blank questions", () => {
   });
   test("user can delete a specific answer", async () => {
     const addQuestion = jest.fn();
-    render(wrapper(<CreateQuestion addQuestion={addQuestion} examId={1} />));
+    render(
+      wrapper(
+        <CreateQuestion isVisible={true} addQuestion={addQuestion} examId={1} />
+      )
+    );
 
     // change question type
     const questionTypeSelector = await screen.findByRole("combobox", {
@@ -201,7 +213,11 @@ describe("create fill the blank questions", () => {
   });
   test("user can change the answer value before creating", async () => {
     const addQuestion = jest.fn();
-    render(wrapper(<CreateQuestion addQuestion={addQuestion} examId={1} />));
+    render(
+      wrapper(
+        <CreateQuestion isVisible={true} addQuestion={addQuestion} examId={1} />
+      )
+    );
 
     // change question type
     const questionTypeSelector = await screen.findByRole("combobox", {
@@ -278,7 +294,12 @@ describe("check readonly property", () => {
     const addQuestion = jest.fn();
     render(
       wrapper(
-        <CreateQuestion examId={1} readOnly={true} addQuestion={addQuestion} />
+        <CreateQuestion
+          isVisible={true}
+          examId={1}
+          readOnly={true}
+          addQuestion={addQuestion}
+        />
       )
     );
 
@@ -301,7 +322,12 @@ describe("check readonly property", () => {
     const addQuestion = jest.fn();
     render(
       wrapper(
-        <CreateQuestion examId={1} readOnly={true} addQuestion={addQuestion} />
+        <CreateQuestion
+          isVisible={true}
+          examId={1}
+          readOnly={true}
+          addQuestion={addQuestion}
+        />
       )
     );
 
@@ -320,11 +346,16 @@ describe("check readonly property", () => {
       expect(spinButtons[i]).toHaveAttribute("readonly");
     }
   });
-  test("check all the buttons are readonly", async () => {
+  test("check all the buttons are readonly except cancel button", async () => {
     const addQuestion = jest.fn();
     render(
       wrapper(
-        <CreateQuestion examId={1} readOnly={true} addQuestion={addQuestion} />
+        <CreateQuestion
+          isVisible={true}
+          examId={1}
+          readOnly={true}
+          addQuestion={addQuestion}
+        />
       )
     );
 
@@ -339,7 +370,7 @@ describe("check readonly property", () => {
     await wait(100);
 
     const buttons = screen.getAllByRole("button");
-    for (let i = 0; i < buttons.length; i++) {
+    for (let i = 0; i < buttons.length - 1; i++) {
       expect(buttons[i]).toHaveAttribute("disabled");
     }
   });

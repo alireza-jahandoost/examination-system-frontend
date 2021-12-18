@@ -11,7 +11,11 @@ import { wait } from "../../../utilities/tests.utility";
 describe("create true or false questions", () => {
   test("create question with answer true", async () => {
     const addQuestion = jest.fn();
-    render(wrapper(<CreateQuestion addQuestion={addQuestion} examId={1} />));
+    render(
+      wrapper(
+        <CreateQuestion isVisible={true} addQuestion={addQuestion} examId={1} />
+      )
+    );
 
     // change question type
     const questionTypeSelector = await screen.findByRole("combobox", {
@@ -67,7 +71,11 @@ describe("create true or false questions", () => {
   });
   test("create question with answer false", async () => {
     const addQuestion = jest.fn();
-    render(wrapper(<CreateQuestion addQuestion={addQuestion} examId={1} />));
+    render(
+      wrapper(
+        <CreateQuestion isVisible={true} addQuestion={addQuestion} examId={1} />
+      )
+    );
 
     // change question type
     const questionTypeSelector = await screen.findByRole("combobox", {
@@ -110,7 +118,12 @@ describe("check readonly property", () => {
     const addQuestion = jest.fn();
     render(
       wrapper(
-        <CreateQuestion examId={1} readOnly={true} addQuestion={addQuestion} />
+        <CreateQuestion
+          isVisible={true}
+          examId={1}
+          readOnly={true}
+          addQuestion={addQuestion}
+        />
       )
     );
 
@@ -133,7 +146,12 @@ describe("check readonly property", () => {
     const addQuestion = jest.fn();
     render(
       wrapper(
-        <CreateQuestion examId={1} readOnly={true} addQuestion={addQuestion} />
+        <CreateQuestion
+          isVisible={true}
+          examId={1}
+          readOnly={true}
+          addQuestion={addQuestion}
+        />
       )
     );
 
@@ -156,7 +174,12 @@ describe("check readonly property", () => {
     const addQuestion = jest.fn();
     render(
       wrapper(
-        <CreateQuestion examId={1} readOnly={true} addQuestion={addQuestion} />
+        <CreateQuestion
+          isVisible={true}
+          examId={1}
+          readOnly={true}
+          addQuestion={addQuestion}
+        />
       )
     );
 

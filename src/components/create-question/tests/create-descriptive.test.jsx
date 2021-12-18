@@ -11,7 +11,11 @@ import { wait } from "../../../utilities/tests.utility";
 describe("create descriptive questions", () => {
   test("user can create a new descriptive question", async () => {
     const addQuestion = jest.fn();
-    render(wrapper(<CreateQuestion examId={1} addQuestion={addQuestion} />));
+    render(
+      wrapper(
+        <CreateQuestion isVisible={true} examId={1} addQuestion={addQuestion} />
+      )
+    );
 
     const selectInput = await screen.findByRole("combobox", {
       name: /question type/i,
@@ -58,7 +62,12 @@ describe("check readonly property", () => {
     const addQuestion = jest.fn();
     render(
       wrapper(
-        <CreateQuestion examId={1} readOnly={true} addQuestion={addQuestion} />
+        <CreateQuestion
+          isVisible={true}
+          examId={1}
+          readOnly={true}
+          addQuestion={addQuestion}
+        />
       )
     );
     await wait(100);
@@ -72,7 +81,12 @@ describe("check readonly property", () => {
     const addQuestion = jest.fn();
     render(
       wrapper(
-        <CreateQuestion examId={1} readOnly={true} addQuestion={addQuestion} />
+        <CreateQuestion
+          isVisible={true}
+          examId={1}
+          readOnly={true}
+          addQuestion={addQuestion}
+        />
       )
     );
     await wait(100);
@@ -82,17 +96,22 @@ describe("check readonly property", () => {
       expect(spinButtons[i]).toHaveAttribute("readonly");
     }
   });
-  test("check all the buttons are readonly", async () => {
+  test("check all the buttons are readonly except cancel button", async () => {
     const addQuestion = jest.fn();
     render(
       wrapper(
-        <CreateQuestion examId={1} readOnly={true} addQuestion={addQuestion} />
+        <CreateQuestion
+          isVisible={true}
+          examId={1}
+          readOnly={true}
+          addQuestion={addQuestion}
+        />
       )
     );
     await wait(100);
 
     const buttons = screen.getAllByRole("button");
-    for (let i = 0; i < buttons.length; i++) {
+    for (let i = 0; i < buttons.length - 1; i++) {
       expect(buttons[i]).toHaveAttribute("disabled");
     }
   });

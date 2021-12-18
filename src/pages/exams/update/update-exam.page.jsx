@@ -66,6 +66,8 @@ const UpdateExamPage = () => {
             <CreateQuestion
               readOnly={isPublished}
               examId={examId}
+              isVisible={addQuestionFormVisible}
+              onDismiss={() => setAddQuestionFormVisible(false)}
               addQuestion={(questionObject) => {
                 addQuestion(questionObject);
                 setAddQuestionFormVisible(false);

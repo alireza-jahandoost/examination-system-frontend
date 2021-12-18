@@ -87,7 +87,7 @@ const Header = () => {
   ) : null;
 
   return (
-    <div className="navbar-container" style={{ zIndex: 10000 }}>
+    <div className="navbar-container" style={{ zIndex: 100 }}>
       <Navbar
         collapseOnSelect
         expand="lg"

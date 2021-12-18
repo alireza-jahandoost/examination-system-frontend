@@ -30,7 +30,7 @@ const QuestionAnswers = ({
       })}
       <Row className="mt-2">
         <Col>
-          <AddNewItem disabled={readOnly} onClick={addState}>
+          <AddNewItem variant="success" disabled={readOnly} onClick={addState}>
             create a new answer
           </AddNewItem>
         </Col>

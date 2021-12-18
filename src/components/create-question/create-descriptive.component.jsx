@@ -12,7 +12,7 @@ import apiRoutes from "../../constants/api-routes.constant";
 const CreateDescriptive = ({ examId, addQuestion, readOnly = false }) => {
   const [questionText, setQuestionText] = useState("");
   const [questionScore, setQuestionScore] = useState(0);
-  const { createQuestion, errors, isLoading } = useContext(
+  const { createQuestion, dismissForm, errors, isLoading } = useContext(
     CreateQuestionContext
   );
 
@@ -74,6 +74,13 @@ const CreateDescriptive = ({ examId, addQuestion, readOnly = false }) => {
             type="submit"
           >
             {isLoading ? "Loading..." : "Create"}
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() => dismissForm()}
+            className="ms-2"
+          >
+            Cancel
           </Button>
         </Col>
       </Row>

@@ -168,7 +168,7 @@ const UpdateExamForm = ({ examId }) => {
           <p className="text-muted small">
             {exam.has_password
               ? "* You already set the password, fill the above input to change it"
-              : "* You have not set the password yet, fill the above input to set it"}
+              : "* You have not set the password yet, fill the above input to set it if you want to"}
           </p>
         </Col>
       </Row>

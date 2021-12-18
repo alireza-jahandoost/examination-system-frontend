@@ -32,7 +32,11 @@ const QuestionOptions = ({
         );
       })}
       <div className="mt-2">
-        <AddNewItem onClick={() => addState()} disabled={readOnly}>
+        <AddNewItem
+          variant="success"
+          onClick={() => addState()}
+          disabled={readOnly}
+        >
           create a new option
         </AddNewItem>
       </div>
