@@ -153,7 +153,7 @@ const IndexAllExams = () => {
                     linkHref: programRoutes.examiningOverview(exam.exam_id),
                   },
                 ]}
-                key={idx}
+                key={exam.exam_id}
                 exam={exam}
                 className="mb-3"
               />

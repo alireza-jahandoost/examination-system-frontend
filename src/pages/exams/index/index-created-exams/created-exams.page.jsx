@@ -1,7 +1,5 @@
 import { useState, useMemo, useContext, useEffect } from "react";
-import { Link, useLocation, Redirect } from "react-router-dom";
-import { Button } from "react-bootstrap";
-import RecordsTable from "../../../../components/records-table/records-table.component";
+import { useLocation, Redirect } from "react-router-dom";
 import { useMountedState } from "react-use";
 import useAsyncError from "../../../../hooks/useAsyncError";
 import Pagination from "../../../../components/pagination/pagination.component";
@@ -11,7 +9,7 @@ import programRoutes from "../../../../constants/program-routes.constant";
 import { AuthenticationContext } from "../../../../contexts/authentication-context/authentication.context";
 
 import { ownedExamsIndexRequest } from "../../../../services/exams/exams.service";
-import { convertFromUTCToHumanReadable } from "../../../../utilities/dateAndTime.utility";
+import ExamRecord from "../../../../components/exam-models/exam-record/exam-record.component";
 
 const CreatedExamsPage = () => {
   const [exams, setExams] = useState([]);
@@ -78,55 +76,35 @@ const CreatedExamsPage = () => {
         <p>Loading...</p>
       ) : exams.length > 0 ? (
         <>
-          <RecordsTable>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Exam Name</th>
-                <th>Exam Description</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-                <th>Total Score</th>
-                <th>Creation Time</th>
-                <th>Last Update</th>
-                <th>Published</th>
-                <th>Register Needs Confirmation</th>
-                <th>Operations</th>
-              </tr>
-            </thead>
-            <tbody>
-              {exams.map((exam, idx) => {
-                return (
-                  <tr key={exam.exam_id}>
-                    <td>{idx + 1}</td>
-                    <td>{exam.exam_name}</td>
-                    <td>{exam.exam_description}</td>
-                    <td>{convertFromUTCToHumanReadable(exam.start_of_exam)}</td>
-                    <td>{convertFromUTCToHumanReadable(exam.end_of_exam)}</td>
-                    <td>{exam.total_score}</td>
-                    <td>{convertFromUTCToHumanReadable(exam.creation_time)}</td>
-                    <td>{convertFromUTCToHumanReadable(exam.last_update)}</td>
-                    <td>{exam.published ? "YES" : "NO"}</td>
-                    <td>{exam.needs_confirmation ? "YES" : "NO"}</td>
-                    <td>
-                      <div>
-                        <Link to={programRoutes.updateExam(exam.exam_id)}>
-                          <Button variant="success"> edit exam</Button>
-                        </Link>
-                      </div>
-                      <div className="mt-2">
-                        <Link
-                          to={programRoutes.indexParticipants(exam.exam_id)}
-                        >
-                          <Button variant="success"> participants</Button>
-                        </Link>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </RecordsTable>
+          {exams.map((exam, idx) => {
+            const links = [
+              {
+                linkName: "More Details",
+                linkHref: programRoutes.examiningOverview(exam.exam_id),
+              },
+            ];
+
+            const extraLinks = [
+              {
+                linkName: "Edit Exam",
+                linkHref: programRoutes.updateExam(exam.exam_id),
+              },
+              {
+                linkName: "Participants",
+                linkHref: programRoutes.indexParticipants(exam.exam_id),
+              },
+            ];
+
+            return (
+              <ExamRecord
+                links={links}
+                extraLinks={extraLinks}
+                key={exam.exam_id}
+                exam={exam}
+                className="mb-3"
+              />
+            );
+          })}
           <Pagination
             currentPage={currentPage}
             numberOfPages={numberOfPages}

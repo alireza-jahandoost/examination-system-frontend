@@ -1,11 +1,13 @@
-import { Container } from "react-bootstrap";
+import React from "react";
+import { Container, Dropdown } from "react-bootstrap";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { BsAlarm, BsArrowRight } from "react-icons/bs";
 import { convertFromUTC } from "../../../utilities/dateAndTime.utility";
 import useExamStatus from "../../../hooks/useExamStatus";
 import "./exam-record.style.css";
 
-const ExamRecord = ({ exam, links, ...props }) => {
+const ExamRecord = ({ exam, links, extraLinks, ...props }) => {
   const currentStatus = useExamStatus({
     examStart: exam.start_of_exam,
     examEnd: exam.end_of_exam,
@@ -22,19 +24,60 @@ const ExamRecord = ({ exam, links, ...props }) => {
     }
   })();
 
+  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <button
+      className="bg-white border-0 p-1"
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      {children}
+    </button>
+  ));
+
   return (
     <div {...props}>
       <Container
-        className={`bg-white rounded border shadow border-start-${color} border-start-lg`}
+        className={`bg-white rounded border shadow border-start-${color} border-start-lg pt-2`}
       >
         <div>
           <div className="text-start">
-            <p className="lead mb-0">
-              {exam.exam_name.length > 46
-                ? `${exam.exam_name.substr(0, 43)}...`
-                : exam.exam_name}
-            </p>
-            <p className="small text-muted">by {exam.owner_name}</p>
+            <div className="d-flex justify-content-between">
+              <div>
+                <p className="lead mb-0" title={exam.exam_name}>
+                  {exam.exam_name.length > 46
+                    ? `${exam.exam_name.substr(0, 43)}...`
+                    : exam.exam_name}
+                </p>
+                <p className="small text-muted">by {exam.owner_name}</p>
+              </div>
+              <div>
+                {extraLinks && (
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      as={CustomToggle}
+                      variant="success"
+                      id="dropdown-basic"
+                    >
+                      <BsThreeDotsVertical />
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      {extraLinks.map(({ linkName, linkHref }) => {
+                        console.log("here", linkName, linkHref);
+                        return (
+                          <Dropdown.Item as={Link} to={linkHref} key={linkName}>
+                            {linkName}
+                          </Dropdown.Item>
+                        );
+                      })}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                )}
+              </div>
+            </div>
           </div>
           <div className="d-flex text-muted small align-items-center">
             <BsAlarm />
