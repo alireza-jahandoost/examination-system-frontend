@@ -42,7 +42,7 @@ const PaginationComponent = ({
   }
   return (
     <>
-      <Pagination className="pagination-success">
+      <Pagination className="pagination-muted">
         <PaginationItem to={createUrl(1)} disabled={currentPage === 1}>
           <span aria-hidden="true">«</span>
           <span className="visually-hidden">First</span>
