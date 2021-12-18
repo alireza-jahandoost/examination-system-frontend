@@ -19,7 +19,7 @@ const SettingsPage = () => {
           <Row>
             <Col md={4} lg={6}>
               <div className="lead text-start bg-light border shadow rounded p-3">
-                <div>
+                <div className="mb-4">
                   <p>
                     <span className="pe-2">
                       <BsPerson />
@@ -28,7 +28,7 @@ const SettingsPage = () => {
                   </p>
                   <p className="text-break">{user?.user_name}</p>
                 </div>
-                <div>
+                <div className="mb-4">
                   <p>
                     <span className="pe-2">
                       <BsEnvelope />
@@ -37,7 +37,7 @@ const SettingsPage = () => {
                   </p>
                   <p className="text-break">{user?.user_email}</p>
                 </div>
-                <div>
+                <div className="mb-4">
                   <p>
                     <span className="pe-2">
                       <BsCalendar4 />
