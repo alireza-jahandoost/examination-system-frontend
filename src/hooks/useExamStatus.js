@@ -13,7 +13,7 @@ const calculate = (examStart, examEnd) => {
   }
 };
 
-const useExamStatus = ({ examStart, examEnd }) => {
+const useExamStatus = ({ examStart, examEnd, isPublished }) => {
   const [status, setStatus] = useState(calculate(examStart, examEnd));
 
   const checkStatus = useCallback(() => {
@@ -28,7 +28,7 @@ const useExamStatus = ({ examStart, examEnd }) => {
     return () => clearTimeout(checkStatus, 1000);
   }, [checkStatus, status]);
 
-  return status;
+  return isPublished ? status : "not published";
 };
 
 export default useExamStatus;

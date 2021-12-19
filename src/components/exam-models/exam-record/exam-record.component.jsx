@@ -11,6 +11,7 @@ const ExamRecord = ({ exam, links, extraLinks, ...props }) => {
   const currentStatus = useExamStatus({
     examStart: exam.start_of_exam,
     examEnd: exam.end_of_exam,
+    isPublished: exam.published === undefined ? true : exam.published,
   });
 
   const color = (() => {
@@ -19,8 +20,10 @@ const ExamRecord = ({ exam, links, extraLinks, ...props }) => {
         return "success";
       case "running":
         return "warning";
-      default:
+      case "finished":
         return "danger";
+      default:
+        return "primary";
     }
   })();
 
@@ -66,7 +69,6 @@ const ExamRecord = ({ exam, links, extraLinks, ...props }) => {
 
                     <Dropdown.Menu>
                       {extraLinks.map(({ linkName, linkHref }) => {
-                        console.log("here", linkName, linkHref);
                         return (
                           <Dropdown.Item as={Link} to={linkHref} key={linkName}>
                             {linkName}
