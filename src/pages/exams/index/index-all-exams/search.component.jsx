@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useDebounce } from "react-use";
 import {
   InputGroup,
   Form,
@@ -9,10 +11,26 @@ import {
 import { BsSearch } from "react-icons/bs";
 
 const Search = ({ value, changeValue, handleClick }) => {
+  const [currentValue, setCurrentValue] = useState(value || "");
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (value !== currentValue) {
+      changeValue(currentValue);
+    }
     handleClick();
   };
+
+  useDebounce(
+    () => {
+      if (value === currentValue) {
+        return;
+      }
+      changeValue(currentValue);
+      handleClick();
+    },
+    500,
+    [currentValue]
+  );
 
   return (
     <Row>
@@ -25,14 +43,15 @@ const Search = ({ value, changeValue, handleClick }) => {
               placeholder="Search Exam"
               aria-label="search-exam"
               aria-describedby="search-exam"
-              value={value}
-              onChange={(e) => changeValue(e.target.value)}
+              value={currentValue}
+              onChange={(e) => setCurrentValue(e.target.value)}
             />
             <Button
               type="submit"
               title="search exam"
               id="search-exam"
               variant="muted"
+              className="ms-1 rounded-circle"
             >
               <BsSearch />
             </Button>

@@ -131,18 +131,18 @@ const IndexAllExams = () => {
     setResearch(true);
   };
 
-  if (searchQuery === undefined || isLoading) {
-    return <p>Loading...</p>;
-  }
-
   return (
     <>
-      <Search
-        value={searchQuery}
-        changeValue={(newVal) => setSearchQuery(newVal)}
-        handleClick={researchExam}
-      />
-      {exams.length > 0 ? (
+      {searchQuery !== undefined && (
+        <Search
+          value={searchQuery}
+          changeValue={(newVal) => setSearchQuery(newVal)}
+          handleClick={researchExam}
+        />
+      )}
+      {searchQuery === undefined || isLoading ? (
+        <p>Loading...</p>
+      ) : exams.length > 0 ? (
         <>
           {exams.map((exam, idx) => {
             return (

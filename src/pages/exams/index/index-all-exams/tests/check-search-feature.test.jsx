@@ -7,6 +7,7 @@ import axios from "axios";
 import userEvent from "@testing-library/user-event";
 import IndexAllExamsPage from "../index-all-exams.page";
 import programRoutes from "../../../../../constants/program-routes.constant";
+import { wait } from "../../../../../utilities/tests.utility";
 
 const searchPrefix = "search";
 const notFoundMessage = (searchQuery) =>
@@ -92,5 +93,36 @@ test("if there is not any record that match with the search query, it must be wr
 
   await waitFor(() =>
     expect(screen.getByText(notFoundMessage("testtest"))).toBeInTheDocument()
+  );
+});
+
+test("without clicking search button, the request must be sent", async () => {
+  const axiosGet = jest.spyOn(axios, "get");
+  renderWithRouter(<IndexAllExamsPage />, {
+    route: programRoutes.indexAllExams(),
+    withContexts: true,
+  });
+
+  const searchbar = await screen.findByRole("textbox", { name: /search/i });
+  userEvent.clear(searchbar);
+  userEvent.type(searchbar, "testtest");
+  //
+  // const searchButton = await screen.findByRole("button", { name: /search/i });
+  // userEvent.click(searchButton);
+
+  await wait(1000);
+  await waitFor(() =>
+    expect(window.location.search).toBe(`?${searchPrefix}=testtest`)
+  );
+  await waitFor(() =>
+    expect(window.location.pathname).toBe(programRoutes.indexAllExams())
+  );
+  await waitFor(() => expect(axiosGet).toHaveBeenCalledTimes(2));
+  await waitFor(() =>
+    expect(
+      axiosGet.mock.calls[axiosGet.mock.calls.length - 1][1].params[
+        searchPrefix
+      ]
+    ).toBe("testtest")
   );
 });
