@@ -13,7 +13,7 @@ const QuestionInfo = ({ questionText, questionScore, questionInput }) => {
         {questionInput}
         <span>{secondPart}</span>
       </div>
-      <p className="small">
+      <p className="small text-muted my-3 ">
         {`${questionScore} ${questionScore > 1 ? "points" : "point"}`}
       </p>
     </Container>

@@ -48,18 +48,19 @@ const ExamQuestionPage = () => {
 
   return (
     <div style={{ minHeight: "100vh" }}>
-      <div className="d-flex justify-content-around border mt-2 bg-light shadow py-3">
+      <div className="d-flex justify-content-around border  bg-white shadow py-2 align-items-center">
         <ExamTime color="dark" examTime={examTime} />
         <Button
           variant="success"
           onClick={() => {
             setShowModal(true);
           }}
+          className="h-100"
         >
           Finish Exam
         </Button>
       </div>
-      <Container className="bg-light shadow border flex-grow-1 rounded p-4 my-5">
+      <Container className="bg-white shadow border flex-grow-1 rounded p-4 my-2 text-start">
         <div style={{ minHeight: "400px" }} className="d-flex ">
           {errors.message && <p className="text-danger">{errors.message}</p>}
           <AnswerQuestionProvider

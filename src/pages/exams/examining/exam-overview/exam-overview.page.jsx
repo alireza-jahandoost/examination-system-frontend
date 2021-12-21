@@ -5,7 +5,6 @@ import { useParams, Link } from "react-router-dom";
 import { AuthenticationContext } from "../../../../contexts/authentication-context/authentication.context";
 import { ExaminingContext } from "../../../../contexts/examining-context/examining.context";
 
-import ExamTime from "../../../../components/exam-time/exam-time.component";
 import ExamPassword from "../../../../components/exam-password/exam-password.component";
 
 import programRoutes from "../../../../constants/program-routes.constant";
@@ -60,7 +59,7 @@ const ExamOverviewPage = () => {
   return (
     <div style={{ minHeight: "100vh" }} className="text-start d-flex">
       <Container className="flex-grow-1 m-5 d-flex flex-column">
-        <Container className="bg-light p-3 border shadow rounded">
+        <Container className="bg-white p-3 border shadow rounded">
           <p className="display-5"> Exam Name: {exam.exam_name} </p>
           <p className="small text-muted"> By: {exam.owner_name} </p>
           <p className="lead">
