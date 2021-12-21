@@ -84,7 +84,10 @@ const ExamQuestionPage = () => {
             {...handleClick(nextQuestion === -1)}
             to={programRoutes.examiningQuestion(examId, nextQuestion)}
           >
-            <Button variant="success" disabled={nextQuestion === -1}>
+            <Button
+              variant="success"
+              disabled={nextQuestion === -1 || isLoading}
+            >
               Next
             </Button>
           </Link>

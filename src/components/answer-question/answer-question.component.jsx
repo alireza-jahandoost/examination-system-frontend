@@ -1,7 +1,8 @@
 import { useContext } from "react";
-import { Form, Container, Button } from "react-bootstrap";
+import { Form, Container } from "react-bootstrap";
 
 import { AnswerQuestionContext } from "../../contexts/answer-question-context/answer-question.context";
+import { useDebounce } from "react-use";
 
 import AnswerDescriptive from "./answer-descriptive.component";
 import AnswerFillTheBlank from "./answer-fill-the-blank.component";
@@ -21,6 +22,16 @@ const AnswerQuestion = ({ readOnly = false }) => {
     isLoading,
     errors,
   } = useContext(AnswerQuestionContext);
+
+  useDebounce(
+    () => {
+      if (hasChange && !isLoading) {
+        updateAnswers();
+      }
+    },
+    500,
+    [hasChange, isLoading]
+  );
 
   if (!isContextLoaded) {
     return <p> Loading... </p>;
@@ -48,10 +59,6 @@ const AnswerQuestion = ({ readOnly = false }) => {
       break;
     default:
   }
-
-  const handleClick = () => {
-    updateAnswers();
-  };
 
   return (
     <div className="flex-grow-1">
@@ -81,13 +88,11 @@ const AnswerQuestion = ({ readOnly = false }) => {
             : form}
           {!readOnly &&
             (hasChange ? (
-              <Button
-                variant="success"
-                disabled={isLoading}
-                onClick={handleClick}
-              >
-                {isLoading ? "Loading..." : "save changes"}
-              </Button>
+              isLoading ? (
+                <p> saving... </p>
+              ) : (
+                <p> not saved </p>
+              )
             ) : (
               <p> all changes saved </p>
             ))}

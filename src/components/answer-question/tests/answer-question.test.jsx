@@ -3,10 +3,9 @@ import {
   waitFor,
   renderWithAuthentication,
 } from "../../../test-utils/testing-library-utils";
-import userEvent from "@testing-library/user-event";
 import { wrapper } from "./partials";
 import AnswerQuestion from "../answer-question.component";
-import { randomString } from "../../../utilities/tests.utility";
+import { wait, randomString } from "../../../utilities/tests.utility";
 
 test("if isContextLoaded is false, the answerQuestionComponent must show loading message", () => {
   const { WrappedElement } = wrapper(<AnswerQuestion />, {
@@ -31,7 +30,7 @@ test("if there is error message, it must be shown in the component", () => {
 });
 
 describe("check saving feature", () => {
-  test("if hasChange is true, the save button must be shown", () => {
+  test("if hasChange is true, 'not saved' must be shown to user", () => {
     const { WrappedElement } = wrapper(<AnswerQuestion />, {
       questionTypeId: 1,
       hasChange: true,
@@ -39,27 +38,20 @@ describe("check saving feature", () => {
     renderWithAuthentication(WrappedElement);
 
     expect(screen.queryByText(/all changes saved/i)).not.toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: /save changes/i })
-    ).toBeInTheDocument();
+    expect(screen.getByText(/not saved/i)).toBeInTheDocument();
   });
 
-  test("if user clicks on save changes, the updateAnswers must be called", () => {
+  test("if hasChange is true and isLoading is false, updateAnswers must be called", async () => {
     const { WrappedElement, value } = wrapper(<AnswerQuestion />, {
       questionTypeId: 1,
       hasChange: true,
     });
     renderWithAuthentication(WrappedElement);
 
-    const saveChangesButton = screen.getByRole("button", {
-      name: /save changes/i,
-    });
-    userEvent.click(saveChangesButton);
-
-    expect(value.updateAnswers).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(value.updateAnswers).toHaveBeenCalledTimes(1));
   });
 
-  test("if isLoading is true, the button must be disabled and labeled with 'loading...'", async () => {
+  test("if isLoading is true, 'saving...' phrase must be shown", async () => {
     const { WrappedElement } = wrapper(<AnswerQuestion />, {
       questionTypeId: 1,
       hasChange: true,
@@ -67,23 +59,23 @@ describe("check saving feature", () => {
     });
     renderWithAuthentication(WrappedElement);
 
-    const loadingButton = screen.getByRole("button", {
-      name: /loading/i,
-    });
-    await waitFor(() => expect(loadingButton).toBeDisabled());
+    await waitFor(() =>
+      expect(screen.getByText(/saving/i)).toBeInTheDocument()
+    );
   });
 
-  test("if hasChange is false, the save button must not be shown", () => {
-    const { WrappedElement } = wrapper(<AnswerQuestion />, {
+  test("if hasChange is false, updateAnswers must not be called", async () => {
+    const { WrappedElement, value } = wrapper(<AnswerQuestion />, {
       questionTypeId: 1,
       hasChange: false,
     });
     renderWithAuthentication(WrappedElement);
 
     expect(screen.getByText(/all changes saved/i)).toBeInTheDocument();
-    expect(
-      screen.queryByRole("button", { name: /save changes/i })
-    ).not.toBeInTheDocument();
+
+    await wait(1000);
+
+    await waitFor(() => expect(value.updateAnswers).toHaveBeenCalledTimes(0));
   });
 });
 

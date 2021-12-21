@@ -53,10 +53,15 @@ test("authenticated user can register in started exam, solve the questions and t
   userEvent.clear(answerTextbox);
   userEvent.type(answerTextbox, descriptiveAnswer);
 
-  const descriptiveSaveChanges = await screen.findByRole("button", {
-    name: /save changes/i,
-  });
-  userEvent.click(descriptiveSaveChanges);
+  await waitFor(() =>
+    expect(screen.getByText(/not saved/i)).toBeInTheDocument()
+  );
+
+  await waitFor(() => expect(screen.getByText(/saving/i)).toBeInTheDocument());
+
+  await waitFor(() =>
+    expect(screen.getByText(/all changes saved/i)).toBeInTheDocument()
+  );
 
   // go to fill the blank
   const nextButtonFromDescriptive = screen.getByRole("button", {
@@ -78,10 +83,15 @@ test("authenticated user can register in started exam, solve the questions and t
   userEvent.clear(answerField);
   userEvent.type(answerField, fillTheBlankAnswer);
 
-  const fillTheBlankSaveChanges = await screen.findByRole("button", {
-    name: /save changes/i,
-  });
-  userEvent.click(fillTheBlankSaveChanges);
+  await waitFor(() =>
+    expect(screen.getByText(/not saved/i)).toBeInTheDocument()
+  );
+
+  await waitFor(() => expect(screen.getByText(/saving/i)).toBeInTheDocument());
+
+  await waitFor(() =>
+    expect(screen.getByText(/all changes saved/i)).toBeInTheDocument()
+  );
 
   // go to multiple answers
   const nextButtonFromFillTheBlank = screen.getByRole("button", {
@@ -103,10 +113,15 @@ test("authenticated user can register in started exam, solve the questions and t
     userEvent.click(checkboxes[current]);
   }
 
-  const saveChangesMA = await screen.findByRole("button", {
-    name: /save changes/i,
-  });
-  userEvent.click(saveChangesMA);
+  await waitFor(() =>
+    expect(screen.getByText(/not saved/i)).toBeInTheDocument()
+  );
+
+  await waitFor(() => expect(screen.getByText(/saving/i)).toBeInTheDocument());
+
+  await waitFor(() =>
+    expect(screen.getByText(/all changes saved/i)).toBeInTheDocument()
+  );
 
   // go to select the answer
   const nextButtonFromMA = screen.getByRole("button", { name: /next/i });
@@ -124,10 +139,15 @@ test("authenticated user can register in started exam, solve the questions and t
   const radios = await screen.findAllByRole("radio");
   userEvent.click(radios[checkedAnswerSTA]);
 
-  const saveChangesSTA = await screen.findByRole("button", {
-    name: /save changes/i,
-  });
-  userEvent.click(saveChangesSTA);
+  await waitFor(() =>
+    expect(screen.getByText(/not saved/i)).toBeInTheDocument()
+  );
+
+  await waitFor(() => expect(screen.getByText(/saving/i)).toBeInTheDocument());
+
+  await waitFor(() =>
+    expect(screen.getByText(/all changes saved/i)).toBeInTheDocument()
+  );
 
   // go to true or false
   const nextButtonFromSTA = screen.getByRole("button", { name: /next/i });
@@ -150,10 +170,15 @@ test("authenticated user can register in started exam, solve the questions and t
     userEvent.click(falseAnswer);
   }
 
-  const saveButtonFromTOF = await screen.findByRole("button", {
-    name: /save changes/i,
-  });
-  userEvent.click(saveButtonFromTOF);
+  await waitFor(() =>
+    expect(screen.getByText(/not saved/i)).toBeInTheDocument()
+  );
+
+  await waitFor(() => expect(screen.getByText(/saving/i)).toBeInTheDocument());
+
+  await waitFor(() =>
+    expect(screen.getByText(/all changes saved/i)).toBeInTheDocument()
+  );
 
   // go to ordering
   const nextButtonFromTOR = screen.getByRole("button", { name: /next/i });
@@ -171,10 +196,15 @@ test("authenticated user can register in started exam, solve the questions and t
   )[0];
   userEvent.click(firstDownButton);
 
-  const saveButtonFromOrdering = await screen.findByRole("button", {
-    name: /save changes/i,
-  });
-  userEvent.click(saveButtonFromOrdering);
+  await waitFor(() =>
+    expect(screen.getByText(/not saved/i)).toBeInTheDocument()
+  );
+
+  await waitFor(() => expect(screen.getByText(/saving/i)).toBeInTheDocument());
+
+  await waitFor(() =>
+    expect(screen.getByText(/all changes saved/i)).toBeInTheDocument()
+  );
 
   // finish the exam
   changeCurrentParticipant({ participantId: 1, otherHandlers: [handler] });

@@ -3,6 +3,7 @@ import {
   waitFor,
   renderWithAuthentication,
 } from "../../../../../test-utils/testing-library-utils";
+import axios from "axios";
 import userEvent from "@testing-library/user-event";
 import ExamQuestionPage from "../exam-question.page";
 import { wrapper } from "./partials";
@@ -35,8 +36,8 @@ describe("check isContextLoaded", () => {
   });
 });
 
-describe("check button when saving", () => {
-  test("check button will be disabled and labeled by loading when request is sending", async () => {
+describe("check save feature", () => {
+  test("check 'saving...' phrase must be shown to user when request is sending", async () => {
     const { WrappedElement } = wrapper(<ExamQuestionPage />, {
       participantId: 1,
     });
@@ -53,16 +54,16 @@ describe("check button when saving", () => {
 
     await waitFor(() => expect(textbox).toHaveValue(textboxValue));
 
-    // await wait(200);
-    const saveButton = await screen.findByRole("button", {
-      name: /save changes/i,
-    });
-    userEvent.click(saveButton);
+    await waitFor(() =>
+      expect(screen.getByText(/not saved/i)).toBeInTheDocument()
+    );
 
     await waitFor(() =>
-      expect(
-        screen.getByRole("button", { name: /loading\.\.\./i })
-      ).toBeDisabled()
+      expect(screen.getByText(/saving\.\.\./i)).toBeInTheDocument()
+    );
+
+    await waitFor(() =>
+      expect(screen.getByText(/all changes saved/i)).toBeInTheDocument()
     );
   });
 });
@@ -85,6 +86,7 @@ describe("check descriptive questions", () => {
   });
 
   test("user can create answer", async () => {
+    const axiosPost = jest.spyOn(axios, "post");
     const { WrappedElement } = wrapper(<ExamQuestionPage />, {
       participantId: 1,
     });
@@ -103,18 +105,23 @@ describe("check descriptive questions", () => {
 
     await waitFor(() => expect(textbox).toHaveValue(textboxValue));
 
-    // await wait(200);
-    const saveButton = await screen.findByRole("button", {
-      name: /save changes/i,
-    });
-    userEvent.click(saveButton);
+    await waitFor(() =>
+      expect(screen.getByText(/not saved/i)).toBeInTheDocument()
+    );
+
+    await waitFor(() =>
+      expect(screen.getByText(/saving/i)).toBeInTheDocument()
+    );
 
     await waitFor(() =>
       expect(screen.getByText(/all changes saved/i)).toBeInTheDocument()
     );
+
+    await waitFor(() => expect(axiosPost).toHaveBeenCalledTimes(1));
   });
 
   test("user can change answer", async () => {
+    const axiosDelete = jest.spyOn(axios, "delete");
     const { WrappedElement } = wrapper(<ExamQuestionPage />, {
       participantId: 2,
     });
@@ -133,16 +140,20 @@ describe("check descriptive questions", () => {
 
     await waitFor(() => expect(textbox).toHaveValue(textboxValue));
 
-    // await wait(200);
-    const saveButton = await screen.findByRole("button", {
-      name: /save changes/i,
-    });
-    userEvent.click(saveButton);
+    await waitFor(() =>
+      expect(screen.getByText(/not saved/i)).toBeInTheDocument()
+    );
+
+    await waitFor(() =>
+      expect(screen.getByText(/saving/i)).toBeInTheDocument()
+    );
 
     await waitFor(() =>
       expect(screen.getByText(/all changes saved/i)).toBeInTheDocument()
     );
     expect(textbox).toHaveValue(textboxValue);
+
+    await waitFor(() => expect(axiosDelete).toHaveBeenCalledTimes(1));
   });
 });
 
@@ -164,6 +175,7 @@ describe("check fill the blank questions", () => {
   });
 
   test("user can create answer if the question does not have any answer", async () => {
+    const axiosPost = jest.spyOn(axios, "post");
     const { WrappedElement } = wrapper(<ExamQuestionPage />, {
       participantId: 1,
     });
@@ -182,18 +194,23 @@ describe("check fill the blank questions", () => {
 
     await waitFor(() => expect(textbox).toHaveValue(textboxValue));
 
-    // await wait(200);
-    const saveButton = await screen.findByRole("button", {
-      name: /save changes/i,
-    });
-    userEvent.click(saveButton);
+    await waitFor(() =>
+      expect(screen.getByText(/not saved/i)).toBeInTheDocument()
+    );
+
+    await waitFor(() =>
+      expect(screen.getByText(/saving/i)).toBeInTheDocument()
+    );
 
     await waitFor(() =>
       expect(screen.getByText(/all changes saved/i)).toBeInTheDocument()
     );
+
+    await waitFor(() => expect(axiosPost).toHaveBeenCalledTimes(1));
   });
 
   test("user can change answer if the question has answer", async () => {
+    const axiosDelete = jest.spyOn(axios, "delete");
     const { WrappedElement } = wrapper(<ExamQuestionPage />, {
       participantId: 2,
     });
@@ -212,15 +229,19 @@ describe("check fill the blank questions", () => {
 
     await waitFor(() => expect(textbox).toHaveValue(textboxValue));
 
-    // await wait(200);
-    const saveButton = await screen.findByRole("button", {
-      name: /save changes/i,
-    });
-    userEvent.click(saveButton);
+    await waitFor(() =>
+      expect(screen.getByText(/not saved/i)).toBeInTheDocument()
+    );
+
+    await waitFor(() =>
+      expect(screen.getByText(/saving/i)).toBeInTheDocument()
+    );
 
     await waitFor(() =>
       expect(screen.getByText(/all changes saved/i)).toBeInTheDocument()
     );
+
+    await waitFor(() => expect(axiosDelete).toHaveBeenCalledTimes(1));
   });
 });
 
@@ -258,6 +279,7 @@ describe("check multiple answers questions", () => {
   });
 
   test("if the question has no answer, user can create answers", async () => {
+    const axiosPost = jest.spyOn(axios, "post");
     const { WrappedElement } = wrapper(<ExamQuestionPage />, {
       participantId: 1,
     });
@@ -270,15 +292,19 @@ describe("check multiple answers questions", () => {
     userEvent.click(checkboxes[0]);
     userEvent.click(checkboxes[1]);
 
-    // await wait(200);
-    const saveButton = await screen.findByRole("button", {
-      name: /save changes/i,
-    });
-    userEvent.click(saveButton);
+    await waitFor(() =>
+      expect(screen.getByText(/not saved/i)).toBeInTheDocument()
+    );
+
+    await waitFor(() =>
+      expect(screen.getByText(/saving/i)).toBeInTheDocument()
+    );
 
     await waitFor(() =>
       expect(screen.getByText(/all changes saved/i)).toBeInTheDocument()
     );
+
+    await waitFor(() => expect(axiosPost).toHaveBeenCalledTimes(2));
 
     expect(checkboxes[0]).toBeChecked();
     expect(checkboxes[1]).toBeChecked();
@@ -288,6 +314,7 @@ describe("check multiple answers questions", () => {
   });
 
   test("if the question has answer, user can change the answers", async () => {
+    const axiosDelete = jest.spyOn(axios, "delete");
     const { WrappedElement } = wrapper(<ExamQuestionPage />, {
       participantId: 2,
     });
@@ -300,15 +327,20 @@ describe("check multiple answers questions", () => {
     userEvent.click(checkboxes[0]);
     userEvent.click(checkboxes[1]);
 
-    // await wait(200);
-    const saveButton = await screen.findByRole("button", {
-      name: /save changes/i,
-    });
-    userEvent.click(saveButton);
+    await waitFor(() =>
+      expect(screen.getByText(/not saved/i)).toBeInTheDocument()
+    );
+
+    await waitFor(() =>
+      expect(screen.getByText(/saving/i)).toBeInTheDocument()
+    );
 
     await waitFor(() =>
       expect(screen.getByText(/all changes saved/i)).toBeInTheDocument()
     );
+
+    // first one must not be changed, just third one must be deleted
+    await waitFor(() => expect(axiosDelete).toHaveBeenCalledTimes(1));
 
     const checked = [],
       unchecked = [];
@@ -371,6 +403,7 @@ describe("check select the answer questions", () => {
   });
 
   test("if question has no answer, user can create new answer", async () => {
+    const axiosPost = jest.spyOn(axios, "post");
     const { WrappedElement } = wrapper(<ExamQuestionPage />, {
       participantId: 1,
     });
@@ -386,20 +419,29 @@ describe("check select the answer questions", () => {
     userEvent.click(radios[1]);
     const checked = 1;
 
-    // await wait(200);
-    const saveButton = await screen.findByRole("button", {
-      name: /save changes/i,
-    });
-    userEvent.click(saveButton);
+    await waitFor(() =>
+      expect(screen.getByText(/not saved/i)).toBeInTheDocument()
+    );
+
+    await waitFor(() =>
+      expect(screen.getByText(/saving/i)).toBeInTheDocument()
+    );
+
+    await waitFor(() =>
+      expect(screen.getByText(/all changes saved/i)).toBeInTheDocument()
+    );
 
     expect(radios[checked]).toBeChecked();
     for (let i = 0; i < radios.length; i++) {
       if (i === checked) continue;
       expect(radios[i]).not.toBeChecked();
     }
+
+    await waitFor(() => expect(axiosPost).toHaveBeenCalledTimes(1));
   });
 
   test("if question has answer, user can change the answer", async () => {
+    const axiosDelete = jest.spyOn(axios, "delete");
     const { WrappedElement } = wrapper(<ExamQuestionPage />, {
       participantId: 2,
     });
@@ -419,17 +461,25 @@ describe("check select the answer questions", () => {
       checked = 0;
     }
 
-    // await wait(200);
-    const saveButton = await screen.findByRole("button", {
-      name: /save changes/i,
-    });
-    userEvent.click(saveButton);
+    await waitFor(() =>
+      expect(screen.getByText(/not saved/i)).toBeInTheDocument()
+    );
+
+    await waitFor(() =>
+      expect(screen.getByText(/saving/i)).toBeInTheDocument()
+    );
+
+    await waitFor(() =>
+      expect(screen.getByText(/all changes saved/i)).toBeInTheDocument()
+    );
 
     expect(radios[checked]).toBeChecked();
     for (let i = 0; i < radios.length; i++) {
       if (i === checked) continue;
       expect(radios[i]).not.toBeChecked();
     }
+
+    await waitFor(() => expect(axiosDelete).toHaveBeenCalledTimes(1));
   });
 });
 
@@ -464,6 +514,7 @@ describe("check true or false question", () => {
     expect(radios[1 - checked]).not.toBeChecked();
   });
   test("if the question is not answered, user can create an answer", async () => {
+    const axiosPost = jest.spyOn(axios, "post");
     const { WrappedElement } = wrapper(<ExamQuestionPage />, {
       participantId: 1,
     });
@@ -474,16 +525,25 @@ describe("check true or false question", () => {
     const radios = await screen.findAllByRole("radio");
     userEvent.click(radios[0]);
 
-    // await wait(200);
-    const saveButton = await screen.findByRole("button", {
-      name: /save changes/i,
-    });
-    userEvent.click(saveButton);
+    await waitFor(() =>
+      expect(screen.getByText(/not saved/i)).toBeInTheDocument()
+    );
+
+    await waitFor(() =>
+      expect(screen.getByText(/saving/i)).toBeInTheDocument()
+    );
+
+    await waitFor(() =>
+      expect(screen.getByText(/all changes saved/i)).toBeInTheDocument()
+    );
 
     expect(radios[0]).toBeChecked();
     expect(radios[1]).not.toBeChecked();
+
+    await waitFor(() => expect(axiosPost).toHaveBeenCalledTimes(1));
   });
   test("if the question is answered, user can change the answer", async () => {
+    const axiosDelete = jest.spyOn(axios, "delete");
     const { WrappedElement } = wrapper(<ExamQuestionPage />, {
       participantId: 2,
     });
@@ -501,19 +561,28 @@ describe("check true or false question", () => {
 
     userEvent.click(radios[1 - checked]);
 
-    // await wait(200);
-    const saveButton = await screen.findByRole("button", {
-      name: /save changes/i,
-    });
-    userEvent.click(saveButton);
+    await waitFor(() =>
+      expect(screen.getByText(/not saved/i)).toBeInTheDocument()
+    );
+
+    await waitFor(() =>
+      expect(screen.getByText(/saving/i)).toBeInTheDocument()
+    );
+
+    await waitFor(() =>
+      expect(screen.getByText(/all changes saved/i)).toBeInTheDocument()
+    );
 
     expect(radios[checked]).not.toBeChecked();
     expect(radios[1 - checked]).toBeChecked();
+
+    await waitFor(() => expect(axiosDelete).toHaveBeenCalledTimes(1));
   });
 });
 
 describe("check ordering questions", () => {
   test("if the question is not answered, user can change the order of states", async () => {
+    const axiosPost = jest.spyOn(axios, "post");
     const { WrappedElement } = wrapper(<ExamQuestionPage />, {
       participantId: 1,
     });
@@ -526,15 +595,22 @@ describe("check ordering questions", () => {
 
     userEvent.click(lastUpButton);
 
-    // await wait(200);
-    const saveButton = await screen.findByRole("button", {
-      name: /save changes/i,
-    });
-    userEvent.click(saveButton);
+    await waitFor(() =>
+      expect(screen.getByText(/not saved/i)).toBeInTheDocument()
+    );
+
+    await waitFor(() =>
+      expect(screen.getByText(/saving/i)).toBeInTheDocument()
+    );
 
     expect(await screen.findByText(/all changes saved/i)).toBeInTheDocument();
+
+    await waitFor(() =>
+      expect(axiosPost).toHaveBeenCalledTimes(upButtons.length)
+    );
   });
   test("if the question is answered, user can change the order of states", async () => {
+    const axiosDelete = jest.spyOn(axios, "delete");
     const { WrappedElement } = wrapper(<ExamQuestionPage />, {
       participantId: 2,
     });
@@ -547,13 +623,17 @@ describe("check ordering questions", () => {
 
     userEvent.click(lastUpButton);
 
-    // await wait(200);
-    const saveButton = await screen.findByRole("button", {
-      name: /save changes/i,
-    });
-    userEvent.click(saveButton);
+    await waitFor(() =>
+      expect(screen.getByText(/not saved/i)).toBeInTheDocument()
+    );
+
+    await waitFor(() =>
+      expect(screen.getByText(/saving/i)).toBeInTheDocument()
+    );
 
     expect(await screen.findByText(/all changes saved/i)).toBeInTheDocument();
+
+    await waitFor(() => expect(axiosDelete).toHaveBeenCalledTimes(1));
   });
 });
 
