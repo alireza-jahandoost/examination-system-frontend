@@ -219,6 +219,7 @@ export const EditQuestionProvider = ({ children, examId, questionId }) => {
 
             setStates(statesWithoutRemovedStates);
             setIsLoading(false);
+            setErrors({});
           }
         })
       )
@@ -247,6 +248,7 @@ export const EditQuestionProvider = ({ children, examId, questionId }) => {
     try {
       await questionsDeleteRequest(examId, questionId, token);
       setIsDeleting(false);
+      setErrors({});
       return true;
     } catch (e) {
       switch (Number(e?.response?.status)) {

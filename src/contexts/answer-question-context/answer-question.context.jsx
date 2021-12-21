@@ -154,6 +154,7 @@ export const AnswerQuestionProvider = ({
         if (isMounted()) {
           setAnswers(currentAnswers);
           setIsLoading(false);
+          setErrors({});
         }
       })
       .catch((err) => {

@@ -154,6 +154,7 @@ export const ExaminingProvider = ({ children }) => {
       .then(() => {
         setIsUserFinishedExam(true);
         setIsLoading(false);
+        setErrors({});
       })
       .catch((err) => {
         switch (Number(err?.response?.status)) {

@@ -56,6 +56,7 @@ const CreateExamForm = ({ ...props }) => {
             3000
           );
           setIsLoading(false);
+          setErrors({});
           history.push(programRoutes.updateExam(exam.exam_id));
         }
       })

@@ -6,7 +6,6 @@ import {
   useContext,
 } from "react";
 import { useMountedState } from "react-use";
-import { Redirect } from "react-router-dom";
 import { NotificationContext } from "../notification-context/notification.context";
 import {
   loginRequest,
@@ -167,6 +166,7 @@ export const AuthenticationProvider = ({ children }) => {
   const logout = () => {
     logoutRequest(token).then(() => {
       removeUserInfo();
+      setErrors({});
     });
   };
 
@@ -187,6 +187,7 @@ export const AuthenticationProvider = ({ children }) => {
       .then(() => {
         setUser(null);
         setIsLoading(false);
+        setErrors({});
       })
       .catch((err) => {
         const newErrors = { ...err.response.data.errors };

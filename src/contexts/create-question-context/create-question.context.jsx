@@ -71,6 +71,7 @@ export const CreateQuestionProvider = ({ onDismiss, children }) => {
         await axios.all(stateRequests);
       }
       setIsLoading(false);
+      setErrors({});
       return question;
     } catch (e) {
       switch (Number(e?.response?.status)) {

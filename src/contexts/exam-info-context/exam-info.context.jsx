@@ -112,6 +112,7 @@ export const ExamInfoProvider = ({ children, examId }) => {
             setIsUserJustRegisteredForExam(true);
             setExam((prevExam) => ({ ...prevExam, is_registered: true }));
             setIsRegisteringLoading(false);
+            setErrors({});
           }
         })
         .catch((err) => {
