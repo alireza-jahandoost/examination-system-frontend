@@ -13,6 +13,7 @@ export const CreatedExamsProvider = ({ children }) => {
   const [exams, setExams] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [numberOfPages, setNumberOfPages] = useState(0);
+  const [numberOfAllExams, setNumberOfAllExams] = useState(0);
   const { token, removeUserInfo } = useContext(AuthenticationContext);
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
@@ -31,6 +32,7 @@ export const CreatedExamsProvider = ({ children }) => {
       .then((response) => response.data)
       .then(({ data, meta }) => {
         if (isMounted()) {
+          setNumberOfAllExams(Number(meta.total));
           setCurrentPage(Number(meta.current_page));
           setNumberOfPages(Number(meta.last_page));
         }
@@ -61,7 +63,14 @@ export const CreatedExamsProvider = ({ children }) => {
     throwError,
   ]);
 
-  const value = { exams, currentPage, page, numberOfPages, isLoading };
+  const value = {
+    exams,
+    currentPage,
+    page,
+    numberOfPages,
+    isLoading,
+    numberOfAllExams,
+  };
 
   return (
     <CreatedExamsContext.Provider value={value}>

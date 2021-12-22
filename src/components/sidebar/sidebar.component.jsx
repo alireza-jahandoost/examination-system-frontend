@@ -11,7 +11,7 @@ const Sidebar = (props) => {
 
   return (
     <div className="border-end shadow sidebar-container d-none d-lg-flex">
-      <div className="overflow-scroll p-3 w-320px">
+      <div className="overflow-auto p-3 w-320px">
         <div className="d-flex flex-column justify-content-center flex-grow-1">
           <div>
             <h2 className="display-6 pt-2 pb-3">Examinator</h2>

@@ -43,7 +43,7 @@ const ExamRecord = ({ exam, links, extraLinks, ...props }) => {
   return (
     <div {...props}>
       <Container
-        className={`bg-white rounded border shadow border-start-${color} border-start-lg pt-2`}
+        className={`exam-record bg-white rounded border shadow border-start-${color} border-start-lg pt-2`}
       >
         <div>
           <div className="text-start">
