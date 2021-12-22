@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import { isDateInThePast } from "../utilities/dateAndTime.utility";
 
 const calculate = (examStart, examEnd) => {
@@ -28,7 +28,20 @@ const useExamStatus = ({ examStart, examEnd, isPublished }) => {
     return () => clearTimeout(checkStatus, 1000);
   }, [checkStatus, status]);
 
-  return isPublished ? status : "not published";
+  const color = useMemo(() => {
+    switch (status) {
+      case "not started":
+        return "success";
+      case "running":
+        return "warning";
+      case "finished":
+        return "danger";
+      default:
+        return "primary";
+    }
+  }, [status]);
+
+  return [isPublished ? status : "not published", color];
 };
 
 export default useExamStatus;

@@ -8,24 +8,11 @@ import useExamStatus from "../../../hooks/useExamStatus";
 import "./exam-record.style.css";
 
 const ExamRecord = ({ exam, links, extraLinks, ...props }) => {
-  const currentStatus = useExamStatus({
+  const [currentStatus, color] = useExamStatus({
     examStart: exam.start_of_exam,
     examEnd: exam.end_of_exam,
     isPublished: exam.published === undefined ? true : exam.published,
   });
-
-  const color = (() => {
-    switch (currentStatus) {
-      case "not started":
-        return "success";
-      case "running":
-        return "warning";
-      case "finished":
-        return "danger";
-      default:
-        return "primary";
-    }
-  })();
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <button
