@@ -1,14 +1,7 @@
 import { useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 import { BsHouseDoor, BsGear, BsBoxArrowRight } from "react-icons/bs";
-import {
-  Navbar,
-  OverlayTrigger,
-  Popover,
-  Button,
-  Container,
-  Nav,
-} from "react-bootstrap";
+import { Navbar, Dropdown, Popover, Container, Nav } from "react-bootstrap";
 import { AuthenticationContext } from "../../../contexts/authentication-context/authentication.context";
 import programRoutes from "../../../constants/program-routes.constant";
 import useCurrentPath from "../../../hooks/useCurrentPath";
@@ -34,58 +27,6 @@ const Header = () => {
     }
   };
 
-  const userPopover = user ? (
-    <Popover id="popover-basic">
-      <Popover.Header className="px-5" as="h3">
-        {user.user_name.length > 28
-          ? `${user.user_name.substr(0, 25)}...`
-          : user.user_name}
-      </Popover.Header>
-      <Popover.Body>
-        <Nav.Link
-          {...isActive(programRoutes.profile())}
-          as={Link}
-          onClick={closeMenu}
-          className="text-dark p-0 user-popover-link"
-          to={programRoutes.profile()}
-        >
-          <span className="pe-2">
-            <BsHouseDoor />
-          </span>
-
-          <span>Profile</span>
-        </Nav.Link>
-        <Nav.Link
-          {...isActive(programRoutes.settings())}
-          as={Link}
-          onClick={closeMenu}
-          className="text-dark p-0 user-popover-link"
-          to={programRoutes.settings()}
-        >
-          <span className="pe-2">
-            <BsGear />
-          </span>
-
-          <span>Settings</span>
-        </Nav.Link>
-        <Nav.Link
-          className="text-dark p-0 user-popover-link"
-          onClick={() => {
-            logout();
-            closeMenu();
-          }}
-          role="button"
-        >
-          <span className="pe-2">
-            <BsBoxArrowRight />
-          </span>
-
-          <span>Logout</span>
-        </Nav.Link>
-      </Popover.Body>
-    </Popover>
-  ) : null;
-
   return (
     <div className="navbar-container" style={{ zIndex: 100 }}>
       <Navbar
@@ -97,18 +38,62 @@ const Header = () => {
       >
         <Container className="flex-row-reverse">
           {user && (
-            <OverlayTrigger
-              trigger="click"
-              placement="bottom"
-              overlay={userPopover}
-            >
-              <Button variant="white">
+            <Dropdown align="end">
+              <Dropdown.Toggle variant="white" id="dropdown-basic">
                 {user.user_name.length > 18
                   ? `${user.user_name.substr(0, 15)}...`
                   : user.user_name}
-                {" ▾"}
-              </Button>
-            </OverlayTrigger>
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu className="p-2">
+                <Dropdown.Header>
+                  {user.user_name.length > 33
+                    ? `${user.user_name.substr(0, 30)}...`
+                    : user.user_name}
+                </Dropdown.Header>
+                <Dropdown.Divider />
+                <Dropdown.Item
+                  {...isActive(programRoutes.profile())}
+                  as={Link}
+                  onClick={closeMenu}
+                  className="text-dark p-1 user-popover-link rounded"
+                  to={programRoutes.profile()}
+                >
+                  <span className="pe-2">
+                    <BsHouseDoor />
+                  </span>
+
+                  <span>Dashboard</span>
+                </Dropdown.Item>
+                <Dropdown.Item
+                  {...isActive(programRoutes.settings())}
+                  as={Link}
+                  onClick={closeMenu}
+                  className="text-dark p-1 user-popover-link rounded"
+                  to={programRoutes.settings()}
+                >
+                  <span className="pe-2">
+                    <BsGear />
+                  </span>
+
+                  <span>Settings</span>
+                </Dropdown.Item>
+                <Dropdown.Item
+                  className="text-dark p-1 user-popover-link rounded"
+                  onClick={() => {
+                    logout();
+                    closeMenu();
+                  }}
+                  role="button"
+                >
+                  <span className="pe-2">
+                    <BsBoxArrowRight />
+                  </span>
+
+                  <span>Logout</span>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           )}
           <Navbar.Toggle
             ref={toggleButtonRef}

@@ -22,10 +22,8 @@ test("when user occured to an error and then changed his page, the error must be
 
   await waitFor(() => expect(screen.getByText(403)).toBeInTheDocument());
 
-  const validator = new RegExp(userName, "i");
-  userEvent.click(await screen.findByRole("button", { name: validator }));
-  const profileLink = screen.getByRole("link", { name: /profile/i });
-  userEvent.click(profileLink);
+  const dashboardLink = screen.getByRole("link", { name: /dashboard/i });
+  userEvent.click(dashboardLink);
 
   await waitFor(() => expect(screen.queryByText(403)).not.toBeInTheDocument());
 });

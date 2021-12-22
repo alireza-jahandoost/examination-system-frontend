@@ -29,10 +29,8 @@ test("user can change the password, the button must be labeled by loading and th
   userEvent.click(mainLoginButton);
 
   // goto settings
-  const validator = new RegExp(userName, "i");
-  userEvent.click(await screen.findByRole("button", { name: validator }));
-  const profileLink = await screen.findByRole("link", { name: /profile/i });
-  userEvent.click(profileLink);
+  const dashboardLink = await screen.findByRole("link", { name: /dashboard/i });
+  userEvent.click(dashboardLink);
 
   const settingsLink = (
     await screen.findAllByRole("link", { name: /settings/i })
@@ -93,10 +91,8 @@ test("if user's action has error, the error must be shown to user", async () => 
   userEvent.click(mainLoginButton);
 
   // goto settings
-  const validator = new RegExp(userName, "i");
-  userEvent.click(await screen.findByRole("button", { name: validator }));
-  const profileLink = await screen.findByRole("link", { name: /profile/i });
-  userEvent.click(profileLink);
+  const dashboardLink = await screen.findByRole("link", { name: /dashboard/i });
+  userEvent.click(dashboardLink);
 
   const settingsLink = (
     await screen.findAllByRole("link", { name: /settings/i })

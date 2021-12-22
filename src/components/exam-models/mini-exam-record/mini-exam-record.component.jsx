@@ -18,7 +18,6 @@ const MiniExamRecord = ({
     examEnd,
     isPublished,
   });
-  console.log(variant);
 
   return (
     <Link to={to} className="text-decoration-none">
