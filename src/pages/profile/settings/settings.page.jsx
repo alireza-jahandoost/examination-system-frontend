@@ -17,7 +17,7 @@ const SettingsPage = () => {
         <div>
           <Row>
             <Col md={4} lg={6}>
-              <div className="lead text-start bg-light border shadow rounded p-3">
+              <div className="lead text-start bg-white border shadow rounded p-3">
                 <div className="mb-4">
                   <p>
                     <span className="pe-2">
@@ -50,7 +50,7 @@ const SettingsPage = () => {
               </div>
             </Col>
             <Col md={8} lg={6}>
-              <div className="text-start mt-3 mt-md-0 bg-light shadow border rounded p-3">
+              <div className="text-start mt-3 mt-md-0 bg-white shadow border rounded p-3">
                 <h2> Change Password </h2>
                 <ChangePasswordForm />
               </div>
