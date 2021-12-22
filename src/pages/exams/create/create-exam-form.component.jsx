@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 
 import TextInput from "../../../components/inputs/text-input.component";
 import NumberInput from "../../../components/inputs/number-input.component";
-import TextareaInput from "../../../components/inputs/textarea-input.component";
+// import TextareaInput from "../../../components/inputs/textarea-input.component";
 import CheckboxInput from "../../../components/inputs/checkbox-input.component";
 import PasswordInput from "../../../components/inputs/password-input.component";
 
@@ -18,9 +18,10 @@ import { NotificationContext } from "../../../contexts/notification-context/noti
 import { convertToUTC } from "../../../utilities/dateAndTime.utility";
 
 const CreateExamForm = ({ ...props }) => {
+  // exam description part commented
   const [needsPassword, setNeedsPassword] = useState(false);
   const [examName, setExamName] = useState("");
-  const [examDescription, setExamDescription] = useState("");
+  // const [examDescription, setExamDescription] = useState("");
   const [examStart, setExamStart] = useState("");
   const [examEnd, setExamEnd] = useState("");
   const [totalScore, setTotalScore] = useState(0);
@@ -36,7 +37,7 @@ const CreateExamForm = ({ ...props }) => {
   const handleSubmit = (e) => {
     const bodyOfRequest = {
       exam_name: examName,
-      exam_description: examDescription,
+      // exam_description: examDescription,
       start_of_exam: convertToUTC(examStart),
       end_of_exam: convertToUTC(examEnd),
       total_score: totalScore,
@@ -101,18 +102,20 @@ const CreateExamForm = ({ ...props }) => {
               />
             </Col>
           </Row>
-          <Row className="mt-3">
-            <Col>
-              <TextareaInput
-                error={errors.exam_description}
-                label="Exam Description"
-                id="exam-description"
-                value={examDescription}
-                onChange={(e) => setExamDescription(e.target.value)}
-                placeholder="Exam Description"
-              />
-            </Col>
-          </Row>
+          {
+            // <Row className="mt-3">
+            //   <Col>
+            //     <TextareaInput
+            //       error={errors.exam_description}
+            //       label="Exam Description"
+            //       id="exam-description"
+            //       value={examDescription}
+            //       onChange={(e) => setExamDescription(e.target.value)}
+            //       placeholder="Exam Description"
+            //     />
+            //   </Col>
+            // </Row>
+          }
           <Row className="mt-3">
             <Col xs={12} md={6}>
               <TextInput

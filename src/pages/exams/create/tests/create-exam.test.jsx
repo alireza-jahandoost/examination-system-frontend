@@ -10,6 +10,8 @@ import CreateExamPage from "../create-exam.page";
 import moment from "moment";
 import programRoutes from "../../../../constants/program-routes.constant";
 
+// exam description part commented
+
 test("first of all, exam name field must be focused", async () => {
   renderWithAuthentication(<CreateExamPage />);
 
@@ -28,13 +30,13 @@ test("user can create an exam without password and he will see loading... in cre
   userEvent.type(examNameField, "exam name");
   // end
 
-  // fill exam description
-  const examDescriptionField = screen.getByRole("textbox", {
-    name: /exam description/i,
-  });
-  userEvent.clear(examDescriptionField);
-  userEvent.type(examDescriptionField, "exam description ".repeat(50));
-  // end
+  // // fill exam description
+  // const examDescriptionField = screen.getByRole("textbox", {
+  //   name: /exam description/i,
+  // });
+  // userEvent.clear(examDescriptionField);
+  // userEvent.type(examDescriptionField, "exam description ".repeat(50));
+  // // end
 
   // fill exam's start
   const examStartField = screen.getByRole("textbox", { name: /exam's start/i });
@@ -94,13 +96,13 @@ test("user can create an exam with password", async () => {
   userEvent.type(examNameField, "exam name");
   // end
 
-  // fill exam description
-  const examDescriptionField = screen.getByRole("textbox", {
-    name: /exam description/i,
-  });
-  userEvent.clear(examDescriptionField);
-  userEvent.type(examDescriptionField, "exam description ".repeat(50));
-  // end
+  // // fill exam description
+  // const examDescriptionField = screen.getByRole("textbox", {
+  //   name: /exam description/i,
+  // });
+  // userEvent.clear(examDescriptionField);
+  // userEvent.type(examDescriptionField, "exam description ".repeat(50));
+  // // end
 
   // fill exam's start
   const examStartField = screen.getByRole("textbox", { name: /exam's start/i });
@@ -171,13 +173,13 @@ test("user will see errors if he completed the information wrong", async () => {
   userEvent.type(examNameField, "");
   // end
 
-  // fill exam description
-  const examDescriptionField = screen.getByRole("textbox", {
-    name: /exam description/i,
-  });
-  userEvent.clear(examDescriptionField);
-  userEvent.type(examDescriptionField, "exam description ".repeat(50));
-  // end
+  // // fill exam description
+  // const examDescriptionField = screen.getByRole("textbox", {
+  //   name: /exam description/i,
+  // });
+  // userEvent.clear(examDescriptionField);
+  // userEvent.type(examDescriptionField, "exam description ".repeat(50));
+  // // end
 
   // fill exam's start
   const examStartField = screen.getByRole("textbox", { name: /exam's start/i });
@@ -255,13 +257,13 @@ test("user will redirect to update the exams page after creating the exam", asyn
   userEvent.type(examNameField, "exam name");
   // end
 
-  // fill exam description
-  const examDescriptionField = screen.getByRole("textbox", {
-    name: /exam description/i,
-  });
-  userEvent.clear(examDescriptionField);
-  userEvent.type(examDescriptionField, "exam description ".repeat(50));
-  // end
+  // // fill exam description
+  // const examDescriptionField = screen.getByRole("textbox", {
+  //   name: /exam description/i,
+  // });
+  // userEvent.clear(examDescriptionField);
+  // userEvent.type(examDescriptionField, "exam description ".repeat(50));
+  // // end
 
   // fill exam's start
   const examStartField = screen.getByRole("textbox", { name: /exam's start/i });

@@ -3,7 +3,7 @@ import { Alert, Button, Row, Col, Form } from "react-bootstrap";
 
 import TextInput from "../../../components/inputs/text-input.component";
 import NumberInput from "../../../components/inputs/number-input.component";
-import TextareaInput from "../../../components/inputs/textarea-input.component";
+// import TextareaInput from "../../../components/inputs/textarea-input.component";
 import CheckboxInput from "../../../components/inputs/checkbox-input.component";
 import PasswordInput from "../../../components/inputs/password-input.component";
 
@@ -12,12 +12,13 @@ import { convertToUTC } from "../../../utilities/dateAndTime.utility";
 import { UpdateExamContext } from "../../../contexts/update-exam-context/update-exam.context";
 
 const UpdateExamForm = ({ examId }) => {
+  // exam description part commented
   const {
     exam,
     examName,
     changeExamName,
-    examDescription,
-    changeExamDescription,
+    // examDescription,
+    // changeExamDescription,
     examStart,
     changeExamStart,
     examEnd,
@@ -40,9 +41,9 @@ const UpdateExamForm = ({ examId }) => {
     if (exam.exam_name !== examName) {
       bodyOfRequest.exam_name = examName;
     }
-    if (exam.exam_description !== examDescription) {
-      bodyOfRequest.exam_description = examDescription;
-    }
+    // if (exam.exam_description !== examDescription) {
+    //   bodyOfRequest.exam_description = examDescription;
+    // }
     if (exam.start_of_exam !== convertToUTC(examStart)) {
       bodyOfRequest.start_of_exam = convertToUTC(examStart);
     }
@@ -81,21 +82,23 @@ const UpdateExamForm = ({ examId }) => {
           />
         </Col>
       </Row>
-      <Row className="mt-3">
-        <Col>
-          <TextareaInput
-            error={errors.exam_description}
-            readOnly={isPublished}
-            label="Exam Description"
-            id="exam-description"
-            value={examDescription}
-            onChange={(e) => {
-              changeExamDescription(e.target.value);
-            }}
-            placeholder="Exam Description"
-          />
-        </Col>
-      </Row>
+      {
+        // <Row className="mt-3">
+        //   <Col>
+        //     <TextareaInput
+        //       error={errors.exam_description}
+        //       readOnly={isPublished}
+        //       label="Exam Description"
+        //       id="exam-description"
+        //       value={examDescription}
+        //       onChange={(e) => {
+        //         changeExamDescription(e.target.value);
+        //       }}
+        //       placeholder="Exam Description"
+        //     />
+        //   </Col>
+        // </Row>
+      }
       <Row className="mt-3">
         <Col>
           <TextInput
