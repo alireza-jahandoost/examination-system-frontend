@@ -82,7 +82,10 @@ const CreateExamForm = ({ ...props }) => {
 
   return (
     <div {...props}>
-      <div className="shadow bg-light rounded p-3 m-4 border">
+      <div className="shadow bg-white rounded p-3 m-4 border">
+        <p className="text-muted lead">
+          notice: You can change everything in this form in future
+        </p>
         <Form onSubmit={handleSubmit}>
           {errors.message && <Alert variant="danger">{errors.message}</Alert>}
           <Row className="mt-3">
@@ -111,7 +114,7 @@ const CreateExamForm = ({ ...props }) => {
             </Col>
           </Row>
           <Row className="mt-3">
-            <Col>
+            <Col xs={12} md={6}>
               <TextInput
                 error={errors.start_of_exam}
                 label="Exam's Start"
@@ -120,8 +123,13 @@ const CreateExamForm = ({ ...props }) => {
                 value={examStart}
                 onChange={(e) => setExamStart(e.target.value)}
               />
+              <p className="text-muted small">
+                * in YYYY-MM-DD HH:MM:SS format <br />
+                Example: for 1st Dec 2021 at 8 O'clock: <br />
+                2021-12-01 08:00:00
+              </p>
             </Col>
-            <Col>
+            <Col xs={12} md={6}>
               <TextInput
                 error={errors.end_of_exam}
                 label="Exam's End"
@@ -130,6 +138,11 @@ const CreateExamForm = ({ ...props }) => {
                 value={examEnd}
                 onChange={(e) => setExamEnd(e.target.value)}
               />
+              <p className="text-muted small">
+                * in YYYY-MM-DD HH:MM:SS format <br />
+                Example: for 1st Dec 2021 at 8 O'clock: <br />
+                2021-12-01 08:00:00
+              </p>
             </Col>
           </Row>
           <Row className="mt-3">
@@ -142,6 +155,7 @@ const CreateExamForm = ({ ...props }) => {
                 value={totalScore}
                 onChange={(e) => setTotalScore(e.target.value)}
               />
+              <p className="text-muted small">* total score of exam</p>
             </Col>
           </Row>
           <Row className="mt-3">
@@ -153,10 +167,14 @@ const CreateExamForm = ({ ...props }) => {
                 checked={needsConfirmation}
                 onChange={(e) => setNeedsConfirmation(e.target.checked)}
               />
+              <p className="text-muted small">
+                * if enabled, participant must be confirmed by you to
+                participate in exam
+              </p>
             </Col>
           </Row>
           <Row className="mt-3">
-            <Col xs={12} md={6} xl={3}>
+            <Col xs={12} md={6}>
               <CheckboxInput
                 error={errors.needs_password}
                 checked={!!needsPassword}
@@ -164,9 +182,12 @@ const CreateExamForm = ({ ...props }) => {
                 label="Needs Password?"
                 id="needs-password"
               />
+              <p className="text-muted small">
+                * if enabled, registration in exam needs password
+              </p>
             </Col>
-            {needsPassword && (
-              <Col xs={12} md={6} xl={4}>
+            <Col xs={12} md={6} xl={4} style={{ minHeight: "100px" }}>
+              {needsPassword && (
                 <PasswordInput
                   error={errors.password}
                   label="Password"
@@ -175,8 +196,8 @@ const CreateExamForm = ({ ...props }) => {
                   value={examPassword}
                   onChange={(e) => setExamPassword(e.target.value)}
                 />
-              </Col>
-            )}
+              )}
+            </Col>
           </Row>
           <Row className="mt-3">
             <Col>
