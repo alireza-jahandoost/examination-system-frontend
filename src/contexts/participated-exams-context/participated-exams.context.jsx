@@ -1,20 +1,21 @@
-import { createContext, useEffect, useState, useContext, useMemo } from "react";
+import { createContext, useState, useEffect, useMemo, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { useMountedState } from "react-use";
+
 import useAsyncError from "../../hooks/useAsyncError";
 
-import { AuthenticationContext } from "../authentication-context/authentication.context";
+import { AuthenticationContext } from "../../contexts/authentication-context/authentication.context";
 
-import { ownedExamsIndexRequest } from "../../services/exams/exams.service";
+import { participatedExamsIndexRequest } from "../../services/exams/exams.service";
 
-export const CreatedExamsContext = createContext();
+export const ParticipatedExamsContext = createContext();
 
-export const CreatedExamsProvider = ({ children }) => {
+export const ParticipatedExamsProvider = ({ children }) => {
   const [exams, setExams] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [numberOfPages, setNumberOfPages] = useState(0);
-  const { token, removeUserInfo } = useContext(AuthenticationContext);
   const [isLoading, setIsLoading] = useState(false);
+  const { token, removeUserInfo } = useContext(AuthenticationContext);
   const location = useLocation();
   const page = useMemo(() => {
     return Number(new URLSearchParams(location.search).get("page")) || 1;
@@ -27,7 +28,7 @@ export const CreatedExamsProvider = ({ children }) => {
       return;
     }
     setIsLoading(true);
-    ownedExamsIndexRequest(token, page)
+    participatedExamsIndexRequest(token, page)
       .then((response) => response.data)
       .then(({ data, meta }) => {
         if (isMounted()) {
@@ -61,11 +62,11 @@ export const CreatedExamsProvider = ({ children }) => {
     throwError,
   ]);
 
-  const value = { exams, currentPage, page, numberOfPages, isLoading };
+  const value = { exams, isLoading, page, currentPage, numberOfPages };
 
   return (
-    <CreatedExamsContext.Provider value={value}>
+    <ParticipatedExamsContext.Provider value={value}>
       {children}
-    </CreatedExamsContext.Provider>
+    </ParticipatedExamsContext.Provider>
   );
 };

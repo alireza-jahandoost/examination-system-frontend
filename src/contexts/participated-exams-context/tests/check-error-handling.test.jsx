@@ -2,18 +2,18 @@ import {
   waitFor,
   screen,
   renderWithAuthentication,
-} from "../../../../../test-utils/testing-library-utils";
+} from "../../../test-utils/testing-library-utils";
 import {
   changeRequestResponseTo401,
   changeRequestResponseToSpecificStatus,
-} from "../../../../../utilities/tests.utility";
+} from "../../../utilities/tests.utility";
 
-import ParticipatedExamsPage from "../participated-exams.page";
+import ParticipatedExamsPage from "../../../pages/exams/index/index-participated-exams/participated-exams.page";
 
-import { ErrorBoundaryProvider } from "../../../../../contexts/error-boundary-context/error-boundary.context";
+import { ErrorBoundaryProvider } from "../../../contexts/error-boundary-context/error-boundary.context";
 
-import apiRoutes from "../../../../../constants/api-routes.constant";
-import programRoutes from "../../../../../constants/program-routes.constant";
+import apiRoutes from "../../../constants/api-routes.constant";
+import programRoutes from "../../../constants/program-routes.constant";
 
 describe("check 401 errors(the removeUserInfo() func from authentication context must be called)", () => {
   test("check participants.participatedExams route", async () => {
