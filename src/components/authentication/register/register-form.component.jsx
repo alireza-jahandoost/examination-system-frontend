@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { Form, Alert } from "react-bootstrap";
 import TextInput from "../partials/text-input.component";
+import PasswordInput from "../partials/password-input.component";
 import AuthButton from "../partials/auth-button.component";
 import { AuthenticationContext } from "../../../contexts/authentication-context/authentication.context";
 
@@ -37,7 +38,6 @@ const RegisterForm = ({ ...props }) => {
           <TextInput
             error={errors.name}
             id="register-name"
-            type="text"
             placeholder="Name"
             label="name"
             value={name}
@@ -53,19 +53,17 @@ const RegisterForm = ({ ...props }) => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <TextInput
+          <PasswordInput
             error={errors.password}
             id="register-password"
-            type="password"
             placeholder="Password"
             label="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <TextInput
+          <PasswordInput
             error={errors.password_confirmation}
             id="register-password-confirmation"
-            type="password"
             placeholder="Confirm Password"
             label="confirm password"
             value={confirmPassword}

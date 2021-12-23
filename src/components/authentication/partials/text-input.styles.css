@@ -42,6 +42,11 @@
   background-color: inherit !important;
 }
 
+.toggle-show-auth-btn {
+  right: 5px;
+  top: 5px;
+}
+
 input:focus,
 textarea:focus {
   border-color: #198754 !important;

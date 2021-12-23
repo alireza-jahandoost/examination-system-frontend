@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { Form, Alert } from "react-bootstrap";
 import TextInput from "../partials/text-input.component";
+import PasswordInput from "../partials/password-input.component";
 import AuthButton from "../partials/auth-button.component";
 import { AuthenticationContext } from "../../../contexts/authentication-context/authentication.context";
 
@@ -30,7 +31,6 @@ const LoginForm = ({ ...props }) => {
         >
           <TextInput
             id="login-email-address"
-            type="email"
             placeholder="Email Address"
             label="email address"
             value={email}
@@ -38,9 +38,8 @@ const LoginForm = ({ ...props }) => {
             error={errors.email}
             autoFocus
           />
-          <TextInput
+          <PasswordInput
             id="login-password"
-            type="password"
             placeholder="Password"
             label="password"
             value={password}
