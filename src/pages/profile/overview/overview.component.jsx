@@ -69,17 +69,22 @@ const Overview = () => {
                       to={programRoutes.examiningOverview(exam.exam_id)}
                       examStart={exam.start_of_exam}
                       examEnd={exam.end_of_exam}
-                      isPublished={true}
+                      isPublished={exam.published}
                       className="my-1"
                       key={exam.exam_id}
                     />
                   ))}
-                  <Link
-                    to={programRoutes.indexCreatedExams()}
-                    className="d-block text-start"
-                  >
-                    More...
-                  </Link>
+                  {createdExams.exams.length > 5 && (
+                    <Link
+                      to={programRoutes.indexCreatedExams()}
+                      className="d-block text-start"
+                    >
+                      More...
+                    </Link>
+                  )}
+                  {createdExams.exams.length === 0 && (
+                    <p className="lead">You have not created any exam yet</p>
+                  )}
                 </div>
               </Container>
             </Col>
@@ -97,17 +102,24 @@ const Overview = () => {
                       to={programRoutes.examiningOverview(exam.exam_id)}
                       examStart={exam.start_of_exam}
                       examEnd={exam.end_of_exam}
-                      isPublished={exam.published}
+                      isPublished={true}
                       className="my-1"
                       key={exam.exam_id}
                     />
                   ))}
-                  <Link
-                    to={programRoutes.indexParticipatedExams()}
-                    className="d-block text-start"
-                  >
-                    More...
-                  </Link>
+                  {participatedExams.exams.length > 5 && (
+                    <Link
+                      to={programRoutes.indexParticipatedExams()}
+                      className="d-block text-start"
+                    >
+                      More...
+                    </Link>
+                  )}
+                  {participatedExams.exams.length === 0 && (
+                    <p className="lead">
+                      You have not participated in any exam yet
+                    </p>
+                  )}
                 </div>
               </Container>
             </Col>
