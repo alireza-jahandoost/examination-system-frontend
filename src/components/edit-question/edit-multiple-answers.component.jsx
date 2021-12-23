@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
+import { useDebounce } from "react-use";
 
 import QuestionText from "../question-form-partials/question-text.component";
 import QuestionScore from "../question-form-partials/question-score.component";
@@ -21,6 +22,17 @@ const EditMultipleAnswers = ({
   const [hasChange, setHasChange] = useState(false);
   const [currentStates, setCurrentStates] = useState([]);
   const nextStateId = useRef(1);
+  const buttonRef = useRef();
+
+  useDebounce(
+    () => {
+      if (hasChange && buttonRef.current) {
+        buttonRef.current.click();
+      }
+    },
+    3000,
+    [hasChange, questionText, questionScore, currentStates]
+  );
 
   useEffect(() => {
     if (
@@ -206,6 +218,7 @@ const EditMultipleAnswers = ({
         <Col>
           {hasChange ? (
             <Button
+              ref={buttonRef}
               disabled={readOnly || isLoading}
               variant="success"
               type="submit"

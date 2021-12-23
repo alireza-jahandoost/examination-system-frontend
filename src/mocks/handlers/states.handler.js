@@ -175,7 +175,7 @@ const statesHandler = [
 
       switch (Number(questionId)) {
         case 2:
-          if (integer_part !== undefined) {
+          if (integer_part) {
             return res(ctx.status(422), ctx.json(integerPartForFillTheBlank));
           }
           return res(

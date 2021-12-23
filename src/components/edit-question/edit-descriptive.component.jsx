@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useDebounce } from "react-use";
 import { Form, Button, Row, Col } from "react-bootstrap";
 
 import QuestionText from "../question-form-partials/question-text.component";
@@ -17,6 +18,17 @@ const EditDescriptive = ({
   const [questionText, setQuestionText] = useState(question.question_text);
   const [questionScore, setQuestionScore] = useState(question.question_score);
   const [hasChange, setHasChange] = useState(false);
+  const buttonRef = useRef();
+
+  useDebounce(
+    () => {
+      if (hasChange && buttonRef.current) {
+        buttonRef.current.click();
+      }
+    },
+    3000,
+    [hasChange, questionText, questionScore]
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -87,6 +99,7 @@ const EditDescriptive = ({
         <Col>
           {hasChange ? (
             <Button
+              ref={buttonRef}
               disabled={readOnly || isLoading}
               variant="success"
               type="submit"

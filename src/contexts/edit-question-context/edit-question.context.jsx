@@ -139,20 +139,10 @@ export const EditQuestionProvider = ({ children, examId, questionId }) => {
     if (changedStates) {
       changedStates.forEach((changedState) => {
         const changedStateBody = {};
-        const stateBeforeChange = states.find(
-          (state) => state.id === changedState.id
-        );
-        if (
-          changedState.integer_part !== undefined &&
-          Number(stateBeforeChange.integer_part) !==
-            Number(changedState.integer_part)
-        ) {
+        if (changedState.integer_part !== undefined) {
           changedStateBody.integer_part = changedState.integer_part;
         }
-        if (
-          changedState.text_part !== undefined &&
-          stateBeforeChange.text_part !== changedState.text_part
-        ) {
+        if (changedState.text_part !== undefined) {
           changedStateBody.text_part = changedState.text_part;
         }
         requests.push(
