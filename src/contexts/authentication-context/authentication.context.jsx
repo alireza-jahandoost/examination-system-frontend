@@ -25,6 +25,7 @@ export const AuthenticationProvider = ({ children }) => {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [popover, setPopover] = useState("");
+  const [isLoggedOut, setIsLoggedOut] = useState(false);
   const { createNotification } = useContext(NotificationContext);
   const isMounted = useMountedState();
 
@@ -164,6 +165,7 @@ export const AuthenticationProvider = ({ children }) => {
   }, []);
 
   const logout = () => {
+    setIsLoggedOut(true);
     logoutRequest(token).then(() => {
       removeUserInfo();
       setErrors({});
@@ -215,6 +217,7 @@ export const AuthenticationProvider = ({ children }) => {
         logout,
         changePassword,
         removeUserInfo,
+        isLoggedOut,
       }}
     >
       {children}
