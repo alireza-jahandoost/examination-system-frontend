@@ -104,6 +104,10 @@ const CreateFillTheBlank = ({ examId, addQuestion, readOnly = false }) => {
             error={errors.question_text}
             readOnly={readOnly}
           />
+          <p className="text-muted small">
+            * you have to specify the place of blank input with {` "{{{}}}" `}
+            phrase without quotes.
+          </p>
         </Col>
       </Row>
       <Row className="mt-3">
@@ -116,6 +120,11 @@ const CreateFillTheBlank = ({ examId, addQuestion, readOnly = false }) => {
             error={errors.question_answers}
             readOnly={readOnly}
           />
+          <p className="text-muted small">
+            * these answers specify the acceptable answers of the question. it
+            means that if participant submit any of them, he/she will get full
+            score.
+          </p>
         </Col>
       </Row>
       <Row className="mt-3">

@@ -132,6 +132,11 @@ const UpdateExamForm = ({ examId }) => {
               changeExamStart(e.target.value);
             }}
           />
+          <p className="text-muted small">
+            * in YYYY-MM-DD HH:MM:SS format <br />
+            Example: for Dec 1st 2021 at 8 O'clock: <br />
+            2021-12-01 08:00:00
+          </p>
         </Col>
         <Col>
           <TextInput
@@ -145,6 +150,11 @@ const UpdateExamForm = ({ examId }) => {
               changeExamEnd(e.target.value);
             }}
           />
+          <p className="text-muted small">
+            * in YYYY-MM-DD HH:MM:SS format <br />
+            Example: for Dec 1st 2021 at 8 O'clock: <br />
+            2021-12-01 08:00:00
+          </p>
         </Col>
       </Row>
       <Row className="mt-3">
@@ -160,6 +170,7 @@ const UpdateExamForm = ({ examId }) => {
               changeTotalScore(Number(e.target.value));
             }}
           />
+          <p className="text-muted small">* total score of exam</p>
         </Col>
       </Row>
       <Row className="mt-3">
@@ -174,6 +185,10 @@ const UpdateExamForm = ({ examId }) => {
               changeNeedsConfirmation(e.target.checked);
             }}
           />
+          <p className="text-muted small">
+            * if enabled, participant must be confirmed by you to participate in
+            exam
+          </p>
         </Col>
       </Row>
       <Row className="mt-3">

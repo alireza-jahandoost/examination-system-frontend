@@ -128,7 +128,7 @@ const CreateExamForm = ({ ...props }) => {
               />
               <p className="text-muted small">
                 * in YYYY-MM-DD HH:MM:SS format <br />
-                Example: for 1st Dec 2021 at 8 O'clock: <br />
+                Example: for Dec 1st 2021 at 8 O'clock: <br />
                 2021-12-01 08:00:00
               </p>
             </Col>
@@ -143,7 +143,7 @@ const CreateExamForm = ({ ...props }) => {
               />
               <p className="text-muted small">
                 * in YYYY-MM-DD HH:MM:SS format <br />
-                Example: for 1st Dec 2021 at 8 O'clock: <br />
+                Example: for Dec 1st 2021 at 8 O'clock: <br />
                 2021-12-01 08:00:00
               </p>
             </Col>

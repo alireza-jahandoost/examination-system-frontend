@@ -204,6 +204,10 @@ const EditOrdering = ({
             readOnly={readOnly}
             suffix={`question-${question.question_id}`}
           />
+          <p className="text-muted small">
+            * specify the answer of question in correct order. it will be
+            shuffled by system.
+          </p>
         </Col>
       </Row>
       <Row className="mt-3">

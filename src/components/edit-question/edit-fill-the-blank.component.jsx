@@ -184,6 +184,10 @@ const EditFillTheBlank = ({
             error={errors.question_text}
             readOnly={readOnly}
           />
+          <p className="text-muted small">
+            * you have to specify the place of blank input with {` "{{{}}}" `}
+            phrase without quotes.
+          </p>
         </Col>
       </Row>
       <Row className="mt-3">
@@ -197,6 +201,11 @@ const EditFillTheBlank = ({
             readOnly={readOnly}
             suffix={`question-${question.question_id}`}
           />
+          <p className="text-muted small">
+            * these answers specify the acceptable answers of the question. it
+            means that if participant submit any of them, he/she will get full
+            score.
+          </p>
         </Col>
       </Row>
       <Row className="mt-3">
