@@ -110,7 +110,7 @@ const Header = () => {
                     className="d-lg-none m-2 lead"
                     to={programRoutes.profile()}
                   >
-                    overview
+                    Dashboard
                   </Nav.Link>
                   <Nav.Link
                     {...isActive(programRoutes.indexAllExams())}

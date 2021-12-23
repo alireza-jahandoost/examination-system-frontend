@@ -29,7 +29,9 @@ test("user can change the password, the button must be labeled by loading and th
   userEvent.click(mainLoginButton);
 
   // goto settings
-  const dashboardLink = await screen.findByRole("link", { name: /dashboard/i });
+  const dashboardLink = (
+    await screen.findAllByRole("link", { name: /dashboard/i })
+  )[0];
   userEvent.click(dashboardLink);
 
   const settingsLink = (
@@ -91,7 +93,9 @@ test("if user's action has error, the error must be shown to user", async () => 
   userEvent.click(mainLoginButton);
 
   // goto settings
-  const dashboardLink = await screen.findByRole("link", { name: /dashboard/i });
+  const dashboardLink = (
+    await screen.findAllByRole("link", { name: /dashboard/i })
+  )[0];
   userEvent.click(dashboardLink);
 
   const settingsLink = (
