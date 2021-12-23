@@ -1,5 +1,6 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { Alert, Button, Row, Col, Form } from "react-bootstrap";
+import { useDebounce } from "react-use";
 
 import TextInput from "../../../components/inputs/text-input.component";
 import NumberInput from "../../../components/inputs/number-input.component";
@@ -35,6 +36,25 @@ const UpdateExamForm = ({ examId }) => {
     isAnyChangeExist,
     handleUpdate,
   } = useContext(UpdateExamContext);
+  const buttonRef = useRef();
+
+  useDebounce(
+    () => {
+      if (isAnyChangeExist && buttonRef.current) {
+        buttonRef.current.click();
+      }
+    },
+    3000,
+    [
+      isAnyChangeExist,
+      examName,
+      examStart,
+      examEnd,
+      totalScore,
+      examPassword,
+      needsConfirmation,
+    ]
+  );
 
   const handleSubmit = (e) => {
     const bodyOfRequest = {};
@@ -178,7 +198,12 @@ const UpdateExamForm = ({ examId }) => {
       <Row className="mt-3">
         <Col>
           {isAnyChangeExist ? (
-            <Button variant="success" disabled={isLoading} type="submit">
+            <Button
+              variant="success"
+              disabled={isLoading}
+              ref={buttonRef}
+              type="submit"
+            >
               {isLoading ? "Loading..." : "Save Changes"}
             </Button>
           ) : (
