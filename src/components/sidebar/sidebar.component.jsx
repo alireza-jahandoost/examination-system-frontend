@@ -30,13 +30,26 @@ const Sidebar = (props) => {
             iconName="exam"
           >
             <SidebarItem
-              active={checkCurrentPath(programRoutes.indexAllExams())}
+              active={
+                checkCurrentPath(programRoutes.indexAllExams()) ||
+                checkCurrentPath(
+                  programRoutes.examiningQuestion(":examId", ":questionId")
+                ) ||
+                checkCurrentPath(programRoutes.examiningOverview(":examId"))
+              }
               className="lead my-2"
               label="all exams"
               href={programRoutes.indexAllExams()}
             />
             <SidebarItem
-              active={checkCurrentPath(programRoutes.indexCreatedExams())}
+              active={
+                checkCurrentPath(programRoutes.indexCreatedExams()) ||
+                checkCurrentPath(programRoutes.indexParticipants(":examId")) ||
+                checkCurrentPath(programRoutes.updateExam(":examId")) ||
+                checkCurrentPath(
+                  programRoutes.showParticipant(":examId", ":participantId")
+                )
+              }
               className="lead my-2"
               label="created exams"
               href={programRoutes.indexCreatedExams()}

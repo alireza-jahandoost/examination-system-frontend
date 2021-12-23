@@ -1,12 +1,15 @@
 import { useCallback } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, matchPath } from "react-router-dom";
 
 const useCurrentPath = () => {
   const location = useLocation();
 
   return useCallback(
     (expected) => {
-      return location.pathname === expected;
+      return !!matchPath(location.pathname, {
+        path: expected,
+        exact: true,
+      });
     },
     [location]
   );

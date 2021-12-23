@@ -75,7 +75,18 @@ const IndexParticipantsPage = () => {
 
   return (
     <>
-      {" "}
+      <div className="text-start bg-white p-3 rounded shadow border mb-3">
+        <Link to={programRoutes.updateExam(examId)}>
+          <Button className="mx-2" variant="warning">
+            edit exam
+          </Button>
+        </Link>
+        <Link to={programRoutes.examiningOverview(examId)}>
+          <Button className="mx-2" variant="info">
+            exam overview
+          </Button>
+        </Link>
+      </div>
       <h1>Participants</h1>
       {isLoading ? (
         <p>Loading...</p>
@@ -123,7 +134,11 @@ const IndexParticipantsPage = () => {
           />
         </>
       ) : (
-        <p className="lead"> no one have participated in this exam yet </p>
+        <p className="lead">
+          no one have participated in this exam yet <br />
+          check whether your exam is published or not(another users can not see
+          the exams if they are not published)
+        </p>
       )}
     </>
   );
