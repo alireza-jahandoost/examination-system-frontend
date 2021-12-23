@@ -70,13 +70,12 @@ export const AuthenticationProvider = ({ children }) => {
   }, [isAuthLoaded, authenticateUser, isMounted]);
 
   useEffect(() => {
-    if (user) {
+    if (user && token) {
       setIsUserAuthenticated(true);
     } else {
       setIsUserAuthenticated(false);
-      setToken(null);
     }
-  }, [user]);
+  }, [user, token]);
 
   const showUserLoginPopover = () => {
     setPopover("login");
@@ -161,6 +160,7 @@ export const AuthenticationProvider = ({ children }) => {
     if (localStorage.getItem("token")) {
       localStorage.removeItem("token");
       setUser(null);
+      setToken(null);
     }
   }, []);
 
@@ -188,6 +188,7 @@ export const AuthenticationProvider = ({ children }) => {
     )
       .then(() => {
         setUser(null);
+        setToken(null);
         setIsLoading(false);
         setErrors({});
       })

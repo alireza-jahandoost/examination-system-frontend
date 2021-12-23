@@ -123,8 +123,10 @@ test("user can see the grade, change it and save it", async () => {
     await screen.findByText(showGrade(1, 1).data.grade.grade, { exact: false })
   ).toBeInTheDocument();
 
-  const newGrade = Math.floor(
-    Math.random() * Number(questionsShowId_1.data.question.question_score)
+  const newGrade = (showGrade(1, 1).data.grade.grade ===
+  questionsShowId_1.data.question.question_score - 1
+    ? questionsShowId_1.data.question.question_score - 2
+    : questionsShowId_1.data.question.question_score - 1
   ).toString();
 
   const gradeInput = screen.getByRole("spinbutton", { name: /grade/i });
