@@ -73,7 +73,7 @@ describe("an authenticated user can register in an started exam that did not fin
     );
     expect(registerToExamMessage).toBeInTheDocument();
 
-    const registeredText = await screen.findByText(/^registered$/i);
+    const registeredText = await screen.findByText(/registered/i);
     expect(registeredText).toBeInTheDocument();
     // end
   });
@@ -140,7 +140,7 @@ describe("an authenticated user can register in an started exam that did not fin
     );
     expect(registerToExamMessage).toBeInTheDocument();
 
-    const registeredText = await screen.findByText(/^registered$/i);
+    const registeredText = await screen.findByText(/registered/i);
     expect(registeredText).toBeInTheDocument();
     // end
   });

@@ -3,165 +3,525 @@ import {
   screen,
   waitFor,
 } from "../../../../../test-utils/testing-library-utils";
+import moment from "moment";
 import userEvent from "@testing-library/user-event";
 import ExamOverview from "../exam-overview.page";
 import { wrapper } from "./partials";
 import programRoutes from "../../../../../constants/program-routes.constant";
-import { randomString } from "../../../../../utilities/tests.utility";
+import { wait } from "../../../../../utilities/tests.utility";
 
-test("if isContextLoaded is equal to false, user must see the loading message", async () => {
-  const showUserLoginPopover = jest.fn();
-  const { WrappedElement } = wrapper(<ExamOverview />, {
-    participantId: 1,
-    isContextLoaded: false,
-  });
+test("first of all, a loading message must be shown", async () => {
+  const { WrappedElement } = wrapper(<ExamOverview />, {});
   renderWithAuthentication(WrappedElement, {
     route: programRoutes.examiningOverview(1),
-    authenticationProviderProps: {
-      user: null,
-      isUserAuthenticated: false,
-      showUserLoginPopover,
-    },
   });
 
   expect(await screen.findByText(/loading\.\.\./i)).toBeInTheDocument();
 });
 
-describe("check when exam is not finished", () => {
-  test("user must not see register for exam button", async () => {
-    const { WrappedElement } = wrapper(<ExamOverview />, {
-      participantId: 1,
-    });
-    renderWithAuthentication(WrappedElement, {
-      route: programRoutes.examiningOverview(1),
-    });
+describe("check register button", () => {
+  describe("check when exam is finished", () => {
+    test("if user own the exam, it must not be shown", async () => {
+      const start = moment(Date.now() - 5000 * 60).format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
+      const end = moment(Date.now() - 5000).format("YYYY-MM-DD HH:mm:ss");
+      const { WrappedElement } = wrapper(<ExamOverview />, {
+        participantId: 1,
+        exam: {
+          startOfExam: start,
+          endOfExam: end,
+          published: true,
+          isRegistered: false,
+          ownerId: 1,
+        },
+      });
+      renderWithAuthentication(WrappedElement, {
+        route: programRoutes.examiningOverview(1),
+      });
 
-    expect(
-      screen.queryByRole("button", { name: /register for exam/i })
-    ).not.toBeInTheDocument();
-  });
-  test("if user registered and user is not finished the exam, user can click go to exam", async () => {
-    const { WrappedElement } = wrapper(<ExamOverview />, {
-      participantId: 4,
-      firstQuestion: 6,
-    });
-    renderWithAuthentication(WrappedElement, {
-      route: programRoutes.examiningOverview(1),
-    });
-
-    const goToExamButton = await screen.findByRole("button", {
-      name: /go to exam/i,
-    });
-    userEvent.click(goToExamButton);
-
-    await waitFor(() =>
+      await waitFor(() =>
+        expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+      );
       expect(
-        window.location.href.endsWith(programRoutes.examiningQuestion(1, 6))
-      )
-    );
+        screen.queryByRole("button", { name: /register/i })
+      ).not.toBeInTheDocument();
+    });
+    test("if user does not own the exam, it must not be shown", async () => {
+      const start = moment(Date.now() - 5000 * 60).format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
+      const end = moment(Date.now() - 5000).format("YYYY-MM-DD HH:mm:ss");
+      const { WrappedElement } = wrapper(<ExamOverview />, {
+        participantId: 1,
+        exam: {
+          startOfExam: start,
+          endOfExam: end,
+          published: true,
+          isRegistered: false,
+          ownerId: 12,
+        },
+      });
+      renderWithAuthentication(WrappedElement, {
+        route: programRoutes.examiningOverview(1),
+      });
+
+      await waitFor(() =>
+        expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+      );
+      expect(
+        screen.queryByRole("button", { name: /register/i })
+      ).not.toBeInTheDocument();
+    });
   });
-  test("if user registered and user finished the exam, user can not go to the exam", async () => {
-    const { WrappedElement } = wrapper(<ExamOverview />, {
-      participantId: 1,
-      firstQuestion: 6,
-      isUserFinishedExam: true,
-    });
-    renderWithAuthentication(WrappedElement, {
-      route: programRoutes.examiningOverview(1),
-    });
+  describe("check when exam is not finished", () => {
+    describe("check when user own the exam", () => {
+      test("the button must not be shown", async () => {
+        const start = moment(Date.now() - 5000).format("YYYY-MM-DD HH:mm:ss");
+        const end = moment(Date.now() + 60 * 5000).format(
+          "YYYY-MM-DD HH:mm:ss"
+        );
+        const { WrappedElement } = wrapper(<ExamOverview />, {
+          participantId: 1,
+          exam: {
+            startOfExam: start,
+            endOfExam: end,
+            published: true,
+            isRegistered: false,
+            ownerId: 1,
+          },
+        });
+        renderWithAuthentication(WrappedElement, {
+          route: programRoutes.examiningOverview(1),
+        });
 
-    expect(
-      screen.queryByRole("button", { name: /go to exam/i })
-    ).not.toBeInTheDocument();
-  });
-  test("if user is not registered, user can regiter in exam without password", async () => {
-    const registerToExam = jest.fn();
-    const { WrappedElement } = wrapper(<ExamOverview />, {
-      participantId: 0,
-      firstQuestion: null,
-      registerToExam,
+        await waitFor(() =>
+          expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+        );
+        expect(
+          screen.queryByRole("button", { name: /register/i })
+        ).not.toBeInTheDocument();
+      });
     });
-    renderWithAuthentication(WrappedElement, {
-      route: programRoutes.examiningOverview(1),
-    });
+    describe("check when user does not own the exam", () => {
+      test("if user registered in exam, it must not be shown", async () => {
+        const start = moment(Date.now() - 5000).format("YYYY-MM-DD HH:mm:ss");
+        const end = moment(Date.now() + 60 * 5000).format(
+          "YYYY-MM-DD HH:mm:ss"
+        );
+        const { WrappedElement } = wrapper(<ExamOverview />, {
+          participantId: 1,
+          exam: {
+            startOfExam: start,
+            endOfExam: end,
+            ownerId: 12,
+            published: true,
+            isRegistered: true,
+          },
+        });
+        renderWithAuthentication(WrappedElement, {
+          route: programRoutes.examiningOverview(1),
+        });
 
-    const registerForExamButton = await screen.findByRole("button", {
-      name: /register for exam/i,
-    });
-    userEvent.click(registerForExamButton);
+        await waitFor(() =>
+          expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+        );
+        expect(
+          screen.queryByRole("button", { name: /register/i })
+        ).not.toBeInTheDocument();
+      });
+      test("if user not registered in exam, it must be shown", async () => {
+        const start = moment(Date.now() - 5000).format("YYYY-MM-DD HH:mm:ss");
+        const end = moment(Date.now() + 60 * 5000).format(
+          "YYYY-MM-DD HH:mm:ss"
+        );
+        const { WrappedElement } = wrapper(<ExamOverview />, {
+          participantId: -1,
+          exam: {
+            startOfExam: start,
+            endOfExam: end,
+            ownerId: 12,
+            isRegistered: false,
+            published: true,
+          },
+        });
+        renderWithAuthentication(WrappedElement, {
+          route: programRoutes.examiningOverview(1),
+        });
 
-    await waitFor(() => expect(registerToExam).toHaveBeenCalledTimes(1));
-  });
-  test("if user is not registered, user can regiter in exam with password", async () => {
-    const registerToExam = jest.fn();
-    const changeExamPassword = jest.fn();
-    const { WrappedElement } = wrapper(<ExamOverview />, {
-      examId: 5,
-      participantId: 0,
-      firstQuestion: null,
-      registerToExam,
-      changeExamPassword,
+        await waitFor(() =>
+          expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+        );
+        expect(
+          screen.queryByRole("button", { name: /register/i })
+        ).toBeInTheDocument();
+      });
     });
-    renderWithAuthentication(WrappedElement, {
-      route: programRoutes.examiningOverview(5),
-    });
-
-    const passwordField = await screen.findByLabelText(/password/i);
-    userEvent.type(passwordField, "test");
-
-    const registerForExamButton = await screen.findByRole("button", {
-      name: /register for exam/i,
-    });
-    userEvent.click(registerForExamButton);
-
-    await waitFor(() => expect(changeExamPassword).toHaveBeenCalledTimes(4));
-    await waitFor(() => expect(registerToExam).toHaveBeenCalledTimes(1));
-  });
-  test("if there is error message about password, it must be shown", async () => {
-    const registerToExam = jest.fn();
-    const changeExamPassword = jest.fn();
-    const errorMessage = randomString();
-    const { WrappedElement } = wrapper(<ExamOverview />, {
-      examId: 5,
-      participantId: 0,
-      firstQuestion: null,
-      registerToExam,
-      changeExamPassword,
-      errors: { message: errorMessage },
-    });
-    renderWithAuthentication(WrappedElement, {
-      route: programRoutes.examiningOverview(5),
-    });
-
-    expect(await screen.findByText(errorMessage)).toHaveClass("text-danger");
   });
 });
-describe("check when exam is finished", () => {
-  test("if user registered to exam, user must see 'your grade: ' with the grade", async () => {
-    const registerToExam = jest.fn();
-    const changeExamPassword = jest.fn();
+describe("check go to exam button", () => {
+  describe("check when exam is finished", () => {
+    test("if use own the exam, it must not be shown", async () => {
+      const start = moment(Date.now() - 60 * 5000).format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
+      const end = moment(Date.now() - 5000).format("YYYY-MM-DD HH:mm:ss");
+      const { WrappedElement } = wrapper(<ExamOverview />, {
+        participantId: -1,
+        exam: {
+          startOfExam: start,
+          endOfExam: end,
+          ownerId: 1,
+          isRegistered: false,
+          published: true,
+        },
+      });
+      renderWithAuthentication(WrappedElement, {
+        route: programRoutes.examiningOverview(1),
+      });
+
+      await waitFor(() =>
+        expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+      );
+      expect(
+        screen.queryByRole("button", { name: /go to exam/i })
+      ).not.toBeInTheDocument();
+    });
+    test("if user does not own the exam, it must not be shown", async () => {
+      const start = moment(Date.now() - 60 * 5000).format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
+      const end = moment(Date.now() - 5000).format("YYYY-MM-DD HH:mm:ss");
+      const { WrappedElement } = wrapper(<ExamOverview />, {
+        participantId: -1,
+        exam: {
+          startOfExam: start,
+          endOfExam: end,
+          ownerId: 12,
+          isRegistered: false,
+          published: true,
+        },
+      });
+      renderWithAuthentication(WrappedElement, {
+        route: programRoutes.examiningOverview(1),
+      });
+
+      await waitFor(() =>
+        expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+      );
+      expect(
+        screen.queryByRole("button", { name: /go to exam/i })
+      ).not.toBeInTheDocument();
+    });
+  });
+  describe("check when exam is not finished", () => {
+    describe("check when user own the exam", () => {
+      test("if user own the exam, the go to exam button must not be shown", async () => {
+        const start = moment(Date.now() - 5000).format("YYYY-MM-DD HH:mm:ss");
+        const end = moment(Date.now() + 60 * 5000).format(
+          "YYYY-MM-DD HH:mm:ss"
+        );
+        const { WrappedElement } = wrapper(<ExamOverview />, {
+          participantId: -1,
+          exam: {
+            startOfExam: start,
+            endOfExam: end,
+            ownerId: 1,
+            isRegistered: false,
+            published: true,
+          },
+        });
+        renderWithAuthentication(WrappedElement, {
+          route: programRoutes.examiningOverview(1),
+        });
+
+        await waitFor(() =>
+          expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+        );
+        expect(
+          screen.queryByRole("button", { name: /go to exam/i })
+        ).not.toBeInTheDocument();
+      });
+    });
+    describe("check when user does not own the exam", () => {
+      describe("check when user registered for exam", () => {
+        test("user can see the button if he/she does not finished the exam", async () => {
+          const start = moment(Date.now() - 5000).format("YYYY-MM-DD HH:mm:ss");
+          const end = moment(Date.now() + 60 * 5000).format(
+            "YYYY-MM-DD HH:mm:ss"
+          );
+          const { WrappedElement } = wrapper(<ExamOverview />, {
+            participantId: 4,
+            exam: {
+              startOfExam: start,
+              endOfExam: end,
+              ownerId: 12,
+              isRegistered: true,
+              published: true,
+            },
+          });
+          renderWithAuthentication(WrappedElement, {
+            route: programRoutes.examiningOverview(1),
+          });
+
+          await waitFor(() =>
+            expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+          );
+          expect(
+            await screen.findByRole("button", { name: /go to exam/i })
+          ).toBeInTheDocument();
+        });
+        test("user can not see the button if he/she finished the exam", async () => {
+          const start = moment(Date.now() - 5000).format("YYYY-MM-DD HH:mm:ss");
+          const end = moment(Date.now() + 60 * 5000).format(
+            "YYYY-MM-DD HH:mm:ss"
+          );
+          const { WrappedElement } = wrapper(<ExamOverview />, {
+            participantId: 1,
+            exam: {
+              startOfExam: start,
+              endOfExam: end,
+              ownerId: 12,
+              isRegistered: true,
+              published: true,
+            },
+          });
+          renderWithAuthentication(WrappedElement, {
+            route: programRoutes.examiningOverview(1),
+          });
+
+          await waitFor(() =>
+            expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+          );
+          await wait(500);
+          expect(
+            screen.queryByRole("button", { name: /go to exam/i })
+          ).not.toBeInTheDocument();
+        });
+      });
+      describe("check when user does not registered for exam", () => {
+        test("if user does not registered, user must not see the exam", async () => {
+          const start = moment(Date.now() - 5000).format("YYYY-MM-DD HH:mm:ss");
+          const end = moment(Date.now() + 60 * 5000).format(
+            "YYYY-MM-DD HH:mm:ss"
+          );
+          const { WrappedElement } = wrapper(<ExamOverview />, {
+            participantId: -1,
+            exam: {
+              startOfExam: start,
+              endOfExam: end,
+              ownerId: 12,
+              isRegistered: false,
+              published: true,
+            },
+          });
+          renderWithAuthentication(WrappedElement, {
+            route: programRoutes.examiningOverview(1),
+          });
+
+          await waitFor(() =>
+            expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+          );
+          await wait(500);
+          expect(
+            screen.queryByRole("button", { name: /go to exam/i })
+          ).not.toBeInTheDocument();
+        });
+      });
+    });
+  });
+});
+describe("check edit exam button", () => {
+  describe("check when user own the exam", () => {
+    describe("check when exam is published", () => {
+      test("if exam is started, user must not see the button", async () => {
+        const start = moment(Date.now() - 5000).format("YYYY-MM-DD HH:mm:ss");
+        const end = moment(Date.now() + 60 * 5000).format(
+          "YYYY-MM-DD HH:mm:ss"
+        );
+        const { WrappedElement } = wrapper(<ExamOverview />, {
+          participantId: -1,
+          exam: {
+            startOfExam: start,
+            endOfExam: end,
+            ownerId: 1,
+            isRegistered: false,
+            published: true,
+          },
+        });
+        renderWithAuthentication(WrappedElement, {
+          route: programRoutes.examiningOverview(1),
+        });
+
+        await waitFor(() =>
+          expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+        );
+        await wait(500);
+        expect(
+          screen.queryByRole("button", { name: /edit exam/i })
+        ).not.toBeInTheDocument();
+      });
+      test("if exam is not started, user must see the button", async () => {
+        const start = moment(Date.now() + 5000).format("YYYY-MM-DD HH:mm:ss");
+        const end = moment(Date.now() + 60 * 5000).format(
+          "YYYY-MM-DD HH:mm:ss"
+        );
+        const { WrappedElement } = wrapper(<ExamOverview />, {
+          participantId: -1,
+          exam: {
+            startOfExam: start,
+            endOfExam: end,
+            ownerId: 1,
+            isRegistered: false,
+            published: true,
+          },
+        });
+        renderWithAuthentication(WrappedElement, {
+          route: programRoutes.examiningOverview(1),
+        });
+
+        await waitFor(() =>
+          expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+        );
+        await wait(500);
+        expect(
+          screen.queryByRole("button", { name: /edit exam/i })
+        ).toBeInTheDocument();
+      });
+    });
+    describe("check when exam is not published", () => {
+      test("if exam is started, user must see the button", async () => {
+        const start = moment(Date.now() - 5000).format("YYYY-MM-DD HH:mm:ss");
+        const end = moment(Date.now() + 60 * 5000).format(
+          "YYYY-MM-DD HH:mm:ss"
+        );
+        const { WrappedElement } = wrapper(<ExamOverview />, {
+          participantId: -1,
+          exam: {
+            startOfExam: start,
+            endOfExam: end,
+            ownerId: 1,
+            isRegistered: false,
+            published: false,
+          },
+        });
+        renderWithAuthentication(WrappedElement, {
+          route: programRoutes.examiningOverview(1),
+        });
+
+        await waitFor(() =>
+          expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+        );
+        await wait(500);
+        expect(
+          screen.queryByRole("button", { name: /edit exam/i })
+        ).toBeInTheDocument();
+      });
+      test("if exam is not started, user must see the button", async () => {
+        const start = moment(Date.now() + 5000).format("YYYY-MM-DD HH:mm:ss");
+        const end = moment(Date.now() + 60 * 5000).format(
+          "YYYY-MM-DD HH:mm:ss"
+        );
+        const { WrappedElement } = wrapper(<ExamOverview />, {
+          participantId: -1,
+          exam: {
+            startOfExam: start,
+            endOfExam: end,
+            ownerId: 1,
+            isRegistered: false,
+            published: false,
+          },
+        });
+        renderWithAuthentication(WrappedElement, {
+          route: programRoutes.examiningOverview(1),
+        });
+
+        await waitFor(() =>
+          expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+        );
+        await wait(500);
+        expect(
+          screen.queryByRole("button", { name: /edit exam/i })
+        ).toBeInTheDocument();
+      });
+    });
+  });
+  describe("check when user does not own the exam", () => {
+    test("user must not see the button", async () => {
+      const start = moment(Date.now() + 5000).format("YYYY-MM-DD HH:mm:ss");
+      const end = moment(Date.now() + 60 * 5000).format("YYYY-MM-DD HH:mm:ss");
+      const { WrappedElement } = wrapper(<ExamOverview />, {
+        participantId: -1,
+        exam: {
+          startOfExam: start,
+          endOfExam: end,
+          ownerId: 12,
+          isRegistered: false,
+          published: true,
+        },
+      });
+      renderWithAuthentication(WrappedElement, {
+        route: programRoutes.examiningOverview(1),
+      });
+
+      await waitFor(() =>
+        expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+      );
+      await wait(500);
+      expect(
+        screen.queryByRole("button", { name: /edit exam/i })
+      ).not.toBeInTheDocument();
+    });
+  });
+});
+describe("check participants button", () => {
+  test("if user own the exam, user must see this button", async () => {
+    const start = moment(Date.now() + 5000).format("YYYY-MM-DD HH:mm:ss");
+    const end = moment(Date.now() + 60 * 5000).format("YYYY-MM-DD HH:mm:ss");
     const { WrappedElement } = wrapper(<ExamOverview />, {
-      examId: 5,
-      participantId: 1,
-      firstQuestion: null,
-      registerToExam,
-      changeExamPassword,
-      isUserFinishedExam: true,
-      examTime: {
-        isExamStarted: true,
-        isExamFinished: true,
+      participantId: -1,
+      exam: {
+        startOfExam: start,
+        endOfExam: end,
+        ownerId: 1,
+        isRegistered: false,
+        published: true,
       },
     });
     renderWithAuthentication(WrappedElement, {
-      route: programRoutes.examiningOverview(5),
+      route: programRoutes.examiningOverview(1),
     });
 
+    await waitFor(() =>
+      expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+    );
     expect(
-      screen.queryByRole("button", { name: /register for exam/i })
-    ).not.toBeInTheDocument();
+      await screen.findByRole("button", { name: /participants/i })
+    ).toBeInTheDocument();
+  });
+  test("if user does not own the exam, user must not see this button", async () => {
+    const start = moment(Date.now() + 5000).format("YYYY-MM-DD HH:mm:ss");
+    const end = moment(Date.now() + 60 * 5000).format("YYYY-MM-DD HH:mm:ss");
+    const { WrappedElement } = wrapper(<ExamOverview />, {
+      participantId: -1,
+      exam: {
+        startOfExam: start,
+        endOfExam: end,
+        ownerId: 12,
+        isRegistered: false,
+        published: true,
+      },
+    });
+    renderWithAuthentication(WrappedElement, {
+      route: programRoutes.examiningOverview(1),
+    });
+
+    await waitFor(() =>
+      expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+    );
+    await wait(500);
     expect(
-      screen.queryByRole("button", { name: /go to exam/i })
+      screen.queryByRole("button", { name: /participants/i })
     ).not.toBeInTheDocument();
-    expect(screen.getByText(/your grade: *\d+/i)).toBeInTheDocument();
   });
 });

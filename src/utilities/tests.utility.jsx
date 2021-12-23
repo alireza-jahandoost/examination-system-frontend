@@ -256,6 +256,9 @@ export const changeCurrentParticipant = ({
   const currentHandler = rest.get(
     apiRoutes.participants.currentParticipant(":examId"),
     (req, res, ctx) => {
+      if (participantId === -1) {
+        return res(ctx.status(404));
+      }
       return res(ctx.json(getParticipant(participantId)));
     }
   );

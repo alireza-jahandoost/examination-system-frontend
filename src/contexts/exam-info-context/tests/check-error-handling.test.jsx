@@ -20,6 +20,7 @@ import ExamOverview from "../../../pages/exams/examining/exam-overview/exam-over
 import apiRoutes from "../../../constants/api-routes.constant";
 import programRoutes from "../../../constants/program-routes.constant";
 import { asignExamShowStartAndEnd } from "../../../utilities/tests.utility";
+import { userMock } from "../../../mocks/mocks/authentication.mock";
 
 describe("check 401 errors(the removeUserInfo() func from authentication context must be called)", () => {
   test("check exams.showExam route", async () => {
@@ -96,7 +97,10 @@ describe("check 422 errors", () => {
         </ExaminingProvider>
       </ExamInfoProvider>,
       {
-        authenticationProviderProps: { removeUserInfo },
+        authenticationProviderProps: {
+          removeUserInfo,
+          user: { ...userMock, user_id: 2 },
+        },
         route: programRoutes.examiningOverview(5),
       }
     );

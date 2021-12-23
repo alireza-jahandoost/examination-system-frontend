@@ -852,6 +852,37 @@ export const notFoundPageExamsIndex = (page) => ({
   },
 });
 
+export const examConstructor = ({
+  examId = 1,
+  ownerId = 33,
+  ownerName = "Mrs. Alanna Bogan Jr.",
+  isRegistered = false,
+  published = false,
+  hasPassword = false,
+  needsConfirmation = false,
+  startOfExam = "2021-10-11 15:40:39",
+  endOfExam = "2021-10-11 17:40:39",
+}) => ({
+  data: {
+    exam: {
+      exam_id: examId,
+      exam_name: "Dolorum repellendus fuga nihil illo.",
+      needs_confirmation: needsConfirmation,
+      has_password: hasPassword,
+      start_of_exam: startOfExam,
+      end_of_exam: endOfExam,
+      total_score: 100,
+      creation_time: "2021-09-24T15:40:39.000000Z",
+      last_update: "2021-09-24T15:40:39.000000Z",
+      owner_id: ownerId,
+      owner_name: ownerName,
+      owner_link: "http://localhost:8000/api/users/33",
+      is_registered: isRegistered,
+      published: published,
+    },
+  },
+});
+
 export const examShowId_1 = {
   data: {
     exam: {

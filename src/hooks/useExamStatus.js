@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
+import { useMountedState } from "react-use";
 import { isDateInThePast } from "../utilities/dateAndTime.utility";
 
 const calculate = (examStart, examEnd) => {
@@ -15,10 +16,13 @@ const calculate = (examStart, examEnd) => {
 
 const useExamStatus = ({ examStart, examEnd, isPublished }) => {
   const [status, setStatus] = useState(calculate(examStart, examEnd));
+  const isMounted = useMountedState();
 
   const checkStatus = useCallback(() => {
-    setStatus(calculate(examStart, examEnd));
-  }, [examStart, examEnd]);
+    if (isMounted()) {
+      setStatus(calculate(examStart, examEnd));
+    }
+  }, [examStart, examEnd, isMounted]);
 
   useEffect(() => {
     if (status === "finished") {
@@ -29,6 +33,9 @@ const useExamStatus = ({ examStart, examEnd, isPublished }) => {
   }, [checkStatus, status]);
 
   const color = useMemo(() => {
+    if (!isPublished) {
+      return "primary";
+    }
     switch (status) {
       case "not started":
         return "success";
@@ -39,7 +46,7 @@ const useExamStatus = ({ examStart, examEnd, isPublished }) => {
       default:
         return "primary";
     }
-  }, [status]);
+  }, [status, isPublished]);
 
   return [isPublished ? status : "not published", color];
 };
