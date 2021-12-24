@@ -9,3 +9,12 @@ export const getCurrentUserRequest = (token) => {
     },
   });
 };
+
+export const showUserRequest = (userId, token) => {
+  return axios.get(apiRoutes.users.showUser(userId), {
+    headers: {
+      accept: "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  });
+};
