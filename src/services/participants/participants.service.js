@@ -59,3 +59,12 @@ export const showParticipantRequest = (examId, participantId, token) => {
     }
   );
 };
+
+export const confirmParticipantRequest = (examId, body, token) => {
+  return axios.put(apiRoutes.exams.confirmParticipant(examId), body, {
+    headers: {
+      accept: "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  });
+};

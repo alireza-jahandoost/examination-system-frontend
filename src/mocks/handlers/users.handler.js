@@ -10,13 +10,13 @@ const usersHandler = [
     const { userId } = req.params;
     switch (Number(userId)) {
       case 1:
-        return UserId1;
+        return res(ctx.json(UserId1));
       case 2:
-        return UserId2;
+        return res(ctx.json(UserId2));
       case 3:
-        return UserId3;
+        return res(ctx.json(UserId3));
       case 4:
-        return UserId4;
+        return res(ctx.json(UserId4));
       default:
         throw new Error("unexpected user id in users.handler");
     }

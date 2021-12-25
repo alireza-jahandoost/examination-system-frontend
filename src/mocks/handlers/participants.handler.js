@@ -59,6 +59,9 @@ const participantsHandler = [
         return res(ctx.status(401));
     }
   }),
+  rest.put(apiRoutes.exams.confirmParticipant(":examId"), (req, res, ctx) => {
+    return res(ctx.status(202));
+  }),
   rest.get(
     apiRoutes.participants.currentParticipant(":examId"),
     (req, res, ctx) => {

@@ -18,6 +18,7 @@ import {
   showParticipantId2,
   showParticipantId3,
   showParticipantId4,
+  indexParticipantsPage1,
 } from "../mocks/mocks/participants.mock";
 
 export const wrapWithWidth = (component, size) => {
@@ -260,6 +261,48 @@ export const changeCurrentParticipant = ({
         return res(ctx.status(404));
       }
       return res(ctx.json(getParticipant(participantId)));
+    }
+  );
+
+  server.resetHandlers(currentHandler, ...otherHandlers, ...handlers);
+  return currentHandler;
+};
+
+export const changeParticipantsWithOneParticipant = ({
+  participant = {},
+  otherHandlers = [],
+}) => {
+  const defaultParticipant = showParticipantId1.data.participant;
+  const participantId =
+    participant.participant_id || defaultParticipant.participant_id;
+  const userId = participant.user_id || defaultParticipant.user_id;
+  const examId = participant.exam_id || defaultParticipant.exam_id;
+  const confirmed = participant.confirmed || defaultParticipant.confirmed;
+  const status = participant.status || defaultParticipant.status;
+  const grade = participant.grade || defaultParticipant.grade;
+
+  const currentHandler = rest.get(
+    apiRoutes.participants.indexParticipants(":examId"),
+    (req, res, ctx) => {
+      return res(
+        ctx.json({
+          ...indexParticipantsPage1,
+          data: {
+            participants: [
+              {
+                participant_id: participantId,
+                user_id: userId,
+                user_link: apiRoutes.users.showUser(userId),
+                exam_id: examId,
+                exam_link: apiRoutes.exams.showExam(examId),
+                confirmed,
+                status,
+                grade,
+              },
+            ],
+          },
+        })
+      );
     }
   );
 

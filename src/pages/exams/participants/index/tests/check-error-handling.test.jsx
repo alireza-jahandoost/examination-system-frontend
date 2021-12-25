@@ -19,13 +19,13 @@ import programRoutes from "../../../../../constants/program-routes.constant";
 describe("check 401 errors(the removeUserInfo() func from authentication context must be called)", () => {
   test("check participants.indexParticipants route", async () => {
     changeRequestResponseTo401({
-      route: apiRoutes.participants.indexParticipants(),
+      route: apiRoutes.participants.indexParticipants(1),
       method: "get",
     });
 
     const removeUserInfo = jest.fn();
     renderWithAuthentication(
-      <Route to={programRoutes.indexParticipants(":examId")}>
+      <Route path={programRoutes.indexParticipants(":examId")}>
         <IndexParticipantsPage />
       </Route>,
       {
@@ -42,14 +42,14 @@ describe("check other errors", () => {
   test("check participants.indexParticipants route", async () => {
     jest.spyOn(console, "error").mockImplementation(() => {});
     changeRequestResponseToSpecificStatus({
-      route: apiRoutes.participants.indexParticipants(),
+      route: apiRoutes.participants.indexParticipants(1),
       method: "get",
       status: 403,
     });
 
     const removeUserInfo = jest.fn();
     renderWithAuthentication(
-      <Route to={programRoutes.indexParticipants(":examId")}>
+      <Route path={programRoutes.indexParticipants(":examId")}>
         <ErrorBoundaryProvider>
           <IndexParticipantsPage />
         </ErrorBoundaryProvider>

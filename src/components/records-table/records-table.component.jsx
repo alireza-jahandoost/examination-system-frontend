@@ -2,7 +2,7 @@ import { Table } from "react-bootstrap";
 
 const RecordsTable = ({ children }) => {
   return (
-    <Table responsive striped bordered hover className="bg-light shadow">
+    <Table responsive hover className="bg-light shadow border">
       {children}
     </Table>
   );
