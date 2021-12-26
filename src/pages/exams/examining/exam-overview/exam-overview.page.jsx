@@ -129,6 +129,16 @@ const ExamOverviewPage = () => {
             </tbody>
           </Table>
 
+          {!isUserOwnExam &&
+            exam.needs_confirmation &&
+            participant &&
+            !participant.confirmed && (
+              <p className="lead">
+                Notice: This exam needs confirmation by owner and you are not
+                confirmed. Contact the owner of exam and try again.
+              </p>
+            )}
+
           {canUserGoToExam && (
             <Link to={programRoutes.examiningQuestion(examId, firstQuestion)}>
               <Button className="m-2" variant="success">

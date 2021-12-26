@@ -5,16 +5,26 @@ import { ExamInfoProvider } from "../../../../../contexts/exam-info-context/exam
 import programRoutes from "../../../../../constants/program-routes.constant";
 import apiRoutes from "../../../../../constants/api-routes.constant";
 import { examConstructor } from "../../../../../mocks/mocks/exams.mock";
-import { changeCurrentParticipant } from "../../../../../utilities/tests.utility";
+import {
+  changeCurrentParticipant,
+  changeShowExam,
+} from "../../../../../utilities/tests.utility";
 
-export const wrapper = (ui, { exam = {}, participantId = 1 }) => {
+export const wrapper = (
+  ui,
+  {
+    exam = {},
+    participantId = 1,
+    useObject = false,
+    participant = {},
+    otherHandlers = [],
+  }
+) => {
   changeCurrentParticipant({
     participantId,
-    otherHandlers: [
-      rest.get(apiRoutes.exams.showExam(":examId"), (req, res, ctx) => {
-        return res(ctx.json(examConstructor({ ...exam })));
-      }),
-    ],
+    useObject,
+    participant,
+    otherHandlers: [changeShowExam({ exam }), ...otherHandlers],
   });
 
   const WrappedElement = (

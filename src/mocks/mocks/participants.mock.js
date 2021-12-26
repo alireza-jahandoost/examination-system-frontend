@@ -1,18 +1,19 @@
 export const examsPassword = "examPassword";
 
-const participantConstructor = ({
+export const participantConstructor = ({
   id = 1,
   user_id = 1,
   exam_id = 1,
   status = "WAIT_FOR_MANUAL_CORRECTING",
   grade = null,
+  confirmed = false,
 }) => ({
   participant_id: id,
   user_id: user_id,
   user_link: `http://localhost:8000/api/users/${user_id}`,
   exam_link: `http://localhost:8000/api/exams/${exam_id}`,
   exam_id: exam_id,
-  confirmed: false,
+  confirmed: confirmed,
   status: status,
   grade: grade,
 });

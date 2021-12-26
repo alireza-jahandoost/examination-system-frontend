@@ -12,6 +12,7 @@ import {
   examShowId_3,
   examShowId_4,
   examShowId_5_withPassword,
+  examConstructor,
 } from "../mocks/mocks/exams.mock";
 import {
   showParticipantId1,
@@ -19,6 +20,7 @@ import {
   showParticipantId3,
   showParticipantId4,
   indexParticipantsPage1,
+  participantConstructor,
 } from "../mocks/mocks/participants.mock";
 
 export const wrapWithWidth = (component, size) => {
@@ -118,6 +120,18 @@ export const asignExamShowStartAndEnd = (
     }
   );
   server.resetHandlers(handler, ...handlers);
+
+  return handler;
+};
+
+export const changeShowExam = ({ exam = {}, otherHandlers = [] }) => {
+  const handler = rest.get(
+    apiRoutes.exams.showExam(":examId"),
+    (req, res, ctx) => {
+      return res(ctx.json(examConstructor({ ...exam })));
+    }
+  );
+  server.resetHandlers(handler, ...otherHandlers, ...handlers);
 
   return handler;
 };
@@ -253,14 +267,21 @@ const getParticipant = (participantId) => {
 export const changeCurrentParticipant = ({
   participantId,
   otherHandlers = [],
+  useObject = false,
+  participant = {},
 }) => {
+  const output = useObject
+    ? { data: { participant: participantConstructor({ ...participant }) } }
+    : participantId === -1
+    ? -1
+    : getParticipant(participantId);
   const currentHandler = rest.get(
     apiRoutes.participants.currentParticipant(":examId"),
     (req, res, ctx) => {
       if (participantId === -1) {
         return res(ctx.status(404));
       }
-      return res(ctx.json(getParticipant(participantId)));
+      return res(ctx.json(output));
     }
   );
 

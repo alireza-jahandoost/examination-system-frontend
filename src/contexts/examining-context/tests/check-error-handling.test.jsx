@@ -3,6 +3,7 @@ import {
   screen,
   renderWithAuthentication,
 } from "../../../test-utils/testing-library-utils";
+import moment from "moment";
 import { Route } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import {
@@ -23,6 +24,7 @@ import programRoutes from "../../../constants/program-routes.constant";
 import {
   asignExamShowStartAndEnd,
   changeCurrentParticipant,
+  changeShowExam,
 } from "../../../utilities/tests.utility";
 
 describe("check 401 errors(the removeUserInfo() func from authentication context must be called)", () => {
@@ -70,15 +72,24 @@ describe("check 401 errors(the removeUserInfo() func from authentication context
     await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(1));
   });
   test("check questions.indexQuestions route", async () => {
+    const start = moment(Date.now() - 5000).format("YYYY-MM-DD HH:mm:ss");
+    const end = moment(Date.now() + 60 * 5000).format("YYYY-MM-DD HH:mm:ss");
     changeRequestResponseTo401({
       route: apiRoutes.questions.indexQuestions(":examId"),
       method: "get",
       otherHandlers: [
-        asignExamShowStartAndEnd(
-          2,
-          new Date(Date.now() - 5000),
-          new Date(Date.now() + 3600 * 1000)
-        ),
+        changeShowExam({
+          exam: {
+            examId: 1,
+            ownerId: 10,
+            isRegistered: true,
+            published: true,
+            hasPassword: false,
+            needsConfirmation: false,
+            startOfExam: start,
+            endOfExam: end,
+          },
+        }),
         changeCurrentParticipant({ participantId: 4 }),
       ],
     });
@@ -230,17 +241,26 @@ describe("check other errors", () => {
     );
   });
   test("check questions.indexQuestions route", async () => {
+    const start = moment(Date.now() - 5000).format("YYYY-MM-DD HH:mm:ss");
+    const end = moment(Date.now() + 60 * 5000).format("YYYY-MM-DD HH:mm:ss");
     jest.spyOn(console, "error").mockImplementation(() => {});
     changeRequestResponseToSpecificStatus({
       route: apiRoutes.questions.indexQuestions(":examId"),
       method: "get",
       status: 403,
       otherHandlers: [
-        asignExamShowStartAndEnd(
-          2,
-          new Date(Date.now() - 5000),
-          new Date(Date.now() + 3600 * 1000)
-        ),
+        changeShowExam({
+          exam: {
+            examId: 1,
+            ownerId: 10,
+            isRegistered: true,
+            published: true,
+            hasPassword: false,
+            needsConfirmation: false,
+            startOfExam: start,
+            endOfExam: end,
+          },
+        }),
         changeCurrentParticipant({ participantId: 4 }),
       ],
     });

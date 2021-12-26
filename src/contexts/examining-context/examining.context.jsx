@@ -105,7 +105,10 @@ export const ExaminingProvider = ({ children }) => {
           if (
             receivedParticipant.status === "NOT_FINISHED" &&
             examInfo.examTime.isExamStarted &&
-            !examInfo.examTime.isExamFinished
+            !examInfo.examTime.isExamFinished &&
+            (!examInfo.exam.needs_confirmation ||
+              (examInfo.exam.needs_confirmation &&
+                receivedParticipant.confirmed))
           ) {
             return questionsIndexRequest(examId, token);
           }
