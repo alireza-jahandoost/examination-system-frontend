@@ -142,7 +142,7 @@ describe("check participant status", () => {
     ).not.toBeInTheDocument();
   });
 
-  test("if status is equal to WAIT_FOR_MANUAL_CORRECTING user can not see grade but can see the changing grade part", async () => {
+  test("if status is equal to WAIT_FOR_MANUAL_CORRECTING user can see grade and the changing grade part", async () => {
     renderWithAuthentication(
       <QuestionGradeProvider
         questionId={1}
@@ -158,8 +158,8 @@ describe("check participant status", () => {
     );
     expect(screen.getByRole("spinbutton")).toBeInTheDocument();
     expect(
-      screen.queryByText(showGrade(1, 1).data.grade.grade, { exact: false })
-    ).not.toBeInTheDocument();
+      screen.getByText(showGrade(1, 1).data.grade.grade, { exact: false })
+    ).toBeInTheDocument();
   });
 
   test("if status is equal to FINISHED user can see the grade and changing grade part", async () => {
@@ -217,7 +217,7 @@ describe("check participant status", () => {
 
       expect(getSpy).toHaveBeenCalledTimes(0);
     });
-    test("if status is equal to WAIT_FOR_MANUAL_CORRECTING request must not be send", async () => {
+    test("if status is equal to WAIT_FOR_MANUAL_CORRECTING request must be send", async () => {
       const getSpy = jest.spyOn(axios, "get");
       renderWithAuthentication(
         <QuestionGradeProvider
@@ -233,7 +233,7 @@ describe("check participant status", () => {
         expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
       );
 
-      expect(getSpy).toHaveBeenCalledTimes(0);
+      expect(getSpy).toHaveBeenCalledTimes(1);
     });
     test("if status is equal to FINISHED request must be send", async () => {
       const getSpy = jest.spyOn(axios, "get");

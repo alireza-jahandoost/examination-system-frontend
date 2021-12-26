@@ -26,7 +26,9 @@ export const QuestionGradeProvider = ({
   const isMounted = useMountedState();
   const throwError = useAsyncError();
 
-  const showGradeEnabled = participantStatus === "FINISHED";
+  const showGradeEnabled =
+    participantStatus === "FINISHED" ||
+    participantStatus === "WAIT_FOR_MANUAL_CORRECTING";
   const changeGradeEnabled =
     participantStatus === "FINISHED" ||
     participantStatus === "WAIT_FOR_MANUAL_CORRECTING";

@@ -50,7 +50,7 @@ const QuestionGrade = ({ canUserChangeGrade = false, questionId }) => {
                 error={errors.grade}
               />
             </Col>
-            <Col className="d-flex align-items-end">
+            <Col xs={12}>
               {hasChange && (
                 <Button
                   variant="success"

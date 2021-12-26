@@ -80,16 +80,14 @@ test("if the status of participant is IS_PROCESSING, the grade input and grade m
   ).not.toBeInTheDocument();
 });
 
-test("if the status of participant is WAIT_FOR_MANUAL_CORRECTING, the grade input must be shown but grade must not", async () => {
+test("if the status of participant is WAIT_FOR_MANUAL_CORRECTING, the grade input and grade must be shown", async () => {
   renderWithAuthentication(wrapper(<ShowParticipantPage />), {
     route: programRoutes.showParticipant(1, 2),
   });
 
-  await wait(200);
-
-  expect(
-    screen.queryByText(`grade:`, { exact: false })
-  ).not.toBeInTheDocument();
+  await waitFor(() =>
+    expect(screen.getByText(`grade:`, { exact: false })).toBeInTheDocument()
+  );
 
   expect(screen.getAllByRole("spinbutton", { name: /grade/i })).toHaveLength(6);
 });
