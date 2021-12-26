@@ -19,7 +19,7 @@ const TextInput = ({ label, placeholder, id, error, ...props }) => {
         <button
           type="button"
           onClick={() => setIsHidden(false)}
-          className="toggle-show-auth-btn fs-5 border-0 bg-white position-absolute right-0"
+          className="toggle-show-auth-btn fs-5 border-0 bg-transparent position-absolute right-0"
           title="show password"
         >
           <BsEye />
@@ -28,7 +28,7 @@ const TextInput = ({ label, placeholder, id, error, ...props }) => {
         <button
           type="button"
           onClick={() => setIsHidden(true)}
-          className="toggle-show-auth-btn fs-5 border-0 bg-white position-absolute right-0"
+          className="toggle-show-auth-btn fs-5 border-0 bg-transparent position-absolute right-0"
           title="hide password"
         >
           <BsEyeSlash />
