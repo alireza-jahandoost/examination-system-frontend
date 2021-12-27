@@ -174,6 +174,7 @@ const Header = () => {
                   <Nav.Link
                     {...isActive(programRoutes.login())}
                     className="m-2 lead"
+                    onClick={closeMenu}
                     as={Link}
                     to={programRoutes.login()}
                   >
@@ -182,6 +183,7 @@ const Header = () => {
                   <Nav.Link
                     {...isActive(programRoutes.register())}
                     className="m-2 lead"
+                    onClick={closeMenu}
                     as={Link}
                     to={programRoutes.register()}
                   >
