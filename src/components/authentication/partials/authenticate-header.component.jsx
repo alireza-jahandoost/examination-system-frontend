@@ -14,6 +14,7 @@ const AuthenticateHeader = () => {
               style={{ maxHeight: "75%" }}
               className="d-none d-md-inline w-100 float-start"
               src="./auth-image.jpg"
+              alt="Authentication picture"
             />
 
             <h3

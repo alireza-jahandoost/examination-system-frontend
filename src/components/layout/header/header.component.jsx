@@ -1,7 +1,7 @@
 import { useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 import { BsHouseDoor, BsGear, BsBoxArrowRight } from "react-icons/bs";
-import { Navbar, Dropdown, Popover, Container, Nav } from "react-bootstrap";
+import { Navbar, Dropdown, Image, Container, Nav } from "react-bootstrap";
 import { AuthenticationContext } from "../../../contexts/authentication-context/authentication.context";
 import programRoutes from "../../../constants/program-routes.constant";
 import useCurrentPath from "../../../hooks/useCurrentPath";
@@ -34,9 +34,17 @@ const Header = () => {
         expand="lg"
         bg="white"
         variant="light"
-        className="shadow"
+        className="shadow py-1"
       >
-        <Container className="flex-row-reverse">
+        <Container className="">
+          <Navbar.Brand href="#home" className="ms-3 me-auto py-0">
+            <Image
+              src="./favicon.ico"
+              width={50}
+              height={50}
+              alt="Exams Galaxy brand icon"
+            />
+          </Navbar.Brand>
           {user && (
             <Dropdown align="end">
               <Dropdown.Toggle variant="white" id="dropdown-basic">
