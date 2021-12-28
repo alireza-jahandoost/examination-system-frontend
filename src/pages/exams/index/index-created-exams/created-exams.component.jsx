@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 import { CreatedExamsContext } from "../../../../contexts/created-exams-context/created-exams.context";
 
@@ -62,7 +62,17 @@ const CreatedExams = () => {
           />
         </>
       ) : (
-        <p className="lead"> You have not created any exam yet </p>
+        <>
+          <p className="lead">
+            <span>You have not created any exam yet.</span>
+          </p>
+          <Link
+            className="text-decoration-none fst-italic"
+            to={programRoutes.createExam()}
+          >
+            Create your first one
+          </Link>
+        </>
       )}
     </>
   );
