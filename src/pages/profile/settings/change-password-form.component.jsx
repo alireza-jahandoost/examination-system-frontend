@@ -28,6 +28,7 @@ const ChangePasswordForm = () => {
         id="current-password"
         placeholder="Enter your current password"
         onChange={(e) => setCurrentPassword(e.target.value)}
+        className="pb-3"
       />
       <PasswordInput
         label="New Password"
@@ -36,6 +37,7 @@ const ChangePasswordForm = () => {
         id="new-password"
         placeholder="Enter your new password"
         onChange={(e) => setNewPassword(e.target.value)}
+        className="pb-3"
       />
       <PasswordInput
         label="Confirm New Password"
@@ -44,6 +46,7 @@ const ChangePasswordForm = () => {
         id="confirm-new-password"
         placeholder="Enter your new password again"
         onChange={(e) => setConfirmNewPassword(e.target.value)}
+        className="pb-3"
       />
       <Button
         variant="success"
