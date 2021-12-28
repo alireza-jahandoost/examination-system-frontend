@@ -5,17 +5,20 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
 import { AuthenticationProvider } from "./contexts/authentication-context/authentication.context";
 import { NotificationProvider } from "./contexts/notification-context/notification.context";
+import { ErrorBoundaryProvider } from "./contexts/error-boundary-context/error-boundary.context";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <NotificationProvider>
-        <AuthenticationProvider>
-          <App />
-        </AuthenticationProvider>
-      </NotificationProvider>
+      <ErrorBoundaryProvider>
+        <NotificationProvider>
+          <AuthenticationProvider>
+            <App />
+          </AuthenticationProvider>
+        </NotificationProvider>
+      </ErrorBoundaryProvider>
     </Router>
   </React.StrictMode>,
   document.getElementById("root")
