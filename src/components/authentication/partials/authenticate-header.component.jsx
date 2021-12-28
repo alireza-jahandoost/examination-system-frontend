@@ -1,4 +1,6 @@
 import { Container, Image, Row, Col } from "react-bootstrap";
+import externalRoutes from "../../../constants/external-routes.constant";
+
 const AuthenticateHeader = () => {
   return (
     <Container fluid className="h-100" style={{ backgroundColor: "#bcf1dd" }}>
@@ -33,7 +35,7 @@ const AuthenticateHeader = () => {
               className="text-uppercase text-center fw-light"
             >
               <span className="text-success">any problem? </span>
-              <a href="#contactUs">
+              <a href={externalRoutes.contactUs()}>
                 <em>contact us</em>
               </a>
             </p>
