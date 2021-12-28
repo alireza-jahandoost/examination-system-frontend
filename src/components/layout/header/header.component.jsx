@@ -4,6 +4,7 @@ import { BsHouseDoor, BsGear, BsBoxArrowRight } from "react-icons/bs";
 import { Navbar, Dropdown, Image, Container, Nav } from "react-bootstrap";
 import { AuthenticationContext } from "../../../contexts/authentication-context/authentication.context";
 import programRoutes from "../../../constants/program-routes.constant";
+import externalRoutes from "../../../constants/external-routes.constant";
 import useCurrentPath from "../../../hooks/useCurrentPath";
 import "./header.styles.css";
 
@@ -37,7 +38,10 @@ const Header = () => {
         className="shadow py-1"
       >
         <Container className="">
-          <Navbar.Brand href="#home" className="ms-3 me-auto py-0">
+          <Navbar.Brand
+            href={externalRoutes.main()}
+            className="ms-3 me-auto py-0"
+          >
             <Image
               src="./favicon.ico"
               width={50}
