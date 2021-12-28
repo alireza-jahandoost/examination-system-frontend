@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 
@@ -14,6 +14,19 @@ const PasswordInput = ({
 }) => {
   const [isHidden, setIsHidden] = useState(true);
   const randSuffix = useRef(Math.floor(Math.random() * 1000).toString());
+  const inputRef = useRef();
+
+  const moveCaretAtEnd = (e) => {
+    var temp_value = e.target.value;
+    e.target.value = "";
+    e.target.value = temp_value;
+  };
+
+  useEffect(() => {
+    if (isHidden === false && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isHidden]);
 
   return (
     <Form.Group {...props}>
@@ -22,6 +35,8 @@ const PasswordInput = ({
           {label}
         </Form.Label>
         <Form.Control
+          ref={inputRef}
+          onFocus={moveCaretAtEnd}
           id={`input-password-${randSuffix.current}`}
           type={isHidden ? "password" : "text"}
           readOnly={readOnly}
