@@ -16,40 +16,42 @@ const PasswordInput = ({
   const randSuffix = useRef(Math.floor(Math.random() * 1000).toString());
 
   return (
-    <Form.Group {...props} className="position-relative">
-      <Form.Label htmlFor={`input-password-${randSuffix.current}`}>
-        {label}
-      </Form.Label>
-      <Form.Control
-        id={`input-password-${randSuffix.current}`}
-        type={isHidden ? "password" : "text"}
-        readOnly={readOnly}
-        value={value}
-        placeholder={placeholder}
-        onChange={onChange}
-      />
-      {isHidden ? (
-        <button
-          type="button"
-          onClick={() => setIsHidden(false)}
-          className="fs-5 border-0 bg-transparent text-muted position-absolute"
-          style={{ right: "5px", top: "47%" }}
-          title="show password"
-        >
-          <BsEye />
-        </button>
-      ) : (
-        <button
-          type="button"
-          onClick={() => setIsHidden(true)}
-          className="fs-5 border-0 bg-transparent text-muted position-absolute"
-          style={{ right: "5px", top: "47%" }}
-          title="hide password"
-        >
-          <BsEyeSlash />
-        </button>
-      )}
-      {error && <p className="text-danger">{error}</p>}
+    <Form.Group {...props}>
+      <div className="position-relative">
+        <Form.Label htmlFor={`input-password-${randSuffix.current}`}>
+          {label}
+        </Form.Label>
+        <Form.Control
+          id={`input-password-${randSuffix.current}`}
+          type={isHidden ? "password" : "text"}
+          readOnly={readOnly}
+          value={value}
+          placeholder={placeholder}
+          onChange={onChange}
+        />
+        {isHidden ? (
+          <button
+            type="button"
+            onClick={() => setIsHidden(false)}
+            className="fs-5 border-0 bg-transparent text-muted position-absolute"
+            style={{ right: "5px", top: "47%" }}
+            title="show password"
+          >
+            <BsEye />
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setIsHidden(true)}
+            className="fs-5 border-0 bg-transparent text-muted position-absolute"
+            style={{ right: "5px", top: "47%" }}
+            title="hide password"
+          >
+            <BsEyeSlash />
+          </button>
+        )}
+      </div>
+      {error && <p className="text-danger mb-0">{error}</p>}
     </Form.Group>
   );
 };
