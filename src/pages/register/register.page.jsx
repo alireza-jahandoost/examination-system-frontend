@@ -21,7 +21,7 @@ const Register = () => {
   }
 
   return (
-    <div className="flex-grow-1 d-flex">
+    <div className="flex-grow-1 d-flex overflow-hidden">
       <Row className="flex-grow-1 d-flex flex-column flex-md-row">
         <Col xs={12} md={6} lg={8}>
           <AuthenticateHeader />

@@ -22,7 +22,7 @@ const LoginPage = () => {
   }
 
   return (
-    <div className=" flex-grow-1 d-flex">
+    <div className=" flex-grow-1 d-flex overflow-hidden">
       <Row className="flex-column flex-grow-1 flex-md-row d-flex">
         <Col xs={12} md={6} lg={8}>
           <AuthenticateHeader />
