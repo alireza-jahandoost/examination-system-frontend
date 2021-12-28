@@ -1,5 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
-import { BsInstagram, BsTelegram, BsTwitter } from "react-icons/bs";
+import { BsInstagram, BsTelegram, BsTwitter, BsLinkedin } from "react-icons/bs";
+import externalRoutes from "../../../constants/external-routes.constant";
 import "./icons.style.css";
 
 const Footer = () => {
@@ -20,7 +21,7 @@ const Footer = () => {
               <div className="d-flex justify-content-center">
                 <div className="mx-3">
                   <a
-                    href="#"
+                    href={externalRoutes.socialMedia.twitter()}
                     className={`rounded-circle text-muted p-2 twitter`}
                   >
                     <BsTwitter />
@@ -28,7 +29,7 @@ const Footer = () => {
                 </div>
                 <div className="mx-3">
                   <a
-                    href="#"
+                    href={externalRoutes.socialMedia.instagram()}
                     className={`rounded-circle text-muted p-2 instagram`}
                   >
                     <BsInstagram />
@@ -36,10 +37,18 @@ const Footer = () => {
                 </div>
                 <div className="mx-3">
                   <a
-                    href="#"
+                    href={externalRoutes.socialMedia.telegram()}
                     className={`rounded-circle text-muted p-2 telegram`}
                   >
                     <BsTelegram />
+                  </a>
+                </div>
+                <div className="mx-3">
+                  <a
+                    href={externalRoutes.socialMedia.linkedin()}
+                    className={`rounded-circle text-muted p-2 linkedin`}
+                  >
+                    <BsLinkedin />
                   </a>
                 </div>
               </div>
