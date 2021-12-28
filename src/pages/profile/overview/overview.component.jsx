@@ -24,7 +24,7 @@ const Overview = () => {
 
   return (
     <Container>
-      <div className="bg-light m-3 p-3 ">
+      <div className="m-3 p-3 ">
         <div>
           <Row>
             <Col xs={12} md={6} xl={4} className="my-3">
