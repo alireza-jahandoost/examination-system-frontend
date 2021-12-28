@@ -114,6 +114,7 @@ export const AuthenticationProvider = ({ children }) => {
         if (isMounted()) {
           switch (Number(err?.response?.status)) {
             case 401:
+            case 422:
               const { errors: receivedErrors, message } =
                 err?.response?.data || {};
               setErrors((correntErrors) => ({
