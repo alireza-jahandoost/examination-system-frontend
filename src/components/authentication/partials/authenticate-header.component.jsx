@@ -4,7 +4,7 @@ import externalRoutes from "../../../constants/external-routes.constant";
 const AuthenticateHeader = () => {
   return (
     <Container fluid className="h-100" style={{ backgroundColor: "#bcf1dd" }}>
-      <div className="p-3 p-md-0 h-100 d-flex flex-column justify-content-center">
+      <div className="p-3 pb-1 p-md-0 h-100 d-flex flex-column justify-content-center">
         <Row className="d-flex flex-column justify-content-center align-items-center">
           <Col xs={2} md={0} />
           <Col
@@ -32,7 +32,7 @@ const AuthenticateHeader = () => {
           <Col>
             <p
               style={{ fontSize: "min(2.5vw,15px)" }}
-              className="text-uppercase text-center fw-light"
+              className="text-uppercase mt-3 mb-2 text-center fw-light"
             >
               <span className="text-success">any problem? </span>
               <a href={externalRoutes.contactUs()}>
