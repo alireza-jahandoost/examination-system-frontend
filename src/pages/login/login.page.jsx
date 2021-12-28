@@ -41,7 +41,7 @@ const LoginPage = () => {
             <LoginForm style={{ flexGrow: 3 }} />
             <p style={{ flexGrow: 1 }} className="fw-light text-center">
               <small>
-                <span className="text-uppercase">dont have an account? </span>
+                <span className="text-uppercase">don't have an account? </span>
                 <Link to={programRoutes.register()}>
                   <button className="text-uppercase text-decoration-none border-0 bg-transparent text-primary fst-italic">
                     sign up
