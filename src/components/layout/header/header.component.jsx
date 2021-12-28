@@ -111,7 +111,10 @@ const Header = () => {
             ref={toggleButtonRef}
             aria-controls="responsive-navbar-nav"
           />
-          <Navbar.Collapse id="responsive-navbar-nav">
+          <Navbar.Collapse
+            id="responsive-navbar-nav"
+            className="flex-lg-grow-0"
+          >
             <Nav className="me-auto">
               {user && (
                 <>
