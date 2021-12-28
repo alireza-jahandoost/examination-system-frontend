@@ -22,9 +22,11 @@ const LoginForm = ({ ...props }) => {
   return (
     <div {...props}>
       <div className="h-100 d-flex flex-column align-items-around justify-content-around">
-        <div>
-          {errors.message && <Alert variant="danger">{errors.message}</Alert>}
-        </div>
+        {Object.keys(errors).length > 0 && (
+          <div>
+            {errors.message && <Alert variant="danger">{errors.message}</Alert>}
+          </div>
+        )}
         <Form
           className="flex-fill d-flex flex-column justify-content-around align-items-around"
           onSubmit={handleSubmit}

@@ -26,7 +26,7 @@ const RegisterForm = ({ ...props }) => {
   return (
     <div {...props}>
       <div className="h-100 d-flex flex-column align-items-around justify-content-around">
-        {errors.length > 0 && (
+        {Object.keys(errors).length > 0 && (
           <div>
             {errors.message && <Alert variant="danger">{errors.message}</Alert>}
           </div>

@@ -112,12 +112,22 @@ export const AuthenticationProvider = ({ children }) => {
       })
       .catch((err) => {
         if (isMounted()) {
-          const { errors: receivedErrors, message } = err?.response?.data || {};
-          setErrors((correntErrors) => ({
-            ...correntErrors,
-            ...receivedErrors,
-            message,
-          }));
+          switch (Number(err?.response?.status)) {
+            case 401:
+              const { errors: receivedErrors, message } =
+                err?.response?.data || {};
+              setErrors((correntErrors) => ({
+                ...correntErrors,
+                ...receivedErrors,
+                message,
+              }));
+              break;
+            default:
+              setErrors({
+                message: "Something went wrong, please try again later.",
+              });
+              break;
+          }
           setIsLoading(false);
         }
         return false;
@@ -139,17 +149,27 @@ export const AuthenticationProvider = ({ children }) => {
       })
       .catch((requestErrors) => {
         if (isMounted()) {
-          const err = requestErrors.response.data;
-          const correntErrors = { ...errors };
-          if (err.message) {
-            correntErrors.message = err.message;
+          switch (Number(requestErrors?.response?.status)) {
+            case 422:
+              const err = requestErrors.response.data;
+              const correntErrors = { ...errors };
+              if (err.message) {
+                correntErrors.message = err.message;
+              }
+              if (err.errors) {
+                Object.keys(err.errors).forEach((error) => {
+                  correntErrors[error] = err.errors[error];
+                });
+              }
+              setErrors(correntErrors);
+
+              break;
+            default:
+              setErrors({
+                message: "Something went wrong, please try again later.",
+              });
+              break;
           }
-          if (err.errors) {
-            Object.keys(err.errors).forEach((error) => {
-              correntErrors[error] = err.errors[error];
-            });
-          }
-          setErrors(correntErrors);
           setIsLoading(false);
         }
         return false;
@@ -193,9 +213,18 @@ export const AuthenticationProvider = ({ children }) => {
         setErrors({});
       })
       .catch((err) => {
-        const newErrors = { ...err.response.data.errors };
-        newErrors.message = err.response.data.message;
-        setErrors(newErrors);
+        switch (Number(err?.response?.status)) {
+          case 422:
+            const newErrors = { ...err.response.data.errors };
+            newErrors.message = err.response.data.message;
+            setErrors(newErrors);
+            break;
+          default:
+            setErrors({
+              message: "Something went wrong, please try again later.",
+            });
+            break;
+        }
         setIsLoading(false);
       });
   };
