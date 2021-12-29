@@ -135,7 +135,7 @@ const ExamOverviewPage = () => {
             !participant.confirmed && (
               <p className="lead">
                 Notice: This exam needs confirmation by owner and you are not
-                confirmed. Contact the owner of exam and try again.
+                confirmed.
               </p>
             )}
 
