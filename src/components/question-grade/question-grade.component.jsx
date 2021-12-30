@@ -35,7 +35,7 @@ const QuestionGrade = ({ canUserChangeGrade = false, questionId }) => {
   return (
     <div>
       {showGradeEnabled && (
-        <p className="lead">Grade: {isNaN(grade) ? "not calculated" : grade}</p>
+        <p className="lead">Grade: {grade === null ? "not checked" : grade}</p>
       )}
       {canUserChangeGrade && changeGradeEnabled && (
         <Form onSubmit={handleSubmit}>

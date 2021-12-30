@@ -67,6 +67,7 @@ export const QuestionGradeProvider = ({
       .then((response) => response.data.data)
       .then(({ grade: receivedGrade }) => {
         if (isMounted()) {
+          console.log(receivedGrade);
           setGrade(receivedGrade);
           setIsContextLoaded(true);
         }
@@ -130,7 +131,9 @@ export const QuestionGradeProvider = ({
   const value = {
     isContextLoaded,
     isLoading,
-    grade: showGradeEnabled && (grade ? Number(grade.grade) : null),
+    grade:
+      showGradeEnabled &&
+      (grade && grade.grade !== null ? Number(grade.grade) : null),
     newGrade,
     changeGrade: (new_grade) => setNewGrade(new_grade),
     submitGrade,
