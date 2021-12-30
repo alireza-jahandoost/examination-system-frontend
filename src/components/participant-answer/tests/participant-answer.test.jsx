@@ -16,6 +16,7 @@ test("check readonly inputs for descriptive questions", async () => {
       examId={1}
       participantId={1}
       questionId={1}
+      canUserChangeGrade={true}
     />
   );
   await waitForElementToBeRemoved(() => screen.getAllByText(/loading/i));
@@ -32,6 +33,7 @@ test("check readonly inputs for fill the blank questions", async () => {
       examId={1}
       participantId={1}
       questionId={2}
+      canUserChangeGrade={true}
     />
   );
   await waitForElementToBeRemoved(() => screen.getAllByText(/loading/i));
@@ -48,6 +50,7 @@ test("check readonly inputs for multiple answer questions", async () => {
       examId={1}
       participantId={1}
       questionId={3}
+      canUserChangeGrade={true}
     />
   );
   await waitForElementToBeRemoved(() => screen.getAllByText(/loading/i));
@@ -65,6 +68,7 @@ test("check readonly inputs for select the answer questions", async () => {
       examId={1}
       participantId={1}
       questionId={4}
+      canUserChangeGrade={true}
     />
   );
   await waitForElementToBeRemoved(() => screen.getAllByText(/loading/i));
@@ -82,6 +86,7 @@ test("check readonly inputs for true or false questions", async () => {
       examId={1}
       participantId={1}
       questionId={5}
+      canUserChangeGrade={true}
     />
   );
   await waitForElementToBeRemoved(() => screen.getAllByText(/loading/i));
@@ -99,6 +104,7 @@ test("check readonly inputs for ordering questions", async () => {
       examId={1}
       participantId={1}
       questionId={6}
+      canUserChangeGrade={true}
     />
   );
   await waitForElementToBeRemoved(() => screen.getAllByText(/loading/i));
@@ -116,6 +122,7 @@ test("user can see the grade, change it and save it", async () => {
       examId={1}
       participantId={1}
       questionId={6}
+      canUserChangeGrade={true}
     />
   );
 

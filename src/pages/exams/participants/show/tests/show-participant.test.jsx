@@ -5,6 +5,7 @@ import {
 } from "../../../../../test-utils/testing-library-utils";
 import { Route } from "react-router-dom";
 import ShowParticipantPage from "../show-participant.page";
+import { changeShowExam } from "../../../../../utilities/tests.utility";
 
 import { wait } from "../../../../../utilities/tests.utility";
 
@@ -19,6 +20,15 @@ const wrapper = (ui) => {
 };
 
 test("all the inputs must be readonly or disabled except grade inputs", async () => {
+  changeShowExam({
+    exam: {
+      examId: 1,
+      ownerId: 1,
+      isRegistered: false,
+      published: true,
+      needsConfirmation: false,
+    },
+  });
   renderWithAuthentication(wrapper(<ShowParticipantPage />), {
     route: programRoutes.showParticipant(1, 1),
   });
@@ -49,6 +59,15 @@ test("all the inputs must be readonly or disabled except grade inputs", async ()
 });
 
 test("if the status of participant was NOT_FINISHED, the grade input and grade must not be shown", async () => {
+  changeShowExam({
+    exam: {
+      examId: 1,
+      ownerId: 1,
+      isRegistered: false,
+      published: true,
+      needsConfirmation: false,
+    },
+  });
   renderWithAuthentication(wrapper(<ShowParticipantPage />), {
     route: programRoutes.showParticipant(1, 4),
   });
@@ -65,6 +84,15 @@ test("if the status of participant was NOT_FINISHED, the grade input and grade m
 });
 
 test("if the status of participant is IS_PROCESSING, the grade input and grade must not be shown", async () => {
+  changeShowExam({
+    exam: {
+      examId: 1,
+      ownerId: 1,
+      isRegistered: false,
+      published: true,
+      needsConfirmation: false,
+    },
+  });
   renderWithAuthentication(wrapper(<ShowParticipantPage />), {
     route: programRoutes.showParticipant(1, 3),
   });
@@ -81,6 +109,15 @@ test("if the status of participant is IS_PROCESSING, the grade input and grade m
 });
 
 test("if the status of participant is WAIT_FOR_MANUAL_CORRECTING, the grade input and grade must be shown", async () => {
+  changeShowExam({
+    exam: {
+      examId: 1,
+      ownerId: 1,
+      isRegistered: false,
+      published: true,
+      needsConfirmation: false,
+    },
+  });
   renderWithAuthentication(wrapper(<ShowParticipantPage />), {
     route: programRoutes.showParticipant(1, 2),
   });
@@ -92,7 +129,39 @@ test("if the status of participant is WAIT_FOR_MANUAL_CORRECTING, the grade inpu
   expect(screen.getAllByRole("spinbutton", { name: /grade/i })).toHaveLength(6);
 });
 
+test("if the status of participant is WAIT_FOR_MANUAL_CORRECTING and user is the participant, the grade input must not be shown and grade must be shown", async () => {
+  changeShowExam({
+    exam: {
+      examId: 1,
+      ownerId: 32,
+      isRegistered: false,
+      published: true,
+      needsConfirmation: false,
+    },
+  });
+  renderWithAuthentication(wrapper(<ShowParticipantPage />), {
+    route: programRoutes.showParticipant(1, 2),
+  });
+
+  await waitFor(() =>
+    expect(screen.getByText(`grade:`, { exact: false })).toBeInTheDocument()
+  );
+
+  expect(
+    screen.queryByRole("spinbutton", { name: /grade/i })
+  ).not.toBeInTheDocument();
+});
+
 test("if the status of participant is FINISHED, the grade input and grade must be shown", async () => {
+  changeShowExam({
+    exam: {
+      examId: 1,
+      ownerId: 1,
+      isRegistered: false,
+      published: true,
+      needsConfirmation: false,
+    },
+  });
   renderWithAuthentication(wrapper(<ShowParticipantPage />), {
     route: programRoutes.showParticipant(1, 1),
   });
@@ -110,4 +179,31 @@ test("if the status of participant is FINISHED, the grade input and grade must b
       6
     )
   );
+});
+
+test("if the status of participant is FINISHED and user is the participant, the grade input and grade must be shown", async () => {
+  changeShowExam({
+    exam: {
+      examId: 1,
+      ownerId: 32,
+      isRegistered: false,
+      published: true,
+      needsConfirmation: false,
+    },
+  });
+  renderWithAuthentication(wrapper(<ShowParticipantPage />), {
+    route: programRoutes.showParticipant(1, 1),
+  });
+
+  await wait(200);
+
+  await waitFor(() =>
+    expect(
+      screen.getAllByText(/(grade:)|(user grade)/i, { exact: false })
+    ).toHaveLength(7)
+  );
+
+  expect(
+    screen.queryByRole("spinbutton", { name: /grade/i })
+  ).not.toBeInTheDocument();
 });

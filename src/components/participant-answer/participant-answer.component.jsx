@@ -10,6 +10,7 @@ const ParticipantAnswer = ({
   examId,
   participantId,
   participantStatus,
+  canUserChangeGrade,
 }) => {
   return (
     <div className="border rounded p-2 my-5 text-start">
@@ -30,7 +31,10 @@ const ParticipantAnswer = ({
           questionId={questionId}
           participantStatus={participantStatus}
         >
-          <QuestionGrade questionId={questionId} canUserChangeGrade={true} />
+          <QuestionGrade
+            questionId={questionId}
+            canUserChangeGrade={canUserChangeGrade}
+          />
         </QuestionGradeProvider>
       </Container>
     </div>

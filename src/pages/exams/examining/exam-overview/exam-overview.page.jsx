@@ -161,6 +161,19 @@ const ExamOverviewPage = () => {
             </Link>
           )}
 
+          {!!participant && !isUserOwnExam && (
+            <Link
+              to={programRoutes.showParticipant(
+                examId,
+                participant.participant_id
+              )}
+            >
+              <Button className="m-2" variant="primary">
+                answers
+              </Button>
+            </Link>
+          )}
+
           {canUserRegisterToExam && (
             <Form onSubmit={handleRegistration}>
               {errors.message && (
