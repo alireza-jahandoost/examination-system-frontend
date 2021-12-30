@@ -13,6 +13,7 @@ import {
   createSearch,
 } from "../../../../utilities/url.utility";
 import ExamRecord from "../../../../components/exam-models/exam-record/exam-record.component";
+import { convertFromUTC } from "../../../../utilities/dateAndTime.utility";
 
 const IndexAllExams = () => {
   const [exams, setExams] = useState([]);
@@ -52,7 +53,13 @@ const IndexAllExams = () => {
       })
       .then(({ exams }) => {
         if (isMounted()) {
-          setExams([...exams]);
+          setExams([
+            ...exams.map((exam) => ({
+              ...exam,
+              start_of_exam: convertFromUTC(exam.start_of_exam),
+              end_of_exam: convertFromUTC(exam.end_of_exam),
+            })),
+          ]);
           setIsContextLoaded(true);
           setIsLoading(false);
         }

@@ -64,10 +64,10 @@ const UpdateExamForm = ({ examId }) => {
     // if (exam.exam_description !== examDescription) {
     //   bodyOfRequest.exam_description = examDescription;
     // }
-    if (exam.start_of_exam !== convertToUTC(examStart)) {
+    if (exam.start_of_exam !== examStart) {
       bodyOfRequest.start_of_exam = convertToUTC(examStart);
     }
-    if (exam.end_of_exam !== convertToUTC(examEnd)) {
+    if (exam.end_of_exam !== examEnd) {
       bodyOfRequest.end_of_exam = convertToUTC(examEnd);
     }
     if (exam.total_score !== totalScore) {

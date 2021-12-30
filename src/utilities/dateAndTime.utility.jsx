@@ -93,7 +93,7 @@ export const isDateInThePast = (datetime) => {
     format = moment.ISO_8601;
   }
 
-  return moment.utc(datetime, format).isBefore(new Date());
+  return moment(datetime, format).isBefore(new Date());
 };
 
 export const convertFromUTCToHumanReadable = (datetime) => {
@@ -104,4 +104,14 @@ export const convertFromUTCToHumanReadable = (datetime) => {
     format = moment.ISO_8601;
   }
   return moment.utc(datetime, format).local().fromNow();
+};
+
+export const convertToHumanReadable = (datetime) => {
+  let format;
+  if (moment(datetime, "YYYY-MM-DD HH:mm:ss") === datetime) {
+    format = "YYYY-MM-DD HH:mm:ss";
+  } else {
+    format = moment.ISO_8601;
+  }
+  return moment(datetime, format).fromNow();
 };

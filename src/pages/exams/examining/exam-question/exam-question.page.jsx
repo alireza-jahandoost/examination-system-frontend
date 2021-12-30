@@ -55,7 +55,7 @@ const ExamQuestionPage = () => {
           onClick={() => {
             setShowModal(true);
           }}
-          className="h-100"
+          className="h-100 me-2"
         >
           Finish Exam
         </Button>

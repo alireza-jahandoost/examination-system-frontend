@@ -3,7 +3,6 @@ import { Container, Dropdown } from "react-bootstrap";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { BsAlarm, BsArrowRight } from "react-icons/bs";
-import { convertFromUTC } from "../../../utilities/dateAndTime.utility";
 import useExamStatus from "../../../hooks/useExamStatus";
 import "./exam-record.style.css";
 
@@ -70,9 +69,9 @@ const ExamRecord = ({ exam, links, extraLinks, ...props }) => {
           </div>
           <div className="d-flex text-muted small align-items-center">
             <BsAlarm />
-            <p className="m-0 mx-1">{convertFromUTC(exam.start_of_exam)}</p>
+            <p className="m-0 mx-1">{exam.start_of_exam}</p>
             <BsArrowRight />
-            <p className="m-0 mx-1">{convertFromUTC(exam.end_of_exam)}</p>
+            <p className="m-0 mx-1">{exam.end_of_exam}</p>
           </div>
           <div className="d-flex align-items-center justify-content-between">
             <p

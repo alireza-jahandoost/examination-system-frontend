@@ -9,8 +9,6 @@ import ExamPassword from "../../../../components/exam-password/exam-password.com
 
 import programRoutes from "../../../../constants/program-routes.constant";
 
-import { convertFromUTC } from "../../../../utilities/dateAndTime.utility";
-
 import useExamStatus from "../../../../hooks/useExamStatus";
 
 const ExamOverviewPage = () => {
@@ -74,7 +72,7 @@ const ExamOverviewPage = () => {
 
   return (
     <div style={{ minHeight: "100vh" }} className="text-start d-flex">
-      <Container className="flex-grow-1 m-5 d-flex flex-column">
+      <Container className="flex-grow-1 m-2 m-md-3 m-lg-5 d-flex flex-column">
         <Container className="bg-white p-3 border shadow rounded">
           <Table>
             <tbody>
@@ -92,11 +90,11 @@ const ExamOverviewPage = () => {
               </tr>
               <tr>
                 <td>Start of Exam</td>
-                <td>{convertFromUTC(exam.start_of_exam)}</td>
+                <td>{exam.start_of_exam}</td>
               </tr>
               <tr>
                 <td>End of Exam</td>
-                <td>{convertFromUTC(exam.end_of_exam)}</td>
+                <td>{exam.end_of_exam}</td>
               </tr>
               <tr>
                 <td>Total Score</td>

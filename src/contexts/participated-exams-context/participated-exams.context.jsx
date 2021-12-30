@@ -7,6 +7,7 @@ import useAsyncError from "../../hooks/useAsyncError";
 import { AuthenticationContext } from "../../contexts/authentication-context/authentication.context";
 
 import { participatedExamsIndexRequest } from "../../services/exams/exams.service";
+import { convertFromUTC } from "../../utilities/dateAndTime.utility";
 
 export const ParticipatedExamsContext = createContext();
 
@@ -41,7 +42,13 @@ export const ParticipatedExamsProvider = ({ children }) => {
       })
       .then(({ exams }) => {
         if (isMounted()) {
-          setExams([...exams]);
+          setExams([
+            ...exams.map((exam) => ({
+              ...exam,
+              start_of_exam: convertFromUTC(exam.start_of_exam),
+              end_of_exam: convertFromUTC(exam.end_of_exam),
+            })),
+          ]);
           setIsLoading(false);
         }
       })

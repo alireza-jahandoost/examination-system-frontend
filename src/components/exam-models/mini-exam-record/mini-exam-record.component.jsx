@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import useExamStatus from "../../../hooks/useExamStatus";
-import { convertFromUTCToHumanReadable } from "../../../utilities/dateAndTime.utility";
+import { convertToHumanReadable } from "../../../utilities/dateAndTime.utility";
 import { BsClock } from "react-icons/bs";
 import "./mini-exam-record.styles.css";
 
@@ -32,7 +32,7 @@ const MiniExamRecord = ({
             <p className="m-0">
               <BsClock />
               <span className="ms-1 small">
-                {convertFromUTCToHumanReadable(examTime)}
+                {convertToHumanReadable(examTime)}
               </span>
             </p>
           </div>

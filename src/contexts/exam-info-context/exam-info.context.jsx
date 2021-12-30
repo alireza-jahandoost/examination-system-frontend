@@ -8,6 +8,7 @@ import { useMountedState } from "react-use";
 import {
   convertDateTimeToObject,
   convertSecondsToObject,
+  convertFromUTC,
 } from "../../utilities/dateAndTime.utility";
 
 import { examsShowRequest } from "../../services/exams/exams.service";
@@ -51,7 +52,11 @@ export const ExamInfoProvider = ({ children, examId }) => {
       .then((response) => response.data.data)
       .then((data) => {
         if (isMounted()) {
-          setExam(data.exam);
+          setExam({
+            ...data.exam,
+            start_of_exam: convertFromUTC(data.exam.start_of_exam),
+            end_of_exam: convertFromUTC(data.exam.end_of_exam),
+          });
         }
       })
       .catch((e) => {

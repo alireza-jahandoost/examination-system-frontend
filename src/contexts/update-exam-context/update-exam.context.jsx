@@ -47,8 +47,8 @@ export const UpdateExamProvider = ({ children }) => {
       totalScore !== exam.total_score ||
       examPassword !== "" ||
       needsConfirmation !== exam.needs_confirmation ||
-      examStart !== convertFromUTC(exam.start_of_exam) ||
-      examEnd !== convertFromUTC(exam.end_of_exam)
+      examStart !== exam.start_of_exam ||
+      examEnd !== exam.end_of_exam
     ) {
       setIsAnyChangeExist(true);
     } else {
@@ -82,7 +82,11 @@ export const UpdateExamProvider = ({ children }) => {
             const questionsIndexResponse = responses[1];
 
             const { exam: responseExam } = examsShowResponse.data.data;
-            setExam(responseExam);
+            setExam({
+              ...responseExam,
+              start_of_exam: convertFromUTC(responseExam.start_of_exam),
+              end_of_exam: convertFromUTC(responseExam.end_of_exam),
+            });
             setExamName(responseExam.exam_name);
             setExamDescription(responseExam.exam_description);
             setExamStart(convertFromUTC(responseExam.start_of_exam));
@@ -119,7 +123,11 @@ export const UpdateExamProvider = ({ children }) => {
         if (isMounted()) {
           setIsLoading(false);
           setExamPassword("");
-          setExam(response.exam);
+          setExam({
+            ...response.exam,
+            start_of_exam: convertFromUTC(response.exam.start_of_exam),
+            end_of_exam: convertFromUTC(response.exam.end_of_exam),
+          });
           setExamStart(convertFromUTC(response.exam.start_of_exam));
           setExamEnd(convertFromUTC(response.exam.end_of_exam));
           setErrors({});

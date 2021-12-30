@@ -54,31 +54,32 @@ export const asignExamShowStartAndEnd = (
   end,
   hasPassword = false
 ) => {
+  const createLeadingZero = (input) => ("0" + input).slice(-2);
   const formatted_start_date =
     start.getFullYear() +
     "-" +
-    (start.getMonth() + 1) +
+    createLeadingZero(start.getMonth() + 1) +
     "-" +
-    start.getDate() +
+    createLeadingZero(start.getDate()) +
     " " +
-    start.getHours() +
+    createLeadingZero(start.getHours()) +
     ":" +
-    start.getMinutes() +
+    createLeadingZero(start.getMinutes()) +
     ":" +
-    start.getSeconds();
+    createLeadingZero(start.getSeconds());
 
   let formatted_end_date =
     end.getFullYear() +
     "-" +
-    (end.getMonth() + 1) +
+    createLeadingZero(end.getMonth() + 1) +
     "-" +
-    end.getDate() +
+    createLeadingZero(end.getDate()) +
     " " +
-    end.getHours() +
+    createLeadingZero(end.getHours()) +
     ":" +
-    end.getMinutes() +
+    createLeadingZero(end.getMinutes()) +
     ":" +
-    end.getSeconds();
+    createLeadingZero(end.getSeconds());
 
   const handler = rest.get(
     apiRoutes.exams.showExam(examId),
