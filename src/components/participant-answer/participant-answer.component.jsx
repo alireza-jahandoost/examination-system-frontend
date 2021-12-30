@@ -26,16 +26,21 @@ const ParticipantAnswer = ({
       </Container>
       <Container className="my-2">
         <h4> Grade Info: </h4>
-        <QuestionGradeProvider
-          participantId={participantId}
-          questionId={questionId}
-          participantStatus={participantStatus}
-        >
-          <QuestionGrade
+        {participantStatus === "FINISHED" ||
+        participantStatus === "WAIT_FOR_MANUAL_CORRECTING" ? (
+          <QuestionGradeProvider
+            participantId={participantId}
             questionId={questionId}
-            canUserChangeGrade={canUserChangeGrade}
-          />
-        </QuestionGradeProvider>
+            participantStatus={participantStatus}
+          >
+            <QuestionGrade
+              questionId={questionId}
+              canUserChangeGrade={canUserChangeGrade}
+            />
+          </QuestionGradeProvider>
+        ) : (
+          <p>Processing...</p>
+        )}
       </Container>
     </div>
   );
