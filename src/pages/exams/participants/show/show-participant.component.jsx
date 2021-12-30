@@ -18,11 +18,14 @@ const ShowParticipant = () => {
   return (
     <ExamInfoProvider examId={participant.exam_id}>
       <ProfileContainer>
+        <h1 className="display-6">Participant Answers</h1>
         <UserProvider userId={participant.user_id}>
-          <ParticipantInfo />
+          <ParticipantInfo className="my-3" />
         </UserProvider>
+      </ProfileContainer>
 
-        <AnswersInfo />
+      <ProfileContainer className="my-5">
+        <AnswersInfo className="" />
       </ProfileContainer>
     </ExamInfoProvider>
   );

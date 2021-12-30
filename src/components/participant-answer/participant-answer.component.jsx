@@ -12,7 +12,7 @@ const ParticipantAnswer = ({
   participantStatus,
 }) => {
   return (
-    <div className="border rounded p-2 my-4 text-start">
+    <div className="border rounded p-2 my-5 text-start">
       <Container className=" border-bottom my-2 pb-3">
         <h4> Question Text: </h4>
         <AnswerQuestionProvider
