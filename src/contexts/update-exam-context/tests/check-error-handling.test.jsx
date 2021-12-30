@@ -3,6 +3,7 @@ import {
   screen,
   renderWithAuthentication,
 } from "../../../test-utils/testing-library-utils";
+import moment from "moment";
 import { Route } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import {
@@ -20,6 +21,7 @@ import { ErrorBoundaryProvider } from "../../../contexts/error-boundary-context/
 
 import apiRoutes from "../../../constants/api-routes.constant";
 import programRoutes from "../../../constants/program-routes.constant";
+import { changeShowExam } from "../../../utilities/tests.utility";
 
 describe("check 401 errors(the removeUserInfo() func from authentication context must be called)", () => {
   test("check exams.showExam route", async () => {
@@ -93,9 +95,23 @@ describe("check 401 errors(the removeUserInfo() func from authentication context
     await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(1));
   });
   test("check exams.publishExam route", async () => {
+    const start = moment(Date.now() + 5000).format("YYYY-MM-DD HH:mm:ss");
+    const end = moment(Date.now() + 60 * 5000).format("YYYY-MM-DD HH:mm:ss");
+
     changeRequestResponseTo401({
       route: apiRoutes.exams.publishExam(":examId"),
       method: "put",
+      otherHandlers: [
+        changeShowExam({
+          exam: {
+            startOfExam: start,
+            endOfExam: end,
+            ownerId: 1,
+            isRegistered: false,
+            published: false,
+          },
+        }),
+      ],
     });
 
     const removeUserInfo = jest.fn();
@@ -119,9 +135,23 @@ describe("check 401 errors(the removeUserInfo() func from authentication context
     await waitFor(() => expect(removeUserInfo).toHaveBeenCalledTimes(1));
   });
   test("check exams.unpublishExam route", async () => {
+    const start = moment(Date.now() + 5000).format("YYYY-MM-DD HH:mm:ss");
+    const end = moment(Date.now() + 60 * 5000).format("YYYY-MM-DD HH:mm:ss");
+
     changeRequestResponseTo401({
       route: apiRoutes.exams.unpublishExam(":examId"),
       method: "put",
+      otherHandlers: [
+        changeShowExam({
+          exam: {
+            startOfExam: start,
+            endOfExam: end,
+            ownerId: 1,
+            isRegistered: false,
+            published: true,
+          },
+        }),
+      ],
     });
 
     const removeUserInfo = jest.fn();
@@ -218,10 +248,24 @@ describe("check 422 errors", () => {
     // end
   });
   test("check exams.publishExam route", async () => {
+    const start = moment(Date.now() + 5000).format("YYYY-MM-DD HH:mm:ss");
+    const end = moment(Date.now() + 60 * 5000).format("YYYY-MM-DD HH:mm:ss");
+
     const { message } = changeRequestResponseTo422({
       route: apiRoutes.exams.publishExam(":examId"),
       method: "put",
       fields: [],
+      otherHandlers: [
+        changeShowExam({
+          exam: {
+            startOfExam: start,
+            endOfExam: end,
+            ownerId: 1,
+            isRegistered: false,
+            published: false,
+          },
+        }),
+      ],
     });
 
     const removeUserInfo = jest.fn();
@@ -260,10 +304,24 @@ describe("check 422 errors", () => {
     // end
   });
   test("check exams.unpublishExam route", async () => {
+    const start = moment(Date.now() + 5000).format("YYYY-MM-DD HH:mm:ss");
+    const end = moment(Date.now() + 60 * 5000).format("YYYY-MM-DD HH:mm:ss");
+
     const { message } = changeRequestResponseTo422({
       route: apiRoutes.exams.unpublishExam(":examId"),
       method: "put",
       fields: [],
+      otherHandlers: [
+        changeShowExam({
+          exam: {
+            startOfExam: start,
+            endOfExam: end,
+            ownerId: 1,
+            isRegistered: false,
+            published: true,
+          },
+        }),
+      ],
     });
 
     const removeUserInfo = jest.fn();
@@ -408,10 +466,24 @@ describe("check other errors", () => {
     // end
   });
   test("check exams.publishExam route", async () => {
+    const start = moment(Date.now() + 5000).format("YYYY-MM-DD HH:mm:ss");
+    const end = moment(Date.now() + 60 * 5000).format("YYYY-MM-DD HH:mm:ss");
+
     changeRequestResponseToSpecificStatus({
       route: apiRoutes.exams.publishExam(":examId"),
       method: "put",
       status: 403,
+      otherHandlers: [
+        changeShowExam({
+          exam: {
+            startOfExam: start,
+            endOfExam: end,
+            ownerId: 1,
+            isRegistered: false,
+            published: false,
+          },
+        }),
+      ],
     });
 
     const removeUserInfo = jest.fn();
@@ -450,10 +522,24 @@ describe("check other errors", () => {
     // end
   });
   test("check exams.unpublishExam route", async () => {
+    const start = moment(Date.now() + 5000).format("YYYY-MM-DD HH:mm:ss");
+    const end = moment(Date.now() + 60 * 5000).format("YYYY-MM-DD HH:mm:ss");
+
     changeRequestResponseToSpecificStatus({
       route: apiRoutes.exams.unpublishExam(":examId"),
       method: "put",
       status: 403,
+      otherHandlers: [
+        changeShowExam({
+          exam: {
+            startOfExam: start,
+            endOfExam: end,
+            ownerId: 1,
+            isRegistered: false,
+            published: true,
+          },
+        }),
+      ],
     });
 
     const removeUserInfo = jest.fn();
