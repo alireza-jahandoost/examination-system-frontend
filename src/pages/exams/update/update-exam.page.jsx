@@ -9,6 +9,7 @@ import { QuestionTypesProvider } from "../../../contexts/question-types-context/
 import { UpdateExamContext } from "../../../contexts/update-exam-context/update-exam.context";
 import { BsExclamationTriangle } from "react-icons/bs";
 import programRoutes from "../../../constants/program-routes.constant";
+import { isDateInThePast } from "../../../utilities/dateAndTime.utility";
 
 const UpdateExamPage = () => {
   const [addQuestionFormVisible, setAddQuestionFormVisible] = useState(false);
@@ -27,28 +28,33 @@ const UpdateExamPage = () => {
   if (!exam) {
     return <p> Loading... </p>;
   }
+
+  const userCanEdit = !isPublished || !isDateInThePast(exam.start_of_exam);
+
   return (
     <div className="text-start mb-5">
       <ElementContainer>
         <div className="d-flex flex-column">
           <div>
-            <Button
-              variant="success"
-              onClick={() => {
-                if (!isPublished) {
-                  publishExam();
-                } else {
-                  unpublishExam();
-                }
-              }}
-              disabled={isPublishStateChanging}
-            >
-              {isPublishStateChanging
-                ? "Loading..."
-                : isPublished
-                ? "Unpublish Exam"
-                : "Publish Exam"}
-            </Button>
+            {userCanEdit && (
+              <Button
+                variant="success"
+                onClick={() => {
+                  if (!isPublished) {
+                    publishExam();
+                  } else {
+                    unpublishExam();
+                  }
+                }}
+                disabled={isPublishStateChanging}
+              >
+                {isPublishStateChanging
+                  ? "Loading..."
+                  : isPublished
+                  ? "Unpublish Exam"
+                  : "Publish Exam"}
+              </Button>
+            )}
             <Link to={programRoutes.indexParticipants(examId)}>
               <Button variant="primary" className="mx-2">
                 participants
@@ -64,6 +70,15 @@ const UpdateExamPage = () => {
                   : "You must publish your exam to allow other participate in your exam."}
               </span>
             </p>
+            {!userCanEdit && (
+              <p className="text-muted small my-2">
+                <BsExclamationTriangle />
+                <span>
+                  You can not edit the exam anymore, because exam is running or
+                  finished.
+                </span>
+              </p>
+            )}
           </div>
         </div>
       </ElementContainer>
