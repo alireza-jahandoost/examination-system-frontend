@@ -35,7 +35,10 @@ const Sidebar = (props) => {
                 checkCurrentPath(
                   programRoutes.examiningQuestion(":examId", ":questionId")
                 ) ||
-                checkCurrentPath(programRoutes.examiningOverview(":examId"))
+                checkCurrentPath(programRoutes.examiningOverview(":examId")) ||
+                checkCurrentPath(
+                  programRoutes.showParticipant(":examId", ":participantId")
+                )
               }
               className="lead my-2"
               label="all exams"
@@ -45,10 +48,7 @@ const Sidebar = (props) => {
               active={
                 checkCurrentPath(programRoutes.indexCreatedExams()) ||
                 checkCurrentPath(programRoutes.indexParticipants(":examId")) ||
-                checkCurrentPath(programRoutes.updateExam(":examId")) ||
-                checkCurrentPath(
-                  programRoutes.showParticipant(":examId", ":participantId")
-                )
+                checkCurrentPath(programRoutes.updateExam(":examId"))
               }
               className="lead my-2"
               label="created exams"
