@@ -1,40 +1,30 @@
 import { useContext } from "react";
 
 import ProfileContainer from "../../../../components/profile-container/profile-container.component";
-import ParticipantAnswer from "../../../../components/participant-answer/participant-answer.component";
+import ParticipantInfo from "./participant-info.component";
+import AnswersInfo from "./answers-info.component";
 
 import { ShowParticipantContext } from "../../../../contexts/show-participant-context/show-participant.context";
+import { UserProvider } from "../../../../contexts/user-context/user.context";
+import { ExamInfoProvider } from "../../../../contexts/exam-info-context/exam-info.context";
 
 const ShowParticipant = () => {
-  const { participant, questions, isContextLoaded } = useContext(
-    ShowParticipantContext
-  );
+  const { participant, isContextLoaded } = useContext(ShowParticipantContext);
 
   if (!isContextLoaded) {
     return <p> Loading... </p>;
   }
 
   return (
-    <ProfileContainer>
-      <h1>Participant Answers</h1>
-      <div>
-        <p className="lead"> status: {participant.status} </p>
-        {participant.grade !== null && (
-          <p className="lead"> grade: {participant.grade} </p>
-        )}
-      </div>
-      <div>
-        {questions.map((question) => (
-          <ParticipantAnswer
-            key={question.question_id}
-            participantId={participant.participant_id}
-            examId={participant.exam_id}
-            questionId={question.question_id}
-            participantStatus={participant.status}
-          />
-        ))}
-      </div>
-    </ProfileContainer>
+    <ExamInfoProvider examId={participant.exam_id}>
+      <ProfileContainer>
+        <UserProvider userId={participant.user_id}>
+          <ParticipantInfo />
+        </UserProvider>
+
+        <AnswersInfo />
+      </ProfileContainer>
+    </ExamInfoProvider>
   );
 };
 

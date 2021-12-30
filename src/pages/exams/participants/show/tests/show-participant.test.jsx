@@ -100,7 +100,9 @@ test("if the status of participant is FINISHED, the grade input and grade must b
   await wait(200);
 
   await waitFor(() =>
-    expect(screen.getAllByText(/grade:/i, { exact: false })).toHaveLength(7)
+    expect(
+      screen.getAllByText(/(grade:)|(user grade)/i, { exact: false })
+    ).toHaveLength(7)
   );
 
   await waitFor(() =>

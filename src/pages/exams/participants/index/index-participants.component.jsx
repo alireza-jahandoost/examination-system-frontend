@@ -84,6 +84,9 @@ const IndexParticipantsPage = () => {
   return (
     <>
       <div className="text-start bg-white p-3 rounded shadow border mb-3">
+        <h2 className="display-6 mx-2">
+          Exam Name: {exam ? exam.exam_name : "..."}
+        </h2>
         <Link to={programRoutes.updateExam(examId)}>
           <Button className="mx-2" variant="warning">
             edit exam
