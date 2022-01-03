@@ -1,7 +1,8 @@
 import "./error-template.styles.css";
 import { Link } from "react-router-dom";
-import { BsInstagram, BsTelegram, BsTwitter, BsFacebook } from "react-icons/bs";
+import { BsInstagram, BsTelegram, BsTwitter, BsLinkedin } from "react-icons/bs";
 import programRoutes from "../../constants/program-routes.constant";
+import externalRoutes from "../../constants/external-routes.constant";
 
 const ErrorTemplate = ({ status, message, phrase }) => {
   return (
@@ -22,16 +23,16 @@ const ErrorTemplate = ({ status, message, phrase }) => {
         </p>
         <Link to={programRoutes.profile}>Homepage</Link>
         <div className="notfound-social">
-          <a href="#">
-            <BsFacebook />
+          <a href={externalRoutes.socialMedia.linkedin()}>
+            <BsLinkedin />
           </a>
-          <a href="#">
+          <a href={externalRoutes.socialMedia.twitter()}>
             <BsTwitter />
           </a>
-          <a href="#">
+          <a href={externalRoutes.socialMedia.instagram()}>
             <BsInstagram />
           </a>
-          <a href="#">
+          <a href={externalRoutes.socialMedia.telegram()}>
             <BsTelegram />
           </a>
         </div>
