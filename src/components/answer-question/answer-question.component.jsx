@@ -21,6 +21,7 @@ const AnswerQuestion = ({ readOnly = false }) => {
     updateAnswers,
     isLoading,
     errors,
+    answers,
   } = useContext(AnswerQuestionContext);
 
   useDebounce(
@@ -30,7 +31,7 @@ const AnswerQuestion = ({ readOnly = false }) => {
       }
     },
     500,
-    [hasChange, isLoading]
+    [hasChange, isLoading, answers]
   );
 
   if (!isContextLoaded) {
