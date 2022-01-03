@@ -56,6 +56,9 @@ const ExamOverviewPage = () => {
     isUserOwnExam &&
     (exam?.published === false ? true : !examTime.isExamStarted);
 
+  const canUserSeeAnswers =
+    !!participant && !isUserOwnExam && examTime.isExamFinished;
+
   const handleRegistration = (e) => {
     e.preventDefault();
 
@@ -161,7 +164,7 @@ const ExamOverviewPage = () => {
             </Link>
           )}
 
-          {!!participant && !isUserOwnExam && (
+          {canUserSeeAnswers && (
             <Link
               to={programRoutes.showParticipant(
                 examId,
