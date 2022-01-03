@@ -46,7 +46,7 @@ const Header = () => {
               src="./favicon.ico"
               width={50}
               height={50}
-              alt="Exams Galaxy brand icon"
+              alt="Exams Galaxy"
             />
           </Navbar.Brand>
           {user && (
