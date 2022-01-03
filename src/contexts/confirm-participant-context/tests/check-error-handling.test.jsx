@@ -3,6 +3,7 @@ import {
   screen,
   renderWithAuthentication,
 } from "../../../test-utils/testing-library-utils";
+import moment from "moment";
 import userEvent from "@testing-library/user-event";
 import { Route } from "react-router-dom";
 import {
@@ -10,10 +11,8 @@ import {
   changeRequestResponseTo422,
   changeRequestResponseToSpecificStatus,
   changeParticipantsWithOneParticipant,
+  changeShowExam,
 } from "../../../utilities/tests.utility";
-
-import { ConfirmParticipantProvider } from "../confirm-participant.context";
-import { ExamInfoProvider } from "../../exam-info-context/exam-info.context";
 
 import IndexParticipantsPage from "../../../pages/exams/participants/index/index-participants.page";
 
@@ -22,6 +21,8 @@ import programRoutes from "../../../constants/program-routes.constant";
 
 describe("check 401 errors(the removeUserInfo() func from authentication context must be called)", () => {
   test("check exams.confirmParticipant route", async () => {
+    const start = moment(Date.now() + 5000).format("YYYY-MM-DD HH:mm:ss");
+    const end = moment(Date.now() + 60 * 5000).format("YYYY-MM-DD HH:mm:ss");
     changeRequestResponseTo401({
       route: apiRoutes.exams.confirmParticipant(":examId"),
       method: "put",
@@ -29,6 +30,16 @@ describe("check 401 errors(the removeUserInfo() func from authentication context
         changeParticipantsWithOneParticipant({
           participant: {
             confirmed: false,
+          },
+        }),
+        changeShowExam({
+          exam: {
+            startOfExam: start,
+            needsConfirmation: true,
+            endOfExam: end,
+            published: true,
+            isRegistered: false,
+            ownerId: 12,
           },
         }),
       ],
@@ -70,6 +81,8 @@ describe("check 401 errors(the removeUserInfo() func from authentication context
 
 describe("check 422 errors", () => {
   test("check exams.confirmParticipant route", async () => {
+    const start = moment(Date.now() + 5000).format("YYYY-MM-DD HH:mm:ss");
+    const end = moment(Date.now() + 60 * 5000).format("YYYY-MM-DD HH:mm:ss");
     const { message } = changeRequestResponseTo422({
       route: apiRoutes.exams.confirmParticipant(":examId"),
       method: "put",
@@ -78,6 +91,16 @@ describe("check 422 errors", () => {
         changeParticipantsWithOneParticipant({
           participant: {
             confirmed: false,
+          },
+        }),
+        changeShowExam({
+          exam: {
+            startOfExam: start,
+            needsConfirmation: true,
+            endOfExam: end,
+            published: true,
+            isRegistered: false,
+            ownerId: 12,
           },
         }),
       ],
@@ -122,6 +145,8 @@ describe("check 422 errors", () => {
 
 describe("check other errors", () => {
   test("check exams.confirmParticipant route", async () => {
+    const start = moment(Date.now() + 5000).format("YYYY-MM-DD HH:mm:ss");
+    const end = moment(Date.now() + 60 * 5000).format("YYYY-MM-DD HH:mm:ss");
     changeRequestResponseToSpecificStatus({
       route: apiRoutes.exams.confirmParticipant(":examId"),
       status: 403,
@@ -130,6 +155,16 @@ describe("check other errors", () => {
         changeParticipantsWithOneParticipant({
           participant: {
             confirmed: false,
+          },
+        }),
+        changeShowExam({
+          exam: {
+            startOfExam: start,
+            needsConfirmation: true,
+            endOfExam: end,
+            published: true,
+            isRegistered: false,
+            ownerId: 12,
           },
         }),
       ],

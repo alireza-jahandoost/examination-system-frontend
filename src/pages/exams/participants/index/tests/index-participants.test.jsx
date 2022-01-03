@@ -4,6 +4,7 @@ import {
   waitForElementToBeRemoved,
   screen,
 } from "../../../../../test-utils/testing-library-utils";
+import moment from "moment";
 import userEvent from "@testing-library/user-event";
 import axios from "axios";
 import { Route } from "react-router-dom";
@@ -14,6 +15,7 @@ import { indexParticipantsPage1 } from "../../../../../mocks/mocks/participants.
 import {
   emptyRequest,
   changeParticipantsWithOneParticipant,
+  changeShowExam,
 } from "../../../../../utilities/tests.utility";
 
 describe("check essential things", () => {
@@ -50,7 +52,7 @@ describe("check essential things", () => {
     }
   });
 
-  test("if there is not any created exam, loading must be gone", async () => {
+  test("if there is not any participant, loading must be gone", async () => {
     emptyRequest({
       method: "get",
       route: apiRoutes.participants.indexParticipants(1),
@@ -194,12 +196,183 @@ describe("check confirmation", () => {
       expect(screen.getByText(/confirmed/i)).toBeInTheDocument();
     });
 
-    test("if participant is not confirmed, a button must be exist to confirm participant", async () => {
-      const axiosPut = jest.spyOn(axios, "put");
+    describe("check when participant is not confirmed", () => {
+      test("if exam is not started, a button must be exist to confirm participant", async () => {
+        const axiosPut = jest.spyOn(axios, "put");
+        const start = moment(Date.now() + 5000).format("YYYY-MM-DD HH:mm:ss");
+        const end = moment(Date.now() + 60 * 5000).format(
+          "YYYY-MM-DD HH:mm:ss"
+        );
+        changeParticipantsWithOneParticipant({
+          participant: {
+            confirmed: false,
+          },
+          otherHandlers: [
+            changeShowExam({
+              exam: {
+                startOfExam: start,
+                needsConfirmation: true,
+                endOfExam: end,
+                published: true,
+                isRegistered: false,
+                ownerId: 12,
+              },
+            }),
+          ],
+        });
+        renderWithAuthentication(
+          <Route path={programRoutes.indexParticipants(":examId")} exact>
+            <IndexParticipantsPage />
+          </Route>,
+          {
+            route: programRoutes.indexParticipants(2),
+          }
+        );
+
+        await waitFor(() =>
+          expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+        );
+
+        const confirmButton = screen.getByRole("button", {
+          name: /confirm this participant/i,
+        });
+        userEvent.click(confirmButton);
+
+        expect(
+          await screen.findByRole("button", { name: /loading/i })
+        ).toBeDisabled();
+
+        await waitFor(() => expect(axiosPut).toHaveBeenCalledTimes(1));
+        await waitFor(() =>
+          expect(axiosPut.mock.calls[0][0]).toBe(
+            apiRoutes.exams.confirmParticipant(2)
+          )
+        );
+
+        expect(await screen.findByText(/confirmed/i)).toBeInTheDocument();
+      });
+      test("if exam is running, a button must be exist to confirm participant", async () => {
+        const axiosPut = jest.spyOn(axios, "put");
+        const start = moment(Date.now() - 5000).format("YYYY-MM-DD HH:mm:ss");
+        const end = moment(Date.now() + 60 * 5000).format(
+          "YYYY-MM-DD HH:mm:ss"
+        );
+        changeParticipantsWithOneParticipant({
+          participant: {
+            confirmed: false,
+          },
+          otherHandlers: [
+            changeShowExam({
+              exam: {
+                startOfExam: start,
+                needsConfirmation: true,
+                endOfExam: end,
+                published: true,
+                isRegistered: false,
+                ownerId: 12,
+              },
+            }),
+          ],
+        });
+        renderWithAuthentication(
+          <Route path={programRoutes.indexParticipants(":examId")} exact>
+            <IndexParticipantsPage />
+          </Route>,
+          {
+            route: programRoutes.indexParticipants(2),
+          }
+        );
+
+        await waitFor(() =>
+          expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+        );
+
+        const confirmButton = screen.getByRole("button", {
+          name: /confirm this participant/i,
+        });
+        userEvent.click(confirmButton);
+
+        expect(
+          await screen.findByRole("button", { name: /loading/i })
+        ).toBeDisabled();
+
+        await waitFor(() => expect(axiosPut).toHaveBeenCalledTimes(1));
+        await waitFor(() =>
+          expect(axiosPut.mock.calls[0][0]).toBe(
+            apiRoutes.exams.confirmParticipant(2)
+          )
+        );
+
+        expect(await screen.findByText(/confirmed/i)).toBeInTheDocument();
+      });
+      test("if exam is finished, 'Not confirmed' must be shown", async () => {
+        const start = moment(Date.now() - 60 * 5000).format(
+          "YYYY-MM-DD HH:mm:ss"
+        );
+        const end = moment(Date.now() - 5000).format("YYYY-MM-DD HH:mm:ss");
+        changeParticipantsWithOneParticipant({
+          participant: {
+            confirmed: false,
+          },
+          otherHandlers: [
+            changeShowExam({
+              exam: {
+                startOfExam: start,
+                needsConfirmation: true,
+                endOfExam: end,
+                published: true,
+                isRegistered: false,
+                ownerId: 12,
+              },
+            }),
+          ],
+        });
+        renderWithAuthentication(
+          <Route path={programRoutes.indexParticipants(":examId")} exact>
+            <IndexParticipantsPage />
+          </Route>,
+          {
+            route: programRoutes.indexParticipants(2),
+          }
+        );
+
+        await waitFor(() =>
+          expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+        );
+
+        expect(
+          screen.queryByRole("button", {
+            name: /confirm this participant/i,
+          })
+        ).not.toBeInTheDocument();
+
+        expect(await screen.findByText(/not confirmed/i)).toBeInTheDocument();
+      });
+    });
+  });
+});
+
+describe("check more button", () => {
+  describe("when exam needs confirmation", () => {
+    test("if exam is not started, more button must not be shown before confirming participant", async () => {
+      const start = moment(Date.now() + 5000).format("YYYY-MM-DD HH:mm:ss");
+      const end = moment(Date.now() + 60 * 5000).format("YYYY-MM-DD HH:mm:ss");
       changeParticipantsWithOneParticipant({
         participant: {
           confirmed: false,
         },
+        otherHandlers: [
+          changeShowExam({
+            exam: {
+              startOfExam: start,
+              needsConfirmation: true,
+              endOfExam: end,
+              published: true,
+              isRegistered: false,
+              ownerId: 12,
+            },
+          }),
+        ],
       });
       renderWithAuthentication(
         <Route path={programRoutes.indexParticipants(":examId")} exact>
@@ -214,23 +387,224 @@ describe("check confirmation", () => {
         expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
       );
 
-      const confirmButton = screen.getByRole("button", {
+      expect(
+        screen.queryByRole("button", { name: /more/i })
+      ).not.toBeInTheDocument();
+
+      const confirmButton = await screen.findByRole("button", {
         name: /confirm this participant/i,
       });
+
       userEvent.click(confirmButton);
 
       expect(
-        await screen.findByRole("button", { name: /loading/i })
-      ).toBeDisabled();
-
-      await waitFor(() => expect(axiosPut).toHaveBeenCalledTimes(1));
-      await waitFor(() =>
-        expect(axiosPut.mock.calls[0][0]).toBe(
-          apiRoutes.exams.confirmParticipant(2)
-        )
+        await screen.findByRole("button", { name: /more/i })
+      ).toBeInTheDocument();
+    });
+    test("if exam is running, more button must not be shown before confirming participant", async () => {
+      const start = moment(Date.now() - 5000).format("YYYY-MM-DD HH:mm:ss");
+      const end = moment(Date.now() + 60 * 5000).format("YYYY-MM-DD HH:mm:ss");
+      changeParticipantsWithOneParticipant({
+        participant: {
+          confirmed: false,
+        },
+        otherHandlers: [
+          changeShowExam({
+            exam: {
+              startOfExam: start,
+              needsConfirmation: true,
+              endOfExam: end,
+              published: true,
+              isRegistered: false,
+              ownerId: 12,
+            },
+          }),
+        ],
+      });
+      renderWithAuthentication(
+        <Route path={programRoutes.indexParticipants(":examId")} exact>
+          <IndexParticipantsPage />
+        </Route>,
+        {
+          route: programRoutes.indexParticipants(2),
+        }
       );
 
-      expect(await screen.findByText(/confirmed/i)).toBeInTheDocument();
+      await waitFor(() =>
+        expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+      );
+
+      expect(
+        screen.queryByRole("button", { name: /more/i })
+      ).not.toBeInTheDocument();
+
+      const confirmButton = await screen.findByRole("button", {
+        name: /confirm this participant/i,
+      });
+
+      userEvent.click(confirmButton);
+
+      expect(
+        await screen.findByRole("button", { name: /more/i })
+      ).toBeInTheDocument();
+    });
+    test("if exam is finished, more button must not be shown", async () => {
+      const start = moment(Date.now() - 60 * 5000).format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
+      const end = moment(Date.now() - 5000).format("YYYY-MM-DD HH:mm:ss");
+      changeParticipantsWithOneParticipant({
+        participant: {
+          confirmed: false,
+        },
+        otherHandlers: [
+          changeShowExam({
+            exam: {
+              startOfExam: start,
+              needsConfirmation: true,
+              endOfExam: end,
+              published: true,
+              isRegistered: false,
+              ownerId: 12,
+            },
+          }),
+        ],
+      });
+      renderWithAuthentication(
+        <Route path={programRoutes.indexParticipants(":examId")} exact>
+          <IndexParticipantsPage />
+        </Route>,
+        {
+          route: programRoutes.indexParticipants(2),
+        }
+      );
+
+      await waitFor(() =>
+        expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+      );
+
+      expect(
+        screen.queryByRole("button", { name: /more/i })
+      ).not.toBeInTheDocument();
+
+      expect(
+        screen.queryByRole("button", { name: /confirm this participant/i })
+      ).not.toBeInTheDocument();
+    });
+  });
+  describe("when exam does not need confirmation", () => {
+    test("if exam is not started, more button must be shown", async () => {
+      const start = moment(Date.now() + 5000).format("YYYY-MM-DD HH:mm:ss");
+      const end = moment(Date.now() + 60 * 5000).format("YYYY-MM-DD HH:mm:ss");
+      changeParticipantsWithOneParticipant({
+        participant: {
+          confirmed: false,
+        },
+        otherHandlers: [
+          changeShowExam({
+            exam: {
+              startOfExam: start,
+              needsConfirmation: false,
+              endOfExam: end,
+              published: true,
+              isRegistered: false,
+              ownerId: 12,
+            },
+          }),
+        ],
+      });
+      renderWithAuthentication(
+        <Route path={programRoutes.indexParticipants(":examId")} exact>
+          <IndexParticipantsPage />
+        </Route>,
+        {
+          route: programRoutes.indexParticipants(2),
+        }
+      );
+
+      await waitFor(() =>
+        expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+      );
+
+      expect(
+        await screen.findByRole("button", { name: /more/i })
+      ).toBeInTheDocument();
+    });
+    test("if exam is running, more button must be shown", async () => {
+      const start = moment(Date.now() - 5000).format("YYYY-MM-DD HH:mm:ss");
+      const end = moment(Date.now() + 60 * 5000).format("YYYY-MM-DD HH:mm:ss");
+      changeParticipantsWithOneParticipant({
+        participant: {
+          confirmed: false,
+        },
+        otherHandlers: [
+          changeShowExam({
+            exam: {
+              startOfExam: start,
+              needsConfirmation: false,
+              endOfExam: end,
+              published: true,
+              isRegistered: false,
+              ownerId: 12,
+            },
+          }),
+        ],
+      });
+      renderWithAuthentication(
+        <Route path={programRoutes.indexParticipants(":examId")} exact>
+          <IndexParticipantsPage />
+        </Route>,
+        {
+          route: programRoutes.indexParticipants(2),
+        }
+      );
+
+      await waitFor(() =>
+        expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+      );
+
+      expect(
+        await screen.findByRole("button", { name: /more/i })
+      ).toBeInTheDocument();
+    });
+    test("if exam is finished, more button must be shown", async () => {
+      const start = moment(Date.now() - 60 * 5000).format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
+      const end = moment(Date.now() - 5000).format("YYYY-MM-DD HH:mm:ss");
+      changeParticipantsWithOneParticipant({
+        participant: {
+          confirmed: false,
+        },
+        otherHandlers: [
+          changeShowExam({
+            exam: {
+              startOfExam: start,
+              needsConfirmation: false,
+              endOfExam: end,
+              published: true,
+              isRegistered: false,
+              ownerId: 12,
+            },
+          }),
+        ],
+      });
+      renderWithAuthentication(
+        <Route path={programRoutes.indexParticipants(":examId")} exact>
+          <IndexParticipantsPage />
+        </Route>,
+        {
+          route: programRoutes.indexParticipants(2),
+        }
+      );
+
+      await waitFor(() =>
+        expect(screen.queryByText(/loading/i)).not.toBeInTheDocument()
+      );
+
+      expect(
+        await screen.findByRole("button", { name: /more/i })
+      ).toBeInTheDocument();
     });
   });
 });

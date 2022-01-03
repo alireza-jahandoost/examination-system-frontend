@@ -31,7 +31,7 @@ const IndexParticipantsPage = () => {
   }, [location]);
   const isMounted = useMountedState();
   const throwError = useAsyncError();
-  const { exam, isContextLoaded } = useContext(ExamInfoContext);
+  const { exam, examTime, isContextLoaded } = useContext(ExamInfoContext);
 
   useEffect(() => {
     if (Number(page) === Number(currentPage) || isLoading) {
@@ -128,6 +128,7 @@ const IndexParticipantsPage = () => {
                           participant={participant}
                           examId={examId}
                           index={idx + 1 + (currentPage - 1) * pageSize}
+                          canUserConfirmParticipant={!examTime.isExamFinished}
                         />
                       </ConfirmParticipantProvider>
                     </UserProvider>

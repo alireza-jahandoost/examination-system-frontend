@@ -10,6 +10,7 @@ const ParticipantRecord = ({
   examId,
   index,
   needsConfirmation,
+  canUserConfirmParticipant,
 }) => {
   const { user, isLoading, isContextLoaded } = useContext(UserContext);
   const confirmParticipantObject = useContext(ConfirmParticipantContext);
@@ -34,14 +35,18 @@ const ParticipantRecord = ({
             "Confirmed"
           ) : (
             <>
-              <Button
-                onClick={handleConfirm}
-                disabled={confirmParticipantObject.isLoading}
-              >
-                {confirmParticipantObject.isLoading
-                  ? "Loading..."
-                  : "Confirm This Participant"}
-              </Button>
+              {canUserConfirmParticipant ? (
+                <Button
+                  onClick={handleConfirm}
+                  disabled={confirmParticipantObject.isLoading}
+                >
+                  {confirmParticipantObject.isLoading
+                    ? "Loading..."
+                    : "Confirm This Participant"}
+                </Button>
+              ) : (
+                "Not Confirmed"
+              )}
               {confirmParticipantObject.errors.message && (
                 <p className="text-danger">
                   {confirmParticipantObject.errors.message}
@@ -56,7 +61,9 @@ const ParticipantRecord = ({
         <Link
           to={programRoutes.showParticipant(examId, participant.participant_id)}
         >
-          <Button variant="primary">more</Button>
+          {(participant.confirmed ||
+            confirmParticipantObject?.confirmed ||
+            !needsConfirmation) && <Button variant="primary">more</Button>}
         </Link>
       </td>
     </tr>
