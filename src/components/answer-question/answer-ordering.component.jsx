@@ -75,7 +75,8 @@ const AnswerOrdering = ({ readOnly = false }) => {
                 />
               );
             })
-          : states.map((state, idx) => {
+          : states &&
+            states.map((state, idx) => {
               return (
                 <OrderingOption
                   readOnly={readOnly}

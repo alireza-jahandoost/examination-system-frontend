@@ -21,22 +21,23 @@ const AnswerMultipleAnswers = ({ readOnly = false }) => {
 
   return (
     <div className="text-start">
-      {states.map((state, idx) => {
-        const answer = answers.find(
-          (answer) => answer.integer_part === state.state_id
-        );
-        const isChecked = answer !== undefined;
-        return (
-          <CheckboxInput
-            readOnly={readOnly}
-            label={state.text_part}
-            key={state.state_id}
-            checked={isChecked}
-            id={state.state_id}
-            onChange={handleChange}
-          />
-        );
-      })}
+      {states &&
+        states.map((state, idx) => {
+          const answer = answers.find(
+            (answer) => answer.integer_part === state.state_id
+          );
+          const isChecked = answer !== undefined;
+          return (
+            <CheckboxInput
+              readOnly={readOnly}
+              label={state.text_part}
+              key={state.state_id}
+              checked={isChecked}
+              id={state.state_id}
+              onChange={handleChange}
+            />
+          );
+        })}
     </div>
   );
 };

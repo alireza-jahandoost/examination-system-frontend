@@ -14,25 +14,26 @@ const AnswerSelectTheAnswer = ({ readOnly = false }) => {
 
   return (
     <div className="text-start">
-      {states.map((state) => {
-        return (
-          <RadioInput
-            key={`option-${state.state_id}`}
-            label={state.text_part}
-            checked={
-              answers &&
-              answers[0] &&
-              Number(answers[0].integer_part) === Number(state.state_id)
-            }
-            id={`option-${state.state_id}`}
-            onChange={handleChange}
-            readOnly={readOnly}
-            inputProps={{
-              "data-state-id": state.state_id,
-            }}
-          />
-        );
-      })}
+      {states &&
+        states.map((state) => {
+          return (
+            <RadioInput
+              key={`option-${state.state_id}`}
+              label={state.text_part}
+              checked={
+                answers &&
+                answers[0] &&
+                Number(answers[0].integer_part) === Number(state.state_id)
+              }
+              id={`option-${state.state_id}`}
+              onChange={handleChange}
+              readOnly={readOnly}
+              inputProps={{
+                "data-state-id": state.state_id,
+              }}
+            />
+          );
+        })}
     </div>
   );
 };
