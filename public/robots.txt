@@ -1,3 +1,7 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: /
+Allow: /login
+Allow: /Register
+
+Sitemap: https://app.examsgalaxy.com/sitemap.txt
