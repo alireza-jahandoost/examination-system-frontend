@@ -1,6 +1,5 @@
 import { useContext } from "react";
 
-import ProfileContainer from "../../../../components/profile-container/profile-container.component";
 import ParticipantInfo from "./participant-info.component";
 import AnswersInfo from "./answers-info.component";
 

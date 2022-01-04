@@ -8,7 +8,7 @@ const PaginationItem = ({ to, disabled = false, active = false, children }) => {
       }`}
     >
       {active ? (
-        <a className="page-link"> {children}</a>
+        <span className="page-link">{children}</span>
       ) : (
         <Link className="page-link" to={to}>
           {children}

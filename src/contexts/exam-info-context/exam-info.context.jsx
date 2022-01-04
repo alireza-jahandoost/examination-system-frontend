@@ -78,7 +78,12 @@ export const ExamInfoProvider = ({ children, examId }) => {
         3000
       );
     }
-  }, [isUserJustRegisteredForExam, notificationShown]);
+  }, [
+    isUserJustRegisteredForExam,
+    notificationShown,
+    createNotification,
+    exam?.exam_name,
+  ]);
 
   const startOfExam = useMemo(
     () =>

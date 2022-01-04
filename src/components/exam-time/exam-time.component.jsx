@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { Col, Row } from "react-bootstrap";
 import {
   standardTime,
@@ -8,7 +7,7 @@ import {
 const ExamTime = ({ color, fontSize, examTime }) => {
   const {
     isExamStarted,
-    examTimeDuration,
+    // examTimeDuration,
     isExamFinished,
     seconds,
     minutes,
@@ -39,19 +38,19 @@ const ExamTime = ({ color, fontSize, examTime }) => {
         ]
       : ["00:00:00:00", "exam is finished"];
 
-  const [duration, stringDuration] = useMemo(() => {
-    return [
-      `${examTimeDuration.days}:${standardTime(
-        examTimeDuration.hours || 0
-      )}:${standardTime(examTimeDuration.minutes || 0)}:${standardTime(
-        examTimeDuration.seconds || 0
-      )}`,
-      `duration of exam: ${
-        examTimeDuration && convertObjectToString(examTimeDuration)
-      }`,
-    ];
-  }, [examTimeDuration]);
-
+  // const [duration, stringDuration] = useMemo(() => {
+  //   return [
+  //     `${examTimeDuration.days}:${standardTime(
+  //       examTimeDuration.hours || 0
+  //     )}:${standardTime(examTimeDuration.minutes || 0)}:${standardTime(
+  //       examTimeDuration.seconds || 0
+  //     )}`,
+  //     `duration of exam: ${
+  //       examTimeDuration && convertObjectToString(examTimeDuration)
+  //     }`,
+  //   ];
+  // }, [examTimeDuration]);
+  //
   const styles = {};
   if (fontSize !== undefined) {
     styles.fontSize = fontSize;

@@ -12,7 +12,7 @@ const LoginForm = ({ ...props }) => {
 
   useEffect(() => {
     return () => resetErrors();
-  }, []);
+  }, [resetErrors]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

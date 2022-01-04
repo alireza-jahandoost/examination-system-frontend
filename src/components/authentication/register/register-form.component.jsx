@@ -21,7 +21,7 @@ const RegisterForm = ({ ...props }) => {
     return () => {
       resetErrors();
     };
-  }, []);
+  }, [resetErrors]);
 
   return (
     <div {...props}>

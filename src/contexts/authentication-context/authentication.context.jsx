@@ -81,11 +81,11 @@ export const AuthenticationProvider = ({ children }) => {
     setPopover("login");
   };
 
-  const resetErrors = () => {
-    if (errors) {
+  const resetErrors = useCallback(() => {
+    if (Object.keys(errors).length !== 0) {
       setErrors({});
     }
-  };
+  }, [errors]);
 
   const changePopover = (newPopover) => {
     if (
