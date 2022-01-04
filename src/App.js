@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { HelmetProvider } from "react-helmet-async";
 import Layout from "./components/layout/layout.component";
 import AppRouter from "./app.router";
 import { AuthenticationContext } from "./contexts/authentication-context/authentication.context";
@@ -11,7 +12,9 @@ function App() {
   }
   return (
     <Layout>
-      <AppRouter />
+      <HelmetProvider>
+        <AppRouter />
+      </HelmetProvider>
     </Layout>
   );
 }

@@ -5,6 +5,7 @@ import { Button, Container } from "react-bootstrap";
 import { ExaminingContext } from "../../../../contexts/examining-context/examining.context";
 import { AnswerQuestionProvider } from "../../../../contexts/answer-question-context/answer-question.context";
 
+import useMetaTag from "../../../../hooks/useMetaTag";
 import AnswerQuestion from "../../../../components/answer-question/answer-question.component";
 import ExamTime from "../../../../components/exam-time/exam-time.component";
 import Modal from "../../../../components/modal/modal.component";
@@ -25,6 +26,11 @@ const ExamQuestionPage = () => {
   } = useContext(ExaminingContext);
   const { examId, questionId } = useParams();
   const [showModal, setShowModal] = useState(false);
+
+  useMetaTag({
+    title: "Examining",
+    ogTitle: "Examining",
+  });
 
   if (!isContextLoaded) {
     return <p> Loading... </p>;

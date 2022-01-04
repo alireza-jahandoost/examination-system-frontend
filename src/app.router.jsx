@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Switch, Redirect, Route, useLocation } from "react-router-dom";
 import MainRouter from "./main.router";
 import { ErrorBoundaryProvider } from "./contexts/error-boundary-context/error-boundary.context";
+import { MetaTagsProvider } from "./contexts/meta-tags-context/meta-tags.context";
 import { AuthenticationContext } from "./contexts/authentication-context/authentication.context";
 import programRoutes from "./constants/program-routes.constant";
 import LoginPage from "./pages/login/login.page";
@@ -40,13 +41,15 @@ const AppRouter = () => {
   }
   return (
     <ErrorBoundaryProvider>
-      <div style={{ minHeight: "100vh" }} className="d-flex flex-column">
-        <Switch>
-          <Route path={programRoutes.login()} component={LoginPage} />
-          <Route path={programRoutes.register()} component={RegisterPage} />
-          <Route path="*" component={MainRouter} />
-        </Switch>
-      </div>
+      <MetaTagsProvider>
+        <div style={{ minHeight: "100vh" }} className="d-flex flex-column">
+          <Switch>
+            <Route path={programRoutes.login()} component={LoginPage} />
+            <Route path={programRoutes.register()} component={RegisterPage} />
+            <Route path="*" component={MainRouter} />
+          </Switch>
+        </div>
+      </MetaTagsProvider>
     </ErrorBoundaryProvider>
   );
 };

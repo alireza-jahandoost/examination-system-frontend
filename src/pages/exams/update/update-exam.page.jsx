@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import UpdateExamForm from "./update-exam-form.component";
+import useMetaTag from "../../../hooks/useMetaTag";
 import EditQuestion from "../../../components/edit-question/edit-question.component";
 import CreateQuestion from "../../../components/create-question/create-question.component";
 import ElementContainer from "./element-container.component";
@@ -24,6 +25,10 @@ const UpdateExamPage = () => {
     unpublishExam,
     isPublishStateChanging,
   } = useContext(UpdateExamContext);
+  useMetaTag({
+    title: "Update Exam",
+    ogTitle: "Update Exam",
+  });
 
   if (!exam) {
     return <p> Loading... </p>;

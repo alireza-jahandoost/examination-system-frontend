@@ -1,5 +1,5 @@
 import { createContext, useState, useCallback } from "react";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 export const MetaTagsContext = createContext();
 
@@ -8,16 +8,21 @@ export const MetaTagsProvider = ({ children }) => {
 
   const value = {
     changeMetaData: useCallback((newMetaData) => setMetaData(newMetaData), []),
+    metaData,
   };
 
   return (
     <MetaTagsContext.Provider value={value}>
       <Helmet>
-        <title>{metaData.title || "Exams Galaxy"}</title>
+        <title>
+          {metaData.title ? `${metaData.title} - ` : ""}Exams Galaxy
+        </title>
         <meta name="description" content={metaData.description || ""} />
         <meta
           property="og:title"
-          content={metaData.ogTitle || "Exams Galaxy"}
+          content={`${
+            metaData.ogTitle ? `${metaData.ogTitle} - ` : ""
+          }Exams Galaxy`}
         />
         <meta
           property="og:description"

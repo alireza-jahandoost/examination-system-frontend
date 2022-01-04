@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link, Redirect, useLocation } from "react-router-dom";
+import useMetaTag from "../../hooks/useMetaTag";
 import LoginForm from "../../components/authentication/login/login-form.component";
 import AuthenticateHeader from "../../components/authentication/partials/authenticate-header.component";
 import { AuthenticationContext } from "../../contexts/authentication-context/authentication.context";
@@ -11,6 +12,10 @@ import programRoutes from "../../constants/program-routes.constant";
 const LoginPage = () => {
   const { isUserAuthenticated } = useContext(AuthenticationContext);
   const location = useLocation();
+  useMetaTag({
+    title: "Login",
+    ogTitle: "Login",
+  });
 
   if (isUserAuthenticated) {
     const redirect = getParams({ url: location.search }).redirect;

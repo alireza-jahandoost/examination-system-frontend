@@ -7,6 +7,11 @@ import "@testing-library/jest-dom";
 // src/setupTests.js
 import { server } from "./mocks/server.js";
 
+jest.mock("./hooks/useMetaTag.js", () => ({
+  __esModule: true,
+  default: () => {},
+}));
+
 jest.setTimeout(8000);
 
 // Establish API mocking before all tests.

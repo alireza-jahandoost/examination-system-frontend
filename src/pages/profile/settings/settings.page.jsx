@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { convertFromUTCToHumanReadable } from "../../../utilities/dateAndTime.utility";
+import useMetaTag from "../../../hooks/useMetaTag";
 
 import { BsPerson, BsEnvelope, BsCalendar4 } from "react-icons/bs";
 
@@ -10,6 +11,10 @@ import { AuthenticationContext } from "../../../contexts/authentication-context/
 
 const SettingsPage = () => {
   const { user } = useContext(AuthenticationContext);
+  useMetaTag({
+    title: "Settings",
+    ogTitle: "Settings",
+  });
 
   return (
     <>

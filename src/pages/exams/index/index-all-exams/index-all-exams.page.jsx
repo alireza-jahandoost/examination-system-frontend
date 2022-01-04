@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect, useContext } from "react";
 import { useHistory, Redirect, useLocation } from "react-router-dom";
 import { AuthenticationContext } from "../../../../contexts/authentication-context/authentication.context";
 import Search from "./search.component";
+import useMetaTag from "../../../../hooks/useMetaTag";
 import useAsyncError from "../../../../hooks/useAsyncError";
 import { examsIndexRequest } from "../../../../services/exams/exams.service";
 import { useMountedState } from "react-use";
@@ -31,6 +32,10 @@ const IndexAllExams = () => {
   const isMounted = useMountedState();
   const throwError = useAsyncError();
   const history = useHistory();
+  useMetaTag({
+    title: "All Exams",
+    ogTitle: "All Exams",
+  });
 
   useEffect(() => {
     if (

@@ -5,6 +5,7 @@ import { useParams, Link } from "react-router-dom";
 import { AuthenticationContext } from "../../../../contexts/authentication-context/authentication.context";
 import { ExaminingContext } from "../../../../contexts/examining-context/examining.context";
 
+import useMetaTag from "../../../../hooks/useMetaTag";
 import ExamPassword from "../../../../components/exam-password/exam-password.component";
 
 import programRoutes from "../../../../constants/program-routes.constant";
@@ -29,6 +30,11 @@ const ExamOverviewPage = () => {
     AuthenticationContext
   );
   const { examId } = useParams();
+
+  useMetaTag({
+    title: "Exam Overview",
+    ogTitle: "Exam Overview",
+  });
 
   const isUserOwnExam = exam && user && exam.owner_id === user.user_id;
 
