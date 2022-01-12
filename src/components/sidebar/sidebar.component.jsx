@@ -14,7 +14,7 @@ const Sidebar = (props) => {
       <div className="overflow-auto p-3 w-320px">
         <div className="d-flex flex-column justify-content-center flex-grow-1">
           <div>
-            <h2 className="display-6 pt-2 pb-3">Examinator</h2>
+            <h2 className="display-6 pt-2 pb-3">Exams Galaxy</h2>
           </div>
           <hr className="text-muted" />
           <SidebarItem

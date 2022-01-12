@@ -10,53 +10,56 @@ const Footer = () => {
         id="footer"
         data-testid="footer"
         fluid={true}
-        className="bg-dark text-muted px-5 pt-5"
+        className="bg-dark text-muted px-5"
       >
         <Container>
+          {
+            // <Row>
+            //   <Col xs={12}>
+            //     <p className="text-center lead">Follow us on social media</p>
+            //   </Col>
+            //   <Col>
+            //     <div className="d-flex justify-content-center">
+            //       <div className="mx-3">
+            //         <a
+            //           href={externalRoutes.socialMedia.twitter()}
+            //           className={`rounded-circle text-muted p-2 twitter`}
+            //         >
+            //           <BsTwitter />
+            //         </a>
+            //       </div>
+            //       <div className="mx-3">
+            //         <a
+            //           href={externalRoutes.socialMedia.instagram()}
+            //           className={`rounded-circle text-muted p-2 instagram`}
+            //         >
+            //           <BsInstagram />
+            //         </a>
+            //       </div>
+            //       <div className="mx-3">
+            //         <a
+            //           href={externalRoutes.socialMedia.telegram()}
+            //           className={`rounded-circle text-muted p-2 telegram`}
+            //         >
+            //           <BsTelegram />
+            //         </a>
+            //       </div>
+            //         <div className="mx-3">
+            //           <a
+            //             href={externalRoutes.socialMedia.linkedin()}
+            //             className={`rounded-circle text-muted p-2 linkedin`}
+            //           >
+            //             <BsLinkedin />
+            //           </a>
+            //         </div>
+            //     </div>
+            //   </Col>
+            // </Row>
+          }
           <Row>
-            <Col xs={12}>
-              <p className="text-center lead">Follow us on social media</p>
-            </Col>
-            <Col>
-              <div className="d-flex justify-content-center">
-                <div className="mx-3">
-                  <a
-                    href={externalRoutes.socialMedia.twitter()}
-                    className={`rounded-circle text-muted p-2 twitter`}
-                  >
-                    <BsTwitter />
-                  </a>
-                </div>
-                <div className="mx-3">
-                  <a
-                    href={externalRoutes.socialMedia.instagram()}
-                    className={`rounded-circle text-muted p-2 instagram`}
-                  >
-                    <BsInstagram />
-                  </a>
-                </div>
-                <div className="mx-3">
-                  <a
-                    href={externalRoutes.socialMedia.telegram()}
-                    className={`rounded-circle text-muted p-2 telegram`}
-                  >
-                    <BsTelegram />
-                  </a>
-                </div>
-                <div className="mx-3">
-                  <a
-                    href={externalRoutes.socialMedia.linkedin()}
-                    className={`rounded-circle text-muted p-2 linkedin`}
-                  >
-                    <BsLinkedin />
-                  </a>
-                </div>
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col className="d-flex justify-content-center pt-4">
-              <p>© 2021 Examinator, Inc.</p>
+            <Col className="d-flex flex-column align-items-center pt-4">
+              <p className="font-monospace">© 2022 ExamsGalaxy.com</p>
+              <p>All Rights Reserved</p>
             </Col>
           </Row>
         </Container>
