@@ -15,22 +15,39 @@ export const MetaTagsProvider = ({ children }) => {
     <MetaTagsContext.Provider value={value}>
       <Helmet>
         <title>
-          {metaData.title ? `${metaData.title} - ` : ""}Exams Galaxy
+          {metaData.title ? `${metaData.title} - ` : "Exams Galaxy"}Exams Galaxy
         </title>
-        <meta name="description" content={metaData.description || ""} />
+        <meta
+          name="description"
+          content={
+            metaData.description ||
+            `-Variety in question design
+            -A safe environment to test and to be tested
+            -ExamsGalaxy changes your view of the examination`
+          }
+        />
         <meta
           property="og:title"
           content={`${
-            metaData.ogTitle ? `${metaData.ogTitle} - ` : ""
+            metaData.ogTitle
+              ? `${metaData.ogTitle} - `
+              : "Design & Take the exam in the best way possible"
           }Exams Galaxy`}
         />
         <meta
           property="og:description"
-          content={metaData.ogDescription || ""}
+          content={
+            metaData.ogDescription ||
+            `-Variety in question design
+            -A safe environment to test and to be tested
+            -ExamsGalaxy changes your view of the examination`
+          }
         />
         <meta
           property="og:image"
-          content={metaData.ogImage || "https://examsgalaxy.com/auth-image.jpg"}
+          content={
+            metaData.ogImage || "https://app.examsgalaxy.com/auth-image.jpg"
+          }
         />
       </Helmet>
       {children}
