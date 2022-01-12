@@ -1,4 +1,3 @@
-import { Context as ResponsiveContext } from "react-responsive";
 import { act } from "@testing-library/react";
 import { rest } from "msw";
 
@@ -22,14 +21,6 @@ import {
   indexParticipantsPage1,
   participantConstructor,
 } from "../mocks/mocks/participants.mock";
-
-export const wrapWithWidth = (component, size) => {
-  return (
-    <ResponsiveContext.Provider value={{ width: size }}>
-      {component}
-    </ResponsiveContext.Provider>
-  );
-};
 
 export const wait = (time) =>
   act(() => {
