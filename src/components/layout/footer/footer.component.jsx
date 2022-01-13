@@ -1,6 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
-import { BsInstagram, BsTelegram, BsTwitter, BsLinkedin } from "react-icons/bs";
-import externalRoutes from "../../../constants/external-routes.constant";
+// import { BsInstagram, BsTelegram, BsTwitter, BsLinkedin } from "react-icons/bs";
+// import externalRoutes from "../../../constants/external-routes.constant";
 import "./icons.style.css";
 
 const Footer = () => {
