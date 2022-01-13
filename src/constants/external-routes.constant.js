@@ -1,7 +1,8 @@
+const prefix = "https://examsgalaxy.com";
 const externalRoutes = {
-  help: () => "http://localhost:3000/help",
-  contactUs: () => "http://localhost:3000/contact-us",
-  main: () => "http://localhost:3000",
+  help: () => `${prefix}/help`,
+  contactUs: () => `${prefix}/contact-us`,
+  main: () => `${prefix}`,
   socialMedia: {
     telegram: () => "https://www.telegram.com",
     linkedin: () => "https://www.linkedin.com",

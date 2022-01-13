@@ -1,4 +1,4 @@
-const prefix = "http://localhost:8000/api";
+const prefix = "https://api.examsgalaxy.com/api";
 const apiRoutes = {
   exams: {
     confirmParticipant: (examId) => `${prefix}/accept_participant/${examId}`,
