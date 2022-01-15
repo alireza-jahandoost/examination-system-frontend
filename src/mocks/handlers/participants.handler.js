@@ -18,6 +18,10 @@ import {
 
 const participantsHandler = [
   rest.post(apiRoutes.exams.registerInExam(":examId"), (req, res, ctx) => {
+    if (!req.headers.get("authorization")) {
+      return res(ctx.status(401));
+    }
+
     const { password } = req.body;
     let { examId } = req.params;
     examId = Number(examId);
@@ -49,6 +53,10 @@ const participantsHandler = [
     }
   }),
   rest.put(apiRoutes.participants.finishExam(":examId"), (req, res, ctx) => {
+    if (!req.headers.get("authorization")) {
+      return res(ctx.status(401));
+    }
+
     const { examId } = req.params;
     switch (Number(examId)) {
       case 1:
@@ -60,17 +68,29 @@ const participantsHandler = [
     }
   }),
   rest.put(apiRoutes.exams.confirmParticipant(":examId"), (req, res, ctx) => {
+    if (!req.headers.get("authorization")) {
+      return res(ctx.status(401));
+    }
+
     return res(ctx.status(202));
   }),
   rest.get(
     apiRoutes.participants.currentParticipant(":examId"),
     (req, res, ctx) => {
+      if (!req.headers.get("authorization")) {
+        return res(ctx.status(401));
+      }
+
       return res(ctx.json(showParticipantId1));
     }
   ),
   rest.get(
     apiRoutes.participants.indexParticipants(":examId"),
     (req, res, ctx) => {
+      if (!req.headers.get("authorization")) {
+        return res(ctx.status(401));
+      }
+
       const page = req.url.searchParams.get("page");
       switch (Number(page)) {
         case 1:
@@ -87,6 +107,10 @@ const participantsHandler = [
   rest.get(
     apiRoutes.participants.showParticipant(":examId", ":participantId"),
     (req, res, ctx) => {
+      if (!req.headers.get("authorization")) {
+        return res(ctx.status(401));
+      }
+
       const { participantId } = req.params;
 
       switch (Number(participantId)) {

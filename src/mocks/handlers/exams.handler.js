@@ -45,6 +45,10 @@ const examsHandler = [
     }
   }),
   rest.get(apiRoutes.exams.indexCreatedExams(), (req, res, ctx) => {
+    if (!req.headers.get("authorization")) {
+      return res(ctx.status(401));
+    }
+
     const valueOfPage = req.url.searchParams.get("page");
     const page = Number(valueOfPage);
     switch (page) {
@@ -62,6 +66,10 @@ const examsHandler = [
     }
   }),
   rest.get(apiRoutes.participants.participatedExams(), (req, res, ctx) => {
+    if (!req.headers.get("authorization")) {
+      return res(ctx.status(401));
+    }
+
     const valueOfPage = req.url.searchParams.get("page");
     const page = Number(valueOfPage);
     switch (page) {
@@ -79,6 +87,10 @@ const examsHandler = [
     }
   }),
   rest.get(apiRoutes.exams.showExam(":examId"), (req, res, ctx) => {
+    if (!req.headers.get("authorization")) {
+      return res(ctx.status(401));
+    }
+
     let { examId } = req.params;
     examId = Number(examId);
 
@@ -103,6 +115,10 @@ const examsHandler = [
     }
   }),
   rest.post(apiRoutes.exams.createExam(), (req, res, ctx) => {
+    if (!req.headers.get("authorization")) {
+      return res(ctx.status(401));
+    }
+
     const {
       exam_name,
       needs_confirmation,
@@ -129,6 +145,10 @@ const examsHandler = [
     }
   }),
   rest.get(apiRoutes.exams.indexCreatedExams(), (req, res, ctx) => {
+    if (!req.headers.get("authorization")) {
+      return res(ctx.status(401));
+    }
+
     const valueOfPage = req.url.searchParams.get("page");
     const page = Number(valueOfPage);
     switch (page) {
@@ -146,8 +166,13 @@ const examsHandler = [
     }
   }),
   rest.put(apiRoutes.exams.updateExam(":examId"), (req, res, ctx) => {
+    if (!req.headers.get("authorization")) {
+      return res(ctx.status(401));
+    }
+
     let { examId } = req.params;
     examId = Number(examId);
+
     const {
       exam_name,
       needs_confirmation,
@@ -221,6 +246,10 @@ const examsHandler = [
     }
   }),
   rest.put(apiRoutes.exams.publishExam(":examId"), (req, res, ctx) => {
+    if (!req.headers.get("authorization")) {
+      return res(ctx.status(401));
+    }
+
     const { examId } = req.params;
 
     switch (Number(examId)) {
@@ -235,6 +264,10 @@ const examsHandler = [
     }
   }),
   rest.put(apiRoutes.exams.unpublishExam(":examId"), (req, res, ctx) => {
+    if (!req.headers.get("authorization")) {
+      return res(ctx.status(401));
+    }
+
     return res(ctx.status(202));
   }),
 ];

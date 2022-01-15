@@ -21,6 +21,10 @@ import { questionScoreMustBeANumber } from "../errors/failed-question-update.err
 
 const questionsHandler = [
   rest.get(apiRoutes.questions.indexQuestions(":examId"), (req, res, ctx) => {
+    if (!req.headers.get("authorization")) {
+      return res(ctx.status(401));
+    }
+
     if (
       window.location.href.endsWith(programRoutes.examiningOverview(1)) ||
       window.location.href.includes(programRoutes.participantsRoot(1))
@@ -33,6 +37,10 @@ const questionsHandler = [
   rest.get(
     apiRoutes.questions.showQuestion(":examId", ":questionId"),
     (req, res, ctx) => {
+      if (!req.headers.get("authorization")) {
+        return res(ctx.status(401));
+      }
+
       const { questionId } = req.params;
       switch (Number(questionId)) {
         case 1:
@@ -54,6 +62,10 @@ const questionsHandler = [
   ),
 
   rest.post(apiRoutes.questions.createQuestion(":examId"), (req, res, ctx) => {
+    if (!req.headers.get("authorization")) {
+      return res(ctx.status(401));
+    }
+
     const {
       question_text,
       question_score,
@@ -87,6 +99,10 @@ const questionsHandler = [
   rest.put(
     apiRoutes.questions.updateQuestion(":examId", ":questionId"),
     (req, res, ctx) => {
+      if (!req.headers.get("authorization")) {
+        return res(ctx.status(401));
+      }
+
       const { question_text, question_score, can_be_shuffled } = req.body;
       const { questionId } = req.params;
 
@@ -135,6 +151,10 @@ const questionsHandler = [
   rest.delete(
     apiRoutes.questions.deleteQuestion(":examId", ":questionId"),
     (req, res, ctx) => {
+      if (!req.headers.get("authorization")) {
+        return res(ctx.status(401));
+      }
+
       return res(ctx.status(202));
     }
   ),

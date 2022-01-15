@@ -22,6 +22,10 @@ const statesHandler = [
   rest.get(
     apiRoutes.states.indexStates(":examId", ":questionId"),
     (req, res, ctx) => {
+      if (!req.headers.get("authorization")) {
+        return res(ctx.status(401));
+      }
+
       const { questionId, examId } = req.params;
 
       const questionsWithoutState = [1, 2, 5];
@@ -53,6 +57,10 @@ const statesHandler = [
   rest.get(
     apiRoutes.states.showState(":examId", ":questionId", ":stateId"),
     (req, res, ctx) => {
+      if (!req.headers.get("authorization")) {
+        return res(ctx.status(401));
+      }
+
       const { questionId } = req.params;
 
       switch (questionId) {
@@ -74,6 +82,10 @@ const statesHandler = [
   rest.post(
     apiRoutes.states.createState(":examId", ":questionId"),
     (req, res, ctx) => {
+      if (!req.headers.get("authorization")) {
+        return res(ctx.status(401));
+      }
+
       const { integer_part, text_part } = req.body;
       const { questionId } = req.params;
 
@@ -169,6 +181,10 @@ const statesHandler = [
   rest.put(
     apiRoutes.states.updateState(":examid", ":questionId", ":stateId"),
     (req, res, ctx) => {
+      if (!req.headers.get("authorization")) {
+        return res(ctx.status(401));
+      }
+
       const { integer_part, text_part } = req.body;
       const { questionId, stateId } = req.params;
       const integerStateId = Number(stateId);
@@ -274,6 +290,10 @@ const statesHandler = [
   rest.delete(
     apiRoutes.states.deleteState(":examId", ":questionId", ":stateId"),
     (req, res, ctx) => {
+      if (!req.headers.get("authorization")) {
+        return res(ctx.status(401));
+      }
+
       return res(ctx.status(202));
     }
   ),

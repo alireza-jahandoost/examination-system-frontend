@@ -4,6 +4,10 @@ import { UserId1, UserId2, UserId3, UserId4 } from "../mocks/users.mock";
 
 const usersHandler = [
   rest.get(apiRoutes.users.getCurrentUser(), (req, res, ctx) => {
+    if (!req.headers.get("authorization")) {
+      return res(ctx.status(401));
+    }
+
     return res(ctx.status(401));
   }),
   rest.get(apiRoutes.users.showUser(":userId"), (req, res, ctx) => {

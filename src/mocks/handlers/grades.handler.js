@@ -18,6 +18,10 @@ const gradesHandler = [
   rest.get(
     apiRoutes.participants.getGradeOfQuestion(":participantId", ":questionId"),
     (req, res, ctx) => {
+      if (!req.headers.get("authorization")) {
+        return res(ctx.status(401));
+      }
+
       const { participantId, questionId } = req.params;
       return res(ctx.json(showGrade(participantId, questionId)));
     }
@@ -25,6 +29,10 @@ const gradesHandler = [
   rest.post(
     apiRoutes.participants.saveScoreOfQuestion(":questionId", ":participantId"),
     (req, res, ctx) => {
+      if (!req.headers.get("authorization")) {
+        return res(ctx.status(401));
+      }
+
       const { questionId } = req.params;
       const { grade } = req.body;
       switch (Number(questionId)) {

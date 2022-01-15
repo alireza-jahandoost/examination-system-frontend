@@ -64,9 +64,17 @@ const authenticationHandler = [
     }
   }),
   rest.post(apiRoutes.authentication.logout(), (req, res, ctx) => {
+    if (!req.headers.get("authorization")) {
+      return res(ctx.status(401));
+    }
+
     return res(ctx.status(202));
   }),
   rest.put(apiRoutes.authentication.changePassword(), (req, res, ctx) => {
+    if (!req.headers.get("authorization")) {
+      return res(ctx.status(401));
+    }
+
     const { current_password, password, password_confirmation } = req.body;
 
     if (current_password !== correctPassword) {

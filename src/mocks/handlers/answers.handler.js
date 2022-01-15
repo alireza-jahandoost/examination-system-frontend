@@ -14,18 +14,30 @@ const answersHandler = [
   rest.post(
     apiRoutes.answers.createAnswer(":questionId", ":participantId"),
     (req, res, ctx) => {
+      if (!req.headers.get("authorization")) {
+        return res(ctx.status(401));
+      }
+
       return res(ctx.status(201));
     }
   ),
   rest.delete(
     apiRoutes.answers.deleteAnswers(":questionId"),
     (req, res, ctx) => {
+      if (!req.headers.get("authorization")) {
+        return res(ctx.status(401));
+      }
+
       return res(ctx.status(202));
     }
   ),
   rest.get(
     apiRoutes.answers.indexAnswers(":questionId", ":participantId"),
     (req, res, ctx) => {
+      if (!req.headers.get("authorization")) {
+        return res(ctx.status(401));
+      }
+
       const { questionId, participantId } = req.params;
       if (Number(participantId) === 1 || Number(participantId) === 4) {
         return res(ctx.json(indexWithoutAnswer));
