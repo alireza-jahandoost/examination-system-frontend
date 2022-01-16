@@ -59,16 +59,14 @@ export const CreateQuestionProvider = ({ onDismiss, children }) => {
       );
       const { question } = questionStoreResponse.data.data;
       if (stateBodies && stateBodies.length > 0) {
-        const stateRequests = stateBodies.map((stateBody) => {
-          return statesStoreRequest(
+        for (const stateBody of stateBodies) {
+          await statesStoreRequest(
             examId,
             question.question_id,
             stateBody,
             token
           );
-        });
-
-        await axios.all(stateRequests);
+        }
       }
       setIsLoading(false);
       setErrors({});
