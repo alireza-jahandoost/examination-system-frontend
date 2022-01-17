@@ -128,53 +128,42 @@ export const AnswerQuestionProvider = ({
     setCurrentAnswers(newAnswers);
   };
 
-  const updateAnswers = () => {
+  const updateAnswers = async () => {
     if (!questionId || !token) {
       return;
     }
-    setIsLoading(true);
-    deleteAnswersRequest(questionId, token)
-      .then(() => {
-        const requests = currentAnswers.map((answer) => {
-          const bodyOfRequest = {};
-          if (answer.text_part !== undefined && answer.text_part !== null) {
-            bodyOfRequest.text_part = answer.text_part;
-          }
-          if (
-            answer.integer_part !== undefined &&
-            answer.integer_part !== null
-          ) {
-            bodyOfRequest.integer_part = answer.integer_part;
-          }
-          return storeAnswerRequest(questionId, bodyOfRequest, token);
-        });
-        return axios.all(requests);
-      })
-      .then(() => {
-        if (isMounted()) {
-          setAnswers(currentAnswers);
-          setIsLoading(false);
-          setErrors({});
+    try {
+      setIsLoading(true);
+      await deleteAnswersRequest(questionId, token);
+      for (const answer of currentAnswers) {
+        const bodyOfRequest = {};
+        if (answer.text_part !== undefined && answer.text_part !== null) {
+          bodyOfRequest.text_part = answer.text_part;
         }
-      })
-      .catch((err) => {
-        if (isMounted()) {
-          switch (Number(err?.response?.status)) {
-            case 401:
-              removeUserInfo();
-              break;
-            case 422:
-              const { message, errors: receivedErrors } = err.response.data;
-              setErrors({ message, ...receivedErrors });
-              break;
-            default:
-              setErrors({
-                message: "something went wrong, please try again later",
-              });
-          }
-          setIsLoading(false);
+        if (answer.integer_part !== undefined && answer.integer_part !== null) {
+          bodyOfRequest.integer_part = answer.integer_part;
         }
-      });
+        await storeAnswerRequest(questionId, bodyOfRequest, token);
+      }
+      setAnswers(currentAnswers);
+      setIsLoading(false);
+      setErrors({});
+    } catch (err) {
+      switch (Number(err?.response?.status)) {
+        case 401:
+          removeUserInfo();
+          break;
+        case 422:
+          const { message, errors: receivedErrors } = err.response.data;
+          setErrors({ message, ...receivedErrors });
+          break;
+        default:
+          setErrors({
+            message: "something went wrong, please try again later",
+          });
+      }
+      setIsLoading(false);
+    }
   };
 
   const value = {
