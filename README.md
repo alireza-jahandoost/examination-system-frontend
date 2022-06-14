@@ -20,7 +20,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://examsgalaxy.com">
     <img src="https://github.com/alireza-jahandoost/examination-system-frontend/blob/main/public/favicon.ico" alt="Logo" width="80" height="80">
   </a>
 
