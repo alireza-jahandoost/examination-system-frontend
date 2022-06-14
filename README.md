@@ -75,7 +75,7 @@
 
 <div align="center">
   <a href="https://alirezajahandoost.com">
-    <img src="https://github.com/alireza-jahandoost/Examination-System/images/screenshot.png" alt="Screenshot of project">
+    <img src="https://github.com/alireza-jahandoost/Examination-System/blob/main/images/screenshot.png" alt="Screenshot of project">
   </a>
 </div>
 
